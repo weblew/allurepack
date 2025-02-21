@@ -2741,11 +2741,11 @@ select {
   position: relative;
   text-transform: capitalize;
 }
-.shop-by-box-header .types-links .type.active {
+.shop-by-box-header .types-links .type.dark:hover, .shop-by-box-header .types-links .type.active {
   color: var(--gold);
   opacity: 1;
 }
-.shop-by-box-header .types-links .type.active:after {
+.shop-by-box-header .types-links .type.dark:hover:after, .shop-by-box-header .types-links .type.active:after {
   content: "";
   position: absolute;
   width: 100%;
@@ -2754,7 +2754,7 @@ select {
   left: 0;
   background-color: var(--gold);
 }
-.shop-by-box-header .types-links .type:hover {
+.shop-by-box-header .types-links .type.dark, .shop-by-box-header .types-links .type:hover {
   opacity: 1;
 }
 .shop-by-box-header .types-links .type svg {

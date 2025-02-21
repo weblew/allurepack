@@ -2449,7 +2449,7 @@ select {
 .shop-by-box-header{
     margin-bottom:80px;
     flex-wrap: wrap;
-
+    
     .types {
         position: absolute;
         top:-1px;
@@ -2526,6 +2526,7 @@ select {
             padding-bottom: 20px;
             position: relative;
             text-transform: capitalize;
+            &.dark:hover,
             &.active{
                 color: var(--gold);
                 opacity: 1;
@@ -2539,6 +2540,7 @@ select {
                     background-color: var(--gold);
                 }
             }
+            &.dark,
             &:hover{
                 opacity: 1;
             }

@@ -88,8 +88,17 @@
                             {{ link.title }}
                         </a>
                     {% endfor %}
+              </div>
             </div>
-            </div>
+
+            <div class="types-links" style="display:none;">
+                    {% for link in linklists['box-types'].links %}
+                      <a href="{{ link.url }}"  class="type dark">
+                            <svg><use xlink:href="#{{ link.title | handle }}-icon"></use></svg>
+                            {{ link.title }}
+                        </a>
+                    {% endfor %}
+                    </div>
           </div>
   
           <div class="flex flex-align-top">

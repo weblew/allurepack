@@ -18,14 +18,14 @@
               <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M3.18306 6.18306C3.42714 5.93898 3.82286 5.93898 4.06694 6.18306L7.375 9.49112L10.6831 6.18306C10.9271 5.93898 11.3229 5.93898 11.5669 6.18306C11.811 6.42714 11.811 6.82286 11.5669 7.06694L7.81694 10.8169C7.57287 11.061 7.17714 11.061 6.93306 10.8169L3.18306 7.06694C2.93898 6.82286 2.93898 6.42714 3.18306 6.18306Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.25" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <div class="js-types types">
-                    {% for link in linklists['box-types'].links %}
-                        <a href="{{ link.url }}"  class="type flex flex-align-center">
-                            <svg><use xlink:href="#{{ link.title | handle }}-icon"></use></svg>
-                            {{ link.title }}
-                        </a>
-                    {% endfor %}
-            </div>
+                <div class="js-types types">
+                      {% for link in linklists['box-types'].links %}
+                          <a href="{{ link.url }}"  class="type flex flex-align-center">
+                              <svg><use xlink:href="#{{ link.title | handle }}-icon"></use></svg>
+                              {{ link.title }}
+                          </a>
+                      {% endfor %}
+              </div>
             </div>
             
           

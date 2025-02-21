@@ -1,0 +1,57 @@
+<script>
+      var BOXES_IMAGES = {{section.blocks | map:'settings' | json}};
+</script>
+
+<div class="colors-container-inner">
+
+{% for block in section.blocks %}
+
+	{% assign colors = block.settings.colors %}
+    {% assign border = block.settings.border %}
+  
+  	{% if border == blank %}
+  		{% assign border = 'transparent' %}
+  	{% endif %}
+	
+	<div class="color" data-color="{{block.settings.title | handle}}" data-colors="{{colors}}">
+      <div class="color-color"  style="background-image:url('{{block.settings.image | img_url:'50x'}}');border:1px solid {{border}};"></div><div class="color-name">{{block.settings.title}}</div>
+	</div>
+
+{% endfor %}
+  
+</div>
+
+{% schema %}
+  {
+    "name": "Boxes Colors",
+    "blocks": [{
+		"name" : "color",
+		"type" : "color",
+		"settings" : [{
+            "id" : "title",
+            "label": "Color",
+            "type" : "text"
+          },{
+            "id" : "image",
+            "label": "Image",
+            "type" : "image_picker"
+          },{
+            "id" : "colors",
+            "label": "Similar Colors",
+            "type" : "textarea",
+            "info" : "Put each color on a new line"
+          },{
+            "id" : "border",
+            "label": "Border",
+            "type" : "color",
+			"default" : "transparent"
+          }]
+	}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

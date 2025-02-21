@@ -1,0 +1,249 @@
+{% if section.settings.enabled %}
+
+	{% assign showBannerTime = section.settings.enabled_timer %}
+
+	{% assign currentyear = 'now' | date: "%Y" | plus: 0 %}
+    {% assign currentmonth = 'now' | date: "%m" | plus: 0 %}
+    {% assign currentday = 'now' | date: "%e" | plus: 0 %}
+
+	{% assign start = section.settings.from_date | split:'/' %}
+	{% assign startyear = start[2] | plus: 0 %}
+	{% assign startmonth = start[0] | plus: 0 %}
+	{% assign startday = start[1] | plus: 0 %}
+
+	{% assign end = section.settings.to_date | split:'/' %}
+	{% assign endyear = end[2] | plus: 0 %}
+	{% assign endmonth = end[0] | plus: 0 %}
+	{% assign endday = end[1] | plus: 0 %}
+	
+	{% comment %}
+	{% if section.settings.from_date != blank %}
+        {% unless section.settings.from_date and currentyear >= startyear and currentmonth >= startmonth and currentday >= startday %}
+            {% assign showBannerTime = false %}
+        {% endunless %}
+	{% endif %}
+	
+	{% if section.settings.to_date != blank %}
+      {% unless section.settings.to_date and currentyear <= endyear and currentmonth <= endmonth and currentday <= endday %}
+          {% assign showBannerTime = false %}
+      {% endunless %}
+	{% endif %}
+	{% endcomment %}
+
+    <div class="vt-promotion-banner">
+      
+      	  <div  style="background-color:{{section.settings.top_background}}">
+              {% if section.settings.image %}
+                    <img src="{{section.settings.image | img_url:'master'}}" class="w-100 {% if section.settings.image_sm %} d-none d-lg-block{% endif %}">
+              {% endif %}
+              {% if section.settings.image_sm %}
+                <img src="{{section.settings.image_sm | img_url:'master'}}" class="w-100 d-lg-none">
+              {% endif %}
+          </div>
+        
+          {% if section.settings.message != blank or section.settings.second_message != blank or section.settings.code != blank and showBannerTime %}
+          <div class="" style="background-color:{{section.settings.message_background}};color:{{section.settings.message_color}}">
+              <div class="container d-lg-flex flex-align-center flex-justify-{% if section.settings.centered %}center{% else %}between{% endif %}">
+                <div class="">
+                    <div class="vt-promotion-baner-container vt-promotion-baner-message px-lg-3">
+
+                        <div class="flex flex-justify-center">
+                          
+                          <div class="vt-promotion-baner-blink-container">
+                            	{% if section.settings.message != blank %}
+                                      <div class="vt-promotion-baner-blink text-nowrap">{{section.settings.message}}</div>
+                                {% endif %}
+
+                                {% if section.settings.second_message != blank %}
+                                      <div class="vt-promotion-baner-blink text-nowrap" style="display:none">{{section.settings.second_message}}</div>
+                                {% endif %}
+                          </div>
+                          
+                          <div class="vt-promotion-baner-blink-placeholder-container">
+                            	{% if section.settings.message != blank %}
+                                      <span class="vt-promotion-baner-blink-placeholder position-absolute">{{section.settings.message}}</span>
+                                {% endif %}
+
+                                {% if section.settings.second_message != blank %}
+                                      <span class="vt-promotion-baner-blink-placeholder position-absolute">{{section.settings.second_message}}</span>
+                                {% endif %}
+                          </div>
+                          
+                          {% if section.settings.link %}
+                          	  {% if section.settings.code != blank or section.settings.code_message != blank %}
+                                  <a href="{{section.settings.link}}" class="ml-2 ml-lg-3 ml-xl-4">
+                                    <small>{{section.settings.code_message}}</small>
+                                    {{section.settings.code}}  
+                                  </a>
+                              {% endif %}
+                          {% else %}
+                              {% if section.settings.code != blank %}
+                                  <span class="ml-2 ml-lg-3 ml-xl-4">
+                                    <small>{{section.settings.code_message}}</small>
+                                    {{section.settings.code}}  
+                                    <small data-code="{{section.settings.code}} ">copy</small>
+                                  </span>
+                              {% endif %}
+                          {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+                {% if showBannerTime %}
+                <div class="">
+                    <div class="vt-promotion-baner-container px-3 pt-2 pt-lg-0">
+                        <div class="flex flex-justify-center flex-justify-md-end">
+                          {{section.settings.timer_message}}
+                          <span class="ml-2" data-countdown="{{section.settings.to_date}}">
+
+                          </span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+              </div>
+          </div>
+      		{%endif%}
+      
+      		<div class="vt-promotion-banner-close d-none d-lg-block" style="color:{{section.settings.message_color}}">
+            	{% include 'icon-close' %}  
+      		</div>
+      </div>
+	
+
+	<script>
+      
+      $(document).ready(function(){
+      
+        
+          	initPromotionBlink()
+              
+      
+      }).on('mouseenter', '.vt-promotion-baner-message', function(){
+      	
+      	//clearInterval(window.promotionBlinker)
+      
+      }).on('mouseleave', '.vt-promotion-baner-message', function(){
+      
+      	//initPromotionBlink()
+      
+      });
+      
+      function setBlinkMasWidth(){
+      
+          $('.vt-promotion-baner-blink-placeholder').each(function(){
+            
+            if($('.vt-promotion-baner-blink-container').width() < $(this).outerWidth()){
+              $('.vt-promotion-baner-blink-container').width($(this).outerWidth())
+            }                	
+          });
+      }
+          
+      function initPromotionBlink(){
+        	if($('.vt-promotion-baner-blink').length > 1){
+                	
+              	setBlinkMasWidth()
+              
+              	$('.vt-promotion-baner-message').animate({opacity:1})
+              
+              	window.promotionBlinker = setInterval(function(){
+                  var visibleText = $('.vt-promotion-baner-blink:visible'),
+                      hiddentext = $('.vt-promotion-baner-blink:hidden');
+                  
+                      setBlinkMasWidth()
+                      visibleText.fadeOut(400, function(){
+                      hiddentext.fadeIn(400);
+                  });
+                  
+                }, {{section.settings.blink_interval | times:1000}});
+             }else{
+				$('.vt-promotion-baner-message').css({opacity:1})
+             }
+      }
+      
+	</script>
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Promotion banner",
+    "settings": [{
+		"id" : "enabled",
+		"label" : "Enabled",
+		"type" : "checkbox"
+	},{
+		"id" : "image",
+		"label" : "Image",
+		"type" : "image_picker"
+	},{
+		"id" : "image_sm",
+		"label" : "Mobile Image",
+		"type" : "image_picker"
+	},{
+		"id" : "message",
+		"label" : "First Message",
+		"type" : "richtext"
+	},{
+		"id" : "second_message",
+		"label" : "Second Message",
+		"type" : "richtext"
+	},{
+		"id" : "code_message",
+		"label" : "Code Message",
+		"type" : "text"
+	},{
+		"id" : "code",
+		"label" : "Code",
+		"type" : "text"
+	},{
+		"id" : "link",
+		"label" : "Link",
+		"type" : "url"
+	},{
+		"id" : "enabled_timer",
+		"label" : "Enable Timer",
+		"type" : "checkbox"
+	},{
+		"id" : "timer_message",
+		"label" : "Timer Message",
+		"type" : "text"
+	},{
+		"id" : "from_date",
+		"label" : "From Date",
+		"type" : "text",
+		"info" : "MM/DD/YYYY"
+	},{
+		"id" : "to_date",
+		"label" : "End Date",
+		"type" : "text",
+		"info" : "MM/DD/YYYY"
+	},{
+		"id" : "top_background",
+		"label" : "Top Background",
+		"type" : "color"
+	},{
+		"id" : "message_background",
+		"label" : "Message Background",
+		"type" : "color"
+	},{
+		"id" : "message_color",
+		"label" : "Message Color",
+		"type" : "color"
+	},{
+		"id" : "centered",
+		"label" : "Center",
+		"type" : "checkbox"
+	},{
+		"id" : "blink_interval",
+		"label" : "Blink Every",
+		"type" : "number"
+	}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

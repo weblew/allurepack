@@ -1,0 +1,254 @@
+<script>
+  	
+  var SECTION_COLORS = {},
+      COLLECTION = {{collection | json}};
+  
+  
+  {% if collection.template_suffix == 'displays' %}
+      COLLECTION = {{collections.displays | json}};
+   {%endif%}
+  
+ 
+</script>
+<!-- COLORS -->
+
+{% assign collection_for_swatches = collection %}
+
+{% if collection.template_suffix == 'displays' %}
+	  {% assign collection_for_swatches = collections.displays %}
+{%endif%}
+
+{% if collection_for_swatches == blank and product %}
+	  {% if product.metafields.custom.main_collection %}
+        {% assign collection_for_swatches = product.metafields.custom.main_collection.value %}
+      {% else %}
+    
+      {% for collection in product.collections %}
+          
+          {% if collection.description != blank %}
+    
+          {% assign collection_for_swatches = collection %}
+    
+          {% endif %}
+    
+      {% endfor %}
+    
+    {% endif %}
+{%endif%}
+
+{% assign metaobject_colors = collection_for_swatches.metafields.custom.colors.value %} 
+{% if metaobject_colors.count > 0 %}
+                {% for color in metaobject_colors %}
+                  {% if color.swatch   %}
+                    <script>
+                      SECTION_COLORS['{{collection_for_swatches.handle}}_{{color.name | handle}}'] = {
+                    colorVal: '{{color.name}}',
+                    color: '{{color.name | handleize}}',
+                    hex: '{{ color.color }}',
+                    item_image: '{{color.image | img_url: 'medium'}}',
+                    src: '{{color.swatch | img_url: 'medium'}}'
+                  };
+                  </script>
+
+                  <style>
+                    .color-{{collection_for_swatches.handle}}_{{color.name | handle}}{
+
+                      {% if color.color %}
+                          background-color: {{color.color}};
+                      {% endif %}
+
+                      {% if color.swatch %}
+                          background-image: url('{{color.swatch | img_url: 'medium'}}')
+                      {% endif %}
+                    }
+                  </style>
+
+                  {% endif  %}
+                {% endfor %}
+               
+{% elsif collection_for_swatches.metafields.colors and collection_for_swatches.metafields.colors.names %}
+    {% assign names = collection_for_swatches.metafields.colors.names %}
+	{% assign swatches = collection_for_swatches.metafields.colors.swatches %}
+	{% assign colors = collection_for_swatches.metafields.colors.colors %}
+
+	{% for name in names %}
+		<style>
+          .color-{{collection_for_swatches.handle}}_{{name | handle}}{
+
+            {% if colors[forloop.index0] %}
+                background-color: {{colors[forloop.index0]}};
+            {% endif %}
+
+            {% if swatches[forloop.index0] %}
+                background-image: url('{{swatches[forloop.index0]}}')
+            {% endif %}
+          }
+        </style>
+
+		<script>
+          	SECTION_COLORS['{{collection_for_swatches.handle}}_{{name | handle}}'] = {
+                           collection_image : '{{collection_for_swatches.image | img_url:'master'}}',
+                           item_collection : '{{collection_for_swatches.handle}}',
+                           item_color : '{{colors[forloop.index0]}}',
+                           item_image : '{{swatches[forloop.index0]}}',
+                           item_name : '{{name | handle}}'
+            }
+		</script>
+
+	{% endfor %}
+{% else %}
+
+{% for block in section.blocks %}
+
+    <script>
+          	SECTION_COLORS['{{block.settings.item_collection}}_{{block.settings.item_name}}'] = {{block.settings | json}};
+	</script>
+
+	{% if collection_for_swatches.handle == block.settings.item_collection or page.handle == 'boxes' or block.settings.item_collection == 'displays' %}
+     
+	<style>
+      .color-{{block.settings.item_collection}}_{{block.settings.item_name}}{
+
+        {% if block.settings.item_color %}
+        	background-color: {{block.settings.item_color}};
+        {% endif %}
+              
+        {% if block.settings.item_image %}
+        	background-image: url('{{block.settings.item_image | img_url}}')
+        {% endif %}
+      }
+	</style>
+
+	{% endif %}
+
+
+{% endfor %}
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Item Colors",
+    "blocks": [
+		{
+          "type": "text_block",
+		  "name": "Color",
+          "settings": [
+            {
+              "type": "collection",
+              "id": "item_collection",
+              "label": "Collection"
+            },
+			{
+              "type": "select",
+              "id": "item_name",
+              "options": [
+                  { "value": "black", "label": "Black"},
+                  { "value": "white", "label": "White"},
+				  { "value": "purple", "label": "Purple"},
+                  { "value": "navy-blue", "label": "Navy Blue"},
+				  { "value": "silver", "label": "Silver"},
+				  { "value": "ivory", "label": "Ivory"},
+				  { "value": "light-blue", "label": "Light Blue"},
+                  { "value": "navy", "label": "Navy"},
+				  { "value": "burgundy", "label": "Burgundy"},
+				  { "value": "brown", "label": "Brown"},
+				  { "value": "red", "label": "Red"},
+				  { "value": "green", "label": "Green"},
+				  { "value": "grey", "label": "Grey"},
+				  { "value": "dark-grey", "label": "Dark Grey"},
+				  { "value": "light-grey", "label": "Light Grey"},
+                  { "value": "grey-blue", "label": "Grey/Blue"},
+                  { "value": "bronze", "label": "Bronze"},
+                  { "value": "wine", "label": "Wine"},
+                  { "value": "charcoal-grey", "label": "Charcoal Grey"},
+                  { "value": "blue", "label": "Blue"},
+                  { "value": "rosewood", "label": "Rosewood"},
+                  { "value": "gold", "label": "Gold"},
+                  { "value": "cream", "label": "Cream"},
+                  { "value": "steel-grey", "label": "Steel Grey"},
+				  { "value": "white-white", "label": "White/White"},
+                  { "value": "black-white", "label": "Black/White"},
+                  { "value": "black-black", "label": "Black/Black"},
+				  { "value": "black-grey", "label": "Black/Grey"},
+                  { "value": "brown-brown", "label": "Brown/Brown"},
+                  { "value": "navy-blue-navy-blue", "label": "Navy Blue/Navy Blue"},
+                  { "value": "burgundy-burgundy", "label": "Burgundy/Burgundy"},
+				  { "value": "red-black", "label": "Red/Black"},
+				  { "value": "mohogany", "label": "Mohogany"},
+				  { "value": "teal", "label": "Teal"},
+				  { "value": "pink", "label": "Pink"},
+				  { "value": "shock-pink", "label": "Shock Pink"},
+				  { "value": "turquoise", "label": "Turquoise"},
+				  { "value": "royal", "label": "Royal"},
+				  { "value": "emerald", "label": "Emerald"},
+				  { "value": "forest", "label": "Forest"},
+				  { "value": "yellow", "label": "Yellow"},
+			      { "value": "old-gold", "label": "Old Gold"},
+				  { "value": "sheel-grey", "label": "Sheel Grey"},
+				  { "value": "orange", "label": "Orange"},
+				  { "value": "torrid-orange", "label": "Torrid Orange"},
+				  { "value": "plum", "label": "Plum"},
+			      { "value": "ocean-blue", "label": "Ocean Blue"},
+                  { "value": "goledn-ale", "label": "Goledn Ale"},
+                  { "value": "burnt-sienna", "label": "Burnt Sienna"}, 
+                  { "value": "gunmetal-grey", "label": "Gunmetal Grey"},
+                  { "value": "copper", "label": "Copper"},
+				  { "value": "tan", "label": "Tan"},
+				  { "value": "mint", "label": "Mint"},
+				  { "value": "aqua", "label": "Aqua"},
+                  { "value": "shell-grey", "label": "Shell Grey"},
+                  { "value": "purple-haze", "label": "Purple Haze"},
+                  { "value": "antique-white", "label": "Antique White"},
+				  { "value": "gold-leaf", "label": "Gold Leaf"},
+				  { "value": "rose-gold", "label": "Rose Gold"},
+				  { "value": "parade-blue", "label": "Parade Blue"},
+				  { "value": "french-vanilla", "label": "French Vanilla"},
+				  { "value": "holiday-green", "label": "Holiday Green"},
+			      { "value": "slate-grey", "label": "Slate Grey"},
+                  { "value": "sky-blue", "label": "Sky Blue"},
+                  { "value": "cool-grey", "label": "Cool Grey"},
+				  { "value": "island-pink", "label": "Island Pink"},
+                  { "value": "scarlet", "label": "Scarlet"},
+				  { "value": "taupe", "label": "Taupe"},
+				  { "value": "rose-fog", "label": "Rose Fog"},
+                  { "value": "raspberry", "label": "Raspberry"},
+                  { "value": "kraft", "label": "Kraft"},
+                  { "value": "silver-trellis", "label": "Silver Trellis"},
+                  { "value": "silver-polka-dot", "label": "Silver Polka Dot"},
+                  { "value": "red-polka-dot", "label": "Red Polka Dot"},
+                  { "value": "white-polka-dot", "label": "White Polka Dot"},
+                  { "value": "leopard", "label": "Leopard"},
+                  { "value": "chevron-black", "label": "Chevron Black"},
+                  { "value": "beige", "label": "Beige"}
+              ],
+              "label": "Name"
+            },
+			{
+              "type": "image_picker",
+              "id": "item_image",
+              "label": "Color Swatch"
+            },
+			{
+              "type": "image_picker",
+              "id": "collection_image",
+              "label": "Collection Image"
+            },
+			{
+              "type": "color",
+              "id": "item_color",
+              "label": "Color",
+              "default": "#fff"
+            }
+          ]
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+

@@ -1,0 +1,113 @@
+<div
+  data-section-id="{{ section.id }}"
+  class="slider-section"
+  data-section-type="slider-section">
+
+  <div class="slider">
+    {% for block in section.blocks %}
+      <a href="{{block.settings.link}}" class="slide">
+        <img  {% if block.settings.image_sm != blank %}class="hide-mobile"{% endif %}
+            srcset="
+          {{ block.settings.image | img_url: '2000x' }} 2000w, 
+          {{ block.settings.image | img_url: '1000x' }} 1000w " src="{{ block.settings.image | img_url: 'master' }}">
+        {% if block.settings.image_sm != blank %}
+            <img  {% if block.settings.image_sm != blank %}class="hide-desktop"{% endif %} src="{{ block.settings.image_sm | img_url: 'master' }}">
+        {% endif  %}
+          
+        
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="prev-arrow slick-prev">
+    <svg
+      width="14"
+      height="26"
+      viewBox="0 0 14 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.3479 0.424805L14 2.04223L3.24179 12.9945L14 23.9607L12.3479 25.5758L6.34699e-07 12.9968L12.3479 0.424805Z" fill="#2F2923" />
+    </svg>
+  </div>
+
+  <div class="next-arrow slick-next">
+    <svg
+      width="14"
+      height="26"
+      viewBox="0 0 14 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.65209 0.424805L0 2.04223L10.7582 12.9945L0 23.9607L1.65209 25.5758L14 12.9968L1.65209 0.424805Z" fill="#2F2923" />
+    </svg>
+
+  </div>
+
+
+  {% if section.blocks.size == 0 %}
+    <div class="placeholder-noblocks">
+      {{ 'homepage.onboarding.no_content' | t }}
+    </div>
+  {% endif %}
+
+
+  <script>
+    $(document).ready(function() {
+      $('.slider').slick({
+        dots: true,
+        autoplay: {{section.settings.autoplay}},
+        autoplaySpeed: {{section.settings.autoplay_speed}} * 1000,
+        fade: true,
+        cssEase: 'linear',
+        adaptiveHeight: true,
+        prevArrow: $('.prev-arrow'),
+        nextArrow: $('.next-arrow')
+      });
+    })
+  </script>
+</div>
+
+{% schema %}
+  {
+    "name": "Slider",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate slides",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "autoplay_speed",
+        "label": "Change slides every",
+        "default": "5"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },{
+            "type": "image_picker",
+            "id": "image_sm",
+            "label": "Mobile Image"
+          }, {
+            "type": "url",
+            "id": "link",
+            "label": "Slide link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Slider",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

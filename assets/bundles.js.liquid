@@ -1,0 +1,136 @@
+
+
+(function() {
+  
+  angular
+    	.module('bundles', [])
+  		.config(['$interpolateProvider', function($interpolateProvider){
+    		
+      		$interpolateProvider.startSymbol('<%');
+  			$interpolateProvider.endSymbol('%>');
+      
+    	}])
+  		.controller('BundlesController', BundlesController)
+  
+  BundlesController.$inject = ['$scope', '$http'];
+  function BundlesController($scope, $http){
+    
+    var vm = this;
+    
+    $http.get('https://bundle.weblew.com/bundles').then(function(res){
+
+      vm.bundles = res.data;
+      vm.atcText = 'Add To Order';
+      vm.getVariantImage = getVariantImage;
+      vm.addBundleToCart = addBundleToCart;
+      vm.selectBundleColor = selectBundleColor;
+      vm.getBundlePrice = getBundlePrice;
+      
+      vm.bundles.forEach(function(bundle){
+        selectBundleColor(bundle, bundle.images[0]);
+      });
+      
+      
+      function getVariantImage(images, image_id){
+        var image = images.find(function(image){ return image.id === image_id });
+        return image ? Shopify.resizeImage(image.src, '150x150') : image;
+      }
+      
+      function addBundleToCart(bundle){
+      
+        if(!bundle.selectedImage.variants){
+        	return
+        }
+                
+        var qty = (bundle.qty || 1);
+        
+        bundle.atcText = 'Adding...';
+        
+        var variantIds = bundle.selectedImage.variants.map(function(v){          
+          return v.id + ':' + (v.qty * qty);
+        });
+       
+        
+        moveAlong()
+        
+        function moveAlong() {
+            // If we still have requests in the queue, let's process the next one.
+            
+          if (variantIds.length) {
+              	var request = variantIds.shift().split(':');
+
+                jQuery.post('/cart/add.js', {
+                  quantity: request[1],
+                  id: request[0],
+                  properties: {
+                    '_Set Name': bundle.sku ? bundle.sku : undefined
+                  }
+                }).always(function() {
+                   moveAlong();
+                });
+            
+            }
+            // If the queue is empty, we will redirect to the cart page.
+            else {
+              	var bundle_item = BUNDLE_ITEMS.find(function(item){
+                	return bundle.sku && item.handle.indexOf(bundle.sku.toLowerCase()) > -1;
+                });
+              	if(bundle_item){
+                	jQuery.post('/cart/add.js', {
+                      quantity: qty,
+                      id: bundle_item.variants[0].id
+                    }).always(function() {
+                       document.location.href = '/cart';
+                    });
+                }else{
+                	document.location.href = '/cart';
+                }
+                
+            }  
+        };
+        
+      }
+      
+      function selectBundleColor(bundle, image){
+      		bundle.selectedImage = image;
+            if(bundle.selectedImage.variants){
+                bundle.selectedImage.variants.forEach(function(variant){
+					setVariantProdQtyAndPrice(bundle, variant);
+                });
+            }
+        	bundle.images.forEach(image => image.selected = false);
+        	image.selected = true;
+      }
+      
+      function setVariantProdQtyAndPrice(bundle, variant){
+              	
+        var variantInProd;	
+        for(var p = 0; p < bundle.products.length; p++){
+        	
+          	variantInProd = bundle.products[p].variants.find(function(v){
+            	return Number(v.id) === Number(variant.id);
+            });
+          	
+          	if(variantInProd){
+              variant.qty = bundle.products[p].qty;
+              variant.price = Number(variantInProd.price);
+              break;
+           }
+        }
+        
+      }
+      
+      function getBundlePrice(bundle){
+        if(!bundle.selectedImage.variants){
+        	return 0;
+        }
+        return bundle.selectedImage.variants.reduce(function(total, v){
+        	return total + (v.qty * v.price);
+        }, 0)
+      }
+
+	});
+  
+  }
+
+})();

@@ -1,0 +1,94 @@
+(function($) {
+var loaders = 0,
+	svgLoader = '<img src="{{ 'ajax-loader.gif' | asset_url }}" />';
+    
+jQuery.fn.loading = function(size) {
+    return this.each(function() {
+      var $this = $(this),
+          parentOffset = $this.offsetParent().offset(),
+          offset = $this.offset(),
+          loader = $("<div class='ajaxLoadingSvg'>" + svgLoader + "</div>").clone().prop("id", "ajaxLoadingSvg" + loaders++),
+          fromTop = $this.height() < $(window).height() ? offset.top - parentOffset.top : ($this.closestOffset() !== $this ? ($this.offset().top - $this.closestOffset().offset().top) / 2 : 0) + $this.closestOffset().getVisibleCenter() - 16,
+          fromLeft = offset.left - parentOffset.left,
+          width = $this.outerWidth(),
+          height = $this.outerHeight();
+
+      $this.addClass('loading');
+
+      loader.css({
+        display: "flex",
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: fromTop,
+        left: fromLeft,
+        position: "absolute",
+        zIndex: 9011,
+        width:width,
+        height:height,
+        padding:0
+      });
+      $this.data("loader", loader.attr("id")).after(loader);
+    });
+};
+
+jQuery.fn.stopLoading = function() {
+    return this.each(function() {
+      var $this = $(this);
+      if ($this.data("loader") !== null) {
+        $("#" + $this.data("loader")).remove();
+        $this.removeData("loader");
+      }
+      if ($this.find(".ajaxLoadingSvg").length > 0) {
+        $this.find(".ajaxLoadingSvg").remove();
+      } else {
+        $this.parent().find(".ajaxLoadingSvg").remove();
+      }
+      $this.removeClass('loading');
+    });
+};
+  
+  jQuery.fn.closestOffset = function(){
+	var $this = this, pos = $this.css("position");
+	switch(pos){
+		case "absolute" :
+		case "fixed" :
+		case "relative" :
+			return $this;
+		default :
+			return $this.offsetParent();
+	}
+};
+jQuery.fn.getVisibleCenter = function(rel){//needs Modification
+	var $w = $(window), 
+		$this = this,
+		eOffset = $this.offset(),
+		eHeight = $this.height(),
+		wHeight = $w.height(),
+		wScrollT = $w.scrollTop(),
+		eBottom = eOffset.top + eHeight,
+		pageVisBottom = wScrollT + wHeight,
+		diff, visible, visibleStart, pos;
+
+		//if bottom edge of elem is visible
+		if(pageVisBottom > eBottom){
+			diff = pageVisBottom - eBottom;
+			visible = wHeight - diff;
+			visibleStart = eHeight - visible;
+			pos = visibleStart + visible / 2; 
+		}
+		//if top edge is visible
+		else if(wScrollT < eOffset.top){
+			diff = eOffset.top - wScrollT;
+			visible = wHeight - diff;
+			pos = visible / 2;
+
+		}
+		//none of edges is visible
+		else {
+			visible = wHeight;
+			visibleStart = wScrollT - eOffset.top;
+			pos =  visibleStart + visible / 2;
+		}
+		return pos;
+};
+})(jQuery);

@@ -1,0 +1,100 @@
+<script text="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+{% comment %}
+  The contents of the product.liquid template can be found in /sections/product-template.liquid
+{% endcomment %}
+
+{% section "logo-icons" %}
+{% section 'product-template' %}
+{% section "item-colors" %}
+
+<script>
+  // Override default values of shop.strings for each template.
+  // Alternate product templates can change values of
+  // add to cart button, sold out, and unavailable states here.
+  theme.productStrings = {
+    addToCart: {{ 'products.product.add_to_cart' | t | json }},
+    soldOut: {{ 'products.product.sold_out' | t | json }},
+    unavailable: {{ 'products.product.unavailable' | t | json }}
+  }
+</script>
+
+
+<!-- start virthium widget -->
+{% assign srb = shop.metafields.virthium.json %}
+{% if product.metafields.virthium.json %}
+  <div id='virthium_widget_{{product.id}}?v=1' class='virthium_widget' data-id='{{product.id}}?v=1'></div>
+{% elsif product.metafields.virthium.snippet %}
+	<div id='virthium_widget_{{product.id}}' class='virthium_widget' data-id='{{product.id}}'></div>
+{% elsif srb.isActive == true %}
+	<div id='virthium_widget_{{srb.id}}?rebate_only=true' class='virthium_widget' data-id='{{srb.id}}?rebate_only=true'></div>
+{% endif %}
+<!-- end virthium widget -->
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org/",
+    "@type": "ProductGroup",
+    "name": "{{ product.title | escape }}",
+    "url": "{{ product.url }}",
+    "image": "{{ product.featured_image | image_url }}",
+    "description": "{{ product.description | strip_html | escape }}",
+    "brand": {
+        "@type": "Brand",
+        "name": "Allurepack"
+    },
+    {% if product.options_by_name['Color'] %}
+    "variesBy": [
+        "color"
+    ],
+    {% endif %}
+    {% if product.options_by_name['Color'] %}
+    {% assign optionField = 'option' | append:product.options_by_name['Color'].position %}
+    "hasVariant": [
+        {% for value in product.options_by_name['Color'].values %}
+        {% assign variant = product.variants | where:optionField,value | first %}
+        {% if variant %}
+        {
+            "@type": "Product",
+            "name": "{{ product.title | escape }} - {{ value | escape }}",
+            "color": "{{ value }}",
+            "isVariantOf": "{{ product.title | escape }}",
+            "offers": {
+                "@type": "Offer",
+                "price": "{{ variant.price | money_without_currency }}",
+                "priceCurrency": "USD",
+                "availability": "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
+            }
+        },
+        {% endif %}
+        {% endfor %}
+    ]
+    {% endif %}
+}
+</script>

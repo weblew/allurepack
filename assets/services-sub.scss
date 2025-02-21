@@ -1,0 +1,177 @@
+.page-container{
+  background-color:#f8f3ed;
+  
+  h1{
+  	margin-top:20px;
+    margin-bottom:30px;
+  }
+  
+  .top-content-row{
+    margin:0 0 30px 0;
+    h3{
+    	line-height: 1.5;
+    }
+    img{
+    	max-width:450px;
+        width:100%;
+    }
+    .top-content-row-content{
+      padding-left:100px;
+      strong{
+      	color: #357284;
+        text-transform: uppercase;
+        font-size: 22px;
+        margin: 0;
+        font-weight: 400;
+      }
+    }
+  }
+  .top-printing-banner,
+  .bottom-printing-banner{
+  	background-color: #347284;
+    padding: 130px 0;
+    p{
+    	margin-bottom: 0;
+        color: #fff;
+        margin: auto;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      	strong{
+        	background-color: #c5a04c;
+            font-size: 16px;
+            padding: 6px 30px;
+            margin: 0 20px;
+            font-weight: 600;
+        }
+      	
+      	
+    }
+    h6{
+       	color:#fff;
+      	font-size: 20px;
+        a{
+          color:#fff;
+          text-decoration:underline;
+        }
+    }
+  }
+  .bottom-printing-banner{
+    background-color:#000000;
+  }
+  .service-faq{
+    width: 880px;
+    margin: 70px auto;
+    max-width: 90%;
+  	h2{
+      font-size: 40px;
+    }
+    .question{
+      border-top: 1px solid #fff;      
+      padding: 14px 0;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &:after{
+          content:'+';  
+          font-size:22px;
+          transition:700ms;
+      }
+      &.open:after{
+          transform:rotate(90deg);
+      }
+    }
+    .answer{
+      display:none;
+      margin:-10px 0 0;
+      padding-bottom:14px;
+
+    }
+  }
+  .colors-banner{
+  	max-width: 1100px;
+    margin: auto;
+    text-align: center;
+    background-color: #fff;
+    padding: 50px 86px;
+    border-radius: 100px;
+    h2{
+      font-size: 40px;
+    }
+    img{
+    	width:100%;
+    }
+  }
+  
+  .service-testimonials{
+    background-color:#2C2B2B;
+    padding:70px 0 120px;
+  	h2{
+      font-size: 40px;
+      color:#fff;
+      margin-bottom:30px;
+    }
+    .testimonial-col{
+    	padding:0 15px;
+    }
+    .testimonial{
+    	background-color:#000000;
+      	color:#fff;
+      	padding:40px 75px;
+      	height:100%;
+    }
+  }
+  
+}
+
+.site-footer{
+	margin-top:0;
+}
+
+@media only screen and (max-width: 960px){
+  .page-container{
+    h1{
+      margin-top: 20px;
+      font-size: 36px;
+    }
+    .top-content-row{
+      .top-content-row-content{
+      	padding-left:0;
+      }
+      img{
+      	margin-bottom:20px;
+      }
+    }
+    
+    .service-faq {
+        margin: 0 auto 70px;
+    }
+    
+    .service-testimonials{
+      h2 {
+        font-size: 30px;
+      }
+      .testimonial{
+      	padding: 30px;
+      }
+    }
+  }
+  
+  .page-container .top-printing-banner, .page-container .bottom-printing-banner{
+  	padding: 70px 10px;
+    p{
+      font-size: 16px;
+      br{
+          display:none;
+      }
+    }
+    h6{
+    font-size: 18px;
+    }
+  }
+  
+  
+}

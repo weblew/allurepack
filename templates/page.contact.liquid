@@ -1,0 +1,31 @@
+<div class="page-width">
+  <br>
+  <h1 class="font-default text-center">{{page.title}}</h1>
+  <div>
+    {{page.content}}
+  </div>
+
+  {% section "contact-form" %}
+</div>
+
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+		<div class="page-width">
+          {{page.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}
+<script src ="https://form.jotform.com/static/feedback2.js" type="text/javascript"></script><script type="text/javascript">
+ 			var JFL_90274796979177 = new JotformFeedback({ 
+            	formId: '90274796979177', 
+                base: 'https://form.jotform.com/', 
+                windowTitle: 'Build my custom box', 
+                background: '#f3cd59', 
+                fontColor: '#000000', 
+                type: '2', 
+                height: 800, 
+                width: 800, 
+                openOnLoad: false 
+           	}); 
+  		</script>

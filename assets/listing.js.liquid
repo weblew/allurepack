@@ -1,0 +1,874 @@
+/* Start Wrap For Jquery 01/08/18 */
+jQuery(document).ready(function($) {
+
+  $('.collection-mobile-title').html($('.collection-desktop-title').html())
+    
+    var AVAILABLE_COLORS_INDEX = 0;
+if(typeof AVAILABLE_COLORS !== 'undefined' && _.isObject(AVAILABLE_COLORS)){
+  
+  SECTION_COLORS = typeof SECTION_COLORS === 'undefined' ? {} : SECTION_COLORS;
+  COLLECTION = typeof COLLECTION === 'undefined' ? {} : COLLECTION;
+  
+  _.each(AVAILABLE_COLORS, function(color, val, arr, index){
+   
+    if(true || color.color !== 'black-white' || COLLECTION.handle === 'pearl-folders'){
+        var selected = location.hash ? location.hash.replace('#','') === color.color : AVAILABLE_COLORS_INDEX === 0;   
+
+
+
+        if(COLLECTION && SECTION_COLORS[COLLECTION.handle +'_'+ color.color] && SECTION_COLORS[COLLECTION.handle +'_'+ color.color].item_image){
+            console.log(1111111111)
+            //$('.collection-vailable-colors').append('<div class="collection-color"><label class="checkbox" data-color="'+color.color+'"><input type="radio" name="collection-colors" '+ (selected ? 'checked="checked"' : '') +'"><span class="variant-box" style="background-color:#fff;background-image:url('+SECTION_COLORS[COLLECTION.handle +'_'+ color.color].item_image+');"></span></label><span>'+color.colorVal+'</span></div>');
+            if(selected){
+              $('[data-color="'+color.color+'"] input').prop('checked', true)
+            }
+            $('.collection-vailable-colors-old').append('<div class="collection-color"><label class="checkbox" data-color="'+color.color+'"><input type="radio" name="collection-colors" '+ (selected ? 'checked="checked"' : '') +'"><span class="variant-box color-'+COLLECTION.handle +'_'+ color.color+'"></span></label><span>'+color.colorVal+'</span></div>');
+        }else if(color.image){
+            console.log(2222222222)
+            $('.collection-vailable-colors').append('<div class="collection-color"><label class="checkbox" data-color="'+color.color+'"><input type="radio" name="collection-colors" '+ (selected ? 'checked="checked"' : '') +'"><span class="variant-box" style="background-color:#fff;background-image:url('+color.src.replace('_small', '')+');"></span></label><span>'+color.colorVal+'</span></div>');
+        }else{
+            console.log(3333333333)
+            $('.collection-vailable-colors').append('<div class="collection-color"><label class="checkbox" data-color="'+color.color+'"><input type="radio" name="collection-colors" '+ (selected ? 'checked="checked"' : '') +'"><span class="variant-box" style="background-color:'+color.hex+';"></span></label><span>'+color.colorVal+'</span></div>');
+        }               
+
+        AVAILABLE_COLORS_INDEX++;
+    }
+  });
+  
+  
+    
+}
+  
+  if($('.collection-vailable-colors .variant-box').length < 2){
+    $('.collection-vailable-colors-container').hide()
+  }else if($('.collection-vailable-colors .variant-box').length >= 10){
+  	$('.collection-vailable-colors').addClass('small-boxes')
+  }
+
+$(document)
+  	.on('click', '.collection-color label', selectCollectionColor)
+	.on('click', '.list-view-item-color input', changeImage)
+  	.on('change', '[name=quantity]', quantityChange)
+  	.on('click', '.js-open-printing-modal', openPrintingModal)
+ 	.on('click', '.printing-modal, .js-cancel-printing, .printing-modal-overlay, .printing-modal-close', closePrintingModal)
+  	.on('change', '.js-select-position', selectLogoPosition)
+	.on('change', '.js-plate', resetLogoFile)
+	.on('click', '.printing-custom-btn.enabled', openCustomLogoModal)
+	.on('click', '.custom-logo-layer-overlay, .custom-logo-layer-close', hideCustomLogoModal)
+	.on('click change', '.logo-row .disabled:not(.enabled) input', preventSelection)
+	.on('click', '.js-add-printing', addPrintingToItems)
+	.on('click', '.js-remove-printing', removePrintingFromItems)
+	.on('change', '[name=id]', displayPricesAndColors)
+	.on('click', '.printing-colors', openAvailableColors)
+	.on('click', '.colors-layer-overlay, .colors-layer-close', hideAvailableColors)
+	.on('click', '.printing-color', selectColors)
+    .on('click', '.upload-layer-overlay, .upload-layer-close', hideUploadLayer)
+	.on('click', '.logo-upload-button.enabled', function(){
+		
+  		var $this = $(this),
+        	row = $this.closest('.logo-row');
+  
+  		row.find('.upload-layer').addClass('in');
+		row.find('.upload-layer-overlay').addClass('in');
+
+	}).on('click', '.js-open-printing-modal-add', function(e){
+      
+      if($('.printing-notice-container').length){
+       
+        
+        var applyTo = $(this).data('apply');
+      	openModal($('.printing-notice-container').html());
+        setTimeout(function(){
+        	$('.printing-notice-actions').data('apply', applyTo);
+            $('.customer-plate-notice .btn').data('apply', applyTo);
+        }, 10)
+        
+      }
+      
+    }).on('click', '.customer-plate-notice-no', function(e){
+      	closeModal();
+  		openPrintingModal(e, $('.customer-plate-notice .btn').data('apply'));
+    }).on('click', '.customer-plate-notice-yes', function(e){
+      	closeModal();
+  		$('.js-plate').prop('checked', true).trigger('change');
+  		openPrintingModal(e, $('.customer-plate-notice .btn').data('apply'));
+	}).on('click', '.collection-info-content-btn', function(){
+		$('.collection-info-content').addClass('open');
+  		return false;
+	}).on('click', '.collection-info-content-close, .collection-info-content-popup-backdrop', function(){
+		$('.collection-info-content').removeClass('open');
+  		return false;
+	}).on('click', '.list-view-item-arrow', function(){
+		$(this).closest('.list-view-item').toggleClass('open');
+  		return false;
+	});
+  
+
+if(window.setUpCustomLogoEvents){
+	setUpCustomLogoEvents();
+}
+  
+$('.list-view-item, .product-detail ,.grid-view-item, .home-grid-item-inner').each(displayPricesAndColors);
+$('.printing-modal-section').appendTo('body');
+$('.custom-logo-section').appendTo('body');
+  
+});
+
+function displayPricesAndColors(e){
+
+      
+	var item = $(this).closest('.list-view-item, .product-detail').length ? $(this).closest('.list-view-item, .product-detail') : $(this),
+        selectedId = item.find('[name=id]:checked').length ? item.find('[name=id]:checked').val() : item.find('[name=id]').val(),
+        qty = item.find('[name=quantity]').val(),
+        variants = PRODUCTS[item.data('id')] ? PRODUCTS[item.data('id')].variants : JSON.parse(item.find('.item-variants').html()),// item.data('variants') ? item.data('variants') : ( typeof PRODUCT === 'object' ? PRODUCT.variants : []),
+       
+        selectedVariant = _.find(variants, function(v){
+        	return Number(v.id) === Number(selectedId);
+        }),
+        selectedVariants = selectedVariant ? _.filter(variants, function(v){
+        	return v.sku === selectedVariant.sku;
+        }) : [];
+    	 
+  	if(selectedVariant){
+      item.find('.list-view-item-sku, .home-grid-item-sku').text(selectedVariant.sku);
+    }
+  
+  	item.find('.product-price__price').html(Shopify.formatMoney(selectedVariant.price));
+	
+  	_.each(selectedVariants, function(variant, idx){  
+		if(idx === 0) return;
+		var bulkLabel = variant.option2;
+
+        if(selectedVariants.length > 1){
+			if(!bulkLabel){
+				bulkLabel = variant.option1;
+			}
+          
+          	item.find('.list-view-item-pricing .volume-discount,.grid-view-item__meta .volume-discount, .home-grid-item-price .volume-discount').addClass('has-discount').html('<div class="a"><span><span class="sale-price">' + Shopify.formatMoney(variant.price) + 'ea </span><span class="original-price '+ (variant.compare_at_price ? '' : 'hidden') +'"><span class="original-price-placeholder">' + Shopify.formatMoney(variant.compare_at_price) + '</span>ea</span></span>for qty of '+ bulkLabel+'+</div>');         
+        }else{
+          	item.find('.list-view-item-pricing .volume-discount,.grid-view-item__meta .volume-discount, .home-grid-item-price .volume-discount').addClass('has-discount').html('<div class="c"><span class="sale-price"><span class="price-placeholder">'+Shopify.formatMoney(variant.price) + '</span></span><span class="original-price '+ (variant.compare_at_price ? '' : 'hidden') +'"><span class="original-price-placeholder">' + Shopify.formatMoney(variant.compare_at_price) + '</span></span></span></div>');
+          
+        }
+    });
+  
+  	if(e.target) return;
+  
+  	$('.list-view-item-color').each(function(){
+    	
+      	if(SECTION_COLORS[$(this).find('span').data('color')]){
+        	$(this).find('span').css('background-color', SECTION_COLORS[$(this).find('span').data('color')].item_color);
+        }
+      
+    });
+  
+  	if(selectedVariants.length > 1){
+     	
+      	var qtyBreaks = _.map(selectedVariants, function(v){
+        	return Number(v.option2);
+        }),
+        qtyBreak = _.min(qtyBreaks);
+      
+      	item.find('.list-view-item-bulk-' + qtyBreak).show();
+      
+      	if(location.hash && item.find('.list-view-item-color-' + location.hash.replace('#','')).length){
+          	item.find('.list-view-item-color-' + location.hash.replace('#','') + ':visible').find('input').click();
+        }else{
+        	item.find('.list-view-item-bulk-' + qtyBreak + ':first').find('input').click();
+        }
+      
+    }else{
+       
+      item.find('.list-view-item-color').show();
+      
+      if(location.hash && item.find('.list-view-item-color-' + location.hash.replace('#','')).length){
+        item.find('.list-view-item-color-' + location.hash.replace('#','') + ':visible').find('input').click();
+      }else{
+        item.find('.list-view-item-color:first input').click();
+      }
+      	
+    }
+}
+
+function selectCollectionColor(){
+	var color = $(this).data('color');
+    
+  	
+  	$('.list-view-item').show().each(function(){
+      	var itemHasColor = $(this).find('.list-view-item-color-' + color + ':visible input').length;
+      
+      	if(!itemHasColor){
+        	$(this).hide()
+        }
+      
+    })
+  	$('.list-view-item-color-' + color + ':visible input').click();
+  	location.hash = color;
+}
+
+function changeImage(){
+	
+  	var $this = $(this),
+        id = $this.val(),
+        links = $this.closest('.list-view-item').find('a'),
+        $img = $this.closest('.list-view-item').find('.list-view-item-image'),
+        $open_img = $img.find('.open-image'),
+        $hover_img = $img.find('.hover-image'),
+    	src = $this.data('image'),
+        hover_image = $this.data('hover-image');
+      
+  	if($this.hasClass('already-clicked')){
+    
+      $open_img.attr('src', src);
+      
+    }else{
+                
+      $open_img.loading().attr('src', src).load(function(){
+          	$this.addClass('already-clicked');
+        	$open_img.stopLoading();
+      }).on('error', function(){
+      		$open_img.stopLoading();
+      });
+      
+    }
+
+    if(hover_image){
+      if($hover_img.length){
+        $hover_img.attr('src', hover_image);
+      }else{
+        $img.append('<img src="'+hover_image+'" class="hover-image"/>')
+      }
+    }else{
+      if($hover_img.length){
+        $hover_img.remove();
+      }
+    }
+  
+  	links.each(function(){
+    
+    	var href = $(this).attr('href').split('?')[0];
+    	$(this).attr('href', href + '?variant=' + id);
+    
+    });
+  
+  
+}
+
+function quantityChange(){
+	var $this = $(this),        
+        item = $this.closest('.list-view-item').length ? $this.closest('.list-view-item') :  $this.closest('.product-detail'),
+        color = item.find('input[type=radio]:checked').data('color'),
+    	options = item.length ? PRODUCTS[item.data('id')].options : [], //item.data('options'),
+        bulk = _.find(options, function(option){
+        	return option.name.toLowerCase() === 'bulk';
+        }),
+    	qty = $(this).val(),
+        qtyBreaks = bulk ? _.filter(bulk.values, function(b){
+        	return ~~b <= qty;
+        }) : '',
+        qtyBreak = _.max(_.map(qtyBreaks, Number));
+
+    console.log(qtyBreaks, qtyBreak)
+    console.log(bulk)
+  	  	    
+  	if(bulk){
+		item.find('.list-view-item-color').hide().siblings('.list-view-item-bulk-' + qtyBreak).show();
+      	item.find('.list-view-item-color-' + color + ':visible').find('input').click();
+
+		if($('[data-index=option2]').length){
+			$('[data-index=option2]').val(qtyBreak).change();
+		}else{
+			$('[data-index=option1]').val(qtyBreak).change();
+		}
+    }
+}
+
+function openPrintingModal(e, apply){
+    if(!$('.printing-notice-container').length || apply){
+      
+      	$('.printing-panel').addClass('open')
+      
+      	return;
+      
+      	if($('.customer-plate-container').length && !$(e.target).is('.customer-plate-notice-no') && !$(e.target).is('.customer-plate-notice-yes') && !$('.js-select-position:checked').length){
+          	
+            var applyTo = $(this).data('apply');
+      	
+        	openModal($('.customer-plate-container').html());
+          
+          	setTimeout(function(){
+                $('.customer-plate-notice .btn').data('apply', applyTo)
+            }, 10);
+          
+        }else{
+      
+    		$('.printing-error').text('');
+  			$('.printing-modal-overlay').addClass('open');
+			$('.printing-modal').addClass('open').data('apply', apply || $(this).data('apply'));
+        }
+    }
+  
+}
+
+function closePrintingModal(e){
+  
+	if(!e || $(e.target).is('.printing-modal-close') || $(e.target).hasClass('printing-modal') || $(e.target).hasClass('js-cancel-printing') || $(e.target).hasClass('printing-modal-overlay')){
+  		$('.printing-modal').removeClass('open');
+      	$('.printing-modal-overlay').removeClass('open')
+  	}
+  
+}
+
+function preventSelection(e){
+	e.stopImmediatePropagation();
+  	return false;
+}
+
+function selectLogoPosition(e){
+  
+  $(this).closest('.logo-row').toggleClass('selected', $(this).is(':checked'));
+  
+  if($(this).closest('.logo-row').find('input:checked:not(.js-select-position)').length){
+  	$(this).closest('.logo-row').find('input:checked:not(.js-select-position)').closest('.disabled').toggleClass('enabled', $(this).is(':checked'));
+  }else{
+  	$(this).closest('.logo-row').find('.disabled').toggleClass('enabled', $(this).is(':checked'));
+  }
+  
+  $(this).closest('.logo-row').find('.printing-colors').closest('.disabled').toggleClass('enabled', $(this).is(':checked'));
+  
+}
+
+function resetLogoFile(){
+	
+  	var isChecked = $(this).is(':checked'),
+    	row = $(this).closest('.logo-row');
+  	
+  	if(isChecked){
+		row.find('input[type=file]').val('');
+      	row.find('.logo-upload-button').removeClass('enabled');
+      	row.find('.printing-custom-btn').removeClass('enabled');
+      	row.find('.printing-custom-btn').data('design', '');
+  		row.find('.stamp-preview').removeClass('has-logo');
+    }else{
+    	row.find('.logo-upload-button').addClass('enabled');
+      	row.find('.printing-custom-btn').addClass('enabled');
+    }
+
+}
+
+function addPrintingToItems(e){
+  
+	var logoForm = $('.printing-modal form'),
+        applyTo = $('.printing-modal').data('apply'),
+        printingError = '';
+        
+        $target = applyTo === 'all' ? $('body') : $('.product-'+applyTo) ;
+  
+  	
+  	logoForm.removeClass('has-logo');
+  	$target.find('.js-item-properties').empty();
+  	$target.find('.js-remove-printing').addClass('displayNone');
+  
+  	$('.logo-row').each(function(){
+    
+    	var row = $(this),
+        	logoName = row.data('name'),
+        	logoSeleced = row.find('[name="properties[Printing '+logoName+']"]:checked').length > 0,
+            logoHasFile = row.find('[name="properties[Printing '+logoName+' file]"]').val(),
+            logoColor = row.find('[name="properties[Printing '+logoName+' color]"]').val(),
+            logoSrc = row.find('[data-name="properties[Printing '+logoName+' file]"]').val(),
+            design = row.find('[data-design]').data('design'),
+            plate = row.find('.js-plate').is(':checked'),
+            logoDisplay = '',
+            fileType = logoHasFile.split('.').pop(),
+            allowedFileTypes = ['pdf', 'eps', 'ai', 'ps'];
+      	        
+//         if(logoHasFile && allowedFileTypes.indexOf(fileType.toLowerCase()) === -1){
+//       		printingError = 'Please select one of the following file types, ' + allowedFileTypes.join(', ');
+//           	$('.printing-error').text(printingError);
+//           	return;
+//       	}
+      
+      	      
+      	if(logoSeleced && !plate && !logoHasFile && !design){
+      		printingError = 'Please upload a logo or select Plate on file';
+          	$('.printing-error').text(printingError);
+          	return;
+      	}
+      
+      	if( logoSeleced && !logoColor){
+      		printingError = 'Please select a color';
+          	$('.printing-error').text(printingError);
+          	return;
+      	}      
+            
+      	if(logoSeleced && (logoHasFile || plate || design) ){
+            $target.find('.js-item-properties').append('<input type="hidden" name="properties[Printing '+logoName+' color]" value="'+ logoColor +'">');          
+          	
+          	if(plate){
+            	$target.find('.js-item-properties').append('<input type="hidden" name="properties[_Printing '+logoName+' plate]" value="yes">');          
+            }else if(logoHasFile){
+            	$target.find('.js-item-properties').append('<input type="hidden" name="properties[_Printing '+logoName+' file]" value="'+ logoHasFile.split(/(\\|\/)/g).pop() +'">');          
+            }else if(design){
+            	
+              	$target.find('.js-item-properties').append('<input type="hidden" name="properties[_Printing '+logoName+' custom]" value="custom">');
+              	
+              	for(var group in design){
+                    for(var setting in design[group]){
+                        $target.find('.js-item-properties').append('<input type="hidden" name="properties[_Printing '+logoName+' ' + group +' '+ setting + ']" value="'+design[group][setting]+'">');
+                    } 
+                }              	
+            }
+          
+            logoDisplay += '<div class="">';
+          
+          		logoDisplay += '<div class="">';
+
+                    logoDisplay += '<div class="no-wrap">'+logoName.replace('_',' ')+'</div>';
+
+                logoDisplay += '</div>';
+
+                	
+                if(plate){
+                  	logoDisplay += "<div class='text-muted'>Plate on file, "+logoColor+"</div>";
+                }else if(logoHasFile){
+                  	logoDisplay += "<div class='text-muted'>"+ logoHasFile.split(/(\\|\/)/g).pop() +", "+logoColor+"</div>";                      	
+                }else if(design){
+                  	logoDisplay += "<div class='text-muted'>Custom, "+logoColor+"</div>";
+                }                    
+
+
+            logoDisplay += '</div>';
+
+            $target.find('.js-item-properties').append(logoDisplay);
+
+            logoForm.addClass('has-logo');
+          	$target.find('.js-remove-printing, .stamp-preview-container').removeClass('displayNone').prev().text('Add Stamp');;
+        }
+    
+    });
+    
+  	if(!logoForm.hasClass('has-logo')){
+		$('.printing-options').find('.js-open-printing-modal').addClass('displayNone'); 
+      
+        $('.printing-options')
+      	.find('.js-item-properties')
+        .html('<div class="selected-printing-options flex-10">Hot stamp inside box/on packer</div><div class="btn btn-small btn-black-light js-open-printing-modal" data-apply="all">ADD STAMP</div>');
+    }else{
+    	
+      	//$target.find('.js-open-printing-modal').removeClass('displayNone').text('EDIT');
+      	
+    }
+    
+  	if(!printingError){
+  		closePrintingModal();
+    }
+  
+}
+  
+function removePrintingFromItems(){
+	var applyTo = $(this).data('apply');
+  	$target = applyTo === 'all' ? $('body') : $('.product-'+applyTo);
+  	
+  	$target.find('.js-item-properties').empty();
+  	$target.find('.js-remove-printing').addClass('displayNone').prev().text('ADD STAMP');
+}
+
+function openAvailableColors(){
+  	window.currentPrintingOption = $(this);
+	$('.colors-layer').addClass('in');
+	$('.colors-layer-overlay').addClass('in');
+}  
+  
+function hideAvailableColors(){
+	$('.colors-layer').removeClass('in');
+	$('.colors-layer-overlay').removeClass('in');
+}
+  
+  
+function hideUploadLayer(){
+	$('.upload-layer').removeClass('in');
+	$('.upload-layer-overlay').removeClass('in');
+}
+function openCustomLogoModal(locationObj){
+  	loadCustomLogoFonts();
+    
+  	hideUploadLayer();
+  
+  	window.currentPrintingOption = locationObj;
+	$('.custom-logo-layer').addClass('in');
+	$('.custom-logo-layer-overlay').addClass('in');
+}
+  
+function hideCustomLogoModal(){
+	$('.custom-logo-layer').removeClass('in');
+	$('.custom-logo-layer-overlay').removeClass('in');
+}
+
+function selectColors(){
+// 	var color = $(this).text();
+//   	window.currentPrintingOption.find('.logo-color-val').val(color);
+//   	window.currentPrintingOption.find('span').text(color);
+//   	hideAvailableColors();
+}
+    /* End Wrap For Jquery 01/08/18 */
+
+
+
+
+
+(function() {
+
+	if(!window.angular) return;
+
+    angular
+    	.module('printing', [])
+    	.config(['$interpolateProvider', function($interpolateProvider){
+    		
+      		// $interpolateProvider.startSymbol('<%');
+  			// $interpolateProvider.endSymbol('%>');
+      
+    	}])
+        .controller('PrintingController', PrintingController);
+
+    PrintingController.$inject = ['$scope', '$http'];
+
+    function PrintingController($scope, $http) {
+        var vm = this;
+      	
+		vm.printing_options = printing_options;
+		vm.show_platefee_popover = false;
+		vm.show_platefee_popover_2 = false;
+		vm.show_platefee_popover_3 = false;
+      	vm.applyTo = '';
+      	vm.applyToItems = {};
+      	vm.isPanelOpen = false;
+		vm.showPrintingPricing = false;
+      	vm.logos_locations = [];
+      	vm.addLocation = addLocation;
+      	vm.removeLocation = removeLocation;
+      	vm.locationIsSelected = locationIsSelected;
+      	vm.selectLocationOption = selectLocationOption;
+      	vm.fileSelected = fileSelected;
+      	vm.setLocationColor = setLocationColor;
+      	vm.saveLoction = saveLoction;
+      	vm.editLocation = editLocation;
+      	vm.closePanel = closePanel;
+      	vm.openPrintingPanel = openPrintingPanel;
+      	vm.savePrintingPanel = savePrintingPanel;
+      	vm.savedLocations = savedLocations;
+		vm.togglePrintingPricing = togglePrintingPricing;
+		vm.locationIsValid = locationIsValid;
+		vm.closePopover = closePopover;
+
+		// let gql = `{
+		// 	metaobjects(type:"plates", first:10, query:"fields.custom_id:'7270321127467'"){
+		// 		nodes{
+		// 			fields{
+		// 				key
+		// 				value
+		// 			}
+		// 		}
+		// 	}
+		// }`;
+
+		// $http({
+		// 	url: "https://allurepack.myshopify.com/api/2024-07/graphql.json",
+		// 	method : "POST",
+		// 	headers: {
+		// 		'X-Shopify-Storefront-Access-Token': "ef65b645085d504b345a08c197984531"
+		// 	},
+		// 	data : JSON.stringify({
+		// 		query : gql
+		// 	})
+		// }).then(res => {
+		// 	console.log(res)
+		// })
+
+      
+        document.addEventListener('custom-logo', function(e, data) {
+          var locationObj = vm.logos_locations.find(function(obj){
+            return obj.location === window.currentPrintingOption.location;
+          });
+          locationObj.logoSettings = e.detail;
+          locationObj.saved = !!locationObj.color;  
+          locationObj.error = '';
+		  locationObj.type = 'custom'; 
+		  locationObj.tab = 'color';
+
+		  delete locationObj.file;
+
+          $scope.$apply();
+        });
+
+        $(document).on('click', '.printing-notice-actions .btn-black-light', function(e){
+              closeModal()
+              $scope.$apply(function(){
+                vm.openPrintingPanel(vm.applyTo, true);
+              })
+            
+        }).on('click', '.printing-notice-actions .btn-black-dark', function(){
+          	closeModal()
+          	$scope.$apply(function(){
+				vm.applyTo = '';
+			})
+        })
+      
+      	function addLocation(location){
+          	vm.logos_locations.push({
+              	location : location
+            });
+        }
+        function removeLocation(location){
+          	var index = vm.logos_locations.findIndex(function(obj){
+            	return obj.location === location;
+            })
+          	vm.logos_locations.splice(index, 1);
+			vm.closePopover()
+        }
+      	function locationIsSelected(location){
+          	return vm.logos_locations.find(function(obj){
+            	return obj.location === location;
+            })
+        }
+      
+      	function selectLocationOption(location, option){
+        	var locationObj = vm.logos_locations.find(function(obj){
+            	return obj.location === location;
+            });
+
+			if(!option){
+				locationObj.tab = 'logo';
+				locationObj.type = '';
+			}
+
+			if(option === 'plate'){
+            	delete locationObj.file;
+				locationObj.tab = 'color';
+				locationObj.type = option;
+            }
+          
+          	if(option === 'upload'){
+            	delete locationObj.file;
+				locationObj.tab = 'logo';
+				locationObj.type = option;
+            }
+
+			if(option === 'custom'){
+            	openCustomLogoModal(locationObj);
+				//locationObj.tab = 'logo';
+            }else{
+				locationObj.saved = locationIsValid(locationObj);
+			}			
+          
+          	locationObj.error = '';
+			
+			vm.closePopover()
+        }
+      
+        function setLocationColor(location, color){
+        	var locationObj = vm.logos_locations.find(function(obj){
+            	return obj.location === location;
+            });
+          	locationObj.color = color;  
+            locationObj.error = '';
+			if(locationIsValid(locationObj) && color){
+				locationObj.saved = true;
+			}else{
+				if(locationObj.color){
+					locationObj.tab = 'logo'
+				}else{
+					locationObj.tab = 'color'
+				}
+				locationObj.saved = false;
+				
+			}
+			
+			vm.closePopover()
+        }
+      
+      	function saveLoction(location){
+        	var locationObj = vm.logos_locations.find(function(obj){
+            	return obj.location === location;
+            });
+          	locationObj.saved = true;  
+          	locationObj.error = '';
+        }
+      
+      	function editLocation(location, tab){
+        	var locationObj = vm.logos_locations.find(function(obj){
+            	return obj.location === location;
+            });
+			locationObj.tab = tab || 'logo';
+          	locationObj.saved = false;  
+			locationObj.edit = true;     
+			vm.closePopover() 
+        }
+      
+      	function fileSelected(event){
+			var location  = event.dataset.location;
+        	var locationObj = vm.logos_locations.find(function(obj){
+            	return obj.location === location;
+            });
+			locationObj.type = 'upload';
+          	locationObj.file = event.files[0];
+			console.log(locationObj.file)
+          	locationObj.error = '';
+			locationObj.saved = locationIsValid(locationObj);
+			locationObj.tab = 'color';
+          	$scope.$apply();
+        }
+      	
+      	function openPrintingPanel(applyTo, bypassNotice){
+          
+            if($('.printing-notice-container').length && !bypassNotice){
+
+                if(!vm.applyTo){
+                  vm.applyTo = applyTo;
+                }
+            	openModal($('.printing-notice-container').html());
+           
+              
+            }else{
+                vm.applyTo = applyTo;
+            	vm.isPanelOpen = true;
+            	if(vm.applyToItems[applyTo]){
+              	vm.logos_locations = angular.extend([], vm.applyToItems[applyTo]);
+              }
+            }
+
+			$('[data-plate-fees-elm]').html($('[data-plate-fees]').html())
+        }
+      
+      	function closePanel(){
+        	vm.isPanelOpen = false;
+			vm.closePopover()
+        }
+
+		function togglePrintingPricing(){
+			vm.showPrintingPricing = !vm.showPrintingPricing;
+		}
+
+		function locationIsValid(location){
+			if(!location.type){
+                return false
+			}else{
+				if(location.type === 'plate'){
+					if(!location.color){
+						return false	
+					}else{
+						return true
+					}	
+				}
+				if(location.type === 'upload'){
+					if(!location.file){
+						return false	
+					}else if(!location.color){
+						return false	
+					}else{
+						return true	
+					}			
+				}	
+				
+				if(location.type === 'custom'){
+					if(location.type === 'custom' && !location.color){
+						return false	
+					}else{
+						return true	
+					}
+				}
+			}
+		}
+      
+      	function savePrintingPanel(){
+          	var unsaved = vm.logos_locations.filter(function(location){
+                    return !locationIsValid(location);
+                }),
+                saved =  vm.logos_locations.filter(function(location){
+                    return locationIsValid(location);
+                });
+			
+          	if(unsaved.length){
+              	unsaved.forEach(function(location){
+                  	
+                  	if(!location.type){
+                    	location.error = 'Choose File Type';
+                    }else{
+                      	if(location.type === 'plate'){
+                        	if(!location.color){
+                                location.error = 'Select a Color';	
+                            }else{
+                                location.error = 'Save Selection';	
+                            }	
+                        }
+                      	if(location.type === 'upload'){
+                            if(!location.file){
+                        		location.error = 'Upload a logo';	
+                            }else if(!location.color){
+                                location.error = 'Select a Color';	
+                            }else{
+                        		location.error = 'Save Selection';	
+                        	}			
+                        }	
+                      
+                      	if(location.type === 'custom'){
+                        	if(location.type === 'custom' && !location.color){
+                                location.error = 'Select a Color';	
+                            }else{
+                                location.error = 'Save Selection';	
+                            }
+                        }
+                    }
+                })
+            }else if(vm.logos_locations.length){
+				vm.logos_locations.forEach(l => l.saved = true);
+              	if(vm.applyTo === 'all'){
+                  	vm.applyToItems.all = saved;
+                  	for(id in PRODUCTS){
+                      vm.applyToItems[id] = saved;
+                    }
+                }else{
+                	vm.applyToItems[vm.applyTo] = saved;
+                }  
+              	
+              	window.applyToItems = vm.applyToItems;
+              
+        		closePanel()
+            }else{
+				if(vm.applyTo === 'all'){
+					delete vm.applyToItems.all;
+                  	for(id in PRODUCTS){
+						delete vm.applyToItems[id];
+                    }
+                }else{
+                	delete vm.applyToItems[vm.applyTo];
+                } 
+				
+				window.applyToItems = vm.applyToItems;
+				
+				closePanel()
+			}
+        }
+      
+      	function savedLocations(){
+        	return vm.logos_locations.filter(function(location){
+              return location.saved;
+            })
+        }
+      
+      	function itemHasPrinting(id){
+          	return vm.applyToItems.find(function(item){
+            	return item === id;
+            })
+        }
+
+		function closePopover(){
+			vm.show_platefee_popover = false;
+			vm.show_platefee_popover_2 = false;
+			vm.show_platefee_popover_3 = false;
+		}
+    }
+
+	
+  
+  
+})();

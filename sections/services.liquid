@@ -1,0 +1,75 @@
+<div class="services-boxes">
+
+	{% for block in section.blocks %}
+  
+  		<div id="{{ block.settings.hash}}" class="flex flex-align-center service-box {% cycle 'odd', 'even' %}">
+          	
+          	
+          <div class="flex-4 service-box-image">
+            {{ block.settings.image | img_url: 'large' | img_tag}}
+          </div>
+          <div class="flex-1"></div>
+          <div class="flex-5">
+            <div class="flex flex-align-center">
+              	<div class="service-box-icon">
+                  	{{ block.settings.icon | img_url: '50x50' | img_tag}}
+              	</div>
+              	<div>
+              		<h3>{{ block.settings.title}}</h3>
+                  	<div class="fs14 text-muted">{{ block.settings.subTitle}}</div>
+              	</div>
+            </div>
+            <div>{{ block.settings.text}}</div>
+          </div>
+
+          
+  		</div>
+  
+  	{% endfor %}
+
+</div>
+
+
+{% schema %}
+  {
+    "name": "Services box",
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Column",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+		  {
+            "type": "text",
+            "id": "subTitle",
+            "label": "Sub Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          },
+		  {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+		  {
+            "type": "text",
+            "id": "hash",
+            "label": "Section"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

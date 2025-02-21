@@ -1,0 +1,26 @@
+{{ 'landing.css' | asset_url | stylesheet_tag }}
+
+
+<div class="page-width">
+
+    <div class="">
+
+    <h1 class="font-default gold">{{ page.title }}</h1>
+      </div> 
+
+    {% section 'supplies_types' %}
+
+
+    
+</div>
+
+
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+      
+		<div class="page-width">
+          {{page.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}

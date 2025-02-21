@@ -1,0 +1,167 @@
+body {
+    background-color: #f5f1ec
+}
+
+.main-content {
+    padding-top: 0
+}
+
+.shop-boxes-container {
+    margin: 0 -10px
+}
+.shop-banner {
+    display:none;
+}
+
+
+
+.slider-section{
+    position: relative;
+    @media (max-width: 1024px){
+        .slick-prev, .slick-next{
+            opacity: 0;
+        }
+      }
+}
+.slider{
+	    white-space: nowrap;
+}
+.slider .slick-slide:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: background 300ms
+}
+
+.slider .slide:hover:after {
+/*     background-color: rgba(0,0,0,0.1) */
+}
+
+.slider .slick-dots {
+    bottom: 20px;
+    width: 100%
+}
+
+.slider img{
+	width:100%;
+  	height:auto;
+}
+.slider img.hide-desktop{
+    display:none;
+}
+@media only screen and (max-width: 760px){
+    .slider img.hide-mobile{
+        display:none;
+    }
+    .slider img.hide-desktop{
+        display:block;
+    }
+}
+.prev-arrow:before,
+.next-arrow::before{
+    display:none;
+}
+.prev-arrow{
+    left:20px;
+}
+
+.next-arrow{
+    right:20px;
+}
+
+.slick-dots li button:before {
+    color: #bebab7;
+    opacity: 1
+}
+
+.slick-dots li button:before {
+    color: #bebab7;
+    opacity: 1
+}
+
+.slick-dots li.slick-active button:before {
+    color: #2f2f2e;
+    opacity: 1
+}
+
+
+.section-title {
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+    font-size: 14px;
+    line-height: 17px;
+    color: #C7A049;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    letter-spacing: 0.16em;
+}
+.home-collection{
+	padding: 80px 0;
+    background-color: #fff;
+}
+
+.home-items{
+    background-color: #fff;
+    padding: 0 0 80px 0;
+}
+
+.featured-items .slick-list {
+  
+}
+
+.featured-items .slick-track {
+    display: flex;
+    column-gap: 80px;
+}
+
+.featured-items .slick-dots {
+    width: 100%;
+    position: relative
+}
+
+
+.services-section {
+    background-color: #faf8f6;
+    padding: 40px 0;
+}
+
+.services-section .section-header {
+    margin-bottom: 40px;
+}
+
+.services-section .logo-bar .logo-bar__item {
+   	max-width: 170px;
+    width: 20%;
+}
+
+.services-section img {
+    width: 60px;
+  	opacity: 0.8;
+}
+
+.services-section h4 {
+    color: #357284;
+    text-transform: uppercase;
+    padding-top: 20px;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+@media only screen and (max-width: 760px){
+  
+  .shop-btn{
+  	opacity:1;
+  }
+  
+  .slider .slick-dots {
+    visibility:hidden;
+  }
+}
+

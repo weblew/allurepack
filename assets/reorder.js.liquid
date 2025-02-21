@@ -1,0 +1,229 @@
+var ORDERED_ITEMS = []
+
+$(document).on('click', '#customer_logout_link', function(){
+  
+  localStorage.removeItem('NET30')
+
+}).on('click', '.js-reorder', function(e){
+		
+  var selectedItems = $('.js-select-reorder:checked'),
+      counter = 0;
+  
+  if(!selectedItems.length){
+  		wbAlert('Please select one or more items to reorder.')
+  }else{
+    
+    $(this).loading();
+    window.addingToCart = true;
+  	
+    Shopify.getCart(function(cart){
+
+      
+      CART.items = cart.items;
+      var items = [];
+          
+      selectedItems.each(function(item){
+        var data = $(this).data(),
+            product = _.find(ORDERED_ITEMS, {variant_id:data.itemId})
+            qty = $(this).closest('.account-product-history-item').length ? $(this).closest('.account-product-history-item').find('[name="qty"]').val() : $('#' + product.id).find('[name="qty"]').val(),
+            bulk = _.find(product.options, {name:'bulk'}),
+            qtyBreaks = _.map(_.filter(product.variants, function(v){
+              return Number(v.option2) <= qty;
+            }), function(v){
+              return Number(v.option2);
+            }),
+            qtyBreak = _.max(qtyBreaks),
+            newVeriant = qtyBreak && _.find(product.variants, function(v){
+              return v.option1 === product.option1 && Number(v.option2) === Number(qtyBreak);
+            });
+        
+        
+        items.push({
+
+          id : newVeriant ? newVeriant.id : data.itemId,
+          quantity : qty,
+          properties : getProperties(data.properties)
+
+        })
+      }); 
+      
+      
+      jQuery.ajax({
+          url: '/cart/add.js',
+          data: {
+            items: items
+          },
+          method: 'POST',
+          type: 'POST', // For jQuery < 1.9
+          dataType: 'json',
+          success: function(data){
+              updateCartObj(function(){
+                  adjustLogoItems(function(){
+                    window.location.href = '/cart';
+                    window.addingToCart = false;
+                  });
+              })
+          },
+          error: function (res) {           
+              cb()
+          }
+      })
+      
+      
+      return;
+      
+      selectedItems.each(function(item){
+    	
+          var data = $(this).data(),
+              idIsInCart = _.find(cart.items, function(item){
+                return item.variant_id == data.itemId;
+              });
+        
+        	reorderItem({
+                  	
+                id : data.itemId,
+                quantity : data.quantity,
+                properties : getProperties(data.properties)
+
+              }, function(){
+              		counter++;
+                	if(counter === selectedItems.length){
+                      	updateCartObj(function(){
+                          adjustLogoItems(function(){
+                          	window.location.href = '/cart';
+                            window.addingToCart = false;
+                          });
+                        })
+                    }
+              })
+        
+        
+
+      })
+
+    });
+       
+    
+  }
+  
+}).on('click', '.account-tab', function(){
+	var idx = $(this).index(),
+        tab = $(this).data('tab');
+  	$(this).addClass('active').siblings().removeClass('active')
+  	$('.account-tab-content').eq(idx).addClass('active').siblings().removeClass('active');
+  	
+    location.hash = tab;
+}).ready(function(){
+  
+  	
+  
+  	if(!location.hash){
+      	var tab = $('.account-tab.active').data('tab');
+      	if(tab){
+        	location.hash = tab;
+        }      	
+    }else{
+    	var tab = $('.account-tab[data-tab="'+ location.hash.replace('#', '') +'"]').click();      	
+    }
+	
+  	if(window.ORDERED_ITEMS && window.ORDERED_ITEMS.length){
+    	
+      var template = $('#account-product-history-template').html() || '';
+      _.each(window.ORDERED_ITEMS, function(item){
+                    	
+        var row = $(supplant(template, item)),
+            bulkOption = _.find(item.options, {name:'bulk'}),
+            hasQtyBreakets = bulkOption && bulkOption.values.length > 1;
+
+        if(!hasQtyBreakets){
+        	row.find('.qty').html('<input name="qty" value="'+ item.quantity +'"/>')
+        }else{
+        	var qtyOptions = $('<select name="qty" />'),
+                qtys = getItemQtyList(item.quantity, bulkOption.values[0]);
+            qtyOptions.html(qtys)
+            row.find('.qty').html(qtyOptions)
+        }
+        if($('.account-product-history-list').length){
+        	$('.account-product-history-list').append(row)
+        }else{
+          	
+        	$('#'+ item.id).find('.qty').html(qtyOptions)
+        }
+        
+      })
+      
+    }
+  
+});
+
+window.onhashchange = function () { 
+	
+  	if(!location.hash){
+      	var tab = $('.account-tab').first().data('tab');
+      	if(tab){
+        	location.hash = tab;
+        }      	
+    }else{
+    	var tab = $('.account-tab[data-tab="'+ location.hash.replace('#', '') +'"]').click();      	
+    }
+  
+}
+
+function getProperties(properties){
+  	var _properties = {};
+  	
+  	_.each(properties, function(prop){
+      	var key = prop[0].replace(/_/g, ' ').replace('logo', 'Printing')
+        if(key.indexOf('file') > -1){
+        	_properties[key.replace('file', 'plate').replace('custom', 'plate')] = 'yes'
+        }else{
+        	_properties[key] = ' ' + prop[1]
+        }
+    });
+  	return _properties;
+}
+
+
+function reorderItem(item, cb){
+	return jQuery.ajax({
+        url: '/cart/add.js',
+        data: item,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
+        dataType: 'json',
+        success: function(data){
+          	cb()
+        },
+        error: function (res) {           
+          	cb()
+        }
+    });
+}
+
+function supplant(html, o){
+  
+    return html.replace(/{([^{}]*)}/g, function (a, b) {
+      var r = o[b];
+      if(typeof r === 'object'){
+        return JSON.stringify(r)
+      }else{
+      	return typeof r === 'string' || typeof r === 'number' ? r : a;
+      }
+    });
+};
+
+function getItemQtyList(qty, inc){
+    var qtys = new Array(100),
+    	list = _.map(qtys, function (x, i) { 
+          var qtyOption =  i * Number(inc) 
+          if(qtyOption === qty){
+          	return '<option value="'+ qtyOption +'" selected>'+ qtyOption +'</option>'
+          }else{
+          	return '<option value="'+ qtyOption +'">'+ qtyOption +'</option>'
+          }
+          
+        });
+    list.shift();
+    return  list.join('');
+}
+

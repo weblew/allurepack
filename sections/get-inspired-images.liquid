@@ -1,0 +1,32 @@
+<div id="get-inspired" class="get-inspired-top section-header text-center">
+  <div><span class="gold font-default fs40">Get inspired</span> <span class="fs18">Some of our past custom work</span></div> 
+<!--   <a href="#custom-layer">Start Yours</a> -->
+</div>
+
+
+
+<div class="get-inspired-images page-width"> 
+  {% for block in section.blocks %}
+  <div><img src="{{block.settings.image | img_url:'master'}}" alt="{{block.settings.image.alt}}"></div>
+  {% endfor %}
+</div>
+
+
+{% schema %}
+  {
+    "name": "Get Inspired",
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

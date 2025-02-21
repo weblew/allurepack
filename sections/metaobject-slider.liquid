@@ -1,0 +1,102 @@
+<div
+  data-section-id="{{ section.id }}"
+  class="slider-section"
+  data-section-type="slider-section">
+  {% assign today_date = 'now' | date: '%s' %}
+  <div class="slider">
+    {% assign banners = shop.metaobjects.banners.values | sort: 'order' %}
+    {% for banner in banners %}
+        {% assign start_date = banner.start_date | date: '%s' %}
+        {% assign end_date = banner.end_date | date: '%s' %}
+        {% assign show_banner = true %}
+
+        {% if banner.start_date != blank and start_date > today_date %}
+            {% assign show_banner = false %}
+        {% endif %}
+
+        {% if banner.end_date != blank and end_date < today_date %}
+            {% assign show_banner = false %}
+        {% endif %}
+
+        {% if show_banner == false %}
+            {%  continue  %}
+        {% endif %}
+
+        <a href="{{banner.link}}" class="slide">
+            <img {% if banner.mobile_image != blank %}class="hide-mobile"{% endif %}
+                srcset="
+            {{ banner.desktop_image | img_url: '2000x' }} 2000w, 
+            {{ banner.desktop_image | img_url: '1000x' }} 1000w " src="{{ banner.desktop_image | img_url: 'master' }}" />
+            {% if banner.mobile_image != blank %}
+                <img  {% if banner.mobile_image != blank %}class="hide-desktop"{% endif %} src="{{ banner.mobile_image | img_url: 'master' }}" />
+            {% endif  %}
+            
+            
+        </a>
+    {% endfor %}
+  </div>
+
+  <div class="prev-arrow slick-prev">
+    <svg
+      width="14"
+      height="26"
+      viewBox="0 0 14 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.3479 0.424805L14 2.04223L3.24179 12.9945L14 23.9607L12.3479 25.5758L6.34699e-07 12.9968L12.3479 0.424805Z" fill="#2F2923" />
+    </svg>
+  </div>
+
+  <div class="next-arrow slick-next">
+    <svg
+      width="14"
+      height="26"
+      viewBox="0 0 14 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.65209 0.424805L0 2.04223L10.7582 12.9945L0 23.9607L1.65209 25.5758L14 12.9968L1.65209 0.424805Z" fill="#2F2923" />
+    </svg>
+
+  </div>
+
+
+
+  <script>
+    $(document).ready(function() {
+      $('.slider').slick({
+        dots: true,
+        autoplay: {{section.settings.autoplay}},
+        autoplaySpeed: {{section.settings.autoplay_speed}} * 1000,
+        fade: true,
+        cssEase: 'linear',
+        adaptiveHeight: true,
+        prevArrow: $('.prev-arrow'),
+        nextArrow: $('.next-arrow')
+      });
+    })
+  </script>
+</div>
+
+{% schema %}
+  {
+    "name": "New Slider",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate slides",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "autoplay_speed",
+        "label": "Change slides every",
+        "default": "5"
+      }
+    ],
+    "presets": [
+      {
+        "name": "New Slider"
+      }
+    ]
+  }
+{% endschema %}

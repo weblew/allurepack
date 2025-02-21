@@ -1,0 +1,76 @@
+{% layout none %}
+
+
+{% assign query = search.terms | split:':' | first %}
+{% assign option1 = search.terms | split:':' | last %}
+{% assign product = all_products[query] %}
+
+
+{% if product %}
+    {% if product.metafields.upsell and product.metafields.upsell.items %}
+	
+      <div class="">
+        	
+          <h4>Recommended Items</h4>
+          <div class="flex">
+              {% for upsell in product.metafields.upsell.items %}
+
+                  {% assign upsellGroup = upsell | split:'|' %}
+
+                  {% for handle in upsellGroup %}
+
+                    {% assign item = all_products[handle] %}            		
+            
+            		{% if item %}
+						
+                        {% assign variant = item.selected_or_first_available_variant %}
+            			
+            			{% if option1 %}			
+            				{% for variant in item.variants %}
+            					{% if variant.option1 == option1 and variant.available %}
+            						{% assign variant = variant %}
+            					{% endif %}
+            				{% endfor %}
+            			{% endif %}
+                    
+                        <div class="flex-5">
+                            <a href="{{ variant.url }}&utm_source=upsell&utm_medium=atc&utm_campaign={{ variant.sku }}" class="upsell-item flex">
+								
+                              	{% assign image = variant.image %}
+                              
+                              	{% if image == blank %}
+                              		{% assign image = item.featured_image %}
+                              	{% endif %}
+                              
+                                <div class="upsell-item-image flex-4">
+                                    <img src="{{image | img_url}}"/>
+                                </div>
+
+                                <div class="flex-6 flex flex-column flex-justify-between upsell-item-details">
+                                    <div>
+                                        <div class="upsell-item-title">
+                                            {{item.title}}  
+                                        </div>
+                                        <div class="upsell-item-price">
+                                          {{variant.price | money}} 
+                                        </div>  
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-small btn-black-dark">
+                                            View Item
+                                        </button>  
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+            
+            		{% endif %}
+
+                  {% endfor %}
+
+              {% endfor %}
+          </div>
+      </div>
+
+    {% endif %}
+{% endif %}

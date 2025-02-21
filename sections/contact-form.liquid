@@ -1,0 +1,250 @@
+  
+  
+  <div class="contact-layer-body">
+          
+    	{% form 'contact' %}
+
+            {% if form.posted_successfully? %}
+    		
+                <p class="note form--success">
+                  {{ 'contact.form.post_success' | t }}
+                </p>
+    		
+    		{% else %}
+    
+    			{{ form.errors | default_errors }}
+    
+                <div class="form-fields">
+                  
+      
+                  {% if page.handle == 'contact' %}
+                      <div class="layer-backround" style="background-image:url('{{section.settings.contactImage | img_url : 'master'}}');">
+                          <div class="contact-info flex">
+                              <div>
+                                <strong>Main Office</strong>
+                                <div>{{section.settings.address}}</div>
+                                <div>{{section.settings.city}} {{section.settings.state}}, {{section.settings.zip}}</div>
+
+
+                                <div>{{section.settings.email}}</div>
+                              </div>
+                              <div>
+                                <div><strong>TEL</strong> {{section.settings.toll}}</div>
+                                <div><strong>TEL</strong> {{section.settings.tel}}</div>
+                                <div><strong>FAX</strong> {{section.settings.fax}}</div>                  
+                              </div>
+                          </div>
+                          <div>
+                              <input type="hidden" name="contact[Type]" value="Contact">  
+                          </div>
+
+                          <div>
+                              <input type="text" placeholder="Name" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}" required>  
+                          </div>
+
+                          <div>
+                            <input type="email" placeholder="Email" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" class="{% if form.errors contains 'email' %}input--error{% endif %}" required>  
+                          </div>
+
+                          <div>
+                            <input type="tel" placeholder="Phone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}">  
+                          </div>
+
+                          <div>
+                            <textarea rows="10" placeholder="Note..." name="contact[body]" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>  
+                          </div>
+
+                          <div>
+                            <input type="submit" class="btn" value="Get in touch">  
+                          </div>
+                      </div>
+                  {% endif %}
+                  {% if page.handle == 'design-your-own-jewelry-box' %}
+                      <div class="layer-backround" style="background-image:url('{{section.settings.customImage | img_url : 'master'}}');">
+                          <div class="contact-info flex">
+                              <div>
+                                <strong>Main Office</strong>
+                                <div>{{section.settings.address}}</div>
+                                <div>{{section.settings.city}} {{section.settings.state}}, {{section.settings.zip}}</div>
+
+
+                                <div>{{section.settings.email}}</div>
+                              </div>
+                              <div>
+                                <div><strong>TEL</strong> {{section.settings.toll}}</div>
+                                <div><strong>TEL</strong> {{section.settings.tel}}</div>
+                                <div><strong>FAX</strong> {{section.settings.fax}}</div>                  
+                              </div>
+                          </div>
+                          <div>
+                              <input type="hidden" name="contact[Type]" value="Custom">  
+                          </div>
+
+                          <div>
+                              <input type="text" placeholder="Name" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}" required>  
+                          </div>
+
+                          <div>
+                            <input type="email" placeholder="Email" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" class="{% if form.errors contains 'email' %}input--error{% endif %}" required>  
+                          </div>
+
+                          <div class="flex flex-no-wrap">
+                              <div>
+                                <input type="text" placeholder="Phone" name="contact[phone]" autocorrect="off" autocapitalize="off" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" class="{% if form.errors contains 'phone' %}input--error{% endif %}" required>  
+                              </div>
+                            <div>&nbsp;</div>
+                                <div>
+                                <input type="text" placeholder="Company Name" name="contact[company]" autocorrect="off" autocapitalize="off" value="{% if form.company %}{{ form.company }}{% elsif customer %}{{ customer.company }}{% endif %}" class="{% if form.errors contains 'company' %}input--error{% endif %}">  
+                              </div>
+                          </div>
+
+                          <div class="flex flex-no-wrap">
+
+                              <div class="flex-6">
+                                <select name="productType" class="{% if form.errors contains 'Product Type' %}input--error{% endif %}" required>
+                                      <option disabled selected>Product Type</option>
+                                      <option>Box</option>
+                                      <option>Display</option>
+                                      <option>Pouch</option>
+                                      <option>Bag</option>
+                                      <option>Folder</option>
+                                      <option>Other</option>
+                                </select>
+                              </div>
+                              <div>&nbsp;</div>
+                              <div>
+                                <input type="number" placeholder="Qty" name="contact[qty]" value="{% if form.qty %}{{ form.qty }}{% endif %}" class="{% if form.errors contains 'qty' %}input--error{% endif %}">  
+                              </div>
+
+                          </div>
+
+                          <div>
+                            <textarea rows="10" placeholder="Description..." name="contact[description]" required>{% if form.description %}{{ form.description }}{% endif %}</textarea>  
+                          </div>
+
+                          <div>
+                            <input type="submit" class="btn" value="Send">  
+                          </div>
+                      </div>
+                  {% endif %}
+                  {% if page.handle == 'request' %}
+                      <div class="layer-backround" style="background-image:url('{{section.settings.catalogImage | img_url : 'master'}}');">
+                          <div class="contact-info flex">
+                              <div>
+                                <strong>Main Office</strong>
+                                <div>{{section.settings.address}}</div>
+                                <div>{{section.settings.city}} {{section.settings.state}}, {{section.settings.zip}}</div>
+
+
+                                <div>{{section.settings.email}}</div>
+                              </div>
+                              <div>
+                                <div><strong>TEL</strong> {{section.settings.toll}}</div>
+                                <div><strong>TEL</strong> {{section.settings.tel}}</div>
+                                <div><strong>FAX</strong> {{section.settings.fax}}</div>                  
+                              </div>
+                          </div>
+                          <div>
+                              <input type="hidden" name="contact[Type]" value="Catalog">  
+                          </div>
+
+                          <div>
+                              <input type="text" placeholder="Name" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}" required>  
+                          </div>
+
+                          <div>
+                            <input type="email" placeholder="Email" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" class="{% if form.errors contains 'email' %}input--error{% endif %}" required>  
+                          </div>
+
+                          <div>
+                            <input type="text" placeholder="Company Name" name="contact[company]" autocorrect="off" autocapitalize="off" value="{% if form.company %}{{ form.company }}{% elsif customer %}{{ customer.company }}{% endif %}" class="{% if form.errors contains 'company' %}input--error{% endif %}" required>  
+                          </div>
+
+                          <div>
+                            <input type="text" placeholder="Address" name="contact[address]" autocorrect="off" autocapitalize="off" value="{% if form.address %}{{ form.address }}{% elsif customer %}{{ customer.address }}{% endif %}" class="{% if form.errors contains 'address' %}input--error{% endif %}" required>  
+                          </div>
+
+                          <div class="flex flex-no-wrap">
+                             <div>
+                                <input type="text" placeholder="City" name="contact[city]" autocorrect="off" autocapitalize="off" value="{% if form.city %}{{ form.city }}{% elsif customer %}{{ customer.city }}{% endif %}" class="{% if form.errors contains 'city' %}input--error{% endif %}" required>  
+                             </div>
+                            <div>&nbsp;</div>
+                              <div>
+                                <input type="text" placeholder="State" name="contact[state]" autocorrect="off" autocapitalize="off" value="{% if form.state %}{{ form.state }}{% elsif customer %}{{ customer.state }}{% endif %}" class="{% if form.errors contains 'state' %}input--error{% endif %}" required>  
+                             </div>
+                                <div>&nbsp;</div>
+                              <div>
+                                <input type="text" placeholder="Zip" name="contact[zip]" autocorrect="off" autocapitalize="off" value="{% if form.zip %}{{ form.zip }}{% elsif customer %}{{ customer.zip }}{% endif %}" class="{% if form.errors contains 'zip' %}input--error{% endif %}" required>  
+                            </div>
+                          </div>
+
+                          <div>
+                            <input type="submit" class="btn" value="Send">  
+                          </div>
+                      </div>
+                  {% endif %}
+                  
+                  </div>
+          
+          	{% endif %}
+    		
+    	{% endform %}
+    </div>  
+  
+
+{% schema %}
+  {
+    "name": "Contact Info",
+    "settings": [{
+        "type": "text",
+        "id": "address",
+        "label": "Address"
+    },{
+        "type": "text",
+        "id": "city",
+        "label": "City"
+    },{
+        "type": "text",
+        "id": "state",
+        "label": "State"
+    },{
+        "type": "text",
+        "id": "zip",
+        "label": "Zip"
+    },{
+        "type": "text",
+        "id": "tel",
+        "label": "Tel"
+    },{
+        "type": "text",
+        "id": "toll",
+        "label": "Toll Free"
+    },{
+        "type": "text",
+        "id": "fax",
+        "label": "Fax"
+    },{
+        "type": "text",
+        "id": "email",
+        "label": "Email"
+    },{
+        "type": "image_picker",
+        "id": "contactImage",
+        "label": "Contact Image"
+    },{
+        "type": "image_picker",
+        "id": "customImage",
+        "label": "Custom Image"
+    },{
+        "type": "image_picker",
+        "id": "catalogImage",
+        "label": "Catalog Image"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,31 @@
+<style>
+  .main-content{
+  	padding:0;
+  }
+  .site-footer{
+  	margin-top: -10px;
+  }
+   #yumpu{
+   width: 100%;
+     height:850px;
+   }
+  .flip-book{
+  	height: 726px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    margin-top: 50px;
+  }
+</style>
+
+<!--  
+
+<iframe id="yumpu" src="https://www.yumpu.com/en/embed/view/sHY05fQazRlvTnXP" frameborder="0" allowfullscreen="true"  allowtransparency="true"></iframe> -->
+
+
+<!-- <div class="flip-book"><iframe  src="https://shopify-app-magazine.herokuapp.com/embed/5fca3bbf0401c200b35d9b7a" style="width:100%;height:800px;" frameborder="0" allowfullscreen></iframe></div> -->
+<iframe allowfullscreen="true" id="issuuembed" style="border:none;width:100%;" src="//e.issuu.com/embed.html?d=allure_go_catalog_full-2024_small&u=allurepack"></iframe>
+
+<script>
+  	document.getElementById('issuuembed').style.height = ( window.innerHeight - document.getElementById('shopify-section-new-header').offsetHeight + 30 ) + 'px';
+</script>

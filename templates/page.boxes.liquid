@@ -1,0 +1,244 @@
+{{ 'landing.css' | asset_url | stylesheet_tag }}
+
+{% include 'box-icons' %}
+{% assign lowest_price = 10000 %}
+{% assign highest_price = 0 %}
+{% assign lettes = "abcdefghijklmnopqrstuvwxyz" |  split: "" %}
+{% capture boxes %}
+  {% for link in linklists[page.handle].links %}
+                    {% assign collection = link.object %}
+                    {% assign collection_price = collection.products[0].price %}
+                    {% if collection_price < lowest_price %}
+                      {% assign lowest_price = collection_price %}
+                    {% endif %}
+                    {% if collection_price > highest_price %}
+                      {% assign highest_price = collection_price %}
+                    {% endif %}
+
+                    {% assign title_first_letter = link.title | split:'' | first | downcase %}
+                    {% assign title_first_letter_index = 0 %}
+
+                    {%for letter in lettes %}
+                      {% if letter == title_first_letter %}
+                        {% assign title_first_letter_index = forloop.index %}
+                        {% break %}
+                      {% endif %}
+                    {% endfor %}
+
+                    <div class="collection-box-item" style="
+                      --price-order:{{ collection_price | money_without_currency | round }};
+                      --title-order:{{title_first_letter_index}}
+                    " data-price="{{ collection_price | money_without_currency | round }}" data-collection="{{link.handle}}" data-link="{{link.url}}" data-materials="{{link.object.metafields.custom.materials.value}}">
+                        <div class="collection-box">
+                            <a  href="{{link.url}}" 
+                                class="img" 
+                                {% if link.object.metafields.custom.image %}
+                                  style="background-image:url({{link.object.metafields.custom.image | img_url : 'large'}});display:block;" 
+                                  data-image="{{link.object.metafields.custom.image | img_url : 'large'}}"
+                                {% else  %}
+                                  {%if link.object.image%}style="background-image:url({{link.object.image | img_url : 'large'}});display:block;" 
+                                  data-image="{{link.object.image | img_url : 'large'}}"{%endif%}
+                                {% endif  %}
+                            >
+
+                            </a>
+                            <div class="grid-item-colors">
+
+                            {% assign colors = link.object.metafields.custom.colors.value %}                         
+                            {% for color in colors %}
+            
+                                <div class="" style="background-image: url({{color.swatch | img_url: 'medium'}});" data-color="{{color.name}}" data-image="{{color.image | img_url: '430x'}}"></div>            
+                        
+                            {% endfor %}
+                        </div>
+                           <a  href="{{link.url}}">
+                            <strong>{{link.title}}</strong>
+                             <!-- <span class=""> Collection</span> -->
+                           </a>
+
+                           {% if link.object.metafields.custom.label != blank %}
+                              <div class="collection-badge">
+                                {{ link.object.metafields.custom.label }}
+                              </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                {% endfor %}
+{% endcapture %}
+
+<div class="page-width">
+  
+  		  {% section "item-colors" %}
+  
+  		    <div class="shop-by-box-header flex flex-align-center flex-justify-between">
+            <h1 class="font-default gold">
+              <em>{{ page.title }}</em>
+            </h1>
+
+            <div class="shop-by-type-btn btn btn-gold-light boxes-page">
+              <span> Shop by type </span>
+              <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.18306 6.18306C3.42714 5.93898 3.82286 5.93898 4.06694 6.18306L7.375 9.49112L10.6831 6.18306C10.9271 5.93898 11.3229 5.93898 11.5669 6.18306C11.811 6.42714 11.811 6.82286 11.5669 7.06694L7.81694 10.8169C7.57287 11.061 7.17714 11.061 6.93306 10.8169L3.18306 7.06694C2.93898 6.82286 2.93898 6.42714 3.18306 6.18306Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="js-types types">
+                    {% for link in linklists['box-types'].links %}
+                        <a href="{{ link.url }}"  class="type flex flex-align-center">
+                            <svg><use xlink:href="#{{ link.title | handle }}-icon"></use></svg>
+                            {{ link.title }}
+                        </a>
+                    {% endfor %}
+            </div>
+            </div>
+          </div>
+  
+          <div class="flex flex-align-top">
+            <div class="flex-2 filters-panel">
+              <div class="filters-panel-inner">
+                <div class="group-title">Filters</div>
+                <div class="js-colors colors">
+                    <h4 class="">
+                      Shop by color
+                    </h4>
+                  <div class="colors-container">
+                      {% section "box-colors" %}
+                  </div>
+                </div>
+
+                <div class="js-meterials meterials">
+                    <h4 class="">
+                      Box Material / Features
+                    </h4>
+                  <div class="meterials-container">
+                      {% assign meterials = [] %}
+                      {% for link in linklists[page.handle].links  %}
+                        {% assign link_meterials = link.object.metafields.custom.materials.value %}
+                        {% assign meterials = meterials | concat:link_meterials | uniq  %}                      
+                      {% endfor  %}
+                      {% for meterial in meterials %}
+                        <a href="" data-material="{{meterial}}">
+                          <span class="checkbox" title="{{meterial}}"></span>
+                          {{meterial}} <span class="count"></span>
+                          </a>
+                      {% endfor  %}
+                  </div>
+                </div>
+                {% assign lowest_price = lowest_price | money_without_currency | floor %}
+                {% assign highest_price = highest_price | money_without_currency | ceil %}
+                {% render 'price-range-slider', lowest_price:lowest_price, highest_price:highest_price %}
+
+                <div class="sort-option">
+                  <h4 class="group-title">Sort</h4>
+                  <div class="flex flex-align-center flex-justify-between">
+                    <select data-boxes-sort>
+                      <option value="">Featured</option>
+                      <option value="title-ascending">Alphabetically, A-Z</option>
+                      <option value="title-descending">Alphabetically, Z-A</option>
+                      <option value="price-ascending">Price, low to high </option>
+                      <option value="price-descending">Price, high to low</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="filters-panel-close">
+                <button class="btn btn-gold-light" onclick="document.querySelector('.filters-panel').classList.remove('open')">Apply Filters</button>
+              </div>
+              
+            </div>
+            <div class="js-available-collections available-collections flex flex-8">
+
+                <div class="group-title flex flex-align-center flex-justify-between">
+                  <div>
+                    <span class="collections-count">{{linklists[page.handle].links | size}}</span> Collections
+                  </div>
+
+                  <div>
+                    <div class="flex flex-align-center">
+                      <div class="sort-options flex flex-align-center">
+                        Sort:
+                        <select data-boxes-sort>
+                          <option value="">Featured</option>
+                          <option value="title-ascending">Alphabetically, A-Z</option>
+                          <option value="title-descending">Alphabetically, Z-A</option>
+                          <option value="price-ascending">Price, low to high </option>
+                          <option value="price-descending">Price, high to low</option>
+                        </select>
+                      </div>
+
+                      <div class="display-options flex flex-align-center">
+                        Display:
+                        <div class="display-option-item selected" data-layout="grid-view">
+                          
+
+                          <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.25" y="0.25" width="3.5" height="3.5"  stroke="white" stroke-width="0.5"/>
+                            <rect x="6.25" y="0.25" width="3.5" height="3.5"  stroke="white" stroke-width="0.5"/>
+                            <rect x="12.25" y="0.25" width="3.5" height="3.5"  stroke="white" stroke-width="0.5"/>
+                            <rect x="0.25" y="6.25" width="3.5" height="3.5"  stroke="white" stroke-width="0.5"/>
+                            <rect x="6.25" y="6.25" width="3.5" height="3.5"  stroke="white" stroke-width="0.5"/>
+                            <rect x="12.25" y="6.25" width="3.5" height="3.5"  stroke="white" stroke-width="0.5"/>
+                            <rect x="0.25" y="12.25" width="3.5" height="3.5"  stroke="white" stroke-width="0.5"/>
+                            <rect x="6.25" y="12.25" width="3.5" height="3.5"  stroke="white" stroke-width="0.5"/>
+                            <rect x="12.25" y="12.25" width="3.5" height="3.5"  stroke="white" stroke-width="0.5"/>
+                          </svg>
+                          
+                        </div>
+                        <div class="display-option-item" data-layout="gallery-view">
+                          
+                          <svg width="16" height="16" viewBox="0 0 16 16"  xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.25" y="0.25" width="6.5" height="6.5" stroke="white" stroke-width="0.5"/>
+                            <rect x="0.25" y="9.25" width="6.5" height="6.5" stroke="white" stroke-width="0.5"/>
+                            <rect x="9.25" y="0.25" width="6.5" height="6.5" stroke="white" stroke-width="0.5"/>
+                            <rect x="9.25" y="9.25" width="6.5" height="6.5" stroke="white" stroke-width="0.5"/>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button class="btn filter-btn" onclick="document.querySelector('.filters-panel').classList.add('open')">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_2258_11595)">
+                      <path d="M8.25 13.5H9.75C10.1625 13.5 10.5 13.1625 10.5 12.75C10.5 12.3375 10.1625 12 9.75 12H8.25C7.8375 12 7.5 12.3375 7.5 12.75C7.5 13.1625 7.8375 13.5 8.25 13.5ZM2.25 5.25C2.25 5.6625 2.5875 6 3 6H15C15.4125 6 15.75 5.6625 15.75 5.25C15.75 4.8375 15.4125 4.5 15 4.5H3C2.5875 4.5 2.25 4.8375 2.25 5.25ZM5.25 9.75H12.75C13.1625 9.75 13.5 9.4125 13.5 9C13.5 8.5875 13.1625 8.25 12.75 8.25H5.25C4.8375 8.25 4.5 8.5875 4.5 9C4.5 9.4125 4.8375 9.75 5.25 9.75Z" fill="#2F2923"/>
+                      </g>
+                      <defs>
+                      <clipPath id="clip0_2258_11595">
+                      <rect width="18" height="18" fill="white"/>
+                      </clipPath>
+                      </defs>
+                      </svg>
+
+                      Sort & Filters
+                    </button>
+                  </div>
+                </div>
+              	
+              	<h2 class="font-default">The following collections have the color you chose</h2>
+                <div class="flex available-collections-boxes" data-sortby="featured">
+                  {{ boxes }}
+                </div>
+
+            </div>
+          </div>
+
+          <div class="flex-10">
+            {% section "box-meterials" %}
+          </div>
+  		  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'landing.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+		  <!--[if lte IE 9]><script src="{{ 'landing.js' | asset_url }}"></script><![endif]-->
+  	
+    
+</div>
+
+
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+    
+		  <div class="page-width">
+          {{page.metafields.content.bottom_description}}
+      
+
+      {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}

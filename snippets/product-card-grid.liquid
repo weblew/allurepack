@@ -1,0 +1,131 @@
+{% unless grid_image_width %}
+  {%- assign grid_image_width = '300x300' -%}
+{% endunless %}
+{%- assign grid_image_scale = '2' -%}
+<div class="{% if product.tags contains 'box' %} grid-view-item_box{% endif %}">
+  
+<script>
+  
+  if(typeof PRODUCTS === 'undefined'){
+    PRODUCTS = {};
+  }
+  
+  PRODUCTS[{{product.id}}] = {
+    title : {{product.title | json}},
+    handle : '{{product.handle}}',
+    image : {{ product.featured_image.src  | json}},
+    options : {{product.options_with_values | json}},
+    variants : {{product.variants | json}},
+    settings : {{product.metafields.settings | json}},
+    group_items : {},
+    upsell : []
+  };
+  
+  {% if product.metafields.group_items %}
+    
+  
+      {% if product.metafields.group_items.main %}
+            PRODUCTS[{{product.id}}].group_items.main = {{all_products[product.metafields.group_items.main].variants | json}}
+            {% if product.metafields.group_items.insert %}
+               PRODUCTS[{{product.id}}].group_items.insert = {{all_products[product.metafields.group_items.insert].variants | json}}
+            {% endif %}
+      {% endif %}
+
+        
+  {% endif %}
+              
+  {% if product.metafields.upsell and product.metafields.upsell.items %}
+		
+              PRODUCTS[{{product.id}}].upsell = {{product.metafields.upsell.items | split:' '}}
+
+  {% endif %}
+              
+</script>
+  
+{% assign featured_variant = product.variants[0] %}
+{% assign featured_image = product.featured_image %}
+
+{% if featured_variant.featured_image  %}
+{% assign featured_image = featured_variant.featured_image %}
+{%endif%}
+
+{% if collection.metafields.settings.defaultcolor != blank %}
+	{% assign find_featured_variant = product.variants | where:'option1', collection.metafields.settings.defaultcolor %}  
+  
+  	{% if find_featured_variant.size > 0 %}
+  		{% assign featured_variant = find_featured_variant | first %}
+  		{% assign featured_image = featured_variant.image %}
+  	{% endif %}
+    
+{% endif %}
+  
+  
+<form action="/cart/add" method="post" class="grid-view-item" data-id="{{product.id}}">
+  {% if product.metafields.custom.label != blank %}
+    <span class="custom-label">{{ product.metafields.custom.label }}</span>
+  {% endif %}
+  <div class="grid-view-item__link flex flex-column">
+    <a href="{{ featured_variant.url | within: collection }}">
+    <div>
+        <div class="grid-view-item__image" style="background-image:url({{ featured_image.src | img_url: grid_image_width, scale: grid_image_scale }})" title="{{ featured_image.alt }}"></div>
+        <small class="grid-view-item-sku">{{ featured_variant.sku }}&nbsp;</small>
+        <div class="grid-view-item-title">{{ product.title | replace: '(', '<br>(' }}</div> 
+        
+        {% if section.settings.show_vendor %}
+        <div class="grid-view-item__vendor">{{ product.vendor }}</div>
+        {% endif %}
+    </div>
+    </a>
+    <div>
+    <div class="grid-view-item__meta">
+      	{% include 'product-price' %}
+    </div>
+    <input type="hidden" name="id" value="{{ featured_variant.id }}" checked data-sku="{{ featured_variant.sku }}"/>
+     {% if product.has_only_default_variant %}      
+        <div class="flex grid-view-item-actions">
+              <div class="flex-3">
+                {% assign soldIn = featured_variant.option2 %}
+
+                {% if soldIn == 1 or soldIn == '1' or soldIn == blank %}
+                      <input type="number" placeholder="Qty" name="quantity" class="btn-black-light qty-input">
+                {%else%}
+                      <select name="quantity" class="btn-black-light qty-input">
+                        {% for i in (1..200)  %}
+                            <option>{{i | times:soldIn}}</option>
+                        {% endfor %}
+                      </select>
+                {%endif%}
+              </div>
+              <div class="flex-7">
+                <button type="submit" class="btn btn-black-dark fs14 btn-add-to-cart"> Add To Order</button>  
+              </div>
+        </div> 
+      {% else %}
+        
+     
+       
+        {% if product.options[0] == 'Color' and product.options[1] == blank %}
+           <div>
+        	Available in mutiple colors
+              </div>
+        {% endif %}
+       {% if product.options[0] == 'Color' and product.options[1] == 'Bulk' %}
+           <div>  	
+          Available in mutiple quantities
+           </div>
+        {% endif %}
+     
+      
+      <div class="flex grid-view-item-actions">
+      	<a href="{{ featured_variant.url | within: collection }}" class="btn btn-black-light flex-10 fs14">Choose Options</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</form>
+  
+
+<!-- **BEGIN** Hextom USB Integration // Collection Include - DO NOT MODIFY -->
+    {% render 'hextom_usb_coll', product: product %}
+    <!-- **END** Hextom USB Integration // Collection Include - DO NOT MODIFY -->
+</div>

@@ -1,0 +1,718 @@
+
+
+<!--
+DO NOT EDIT FREEBIE-APP.LIQUID
+CHANGES WILL BE OVERWRITTEN
+WHILE USING THE APP
+-->
+
+{% assign cap-status = 'checked' %}
+
+{% assign cap-productquantity = '1' %}
+{% assign cap-triggerprice = 100000 %}
+
+{% assign cap-productquantitytwo = '' %}
+{% assign cap-triggerpricetwo =  %}
+
+{% assign cap-productquantitythree = '' %}
+{% assign cap-triggerpricethree =  %}
+
+{% assign cap-backgroundcolor = 'rgba(68,78,90,0.8)' %}
+{% assign cap-popupcolor = '#ffffff' %}
+{% assign cap-buttoncolor = '#6328e0' %}
+{% assign cap-buttontextcolor = '#ffffff' %}
+{% assign cap-headertextcolor = '#222222' %}
+{% assign cap-bodytextcolor = '#555555' %}
+
+{% assign cap-title = 'Claim Your Black Friday Free Gift' %}
+{% assign cap-description = 'All orders that are $1000 or more qualify for a free gift.' %}
+{% assign cap-button = 'Claim Gift' %}
+{% assign cap-terms = '' %}
+
+
+
+{% if cap-status == "checked" %}
+
+
+
+{{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
+{{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+
+
+
+<style>
+/*---*/
+/*MISC*/
+/*---*/
+body {
+  margin: 0;
+}
+.kd-pointer {
+  cursor: pointer;
+}
+.kd-hide {
+  display:none;
+}
+
+
+/*---*/
+/*GRID*/
+/*---*/
+.kd-row {
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.kd-column {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* @media only screen and (max-width: 500px) {
+  .kd-column:nth-child(n+3) {
+    display: none;
+  }
+} */
+
+
+/*---*/
+/*SPACING*/
+/*---*/
+.kd-padding-lr05 {
+  padding:0 0.5em 0 0.5em;
+}
+.kd-padding-b05 {
+  padding-bottom: 0.5em;
+}
+.kd-padding-05 {
+  padding:0.5em;
+}
+.kd-padding-1 {
+  padding:1em;
+}
+.kd-padding-2 {
+  padding:2em;
+}
+.kd-margin-t05 {
+  margin-top: 0.5em;
+}
+.kd-margin-t1 {
+  margin-top: 1em;
+}
+.kd-margin-t2 {
+  margin-top: 2em;
+}
+.kd-margin-b05 {
+  margin-bottom: 0.5em;
+}
+.kd-margin-b1 {
+  margin-bottom: 1em;
+}
+.kd-margin-b2 {
+  margin-bottom: 2em;
+}
+.kd-text-center {
+  text-align: center;
+}
+.kd-text-white {
+  color: #fff;
+}
+
+
+/*---*/
+/*DYNAMIC*/
+/*---*/
+/*change background colour*/
+.kd-modal-container {
+  background: rgba(68,78,90,0.8);
+}
+.kd-modal-background {
+  border: 2px #ffffff solid;
+  background: #ffffff;
+  color: #555555;
+}
+/*change button*/
+.kd-button {
+  color: #ffffff !important;
+  background: #6328e0 !important;
+  border-color: #6328e0 !important;
+}
+/*change title*/
+.kd-popup-title {
+  color: #222222;
+}
+
+
+/*---*/
+/*POPUP*/
+/*---*/
+.kd-modal-container img {
+  max-width: 100%;
+}
+/*background container*/
+.kd-modal-container {
+  position: fixed;
+  z-index: 999999;
+  top: 0px;
+  left: 0px;
+  overflow: scroll;
+  width: 100%;
+  height: 100%;
+}
+/*basic content container*/
+.kd-modal-content {
+  padding-top:50px;
+  padding-bottom:50px;
+}
+/*header container for close button*/
+.kd-popup-header {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: right;
+  color: #fff;
+}
+/*white modal background*/
+.kd-modal-background {
+  overflow: hidden;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 1px 1px 5px #333;
+  border-radius: 3px;
+}
+@media only screen and (max-width: 500px) {
+  .kd-modal-background {
+    border-radius: 0px;
+  }
+}
+.kd-product {
+  max-width: 33%;
+  min-width: 33%;
+  width: 33%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+@media only screen and (max-width: 500px) {
+  .kd-product {
+    max-width: 50%;
+    min-width: 50%;
+    width: 50%;
+  }
+}
+.kd-popup-title {
+  margin: 0;
+}
+.kd-popup-description {
+  margin-top: 5px;
+  margin-bottom: 12px;
+}
+.kd-product-image {
+  padding: 5px;
+}
+.kd-product-title {
+  margin-top: 5px;
+  margin-bottom: 1px;
+}
+.kd-product-price {
+  margin-top: 1px;
+  margin-bottom: 5px;
+}
+.kd-button {
+  width: initial !important;
+  height: initial !important;
+  margin-top: 6px;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+  border: 1px black solid;
+  border-radius: 3px;
+  font-weight: 500 !important;
+  font-size: 12px;
+}
+.kd-button:hover {
+  opacity: 0.9;
+}
+.kd-popup-footer {
+  margin-top:12px;
+  text-align:center;
+}
+.kd-footer-link {
+  padding-bottom:2px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff !important;
+  border-bottom: 1px solid #fff;
+}
+.kd-footer-link:hover {
+  opacity:0.6;
+  text-decoration: none;
+}
+.kd-loader {
+  text-align:center;
+}
+
+
+/*---*/
+/*LOADER*/
+/*---*/
+.kd-pointe
+@keyframes lds-spinner {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes lds-spinner {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.lds-spinner {
+  position: relative;
+}
+.lds-spinner div {
+  left: 94px;
+  top: 48px;
+  position: absolute;
+  -webkit-animation: lds-spinner linear 1s infinite;
+  animation: lds-spinner linear 1s infinite;
+  background: #c6c6c6;
+  width: 12px;
+  height: 24px;
+  border-radius: 40%;
+  -webkit-transform-origin: 6px 52px;
+  transform-origin: 6px 52px;
+}
+.lds-spinner div:nth-child(1) {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-animation-delay: -0.916666666666667s;
+  animation-delay: -0.916666666666667s;
+}
+.lds-spinner div:nth-child(2) {
+  -webkit-transform: rotate(30deg);
+  transform: rotate(30deg);
+  -webkit-animation-delay: -0.833333333333333s;
+  animation-delay: -0.833333333333333s;
+}
+.lds-spinner div:nth-child(3) {
+  -webkit-transform: rotate(60deg);
+  transform: rotate(60deg);
+  -webkit-animation-delay: -0.75s;
+  animation-delay: -0.75s;
+}
+.lds-spinner div:nth-child(4) {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  -webkit-animation-delay: -0.666666666666667s;
+  animation-delay: -0.666666666666667s;
+}
+.lds-spinner div:nth-child(5) {
+  -webkit-transform: rotate(120deg);
+  transform: rotate(120deg);
+  -webkit-animation-delay: -0.583333333333333s;
+  animation-delay: -0.583333333333333s;
+}
+.lds-spinner div:nth-child(6) {
+  -webkit-transform: rotate(150deg);
+  transform: rotate(150deg);
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+.lds-spinner div:nth-child(7) {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+  -webkit-animation-delay: -0.416666666666667s;
+  animation-delay: -0.416666666666667s;
+}
+.lds-spinner div:nth-child(8) {
+  -webkit-transform: rotate(210deg);
+  transform: rotate(210deg);
+  -webkit-animation-delay: -0.333333333333333s;
+  animation-delay: -0.333333333333333s;
+}
+.lds-spinner div:nth-child(9) {
+  -webkit-transform: rotate(240deg);
+  transform: rotate(240deg);
+  -webkit-animation-delay: -0.25s;
+  animation-delay: -0.25s;
+}
+.lds-spinner div:nth-child(10) {
+  -webkit-transform: rotate(270deg);
+  transform: rotate(270deg);
+  -webkit-animation-delay: -0.166666666666667s;
+  animation-delay: -0.166666666666667s;
+}
+.lds-spinner div:nth-child(11) {
+  -webkit-transform: rotate(300deg);
+  transform: rotate(300deg);
+  -webkit-animation-delay: -0.083333333333333s;
+  animation-delay: -0.083333333333333s;
+}
+.lds-spinner div:nth-child(12) {
+  -webkit-transform: rotate(330deg);
+  transform: rotate(330deg);
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+.lds-spinner {
+  margin: 0 auto;
+  width: 200px !important;
+  height: 200px !important;
+  -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+  transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+}
+</style>
+
+
+
+<div class="kd-modal-container kd-hide" id="popupOne">
+
+  <div class="kd-modal-content">
+
+    <p class="kd-popup-header">
+      <span class="kd-pointer" onclick="closeModal()">X (Close)</span>
+    </p>
+
+    <div class="kd-modal-background">
+      <div class="kd-row">
+        <div class="kd-column">
+          <h2 class="kd-popup-title">Claim Your Black Friday Free Gift</h2>
+          <p class="kd-popup-description">
+            All orders that are $1000 or more qualify for a free gift.
+          </p>
+        </div>
+      </div>
+
+      <div class="kd-row kd-text-center">
+        {% for product in collections.gift-items-1.products limit: cap-productquantity %}
+        <div class="kd-column kd-product">
+          <img class="kd-product-image" src="{{ product.featured_image | img_url: 'compact' }}" alt="{{ product.title | escape }}" />
+          <p class="kd-product-title">{{ product.title }}</p>
+          <p class="kd-product-price">
+            <strong>
+              {{ product.price_min | money }}
+              {% if product.compare_at_price %}
+                | <s>{{ product.compare_at_price_max | money }}</s>
+              {% endif %}
+            </strong>
+          </p>
+          <input onclick="addItem({% for variant in product.variants limit:1%}{{variant.id}}{% endfor%})" data-variant="{% for variant in product.variants limit:1%}{{variant.id}}{% endfor%}" type="submit" name="button" class="kd-button" value="Claim Gift">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <p class="kd-popup-footer">
+      {% if cap-terms == true %}
+      <a class="kd-footer-link" href="">TERMS & CONDITIONS</a> &nbsp;&nbsp;&nbsp;
+      {% endif %}
+      <span class="kd-footer-link" onclick="closeModal()">CONTINUE TO CART</span>
+    </p>
+
+  </div>
+
+  <div class="kd-loader kd-hide">
+    <div class="lds-css ng-scope">
+      <div class="lds-spinner" style="100%;height:100%"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+  </div>
+
+</div>
+
+
+{% if cap-triggerpricetwo > 0 %}
+<div class="kd-modal-container kd-hide" id="popupTwo">
+
+  <div class="kd-modal-content">
+
+    <p class="kd-popup-header">
+      <span class="kd-pointer" onclick="closeModal()">X (Close)</span>
+    </p>
+
+    <div class="kd-modal-background">
+      <div class="kd-row">
+        <div class="kd-column">
+          <h2 class="kd-popup-title">Claim Your Black Friday Free Gift</h2>
+          <p class="kd-popup-description">
+            All orders that are $1000 or more qualify for a free gift.
+          </p>
+        </div>
+      </div>
+
+      <div class="kd-row kd-text-center">
+        {% for product in collections.gift-items-2.products limit: cap-productquantitytwo %}
+        <div class="kd-column kd-product">
+          <img class="kd-product-image" src="{{ product.featured_image | img_url: 'compact' }}" alt="{{ product.title | escape }}" />
+          <p class="kd-product-title">{{ product.title }}</p>
+          <p class="kd-product-price">
+            <strong>
+              {{ product.price_min | money }}
+              {% if product.compare_at_price %}
+                | <s>{{ product.compare_at_price_max | money }}</s>
+              {% endif %}
+            </strong>
+          </p>
+          <input onclick="addItem({% for variant in product.variants limit:1%}{{variant.id}}{% endfor%})" data-variant="{% for variant in product.variants limit:1%}{{variant.id}}{% endfor%}" type="submit" name="button" class="kd-button" value="Claim Gift">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <p class="kd-popup-footer">
+      {% if cap-terms == true %}
+      <a class="kd-footer-link" href="">TERMS & CONDITIONS</a> &nbsp;&nbsp;&nbsp;
+      {% endif %}
+      <span class="kd-footer-link" onclick="closeModal()">CONTINUE TO CART</span>
+    </p>
+
+  </div>
+
+  <div class="kd-loader kd-hide">
+    <div class="lds-css ng-scope">
+      <div class="lds-spinner" style="100%;height:100%"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+  </div>
+
+</div>
+{% endif %}
+
+
+{% if cap-triggerpricethree > 0 %}
+<div class="kd-modal-container kd-hide" id="popupThree">
+
+  <div class="kd-modal-content">
+
+    <p class="kd-popup-header">
+      <span class="kd-pointer" onclick="closeModal()">X (Close)</span>
+    </p>
+
+    <div class="kd-modal-background">
+      <div class="kd-row">
+        <div class="kd-column">
+          <h2 class="kd-popup-title">Claim Your Black Friday Free Gift</h2>
+          <p class="kd-popup-description">
+            All orders that are $1000 or more qualify for a free gift.
+          </p>
+        </div>
+      </div>
+
+      <div class="kd-row kd-text-center">
+        {% for product in collections.gift-items-3.products limit: cap-productquantitythree %}
+        <div class="kd-column kd-product">
+          <img class="kd-product-image" src="{{ product.featured_image | img_url: 'compact' }}" alt="{{ product.title | escape }}" />
+          <p class="kd-product-title">{{ product.title }}</p>
+          <p class="kd-product-price">
+            <strong>
+              {{ product.price_min | money }}
+              {% if product.compare_at_price %}
+                | <s>{{ product.compare_at_price_max | money }}</s>
+              {% endif %}
+            </strong>
+          </p>
+          <input onclick="addItem({% for variant in product.variants limit:1%}{{variant.id}}{% endfor%})" data-variant="{% for variant in product.variants limit:1%}{{variant.id}}{% endfor%}" type="submit" name="button" class="kd-button" value="Claim Gift">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <p class="kd-popup-footer">
+      {% if cap-terms == true %}
+      <a class="kd-footer-link" href="">TERMS & CONDITIONS</a> &nbsp;&nbsp;&nbsp;
+      {% endif %}
+      <span class="kd-footer-link" onclick="closeModal()">CONTINUE TO CART</span>
+    </p>
+
+  </div>
+
+  <div class="kd-loader kd-hide">
+    <div class="lds-css ng-scope">
+      <div class="lds-spinner" style="100%;height:100%"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+  </div>
+
+</div>
+{% endif %}
+
+
+
+<script>
+$(window).bind("load", function() {
+  $('script[src^="https://santaapp.herokuapp.com/js/embed.min.js"]').load(function() {
+
+
+    //   -------------˅˅˅˅
+    var giftMinimum = 100000;
+    {% if cap-triggerpricetwo > 0 %}
+      var giftMinimumTwo = ;
+    {% endif %}
+    {% if cap-triggerpricethree > 0 %}
+      var giftMinimumThree = ;
+    {% endif %}
+    //   -------------˄˄˄˄
+
+    var giftItemsVariants = [];
+    var giftItemsId = [];
+
+    var giftItemsVariantsTwo = [];
+    var giftItemsIdTwo = [];
+
+    var giftItemsVariantsThree = [];
+    var giftItemsIdThree = [];
+
+    var show = true;
+    var countGiftItems = 0;
+
+
+    {% for product in collections.gift-items-1.products %}
+      giftItemsVariants.push("{% for variant in product.variants limit:1%}{{variant.id}}{% endfor%}");
+      giftItemsId.push("{{ product.id }}");
+    {% endfor %}
+
+
+    {% if cap-triggerpricetwo > 0 %}
+      {% for product in collections.gift-items-2.products %}
+        giftItemsVariantsTwo.push("{% for variant in product.variants limit:1%}{{variant.id}}{% endfor%}");
+        giftItemsIdTwo.push("{{ product.id }}");
+      {% endfor %}
+    {% endif %}
+
+
+    {% if cap-triggerpricethree > 0 %}
+      {% for product in collections.gift-items-3.products %}
+        giftItemsVariantsThree.push("{% for variant in product.variants limit:1%}{{variant.id}}{% endfor%}");
+        giftItemsIdThree.push("{{ product.id }}");
+      {% endfor %}
+    {% endif %}
+
+
+    {% for item in cart.items %}
+      {% for collection in item.product.collections %}
+        {% if collection.handle contains "gift-items" %}
+          show = false;
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+
+
+    {% for item in cart.items %}
+      {% if item.product.id == 171644026904 %}
+        if (show === true){
+          kdopenPopup("#popupThree");
+        }
+      {% endif %}
+    {% endfor %}
+
+
+    {% if cap-triggerpricethree > 0 and cap-triggerpricetwo > 0 and cap-triggerprice > 0 %}
+      if ({{ cart.total_price }} >= giftMinimumThree) {
+        if (show === true){
+          kdopenPopup("#popupThree");
+        }
+      } else if ({{ cart.total_price }} >= giftMinimumTwo) {
+        if (show === true){
+          kdopenPopup("#popupTwo");
+        }
+      }  else if ({{ cart.total_price }} >= giftMinimum) {
+        if (show === true){
+          kdopenPopup("#popupOne");
+        }
+      }
+    {% endif %}
+
+    {% if cap-triggerpricethree == blank and cap-triggerpricetwo > 0 and cap-triggerprice > 0 %}
+      if ({{ cart.total_price }} >= giftMinimumTwo) {
+        if (show === true){
+          kdopenPopup("#popupTwo");
+        }
+      }  else if ({{ cart.total_price }} >= giftMinimum) {
+        if (show === true){
+          kdopenPopup("#popupOne");
+        }
+      }
+    {% endif %}
+
+    {% if cap-triggerpricethree == blank and cap-triggerpricetwo == blank and cap-triggerprice > 0 %}
+      if ({{ cart.total_price }} >= giftMinimum) {
+        if (show === true){
+          kdopenPopup("#popupOne");
+        }
+      }
+    {% endif %}
+
+
+    {% for item in cart.items %}
+      {% for collection in item.product.collections %}
+        {% if collection.handle contains "gift-items" %}
+          countGiftItems = countGiftItems +1;
+          if (countGiftItems > 1) {
+            kdremoveAllGiftItems(giftItemsVariants, giftItemsVariantsTwo, giftItemsVariantsThree);
+          }
+          if ({{ cart.total_price }} < giftMinimum) {
+            kdremoveAllGiftItems(giftItemsVariants, giftItemsVariantsTwo, giftItemsVariantsThree);
+          }
+          if ({{ item.quantity }} > 1) {
+            kdremoveAllGiftItems(giftItemsVariants, giftItemsVariantsTwo, giftItemsVariantsThree);
+          }
+        {% endif %}
+        {% if collection.handle == "gift-items-1" %}
+          if ({{ cart.total_price }} < giftMinimum) {
+            kdremoveGiftItems(giftItemsVariants);
+          }
+        {% endif %}
+        {% if cap-triggerpricetwo > 0 %}
+          {% if collection.handle == "gift-items-2" %}
+            if ({{ cart.total_price }} < giftMinimumTwo) {
+              kdremoveGiftItems(giftItemsVariantsTwo);
+            }
+          {% endif %}
+        {% endif %}
+        {% if cap-triggerpricetwo > 0 %}
+          {% if collection.handle == "gift-items-3" %}
+            if ({{ cart.total_price }} < giftMinimumThree) {
+              kdremoveGiftItems(giftItemsVariantsThree);
+            }
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+
+
+    for (var i = 0; i < giftItemsVariants.length; i++) {
+      $('[data-id*="'+giftItemsVariants[i]+'"] :input').css("display","none");
+      $('input[id*='+giftItemsVariants[i]+']').css("display","none");
+    }
+
+
+    for (var i = 0; i < giftItemsVariantsTwo.length; i++) {
+      $('[data-id*="'+giftItemsVariantsTwo[i]+'"] :input').css("display","none");
+      $('input[id*='+giftItemsVariantsTwo[i]+']').css("display","none");
+    }
+
+
+    for (var i = 0; i < giftItemsVariantsThree.length; i++) {
+      $('[data-id*="'+giftItemsVariantsThree[i]+'"] :input').css("display","none");
+      $('input[id*='+giftItemsVariantsThree[i]+']').css("display","none");
+    }
+
+
+  });
+});
+</script>
+
+
+
+{% endif %}
+
+
+

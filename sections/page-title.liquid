@@ -1,0 +1,41 @@
+<div class="page-width page-title">
+    {% for block in section.blocks  %}
+        {% if block.settings.text != blank  %}
+            <h1 class="font-default text-center gold">{{block.settings.text}}</h1>
+        {% endif %}
+        {% if block.settings.content != blank  %}
+            <div class="text-center page-title-content">{{block.settings.content}}</div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% schema %}
+    {
+      "name": "Shop boxes",
+      "blocks": [
+          {
+            "type": "text",
+            "name": "Text",
+            "settings": [
+              {
+                "type": "text",
+                "id": "text",
+                "label": "Text"
+              },
+              {
+                "type": "richtext",
+                "id": "content",
+                "label": "Content"
+              }
+            ]
+          }
+      ],
+      "presets": [
+        {
+          "name": "Page Title"
+        }
+      ]
+    }
+  {% endschema %}
+  
+ 
+  

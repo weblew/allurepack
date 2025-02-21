@@ -1,0 +1,91 @@
+<style>
+  .logo-insperations{
+  	margin:70px -15px;
+  }
+  
+  .logo-insperations h3{
+  	color:#c5a04c;
+  }
+  
+  .logo-insperations .logo-insperation-item{
+  	margin:15px;
+    overflow:hidden;
+  }
+  
+  .logo-insperations .logo-insperation-item-image{
+  	background-size:cover;
+    background-position:center;
+    height:300px;
+    transition:transform 300ms;
+    
+  }
+  .logo-insperations .logo-insperation-item:hover .logo-insperation-item-image{
+  	transform:scale(1.2);
+  }
+</style>
+
+<div class="logo-insperations">
+  <h3  class="font-default text-center">
+  {{section.settings.title}}
+	</h3>
+  <div class="flex">
+  {% for block in section.blocks %}
+  	<div class="flex-{{block.settings.size}}">
+      	<div class="logo-insperation-item">
+          	<div class="logo-insperation-item-image" style="background-image:url('{{block.settings.image | img_url:'master'}}');">
+          
+      		</div>
+      	</div>
+  	</div>
+  {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Logo inspirations",
+    "settings": [{
+		"type" : "text",
+		"id" : "title",
+		"label" : "Title",
+		"default": "Get inspired"
+	}],
+	"blocks" : [{
+		"type" : "Image",
+		"name" : "Image",
+		"settings" : [{
+			"type" : "image_picker",
+			"id" : "image",
+			"label" : "Image"
+		},{
+        "type": "select",
+        "id": "size",
+        "label": "Size",
+        "default": "2-5",
+        "options": [
+          {
+            "value": "2-5",
+            "label": "2.5"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "7-5",
+            "label": "7.5"
+          },{
+            "value": "10",
+            "label": "10"
+          }
+        ]
+      }]
+	}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

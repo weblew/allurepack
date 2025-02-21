@@ -1,0 +1,136 @@
+{{ 'services-sub.scss.css' | asset_url | stylesheet_tag }}
+<div class="page-width">
+  
+  <div>
+    <h1 class="font-default">{{ page.title }}</h1>
+  </div>
+  
+  <div class="">
+    {{ page.content }}
+  </div>
+  {% if page.metafields.custom_content.image_1 != blank and page.metafields.custom_content.content_1 != blank %}
+  <div class="top-content-row">
+    <div class="flex flex-align-center flex-justify-between">
+      <div class="flex-4">
+      		<img src="{{page.metafields.custom_content.image_1}}">
+      </div>
+      <div class="flex-6">
+      		<div class="top-content-row-content">
+              {{page.metafields.custom_content.content_1}}
+        	</div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+  {% if page.metafields.custom_content.image_2 != blank and page.metafields.custom_content.content_2 != blank %}
+  <div class="top-content-row">
+    <div class="flex flex-align-center  flex-justify-between">
+      
+      <div class="flex-5">
+      		<div class="top-content-row-content">
+              {{page.metafields.custom_content.content_2}}
+        	</div>
+      </div>
+      <div class="flex-4 text-right">
+      		<img src="{{page.metafields.custom_content.image_2}}">
+      </div>
+    </div>
+  </div>
+  {% endif %}
+ 
+</div>
+
+{% if page.metafields.custom_content.top_printing_banner != blank %}
+  <div class="top-printing-banner">
+      {{page.metafields.custom_content.top_printing_banner}}
+  </div>
+{% endif %}
+
+{% if page.metafields.custom_content.faq_questions != blank %}
+  <div class="service-faq">
+    <h2 class="text-center font-default">FAQ</h2>
+    {% for question in page.metafields.custom_content.faq_questions %}
+      <div>
+        <div class="question">{{question}}</div>
+        <div class="answer">
+          {{page.metafields.custom_content.faq_answers[forloop.index0]}}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if page.metafields.custom_content.colors_banner != blank %}
+  <div class="colors-banner">
+      <h2 class="text-center font-default">Colors</h2>
+      <img src="{{page.metafields.custom_content.colors_banner}}"/>
+  </div>
+{% endif %}
+
+{% if page.metafields.custom_content.casestudies_titles != blank %}
+  <div class="service-faq">
+    <h2 class="text-center font-default">CASE STUDIES</h2>
+    {% for question in page.metafields.custom_content.casestudies_titles %}
+      <div>
+        <div class="question">{{question}}</div>
+        <div class="answer">
+          {{page.metafields.custom_content.casestudies_content[forloop.index0]}}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if page.metafields.custom_content.testimonials != blank %}
+<div class="service-testimonials">
+  <h2 class="text-center font-default">Testimonials</h2>
+  <div class="page-width">
+    <div class="flex flex-justify-center">
+        {% for testimonial in page.metafields.custom_content.testimonials %}
+          <div class="flex-third testimonial-col">
+            <div class="testimonial">
+              <div>                
+					<svg xmlns="http://www.w3.org/2000/svg" width="168" height="28.249" viewBox="0 0 168 28.249"><g transform="translate(-200 -247.775)"><path d="M214.851,270.262l-9.179,5.762,2.644-10.51L200,258.565l10.813-.733,4.039-10.057,4.039,10.057,10.813.733-8.317,6.949,2.644,10.51Z" fill="#ffc300"/><path d="M832.249,270.262l-9.179,5.762,2.644-10.51-8.317-6.949,10.813-.733,4.039-10.057,4.039,10.057,10.813.733-8.317,6.949,2.644,10.51Z" transform="translate(-582.823)" fill="#ffc300"/><path d="M1449.646,270.262l-9.179,5.762,2.644-10.51-8.317-6.949,10.813-.733,4.038-10.057,4.039,10.057,10.813.733-8.317,6.949,2.644,10.51Z" transform="translate(-1165.646)" fill="#ffc300"/><path d="M2067.044,270.262l-9.179,5.762,2.644-10.51-8.317-6.949,10.813-.733,4.039-10.057,4.039,10.057,10.813.733-8.317,6.949,2.644,10.51Z" transform="translate(-1748.47)" fill="#ffc300"/><path d="M2684.441,270.262l-9.179,5.762,2.644-10.51-8.317-6.949,10.813-.733,4.039-10.057,4.039,10.057,10.813.733-8.317,6.949,2.644,10.51Z" transform="translate(-2331.293)" fill="#ffc300"/></g></svg>
+              </div>
+              {{testimonial}}
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if page.metafields.custom_content.bottom_printing_banner != blank %}
+  <div class="bottom-printing-banner">
+      {{page.metafields.custom_content.bottom_printing_banner}}
+  </div>
+{% endif %}
+
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+      
+		<div class="page-width">
+          {{page.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}
+
+<script>
+  $(document).on('click', '.page-container .question', function(){
+  	$(this).toggleClass('open').siblings('.answer').slideToggle()
+  }).ready(function(){
+  
+//     $('.page-container h4').each(function(){
+//       if($(this).next().is('p')){
+//     	var answeres = $(this).nextUntil('h4');
+//         $(this).addClass('question');
+//       	$(this).after('<div class="answer"></div>')
+//         $(this).next('.answer').append(answeres)
+//       }
+//     })
+    
+  })
+</script>

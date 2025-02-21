@@ -1,0 +1,109 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="page-width">
+
+    <div class="flex">
+      <div class="flex-10 flex">
+        <div class="footer-menu flex-2">
+          {%- assign footer_linklist = section.settings.footer_linklist -%}
+          {% if linklists[footer_linklist].links.size > 0 %}
+
+            <h4>{{ linklists[footer_linklist].title }}</h4>
+            {% for link in linklists[footer_linklist].links %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+
+          {% endif %}
+
+
+        </div>
+        <div class="footer-menu flex-2">
+          {%- assign footer_linklist_two = section.settings.footer_linklist_two -%}
+          {% if linklists[footer_linklist_two].links.size > 0 %}
+
+            <h4>{{ linklists[footer_linklist_two].title }}</h4>
+            {% for link in linklists[footer_linklist_two].links %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+
+          {% endif %}
+        </div>
+        <div class="footer-menu flex-2">
+          {%- assign footer_linklist_tree = section.settings.footer_linklist_tree -%}
+          {% if linklists[footer_linklist_tree].links.size > 0 %}
+
+            <h4>{{ linklists[footer_linklist_tree].title }}</h4>
+            {% for link in linklists[footer_linklist_tree].links %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+
+          {% endif %}
+        </div>
+        <div class="footer-menu flex-2">
+          {%- assign footer_linklist_four = section.settings.footer_linklist_four -%}
+          {% if linklists[footer_linklist_four].links.size > 0 %}
+
+            <h4>{{ linklists[footer_linklist_four].title }}</h4>
+            {% for link in linklists[footer_linklist_four].links %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+
+          {% endif %}
+        </div>
+
+        <div class="footer-menu flex-2">
+          <div>
+            {% include 'social_icons' %}
+          </div>
+          <div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+  <div class="site-footer__copyright">
+    <div class="page-width">
+      All Rights Reserved &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}
+      &nbsp;&nbsp;
+      <a href="/pages/privacy-policy">Privacy policy</a>&nbsp;
+      <a href="/pages/billing-terms-conditions">Billing Terms & Conditions</a>&nbsp;&nbsp;
+
+    </div>
+  </div>
+
+  {% include 'tawk-chat' %}
+</footer>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "footer_linklist",
+        "label": "Primary menu",
+        "default": "footer"
+      }, {
+        "type": "link_list",
+        "id": "footer_linklist_two",
+        "label": "Additional menu",
+        "default": "main-menu"
+      }, {
+        "type": "link_list",
+        "id": "footer_linklist_tree",
+        "label": "Additional menu",
+        "default": "main-menu"
+      }, {
+        "type": "link_list",
+        "id": "footer_linklist_four",
+        "label": "Additional menu",
+        "default": "main-menu"
+      }
+    ]
+  }
+{% endschema %}

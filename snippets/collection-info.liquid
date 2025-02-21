@@ -1,0 +1,172 @@
+
+	
+{% capture 'title' %}
+
+      {% if collection.handle == 'showcase-trays' or collection.handle  == 'light-weight-trays' %}
+
+            {{collection.title}}
+          
+      {% elsif collectionInfo.handle == 'displays' %}
+
+      {%if product.handle %}
+
+            {{product.type}} <span class="gold font-script">Displays</span>
+
+      {% else %}
+
+          {% if collection.handle == 'displays' %}
+
+            {% for tag in current_tags  %}
+
+            {% assign tagType = tag | split:'_' %}
+            {% if tagType.first == 'type' %}
+              {{tagType[1]}}
+            {% endif %}
+
+            {% endfor %}
+
+          {% else %}
+            {{collection.title | replace: 'Displays', '' | replace: 'Display', ''}}
+          {% endif %}
+          <span class="gold font-script">Displays</span>
+
+      {% endif %}
+
+
+      {% elsif collectionInfo.handle == 'bases-risers' %}
+
+            Bases & Risers <span class="gold font-script">Displays</span>
+
+      {% elsif collectionInfo.handle == 'bell-pouches' %}
+
+            Bell <span class="gold font-script">Pouches</span>
+
+      {% elsif collectionInfo.handle == 'rectangular-pouches' %}
+
+            Rectangular <span class="gold font-script">Pouches</span>
+
+      {% elsif collectionInfo.handle == 'matt-euro-tote-bags' %}
+
+          MATT EURO TOTE <span class="gold font-script">Bags</span>
+
+      {% elsif collectionInfo.handle == 'glossy-euro-tote-bags' %}
+
+            GLOSSY EURO TOTE <span class="gold font-script">Bags</span>
+
+      {% elsif collectionInfo.metafields.custom.additional_title != blank %}
+
+          {{collectionInfo.title}} <span class="gold font-script">{{ collectionInfo.metafields.custom.additional_title }}</span>
+
+      {% elsif collectionInfo.handle contains 'pouches' or collectionInfo.handle contains 'rolls' or collectionInfo.handle contains 'folders' or collectionInfo.handle contains 'bags' or collectionInfo.handle contains 'ribbon' or collectionInfo.handle contains 'paper' or collectionInfo.handle contains 'magnetic-gift-boxes' or collectionInfo.handle contains 'wine-packaging' or collectionInfo.handle contains 'metallic-stretch-loops' %}
+
+            {{collectionInfo.title}}
+
+      {% else %}
+
+            {{collectionInfo.title}} 
+
+      {%endif%}
+	
+{% endcapture %}
+    <div class="flex page-width collection-info">
+
+    <div class="flex-4 collection-info-image">
+      <div class="collection-mobile-title">
+        
+      </div>
+      <meta itemprop="image" content="{{collectionInfo.image | img_url: 'large'}}">
+      <img src="{{collectionInfo.image | img_url: 'large'}}">
+      
+
+      {% if collectionInfo.metafields.custom.label != blank %}
+                              <div class="collection-badge">
+                                {{ collectionInfo.metafields.custom.label }}
+                              </div>
+                            {% endif %}
+    </div>
+    <div class="flex-6">
+      
+      	  <div class="collection-desktop-title">
+            {% if collection.metafields.custom.h1_title != blank %}
+              <h1 class="product-collection">
+                {{collection.metafields.custom.h1_title}}
+              </h1>
+              <h2 class="h1 collection-info-title font-default">
+              {{title}}  
+              </h2>
+            {% else %}
+              <h1 class="collection-info-title font-default">
+              {{title}}  
+              </h1>
+            {% endif %}
+      	  </div>
+      
+      		
+          <div class="collection-info-content">
+            <div class="collection-info-content-popup-backdrop"></div>
+            <div class="collection-info-content-popup">
+              	<div class="collection-mobile-title">
+                  
+                </div>
+              	<div class="collection-info-content-close">
+                	
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7 5.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L8.41421 7L13.7071 12.2929C14.0976 12.6834 14.0976 13.3166 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L7 8.41421L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="#3D4246"/>
+                    </svg>
+  
+              	</div>
+                <div class="collection-info-content-inner">
+                  {{collectionInfo.description}}
+                </div>
+              
+            </div>
+            <a href="#" class="collection-info-content-btn">
+              
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99984 2C4.68613 2 1.99984 4.68629 1.99984 8C1.99984 11.3137 4.68613 14 7.99984 14C11.3135 14 13.9998 11.3137 13.9998 8C13.9998 4.68629 11.3135 2 7.99984 2ZM0.666504 8C0.666504 3.94991 3.94975 0.666664 7.99984 0.666664C12.0499 0.666664 15.3332 3.94991 15.3332 8C15.3332 12.0501 12.0499 15.3333 7.99984 15.3333C3.94975 15.3333 0.666504 12.0501 0.666504 8ZM7.33317 5.33333C7.33317 4.96514 7.63165 4.66666 7.99984 4.66666H8.0065C8.37469 4.66666 8.67317 4.96514 8.67317 5.33333C8.67317 5.70152 8.37469 6 8.0065 6H7.99984C7.63165 6 7.33317 5.70152 7.33317 5.33333ZM7.99984 7.33333C8.36803 7.33333 8.6665 7.63181 8.6665 8V10.6667C8.6665 11.0349 8.36803 11.3333 7.99984 11.3333C7.63165 11.3333 7.33317 11.0349 7.33317 10.6667V8C7.33317 7.63181 7.63165 7.33333 7.99984 7.33333Z" fill="#467183"/>
+              </svg>
+
+              About this collection
+            </a>
+      	  </div>
+	      
+          {%if product.handle%}
+      			
+      			{% if collectionInfo.handle == 'displays'  %}
+      
+				<a class="btn btn-small btn-black-light" href="{{collectionInfo.url}}/type_{{product.type}}">SEE {{product.type}} Displays</a>
+      
+      			{% else %}
+      
+      				<a class="btn btn-small btn-black-light" href="{{collectionInfo.url}}">SEE COLLECTION</a>  
+      
+          		{%endif%}
+      
+          {% else %}
+      
+      			{% if collectionInfo.metafields.collection.size > 0 %}
+      
+      				<div class="collection-info-meta-container product-specifications flex">
+      
+
+                        {% if collectionInfo.metafields.collection.specification  %}
+
+                            {{collectionInfo.metafields.collection.specification}}
+
+                        {% else %}            				
+
+                            {% include 'collectionMeta' %}  
+
+                        {%endif%}
+                      
+      				</div>
+      
+      			{%endif%}
+      			
+          {%endif%}
+          
+    </div>
+
+    </div>
+
+                

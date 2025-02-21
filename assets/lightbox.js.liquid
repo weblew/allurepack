@@ -1,0 +1,19 @@
+var box = $('.lightbox-popup');
+
+$(document).on('click', '.lightbox-image', function(){	  	
+  
+  	if(!box.length){
+    	box = $('<div class="lightbox-popup"></div>');
+      	box.html('<div class="lightbox-overlay"></div><div class="lightbox-popup-image"></div>');
+      	box.hide();
+      	$('body').append(box);
+    }
+  
+  	box.find('.lightbox-popup-image').html('<div class="lightbox-popup-close"></div><img src="'+ ( $(this).attr('src') || $(this).attr('data-image')) +'"/>');
+  	box.fadeIn();
+  
+}).on('click', '.lightbox-overlay, .lightbox-popup-close', function(){
+
+  box.fadeOut();
+  
+});

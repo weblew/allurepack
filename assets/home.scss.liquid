@@ -1,0 +1,208 @@
+body{
+  background-color:#020202;
+}
+
+.site-footer {
+    margin-top: 0
+}
+#shopify-section-home-slider{
+	min-height: calc(100vh - 106px);
+    position: relative;
+}
+.home-banner{
+	position:absolute;
+  	width:100%;
+  	opacity:0;
+      visibility: hidden;
+  	transition:all 700ms;
+}
+.home-banner.in{
+	opacity:1;
+      visibility: visible;
+}
+
+.home-banner-content{
+  	background-position:center;
+    background-repeat:no-repeat;
+    background-size:auto;
+	position: relative;
+  	display:block;
+  	min-height: calc(100vh - 112px);
+}
+.home-banner-text {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 40%;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  	opacity:0;
+  	transition:all 700ms;
+}
+.home-banner-text.in{
+	opacity:1;
+}
+
+.home-banner-text .home-banner-text-large{
+    font-size:44px;
+    color:#aa925a;
+  	text-transform: uppercase;
+    line-height: 44px;
+}
+.home-banner-text .home-banner-text-large span{
+	font-size:60px;
+}
+.home-banner-text .home-banner-text-small {
+    color: #fff;
+    margin:40px 0 60px 0;
+}
+
+.home-banner-text .home-banner-btn {
+    color: #aa925a;
+    border: 1px solid #aa925a;
+    width: 220px;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    box-shadow: inset 0px 0px 0px 5px #23211f, inset 0px 0px 0px 5.5px #aa925a;
+    margin-bottom: 50px;
+    font-size: 18px;
+}
+.home-banner-img-container {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 999;
+    align-items: center;
+    display: flex;
+  	opacity:0;  
+  	transform: translateY(2%);
+  	transition:all 700ms;
+}
+.home-banner-img-container img{
+    width:auto;
+    height:62vh;
+}
+.home-banner-sketch-box{
+	transition:all 1200ms;
+}
+.home-banner-sketch-box ~ .home-banner-img-box{
+	transform: translateY(0%);
+  	transition:all 1200ms;
+}
+.home-banner-sketch-box.out{
+	transform: translateY(0%);
+}
+.home-banner-img-container.in{
+	opacity:1;
+  	transform: translateY(0%);
+}
+
+.home-banner-image {
+    position: absolute;
+    height: 70vh;
+    background-repeat: repeat-x;
+    background-position: top right;
+    background-size: contain;
+    background-color: #020202;
+    top: -135px;
+    right: 0;
+    width: 100%;
+  	opacity:0;
+  	transition:all 700ms
+}
+.home-banner-image.in{
+	opacity:1;
+}
+.index-section{
+	padding:0 !important;
+}
+
+.services-section {
+    background-color: #faf8f6;
+    padding: 40px 0;
+}
+
+.services-section .section-header {
+    margin-bottom: 40px;
+}
+
+.services-section .logo-bar .logo-bar__item {
+   	max-width: 170px;
+    width: 20%;
+}
+
+.services-section img {
+    width: 60px;
+  	opacity: 0.8;
+}
+
+.services-section h4 {
+    color: #357284;
+    text-transform: uppercase;
+    padding-top: 20px;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+
+
+@media only screen and (max-width: 1200px){
+  .home-banner-content{
+  	background-size:contain;
+  }
+}
+@media only screen and (min-width: 960px){
+
+  #shopify-section-header{
+      position: relative;
+      z-index: 999;
+  }
+  .site-header{
+      background-color: transparent;
+  }
+  .page-container{
+      overflow:visible;
+  }
+  .main-content {
+      background-color: #020202;
+      padding-top: 0;
+  }
+}
+@media only screen and (max-width: 960px){
+  .main-content{
+  	padding-top:0;
+  }
+  .home-banner-content {
+    min-height: calc(100vh - 80px);
+  }
+  .home-banner-text,
+  .home-banner-img-container{
+  		width:100%;
+    	align-items: center;
+    	padding: 0 20px;
+  }
+  .home-banner-text .home-banner-text-large {
+    font-size: 24px;
+    text-align:center;
+    line-height:26px;
+  }
+  .home-banner-text .home-banner-text-large span{
+	font-size:34px;
+  }
+  .home-banner-text .home-banner-text-small{
+  	text-align:center;
+  }
+  .home-banner-image {
+    height: 100%;
+      background-position: center;
+      background-size: cover;
+      top: 0;
+  }
+}

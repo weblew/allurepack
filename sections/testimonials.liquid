@@ -1,0 +1,80 @@
+<div data-section-id="{{ section.id }}" class="testimonials-section" data-section-type="testimonials-section">
+
+    <div class="page-width">
+        <div class="testimonials flex flex-justify-between flex-align-center">
+            <div class="testimonials-content">
+                {{section.settings.title}}
+                <div class="testimonials-badge">
+                    {{section.settings.liquid}}
+                </div>
+            </div>
+            <div class="testimonials-slider">
+                {% for block in section.blocks %}
+                <div class="slide">
+                    {{block.settings.content}}
+                    <div class="title">{{block.settings.title}}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="testimonials-badge testimonials-badge-mobile">
+                    {{section.settings.liquid}}
+                </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.testimonials-slider').slick({
+            dots: true,
+            fade: true,
+            arrows: false,
+            cssEase: 'linear',
+            adaptiveHeight: true
+        });
+    })
+</script>
+
+
+{% schema %}
+{
+"name": "Testimonials",
+"settings": [
+    {
+        "type": "richtext",
+        "id": "title",
+        "label": "Title"
+    }, {
+        "type": "liquid",
+        "id": "liquid",
+        "label": "Reviews Code"
+    }
+],
+"blocks": [
+    {
+    "type": "item",
+    "name": "Items",
+    "settings": [
+        {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+        }, {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        }
+    ]
+    }
+],
+"presets": [
+    {
+        "name": "Testimonials"
+    }
+]
+}
+{% endschema %}

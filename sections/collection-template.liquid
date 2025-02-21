@@ -1,0 +1,302 @@
+
+{{ 'listting.css' | asset_url | stylesheet_tag }}
+
+{% assign collectionInfo = collection %}
+
+{% if collection.template_suffix == 'displays' %}
+	{% assign collectionInfo = collections.displays %}
+{%endif%}
+
+{% assign showPringing = false %}
+
+{% for printingOption in collectionInfo.metafields.collectionPrinting %}
+    {% if printingOption[1] == 'on' %}
+		{% assign showPringing = true %}
+	{% endif %}
+{% endfor %}
+
+
+
+{% unless collection.handle contains 'box' or collection.template_suffix == 'displays' %}
+
+	{% include 'collection-info' %}
+
+{% elsif collection.title contains 'Sleek' or collection.title contains 'Uniform' or collection.title contains 'Magnetic' %}
+  
+  {% include 'collection-info' %}
+  
+{% else %}
+
+  <h1 class="collection-info-title font-default text-center">
+    {{collection.title}}
+  </h1>
+  <br>
+
+{% endunless %}
+
+
+	
+    
+    {% if collection.metafields.content.top_description %}
+      <div class="page-width" >
+	<div class="collection-top">
+    
+		<div class="">
+          {{collection.metafields.content.top_description}}
+      </div>
+        	<br>
+    </div>
+      </div>
+{% endif %}
+  
+  
+
+<script>
+
+  var AVAILABLE_COLORS = {};
+
+</script>
+
+{% if collection.handle == 'shop' %}
+
+	{% assign perPage = 50 %}
+
+{% else %}
+
+	{% assign perPage = 1000 %}
+
+{% endif %}
+
+{% paginate collection.products by perPage %}
+
+<div class="ng-cloak" ng-app="printing" ng-controller="PrintingController as vm">
+<div class="collection-section" data-section-id="{{ section.id }}" data-section-type="collection-template">
+  
+  <div class="collection-printing printing-options">
+  		
+      {% if showPringing %}      	        	    	
+          
+      	<div class="flex page-width">
+            <div class="flex-6">
+                <h5 class="gold">Filter by Color</h5>
+                {% assign colors = collection.metafields.custom.colors.value %} 
+                {% if colors.count > 0  %}
+                <script>
+                  
+                {% for color in colors %}
+                  {% if color.swatch   %}
+                  AVAILABLE_COLORS['{{color.name | replace: ' ', '_' | replace: '/', '_' | downcase}}'] = {
+                    colorVal: '{{color.name}}',
+                    color: '{{color.name | handleize}}',
+                    hex: '{{ color.color }}',
+                    image: '{{color.image | img_url: 'medium'}}',
+                    src: '{{color.swatch | img_url: 'medium'}}'
+                  };
+
+                  {% endif  %}
+                {% endfor %}
+                </script>
+                {% endif  %}
+              {% if colors.count > 0  %}
+                <div class="collection-vailable-colors flex">
+                  {% for color in colors %}
+                        <div class="collection-color">
+                          <label class="checkbox" data-color="{{color.name | handleize}}">
+                            <input type="radio" name="collection-colors"/>
+                            <span class="variant-box color-{{ collection.handle }}_{{color.name | handleize}}" style="background-image:url({{color.swatch | img_url: 'medium'}})"></span>
+                          </label>
+                          <span>{{color.name}}</span>
+                          {% if color.badge %}
+                            <span class="collection-color-badge">{{color.badge}}</span>
+                          {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="collection-vailable-colors collection-vailable-colors-old flex"></div>
+                {% endif %}
+            </div>
+        	<div class="flex-4">
+              <h5 class="gold">
+                    <span class="">Printing options</span>
+                    &nbsp;&nbsp;
+                    <div class="btn btn-black-light btn-extra-small js-open-printing-modal displayNone" data-apply="all">EDIT</div>
+              </h5>
+              <div class="js-item-properties selected-printing-options">
+
+                <div class="flex flex-align-center gap-20">
+                  <div class="btn btn-gold-light" ng-show="!vm.applyToItems.all" ng-click="vm.openPrintingPanel('all')">
+                      <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="0.5" width="1" height="13" fill="#C7A049"/>
+                        <rect x="13" y="6.5" width="1" height="13" transform="rotate(90 13 6.5)" fill="#C7A049"/>
+                      </svg>                      
+                      ADD STAMP                        
+                  </div>
+                  <div class="product-printing-selected-locations displayNone" ng-class="{'displayNone':!vm.applyToItems.all.length}">
+                  <div ng-repeat="location in vm.applyToItems.all" class="stamp-preview-container flex flex-align-center flex-justify-between js-open-printing-modal js-open-printing-modal-add" ng-click="vm.openPrintingPanel('all')">
+
+                   
+
+                    {% raw %}
+                      <div class="js-item-properties selected-printing-options">
+                          <div class="no-wrap location-title" ng-bind="location.location"></div>
+                          <div ng-if="location.type === 'plate'">Plate on file</div>
+                          <div ng-if="location.type === 'upload'" ng-bind="location.file.name"></div>
+                          <div ng-if="location.type === 'custom'">Custom</div>
+                          <div class="location-color">
+                            <div class="location-color-img" data-imprinting-color="{{location.color}}"></div>
+                            <div ng-bind="location.color"></div>
+                          </div>
+                      </div>
+                    {% endraw %}
+                  </div>
+                </div>
+                  <div class="selected-printing-options text-muted">
+                    {% assign printingOptions = '' %}
+                    {% for printingOption in collectionInfo.metafields.collectionPrinting %}
+                        {% if printingOption[1] == 'on' %}
+                            {% assign option = printingOption[0] | replace: '_', ' ' %}
+                            {% assign printingOptions = printingOptions | append:option | append:'|' %}
+                        {% endif %}
+                    {% endfor %}
+                    <div>
+                      Hot stamp {{printingOptions | split:'|' | join:' / '}}
+                    </div>
+
+                    <span class="pointer gold" ng-click="vm.togglePrintingPricing()">
+                        Details & Pricing 
+                        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99957 3.40866C5.18793 3.40866 2.90866 5.68793 2.90866 8.49957C2.90866 11.3112 5.18793 13.5905 7.99957 13.5905C10.8112 13.5905 13.0905 11.3112 13.0905 8.49957C13.0905 5.68793 10.8112 3.40866 7.99957 3.40866ZM1.77734 8.49957C1.77734 5.06313 4.56313 2.27734 7.99957 2.27734C11.436 2.27734 14.2218 5.06313 14.2218 8.49957C14.2218 11.936 11.436 14.7218 7.99957 14.7218C4.56313 14.7218 1.77734 11.936 1.77734 8.49957ZM7.43391 6.23694C7.43391 5.92454 7.68716 5.67128 7.99957 5.67128H8.00522C8.31763 5.67128 8.57088 5.92454 8.57088 6.23694C8.57088 6.54934 8.31763 6.8026 8.00522 6.8026H7.99957C7.68716 6.8026 7.43391 6.54934 7.43391 6.23694ZM7.99957 7.93391C8.31197 7.93391 8.56522 8.18716 8.56522 8.49957V10.7622C8.56522 11.0746 8.31197 11.3278 7.99957 11.3278C7.68716 11.3278 7.43391 11.0746 7.43391 10.7622V8.49957C7.43391 8.18716 7.68716 7.93391 7.99957 7.93391Z" fill="currentColor"/>
+                        </svg>
+                    </span>
+                  </div>
+                </div>
+                
+
+             </div>
+          </div>
+      	</div>
+      {%else%}  
+    		<div class="collection-vailable-colors-container">
+              <h5 class="gold text-center">Available colors</h5>
+              {% assign colors = collection.metafields.custom.colors.value %} 
+              {% if colors.count > 0  %}
+                <script>
+                  
+                {% for color in colors %}
+                  {% if color.swatch   %}
+                    AVAILABLE_COLORS['{{color.name | replace: ' ', '_' | replace: '/', '_' | downcase}}'] = {
+                      colorVal: '{{color.name}}',
+                      color: '{{color.name | handleize}}',
+                      hex: '{{ color.color }}',
+                      image: '{{color.image | img_url: 'medium'}}',
+                      src: '{{color.swatch | img_url: 'medium'}}'
+                    };
+
+                  {% endif  %}
+                {% endfor %}
+                </script>
+
+                <div class="collection-vailable-colors  flex flex-justify-center page-width">
+                  {% for color in colors %}
+                        <div class="collection-color">
+                          <label class="checkbox" data-color="{{color.name | handleize}}">
+                            <input type="radio" name="collection-colors"/>
+                            <span class="variant-box color-{{ collection.handle }}_{{color.name | handleize}}"  style="background-image:url({{color.swatch | img_url: 'medium'}})"></span>
+                          </label>
+                          <span>{{color.name}}</span>
+                          {% if color.badge %}
+                            <span class="collection-color-badge">{{color.badge}}</span>
+                          {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% else %}
+                <div class="collection-vailable-colors collection-vailable-colors-old flex flex-justify-center page-width">
+                  
+                </div>
+                {% endif  %}
+                
+            	
+            </div>
+      {%endif%}
+    
+  </div>
+  
+  <div class="" id="Collection">
+
+    <div class="list-view-items">
+        
+            
+      	{% for product in collection.products %}
+        	{% include 'product-card-list', product: product %}
+        {% endfor %}
+
+     </div>
+
+    {% if paginate.pages > 1 %}
+      {% include 'pagination' %}
+    {% endif %}
+  </div>
+</div>
+
+{% endpaginate %}
+
+
+{% if collection.metafields.content.bottom_description %}
+	<div class="collection-bottom">
+		<div class="page-width">
+          {{collection.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}
+
+{% include "printing-modal" %}
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="{{ 'custom-logo.js' | asset_url }}"></script>
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'listing.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'listing.js' | asset_url }}"></script><![endif]-->
+
+<script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "url": "{{ collection.url }}",
+  "name": "{{ collection.title | escape }}",
+  "description": "{{ collection.description | strip_html | escape }}",
+  "image": "{{ collection.image | image_url }}",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {% for item in collection.products %}
+      {
+        "@type": "Product",
+        "name": "{{ item.title | escape }}",
+        "url": "{{ item.url }}",
+        "image": "{{ item.featured_image | image_url }}",
+        "description": "{{ item.description | strip_html | escape }}"
+      },
+      {% endfor %}
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Allure Pack",
+    "url": "https://allurepack.com/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdn.shopify.com/s/files/1/1901/6329/files/logo_53bf2d4d-6180-4e2b-880c-326745827130.jpg"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+1-800-859-1788",
+      "contactType": "Customer Service"
+    }
+  }
+}
+</script>

@@ -1,0 +1,78 @@
+<div class="rte article-header">
+  
+  <div class="article-header-img">
+    	{{ article | img_url: '600x', scale: 2 | img_tag: article.title }}
+  </div>
+  <div class="page-width">
+    	<div class="grid">
+          <div class="grid__item medium-up--four-sixths medium-up--push-two-twelfths">
+          <h1 class="article__title  font-default">{{ article.title }}</h1>
+            {% if section.settings.blog_show_author %}
+              <span class="article__author">{{ 'blogs.article.by_author' | t: author: article.author }}</span>
+            {% endif %}
+
+            {% if section.settings.blog_show_date %}
+              <span class="article__date">
+                {{ article.published_at | time_tag: format: 'month_day_year' }}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+  </div>
+  
+  
+  
+</div>
+
+<article class="page-width article-body rte" itemscope itemtype="http://schema.org/Article">
+  <div class="grid">
+    <div class="grid__item medium-up--four-sixths medium-up--push-two-twelfths">
+      {{ article.content }}
+    </div>
+  </div>
+</article>
+
+{% if section.settings.show_share_buttons %}
+  {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+{% endif %}
+
+
+<script>
+  $('.article-body a').each(function(){
+  
+  	var link = $(this).attr('href'),
+        title = $(this).attr('title') || '',
+        handle = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '').replace(/^-/, '');
+    
+    if(link === '#' && title){
+      $(this).attr('href', '#' + handle)
+    	$( "h2:contains("+title+"), h3:contains("+title+"), h4:contains("+title+"), h5:contains("+title+")" ).attr('id', handle)
+    }
+  })
+</script>
+
+{% schema %}
+  {
+    "name": "Posts",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_share_buttons",
+        "label": "Show social sharing buttons",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

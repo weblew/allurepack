@@ -1,0 +1,651 @@
+<script src="{{ 'slick.js' | asset_url }}"></script>
+{% if product.metafields.custom.main_collection %}
+    {% assign collectionInfo = product.metafields.custom.main_collection.value %}
+  {% else %}
+
+  {% for collection in product.collections %}
+      
+      {% if collection.metafields.settings.default %}
+        {% assign collectionInfo = collection %}
+      {% elsif collection.description != blank %}
+        {% assign collectionInfo = collection %}
+      {% endif %}
+
+  {% endfor %}
+
+{% endif %}
+
+{% if collection.template_suffix == 'displays' %}
+  {% assign collectionInfo = collections.displays %}
+
+{% elsif collectionInfo == blank and product.title contains 'Display' %}
+  {% assign collectionInfo = collections.displays %}
+{%endif%}
+
+{% assign showPringing = false %}
+
+{% unless product.metafields.custom.disable_printing %}
+  {% for printingOption in collectionInfo.metafields.collectionPrinting %}
+      {% if printingOption[1] == 'on' %}
+  		{% assign showPringing = true %}
+  	{% endif %}
+  {% endfor %}
+
+{% endunless %}
+
+{{ 'listting.css' | asset_url | stylesheet_tag }}
+{{ 'detail.css' | asset_url | stylesheet_tag }}
+{{ 'lightbox.scss.css' | asset_url | stylesheet_tag }}
+
+<script>
+  
+  var currenProduct = {
+    title : {{product.title | json}},
+    handle : {{product.handle | json}},
+    image : {{ product.featured_image.src  | json}},
+    options : {{product.options_with_values | json}},
+    variants : {{product.variants | json}},
+    settings : {{product.metafields.settings | json}},
+    group_items : {},
+    upsell : []
+  };
+  {% for v in product.variants %}
+    var variant = currenProduct.variants.find(v => v.id == {{v.id}});
+    variant.group_items = [];
+    {% if v.metafields.custom.group_items != blank %}
+      
+      {% for gi in v.metafields.custom.group_items.value %}
+          variant.group_items.push({{gi | json}})
+      {% endfor %}
+      
+    {% endif %}
+
+  {% endfor %}
+  PRODUCTS = {};    
+  
+  {% if product.metafields.group_items %}
+    
+  
+      {% if product.metafields.group_items.main %}
+            currenProduct.group_items.main = {{all_products[product.metafields.group_items.main].variants | json}}
+            {% if product.metafields.group_items.insert %}
+               currenProduct.group_items.insert = {{all_products[product.metafields.group_items.insert].variants | json}}
+            {% endif %}
+      {% endif %}
+
+        
+  {% endif %}      
+  
+  PRODUCTS[{{product.id}}] = currenProduct;
+
+  console.log(PRODUCTS[{{product.id}}])
+  
+</script>
+
+<div class="product-template__container page-width product-detail" 
+     itemscope 
+     itemtype="http://schema.org/Product" 
+     id="ProductSection-{{ section.id }}" 
+     data-section-id="{{ section.id }}" 
+     data-section-type="product" 
+     data-enable-history-state="true"  
+     data-id="{{product.id}}">
+  
+  <meta itemprop="name" content="{{ product.title }}">
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: '800x' }}">
+
+  {% comment %}
+    Get first variant, or deep linked one
+  {% endcomment %}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+
+  {% assign has_bulk = false %}
+  {% for option in product.options %}
+    {% assign option_handle = option | handle %}
+    {% if option_handle == 'bulk' %}
+      {% assign has_bulk = true %}
+    {% endif %}
+  {% endfor %}
+  {% if has_bulk %}
+    {%- assign selected_variant = product.variants | where:'option1',selected_variant.option1 | first -%}
+  {% endif %}
+  {%- assign product_thumb_size = '110x110' -%}
+  {%- assign product_image_zoom_size = '1024x1024' -%}
+  {%- assign product_image_scale = '2' -%}
+  {%- assign enable_zoom = section.settings.enable_zoom -%}
+
+  {% case section.settings.image_size %}
+    {% when 'small' %}
+      {%- assign product_image_width = 'medium-up--one-third' -%}
+      {%- assign product_description_width = 'medium-up--two-thirds' -%}
+      {%- assign product_thumbnail_width = 'medium-up--one-third' -%}
+      {%- assign product_image_size = '345x' -%}
+    {% when 'medium' %}
+      {%- assign product_image_width = 'medium-up--one-half' -%}
+      {%- assign product_description_width = 'medium-up--one-half' -%}
+      {%- assign product_thumbnail_width = 'medium-up--one-quarter' -%}
+      {%- assign product_image_size = '530x' -%}
+    {% when 'large' %}
+      {%- assign product_image_width = 'medium-up--two-thirds' -%}
+      {%- assign product_description_width = 'medium-up--one-third' -%}
+      {%- assign product_thumbnail_width = 'medium-up--one-fifth' -%}
+      {%- assign product_image_size = '720x' -%}
+    {% when 'full' %}
+      {%- assign product_image_width = '' -%}
+      {%- assign product_description_width = '' -%}
+      {%- assign product_thumbnail_width = 'medium-up--one-eighth' -%}
+      {%- assign product_image_size = '1090x' -%}
+      {%- assign enable_zoom = false -%}
+  {% endcase %}
+
+  <div class="product-single flex flex-align-top ng-cloak" ng-app="printing" ng-controller="PrintingController as vm">
+    <div class="product-title-content-mobile"></div>
+<div class="product-single__photos {% if product.images.size > 1 %}flex-5{% else  %}flex-4 {% endif %}">
+      <div>
+        {% if product.metafields.custom.label != blank %}
+          <span class="custom-label">{{ product.metafields.custom.label }}</span>
+        {% endif %}
+        {%- assign featured_img_src = current_variant.featured_image.src | default: product.featured_image.src -%}
+        {%- assign featured_img_alt = current_variant.featured_image.alt | default: product.featured_image.alt -%}
+        <div id="FeaturedImageZoom-{{ section.id }}" class="product-single__photo{% if product.images.size > 1 %} product-single__photo--has-thumbnails{% endif %}" {% if enable_zoom %}data-zoom="{{ featured_img_src | img_url: product_image_zoom_size, scale: product_image_scale }}"{% endif %}>
+          
+          <img src="{{ featured_img_src | img_url: product_image_size, scale: product_image_scale }}" alt="{{ featured_img_alt }}" id="FeaturedImage-{{ section.id }}" class="product-featured-img{% if enable_zoom %} js-zoom-enabled{% endif %} lightbox-image">
+        
+        </div>
+      </div>
+
+      {% if product.images.size > 1 %}
+        {% comment %} {% if product.images.size > 3 and collectionInfo.handle == 'displays'%}
+          {%- assign enable_thumbnail_slides = true -%}
+        {% endif %} {% endcomment %}
+
+        <div class="thumbnails-wrapper{% if enable_thumbnail_slides == true %} thumbnails-slider--active{% endif %}">
+          {% if enable_thumbnail_slides == true %}
+            <button type="button" class="btn btn--link thumbnails-slider__btn thumbnails-slider__prev thumbnails-slider__prev--{{ section.id }}">
+              {% include 'icon-chevron-left' %}
+              <span class="icon__fallback-text">{{ 'sections.slideshow.previous_slide' | t }}</span>
+            </button>
+          {% endif %}
+          <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }}">
+            {% for image in product.images %}
+              <div class="product-single__thumbnails-item" data-alt="{{image.alt | handlize}}">
+                <a
+                  href="{{ image.src | img_url: product_image_size, scale: product_image_scale }}"
+                    class="text-link product-single__thumbnail product-single__thumbnail--{{ section.id }}"
+                    {% if enable_zoom %}data-zoom="{{ image.src | img_url: product_image_zoom_size, scale: product_image_scale }}"{% endif %}>
+                  	<img class="product-single__thumbnail-image" src="{{ image.src | img_url: product_thumb_size, scale: product_image_scale }}" alt="{{ image.alt | escape }}">
+                  	
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+          {% if enable_thumbnail_slides == true %}
+            <button type="button" class="btn btn--link thumbnails-slider__btn thumbnails-slider__next thumbnails-slider__next--{{ section.id }}">
+              {% include 'icon-chevron-right' %}
+              <span class="icon__fallback-text">{{ 'sections.slideshow.next_slide' | t }}</span>
+            </button>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="{% if product.images.size > 1 %}flex-5{% else  %}flex-6{% endif %}">
+
+      
+
+      <div class="product-single__meta">
+      <div class="product-title-content">
+      {% if collectionInfo != blank and collectionInfo.all_products_count > 1  %}
+        <a href="{{collectionInfo.url}}" class="product-collection">
+          {{collectionInfo.title}} 
+          {% if collectionInfo.metafields.custom.additional_title != blank %}
+          <span>{{ collectionInfo.metafields.custom.additional_title }}</span>
+          {% endif %}
+        </a>
+      {% endif  %}
+
+        <h1 itemprop="name" class="product-single__title">
+          {{ product.title }}<span class="product-single__variant-title"></span>          
+        </h1>
+        <div class="product-barcode text-muted">Model # {{ current_variant.sku }}</div>
+
+        <div class="product-reviews-badge">
+
+        
+        <!-- Start of Judge.me code -->
+        <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>{{ product.metafields.judgeme.badge }}</div>
+        <!-- End of Judge.me code -->
+        </div>
+
+
+       </div>
+      
+        <div class="list-view-item-pricing flex-4">
+
+          
+          {% include 'product-price', has_bulk:has_bulk %}
+          
+          <div class="volume-discount {% if has_bulk == true %} has-bulk{% endif %}"></div>
+         
+        </div>
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+		  <meta itemprop="price" content="{{ current_variant.price | money_without_currency }}">
+          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+            {% if product.options.size == 1 and product.variants[0].title == 'Default Title' %}
+              
+              {% else %}
+              <div class="flex-10 product-swatches">
+                    
+                            {% assign colors = collectionInfo.metafields.custom.colors.value %} 
+
+                            {% for option in product.options_with_values %}
+                                {% assign optionname = option.name | downcase %}
+                                {% if optionname == 'bulk' %}
+                                      <div class="selector-wrapper js product-form__item displayNone">
+                                        <select class="single-option-selector btn-black-light single-option-selector-{{ section.id }} product-form__input" id="SingleOptionSelector-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
+                                          {% for value in option.values %}
+                                            <option value="{{ value | escape }}"{% if forloop.first %} selected="selected"{% endif %}>{{ value }}</option>
+                                          {% endfor %}
+                                        </select>
+                                      </div>
+                                  {% else %}
+                                        <div class="product-options-group {% if option.values.size < 2 and optionname != 'color' %}displayNone{% endif  %}">
+                                          <div class="product-options-group-title">
+                                            {{option.name}} - <span>{{option.selected_value}},</span>
+                                          </div>
+                                          <div id="SingleOptionSelector-{{ forloop.index0 }}" class="flex selector-wrapper js product-form__item ">
+                                            
+                                              {% assign optionIndex = forloop.index  %}
+                                              {% for value in option.values %}
+                                                  {% assign color = colors | where:'name',value | first  %}
+                                                  
+                                                  <label title="{{value}}" class="{% if optionname contains 'color' %}color-option{% endif  %}">
+                                                      <input class="single-option-selector single-option-selector-{{ section.id }}" data-index="option{{ optionIndex }}" name="{{option.name}}" type="radio" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}/>
+                                                      <span class="color-{{collectionInfo.handle}}_{{value | handle}} " style="background-color:{{value}};{% if color  %}background-image: url({{color.swatch | img_url: 'medium'}});{% endif  %}">
+                                                        {{ value }}
+                                                      </span>
+                                                  </label>
+                                              {% endfor %}
+                                            
+                                          </div>
+                                      </div>
+                                  {%endif%}
+                          {% endfor %}
+                  </div>
+
+				{% endif %}
+            
+
+          <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form-{{ section.id }}{% unless section.settings.show_variant_labels %} product-form--hide-variant-labels{% endunless %}" data-section="{{ section.id }}">
+            
+            
+            {% if showPringing %}
+            	<div class="flex product-colors-printing printing-options">
+                  
+                  <div class="flex-10 product-printing">
+                  
+                    {% comment %} <h5 class="gold">
+                          Printing options
+                          &nbsp;&nbsp;
+                          <div class="btn btn-black-light btn-extra-small js-open-printing-modal displayNone" data-apply="all">EDIT</div>
+                      	  <div class="btn btn-black-light btn-extra-small js-remove-printing displayNone" data-apply="all">REMOVE</div>
+                    </h5> {% endcomment %}
+                    
+                    
+                    <div class="product-printing-selected-locations displayNone" ng-class="{'displayNone':!vm.applyToItems['{{product.id}}'].length}">
+                        <div ng-repeat="location in vm.applyToItems['{{product.id}}']" data-productid="{{product.id}}" class="stamp-preview-container flex flex-align-center flex-justify-between js-open-printing-modal js-open-printing-modal-add" ng-click="vm.openPrintingPanel('{{product.id}}')">
+                          {% raw %}
+                            <div class="js-item-properties">
+                                <div class="no-wrap location-title" ng-bind="location.location"></div>
+                                <div ng-if="location.type === 'plate'">Plate on file</div>
+                                <div ng-if="location.type === 'upload'" ng-bind="location.file.name"></div>
+                                <div ng-if="location.type === 'custom'">Custom</div>
+                                <div class="location-color">
+                                  <div class="location-color-img" data-imprinting-color="{{location.color}}"></div>
+                                  <div ng-bind="location.color"></div>
+                                </div>
+                            </div>
+                          {% endraw %}
+                            {% comment %} <div class="" >
+
+
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6665 2.1144C12.5064 2.1144 12.3479 2.14593 12.2 2.20719C12.0522 2.26845 11.9178 2.35823 11.8046 2.47142L2.92978 11.3462L2.28333 13.7165L4.65364 13.0701L13.5284 4.19528C13.6416 4.08209 13.7314 3.94771 13.7927 3.79982C13.8539 3.65194 13.8855 3.49343 13.8855 3.33335C13.8855 3.17327 13.8539 3.01477 13.7927 2.86688C13.7314 2.71899 13.6416 2.58461 13.5284 2.47142C13.4153 2.35823 13.2809 2.26845 13.133 2.20719C12.9851 2.14593 12.8266 2.1144 12.6665 2.1144ZM11.6898 0.975348C11.9995 0.847084 12.3313 0.781067 12.6665 0.781067C13.0017 0.781067 13.3336 0.847084 13.6432 0.975348C13.9529 1.10361 14.2343 1.29161 14.4713 1.52861C14.7083 1.76561 14.8963 2.04698 15.0245 2.35663C15.1528 2.66629 15.2188 2.99818 15.2188 3.33335C15.2188 3.66852 15.1528 4.00041 15.0245 4.31007C14.8963 4.61973 14.7083 4.90109 14.4713 5.13809L5.47126 14.1381C5.38922 14.2201 5.28719 14.2793 5.17526 14.3099L1.5086 15.3099C1.27779 15.3728 1.03095 15.3073 0.861782 15.1381C0.692615 14.9689 0.627062 14.7221 0.69001 14.4913L1.69001 10.8246C1.72054 10.7127 1.77974 10.6107 1.86178 10.5286L10.8618 1.52861C11.0988 1.29161 11.3801 1.10361 11.6898 0.975348Z" fill="#202020"/>
+                              </svg>
+
+                            </div> {% endcomment %}
+                          
+                            {% raw %}
+                              <input type="hidden" data-location-color="{{location.location}}" name="properties[Printing {{location.location}} color]" value="{{location.color}}">
+                              <input type="hidden" data-location-plate="{{location.location}}" ng-if="location.type === 'plate'" name="properties[_Printing {{location.location}} plate]" value="Yes">
+                              <input type="hidden" data-location-file="{{location.location}}" ng-if="location.type === 'upload'" name="properties[_Printing {{location.location}} file]" value="{{location.file.name}}">
+          					
+                          	  <div data-location-custom ng-if="location.type === 'custom'">
+                                  <input type="hidden" name="properties[_Printing {{location.location}} custom]" value="custom">
+                                  <div ng-repeat="(group, groupValue) in location.logoSettings">
+                                    <input type="hidden" ng-repeat="(setting, settingValue) in location.logoSettings[group]" name="properties[_Printing {{location.location}} {{group}} {{setting}}]" value="{{location.logoSettings[group][setting]}}">
+                                  </div>
+                              </div>
+                          {% endraw %}
+                        </div>
+                      </div>
+
+                      <div class="js-item-properties">
+                        
+                      <div class="btn btn-gold-light" ng-show="!vm.applyToItems['{{product.id}}']" ng-click="vm.openPrintingPanel('{{product.id}}')">
+                        <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="0.5" width="1" height="13" fill="#C7A049"/>
+                        <rect x="13" y="6.5" width="1" height="13" transform="rotate(90 13 6.5)" fill="#C7A049"/>
+                        </svg>
+                          
+                        ADD STAMP
+                        
+                      </div>
+                      <div class="selected-printing-options" ng-show="!vm.applyToItems['{{product.id}}']">
+                            {% assign printingOptions = '' %}
+                            {% for printingOption in collectionInfo.metafields.collectionPrinting %}
+                                {% if printingOption[1] == 'on' %}
+                                    {% assign option = printingOption[0] | replace: '_', ' ' %}
+                                    {% assign printingOptions = printingOptions | append:option | append:'|' %}
+                                {% endif %}
+                            {% endfor %}
+                            Hot stamp {{printingOptions | split:'|' | join:' & '}}
+                            <span class="" ng-click="vm.togglePrintingPricing()">
+                              Details & Pricing 
+                              <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99957 3.40866C5.18793 3.40866 2.90866 5.68793 2.90866 8.49957C2.90866 11.3112 5.18793 13.5905 7.99957 13.5905C10.8112 13.5905 13.0905 11.3112 13.0905 8.49957C13.0905 5.68793 10.8112 3.40866 7.99957 3.40866ZM1.77734 8.49957C1.77734 5.06313 4.56313 2.27734 7.99957 2.27734C11.436 2.27734 14.2218 5.06313 14.2218 8.49957C14.2218 11.936 11.436 14.7218 7.99957 14.7218C4.56313 14.7218 1.77734 11.936 1.77734 8.49957ZM7.43391 6.23694C7.43391 5.92454 7.68716 5.67128 7.99957 5.67128H8.00522C8.31763 5.67128 8.57088 5.92454 8.57088 6.23694C8.57088 6.54934 8.31763 6.8026 8.00522 6.8026H7.99957C7.68716 6.8026 7.43391 6.54934 7.43391 6.23694ZM7.99957 7.93391C8.31197 7.93391 8.56522 8.18716 8.56522 8.49957V10.7622C8.56522 11.0746 8.31197 11.3278 7.99957 11.3278C7.68716 11.3278 7.43391 11.0746 7.43391 10.7622V8.49957C7.43391 8.18716 7.68716 7.93391 7.99957 7.93391Z" fill="#895F67"/>
+                              </svg>
+
+                            </span>
+                      	</div>
+                    </div>
+                  </div>
+                  
+            	</div>
+
+            {% elsif product.metafields.custom.file_upload %}
+                <div>
+                  <label>Upload Logo</label>
+                  <input type="file" name="properties[Logo]"/>
+                  
+                </div>
+              <br/>
+            {% endif %}    
+            
+            <select name="id" id="ProductSelect-{{ section.id }}" data-section="{{ section.id }}" class="product-form__variants no-js">
+             
+              {% for variant in product.variants %}
+                <option {% if variant == current_variant %} selected="selected" {% endif %} value="{{ variant.id }}" data-sku="{{variant.sku}}" data-price="{{variant.price | money}}" data-original-price="{{variant.compare_at_price | money}}">
+                    {{ variant.title }}
+                  </option>
+              {% endfor %}
+            </select>
+            
+            <div class="flex" style="gap:10px">  
+              
+              {% if section.settings.show_quantity_selector %}
+                <div class="">
+                  
+                  {% assign soldIn = product.variants[0].option2 %}
+                  {% if product.metafields.custom.sold_in != blank %}
+                    {% assign soldIn = product.metafields.custom.sold_in %}
+                  {% endif %}
+                 
+                  {% if soldIn == 1 or soldIn == '1' or soldIn == blank %}
+                        <input type="number" placeholder="Qty" id="Quantity" name="quantity" class="btn-black-light flex-9">
+                  {%else%} 
+                  		{% assign current_variant_bulk = current_variant.option2 | plus:0 %}
+                        <select id="Quantity" name="quantity" class="btn-black-light flex-9">
+                          {% for i in (1..200)  %}
+                          	  {%- assign val = i | times:soldIn -%}
+                              <option {%if false and current_variant_bulk == val %} selected {%endif%}>{{val}}</option>
+                          {% endfor %}
+                        </select>
+                  {%endif%}
+                  
+                  
+                </div>
+              {% endif %}
+
+              <div class="product-form__item product-form__item--submit">
+                <button type="submit" name="add" id="AddToCart-{{ section.id }}" class="btn btn-black-dark product-form__cart-submit{% if product.options.size == 1 and product.variants[0].title == 'Default Title' %} product-form__cart-submit--small{% endif %}">
+                  <span id="AddToCartText-{{ section.id }}">
+                    {{ 'products.product.add_to_cart' | t }}
+                  </span>
+                </button>
+              </div>
+              
+            </div>
+               <div class="qty-error"></div>         
+          </form>
+
+        </div>
+
+        {% if collectionInfo.metafields.collection.size > 0 or product.metafields.dimension.size > 0 or product.metafields.style.style_i != blank %}
+          
+          {% if product.metafields.dimension.size > 0 or product.metafields.style.style_i != blank %}
+          <div class="product-specifications flex">
+            {% if product.tags contains 'box' %}
+            <div class="">
+              <strong>Insert</strong>
+              <div class="">{{product.metafields.style.style_i | default :'N\A'}}</div>
+            </div>
+            {%endif%}
+                {% if product.metafields.dimension.dimension_w != blank %}
+                <div class="">
+                  <strong>Width</strong>
+                  <div class="">{{product.metafields.dimension.dimension_w | default :'N\A'}}&nbsp;&nbsp;</div>
+                </div>
+                {% endif %}
+            {% if product.metafields.dimension.dimension_d != blank %}
+                <div class="">
+                  <strong>Depth</strong>
+                  <div class="">{{product.metafields.dimension.dimension_d | default :'N\A'}}&nbsp;&nbsp;</div>
+                </div>
+              {% endif %}
+
+              {% if product.metafields.dimension.dimension_h != blank %}
+                <div class="">
+                  <strong>Height</strong>
+                  <div class="">{{product.metafields.dimension.dimension_h | default :'N\A'}}&nbsp;&nbsp;</div>
+                </div>
+                {% endif %}
+
+                {% if product.metafields.dimension.dimension_l != blank %}
+                <div class="">
+                  <strong>Length</strong>
+                  <div class="">{{product.metafields.dimension.dimension_l | default :'N\A'}}&nbsp;&nbsp;</div>
+                </div>
+                  {% endif %}
+
+          </div>
+
+          {% endif %}
+          {% if collectionInfo.metafields.collection.size > 0 %}
+                <div class="product-specifications flex">
+                {% if collectionInfo.handle != 'supplies' %}
+                    {% if collectionInfo.metafields.collection.specification  %}
+
+                        {{collectionInfo.metafields.collection.specification}}
+
+                    {% else %}           				
+
+
+                        {% include 'collectionMeta' %}
+
+
+                    {%endif%}
+                {%endif%}
+                </div>
+          {% endif %}
+
+      {%endif%}
+      {% if product.description != blank  %}
+        <div class="product-single__description rte" >
+          <p class="product_description_title">Product Highlights</p>
+          <div itemprop="description">
+          {{ product.description }}
+          </div>
+        </div>
+      {% endif  %}
+      {% if  collectionInfo.metafields.custom.show_on_product_page %}
+      {% unless product.metafields.custom.hide_about_collection %}
+                                
+        {% assign collectionInfoDescription = collectionInfo.description |  strip_html  %}
+        {% if collectionInfoDescription != blank and collectionInfoDescription.size > 1 %}
+            <div class="product-single__description rte" >
+              <p class="product_description_title">About this Collection</p>
+              <div itemprop="description">
+              {{ collectionInfo.description }}
+              </div>
+            </div>
+        {% endif  %}
+      {% endunless %}
+        {% endif  %}
+        {% if section.settings.show_share_buttons %}
+          {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+        {% endif %}
+      </div>
+    </div>
+    
+    {% include "printing-modal" %}
+  </div>
+</div>
+
+<div id="reviews" class="product-reviews">
+
+        <div class="page-width">
+          <div class="product-reviews-inner">
+
+          <!-- Start of Judge.me code -->
+            <div style='clear:both'></div>
+            <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-auto-install='false'>{{ product.metafields.judgeme.widget }}</div>
+          <!-- End of Judge.me code -->
+          
+        </div>
+        </div>
+</div>
+
+<div class="grid-view-items-container">
+  <div class="page-width">
+    <div class="section-title">
+    <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3.42254 4.53809H0C0.614301 4.88912 1.8429 5.80179 1.8429 6.64426V19.5446H10.7344V17.9649H3.42254V4.53809Z" fill="#C7A049"></path>
+      <path d="M12.5775 4.53809H16C15.3857 4.88912 14.1571 5.80179 14.1571 6.64426V19.5446H9.15493V17.965H12.5775V4.53809Z" fill="#C7A049"></path>
+      <path d="M5.44889 1.11568C4.92235 0.852412 3.68978 1.00726 3.86926 1.90554C4.13257 2.9586 4.92239 3.22189 7.23914 3.22189C6.76525 2.16858 5.97543 1.37896 5.44889 1.11568Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.5"></path>
+      <path d="M10.8126 1.11568C11.3391 0.852412 12.5717 1.00726 12.3922 1.90554C12.1289 2.9586 11.3391 3.22189 9.02234 3.22189C9.49622 2.16858 10.286 1.37896 10.8126 1.11568Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.5"></path>
+    </svg>      
+    similar items
+  </div>
+      <div class="grid-view-items flex ">
+
+        {% paginate collectionInfo.products by 500 %}
+        {% for item in collectionInfo.products %}
+
+          {% if product.tags contains 'box' and item.tags contains 'box' %}
+            <div class="home-grid-item">
+                {% include 'home-grid-item', product: item %} 
+                </div>
+          {% elsif product.id != item.id and product.type == item.type %}
+            <div class="home-grid-item">
+        		{% include 'home-grid-item', product: item %}
+            </div>
+          {% endif %}
+
+        {% endfor %}
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        {% endpaginate %}
+
+      </div>
+  </div>
+</div>
+
+{% unless product == empty %}
+  <script type="application/json" id="ProductJson-{{ section.id }}">
+    {{ product | json }}
+  </script>
+{% endunless %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+<script src="{{ 'custom-logo.js' | asset_url }}"></script>
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'loader.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'loader.js' | asset_url }}"></script><![endif]-->
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'listing.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'listing.js' | asset_url }}"></script><![endif]-->
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'detail.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'detail.js' | asset_url }}"></script><![endif]-->
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'lightbox.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'lightbox.js' | asset_url }}"></script><![endif]-->
+
+
+{% schema %}
+  {
+    "name": "Product pages",
+    "settings": [
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image size",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          },
+          {
+            "value": "full",
+            "label": "Full-width"
+          }
+        ],
+        "default": "medium"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_quantity_selector",
+        "label": "Show quantity selector",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_variant_labels",
+        "label": "Show variant labels",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_zoom",
+        "label": "Enable image zoom",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_share_buttons",
+        "label": "Show social sharing buttons",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

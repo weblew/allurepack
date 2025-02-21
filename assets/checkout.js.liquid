@@ -1,0 +1,12 @@
+(function() {
+
+	console.log(Shopify.Checkout.step)
+  	if(Shopify.Checkout.step === 'payment_method'){
+    	
+      	Checkout.$('[data-gateway-group="manual"]').remove()
+      
+    }
+
+  
+})();
+

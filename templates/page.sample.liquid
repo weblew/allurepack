@@ -1,0 +1,190 @@
+{{ 'sample.scss.css' | asset_url | stylesheet_tag }}
+
+
+<div class="page-width">
+  <br><br>
+  <h1 class="font-default text-center">{{page.title}}</h1>
+ <div class="sample-content">
+   {{ page.content }}
+  </div>
+  
+  <br>
+  
+  {% assign menu = linklists['site-nav-bottom'] %}
+  
+  {% form 'contact' %}
+  
+  		<div class="sample-warning">
+          We require that you fill out this form to validate that you are a legitimate business.
+          We reserve the right to deny your request or follow up to see if the sample meets your expectations. We will then inquire if you are ready to proceed with an order.  
+        </div>
+  
+  	  <div>
+        	<h3>General Information</h3>  
+        	<div>Please fill out all required fields</div>
+        	<br>
+        	<div>
+              	<label>Business Name *</label>  
+              	<input type="text"  name="contact[Business Name]" required/>
+        	</div>
+        	<div>
+              	<label>Email *</label>  
+              	<input type="text"  name="contact[Email]" required/>
+        	</div>
+        	<div>
+              	<label>Phone Number *</label>  
+              	<input type="text"  name="contact[Phone Number]" required/>
+        	</div>
+        	<div class="flex">
+              <div class="flex-4">
+                  <label>Address *</label>  
+                  <input type="text"  name="contact[Address]" required/>
+              </div>
+              <div class="flex-3">
+                  <label>City *</label>  
+                  <input type="text"  name="contact[City]" required/>
+              </div>
+              <div class="flex-3">
+                  <label>State *</label>  
+                  <input type="text"  name="contact[State]" required/>
+              </div>
+        	</div>
+        	<div>
+              	<label>Website</label>  
+              	<input type="text"  name="contact[Website]"/>
+        	</div>
+        	<div>
+              	<label>Additional Business Contact Information, i.e. social media page:</label>  
+              	<textarea type="text"  name="contact[social media]"></textarea>
+        	</div>
+  	  </div>
+  		
+  	  <br>
+  		<div>
+        	<h3>Business Information</h3>  
+        	<div>
+              	<label>What is your annual budget for packaging?</label>  
+              	<select name="contact[Budget]" required>
+                  	<option value="$100 - $1000">$100 - $1000</option>  
+                    <option value="$1000 - $5000">$1000 - $5000</option>  
+                    <option value="$5000 - $10000">$5000 - $10000</option>  
+                    <option value="$10000+">$10000+</option>  
+              	</select>
+        	</div>
+        	<div>
+              	<label>What is your primary business?</label>  
+              	<select name="contact[primary business]" required>
+                  	<option value="Wholesale jewelry">Wholesale jewelry</option>  
+                    <option value="Retail jewelry">Retail jewelry</option>  
+                    <option value="Ecommerce jewelry">Ecommerce jewelry</option>  
+                    <option value="Cosmetics">Cosmetics</option>  
+                  	<option value="Apparel">Apparel</option> 
+                  	<option value="Other">Other</option> 
+              	</select>
+        	</div>
+          	<div style="display:none;" class="primary-bussnes-other">
+              	<label>Website</label>  
+              	<input type="text"  name="contact[primary business - Other]"/>
+        	</div>
+  	  </div>
+  		
+  	  <br>
+      <h3>Product Information for Sample</h3>  
+      <div class="text-center">
+            <select class="sample-dropdown" id="categoryMenu" name="contact[category]" required>
+                <option value="">Select Category</option>  
+                {% for link in menu.links %}
+                {% if link.links.size > 1 %}
+                  <option data-menu="{{link.handle}}">{{link.title}}</option>  
+                {% endif %}
+                {% endfor %}
+            </select>
+
+
+      </div>
+  
+      <div class="text-center">
+
+            {% for link in menu.links %}
+                {% if link.links.size > 1 %}
+                    <select class="sample-dropdown" class="" data-child_menu="{{link.handle}}" name="contact[collection]" style="display:none;">
+                       <option value="">Select Collection</option>  
+                        {% for child_link in link.links %}
+                            {% if child_link.type == 'collection_link' %}
+                            <option data-link="{{child_link.url}}">{{child_link.title}}</option>  
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                {% endif %}
+            {% endfor %}
+
+      </div>
+  
+      <div class="text-center">
+
+
+        <select class="sample-dropdown" class="" name="contact[item]" data-items style="display:none;" required>
+            <option>Select Item</option>
+        </select>
+
+      </div>
+  
+    <div class="text-center">
+
+
+      <select class="sample-dropdown" class="" name="contact[color]" data-color style="display:none;">
+          <option>Select Color</option>
+      </select>
+      
+      <input type="hidden" name="contact[sku]" required/>
+
+    </div>
+  
+    <div class="text-center ">
+      <div  data-qty  style="display:none;">
+      <label class="text-left">If the sample meets your expectations, how many units is your order likely to include?</label>
+      <input type="number" placeholder="" name="contact[quantity]"/>
+      </div>
+	</div>
+    <div class="">
+      <label>Are there other allurepack items that you will consider purchasing, along with this item?</label>  
+      <div class="flex">
+        <div class="flex-1-5">
+          <label>
+            <input type="radio"  name="contact[Are there any other Allurepack packaging that you will consider purchasing, along with this item]" value="Yes" required/>
+            Yes
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio"  name="contact[Are there any other Allurepack packaging that you will consider purchasing, along with this item]" value="No" required/>
+            No
+          </label>
+        </div>  
+      </div>
+    </div>
+    
+  	<br>
+  	<input type="submit" class="btn" value="Request Sample">
+  
+ {% endform %}
+  
+      
+<!--     	<input id="sample-search" style="display:none;"/> -->
+  
+  
+  
+</div>
+
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+      
+		<div class="page-width">
+          {{page.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'sample.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'sample.js' | asset_url }}"></script><![endif]-->

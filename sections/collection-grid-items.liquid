@@ -1,0 +1,144 @@
+{{ 'listting.css' | asset_url | stylesheet_tag }}
+
+{% paginate collection.products by 50 %}
+
+<div data-section-id="{{ section.id }}" data-section-type="collection-template">
+  
+  
+  <div class="page-width" id="Collection">
+
+  <div class="shop-by-box-header flex flex-align-center flex-justify-between">
+          <h1 class="gold font-default">
+            {{collection.title}}  
+          </h1>
+          {% if template.suffix == 'types' %}
+
+            <div class="shop-by-type-btn btn btn-gold-light types-page">
+              <span> Shop by type </span>
+              <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.18306 6.18306C3.42714 5.93898 3.82286 5.93898 4.06694 6.18306L7.375 9.49112L10.6831 6.18306C10.9271 5.93898 11.3229 5.93898 11.5669 6.18306C11.811 6.42714 11.811 6.82286 11.5669 7.06694L7.81694 10.8169C7.57287 11.061 7.17714 11.061 6.93306 10.8169L3.18306 7.06694C2.93898 6.82286 2.93898 6.42714 3.18306 6.18306Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="js-types types">
+                    {% for link in linklists['box-types'].links %}
+                        <a href="{{ link.url }}"  class="type flex flex-align-center">
+                            <svg><use xlink:href="#{{ link.title | handle }}-icon"></use></svg>
+                            {{ link.title }}
+                        </a>
+                    {% endfor %}
+            </div>
+            </div>
+            
+          
+            <a href="/pages/jewelry-boxes" class="btn btn-gold-light shop-by-type-btn">
+              Shop By Collection
+                <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.18306 10.5171C4.93898 10.2731 4.93898 9.87733 5.18306 9.63325L8.49112 6.32519L5.18306 3.01714C4.93898 2.77306 4.93898 2.37733 5.18306 2.13325C5.42714 1.88917 5.82286 1.88917 6.06694 2.13325L9.81694 5.88325C10.061 6.12733 10.061 6.52306 9.81694 6.76714L6.06694 10.5171C5.82286 10.7612 5.42714 10.7612 5.18306 10.5171Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.25" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                
+              
+            </a>
+
+            <div class="types-links">
+                    {% for link in linklists['box-types'].links %}
+                      <a href="{{ link.url }}"  class="type {% if link.active  %}active{%endif%}">
+                            <svg><use xlink:href="#{{ link.title | handle }}-icon"></use></svg>
+                            {{ link.title }}
+                        </a>
+                    {% endfor %}
+                    </div>
+          {% endif %}
+          </div>
+	
+    
+    
+    {% if collection.metafields.content.top_description %}
+      <div class="collection-top">
+        
+        <div class="">
+              {{collection.metafields.content.top_description}}
+          </div>
+              <br>
+        </div>
+    {% endif %}
+
+    <div class="flex flex-align-top collection-container" style="width: 100%;position:relative;">
+        {% assign totalFilters = collection.filters | size  %}
+        {% if totalFilters > 1 and collection.metafields.custom.hide_filters != true %}
+              <div class="filters flex-2 filters-panel">
+                <div class="filters-panel-inner">
+                <div class="group-title">Filters</div>
+                {% render 'facets',
+                  results: collection,
+                  enable_filtering: true,
+                  enable_sorting: false,
+                  filter_type: 'vertical',
+                  paginate: paginate
+                %}
+                <div class="filters-panel-close">
+                <button class="btn btn-gold-light" onclick="document.querySelector('.filters-panel').classList.remove('open')">Apply Filters</button>
+              </div>
+                </div>
+              </div>
+        {% endif %}
+      <div class="{% if totalFilters > 1 and collection.metafields.custom.hide_filters != true  %}flex-8{% else %}flex-10{% endif %}">
+
+            <div class="group-title flex flex-align-center flex-justify-between">
+              <span><span id="ProductCount">{{collection.products.count}}</span> Products</span>
+            <button class="btn filter-btn" onclick="document.querySelector('.filters-panel').classList.add('open')">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_2258_11595)">
+                      <path d="M8.25 13.5H9.75C10.1625 13.5 10.5 13.1625 10.5 12.75C10.5 12.3375 10.1625 12 9.75 12H8.25C7.8375 12 7.5 12.3375 7.5 12.75C7.5 13.1625 7.8375 13.5 8.25 13.5ZM2.25 5.25C2.25 5.6625 2.5875 6 3 6H15C15.4125 6 15.75 5.6625 15.75 5.25C15.75 4.8375 15.4125 4.5 15 4.5H3C2.5875 4.5 2.25 4.8375 2.25 5.25ZM5.25 9.75H12.75C13.1625 9.75 13.5 9.4125 13.5 9C13.5 8.5875 13.1625 8.25 12.75 8.25H5.25C4.8375 8.25 4.5 8.5875 4.5 9C4.5 9.4125 4.8375 9.75 5.25 9.75Z" fill="#2F2923"/>
+                      </g>
+                      <defs>
+                      <clipPath id="clip0_2258_11595">
+                      <rect width="18" height="18" fill="white"/>
+                      </clipPath>
+                      </defs>
+                      </svg>
+
+                      Sort & Filters
+                    </button>
+            </div>
+        
+            <div class="grid-view-items flex " id="product-grid" data-id="{{ section.id }}">
+                    
+                {% for product in collection.products %}
+                  <div class="home-grid-item">
+                    
+                    {% include 'home-grid-item' %}
+                  </div>
+                {% endfor %}
+
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+
+            </div>
+
+            {% if paginate.pages > 1 %}
+              {% include 'pagination' %}
+            {% endif %}
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endpaginate %}
+
+{% if collection.metafields.content.bottom_description %}
+	<div class="collection-bottom">
+		<div class="page-width">
+          {{collection.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}
+
+{% include "printing-modal" %}
+
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'listing.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'listing.js' | asset_url }}"></script><![endif]-->
+

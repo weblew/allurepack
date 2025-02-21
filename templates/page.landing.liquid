@@ -1,0 +1,184 @@
+{{ 'landing.css' | asset_url | stylesheet_tag }}
+
+{% include 'box-icons' %}
+
+<div class="page-width">
+
+	  {% if page.handle == 'displays' %}
+  			<div class="flex flex-center">
+              
+              <div class="flex-10">
+                <div class="flex landing-banner displays-banner font-default">
+                  	
+                  	<h1 class="font-default">{{ page.title }}</h1>
+                  
+                </div>
+              </div> 
+              
+            </div>
+  			{% section 'displays_types' %}
+  
+  			<div class="flex flex-center">
+              
+              <div class="flex-10">
+                <a href="/pages/custom">
+                  	
+                  	<img src="{{'custom-displays.png'| file_img_url : 'master'}}">
+                  
+                </a>
+              </div> 
+              
+            </div>
+  			
+  	  {% endif %}
+  
+  		
+      {% if page.handle == 'pouches-bags' %}
+  
+  			<div class="flex flex-center">
+              
+              <div class="flex-10">
+                <div class="flex landing-banner pouches-bags font-default" >
+                  	
+                  	<h1 class="font-default">Pouches <br>& Bags</h1>
+                  
+                </div>
+              </div> 
+              
+            
+  			
+  			<div class="flex flex-10 collection-landgin-box-grid">
+              	{% for link in linklists[page.handle].links %}
+  				<div class="flex-2-5">
+                    <a class="collection-box collection-landgin-box" 
+                       href="{{link.url}}" 
+                       {%if collections[link.handle].image%}style="background-image:url({{collections[link.handle].image | img_url : 'large'}})" {%endif%}>
+                        <strong>{{link.title}}</strong>
+                        <div class="overlay gold flex flex-center font-default">
+                            See Details >
+                        </div>
+                        {% if link.object.metafields.custom.label != blank %}
+                              <div class="collection-badge">
+                                {{ link.object.metafields.custom.label }}
+                              </div>
+                            {% endif %}
+                    </a>
+                </div>
+              	{% endfor %}
+              	<div class="flex-2-5">
+                    <a class="collection-box collection-landgin-box" 
+                       href="{{collections.folders.url}}" style="background-image:url({{collections.folders.image | img_url : 'master'}})">
+                        <strong>Pearl Folders</strong>
+                        <div class="overlay gold flex flex-center font-default">
+                            See Details >
+                        </div>
+                    </a>
+                </div>
+  			</div>
+              
+              </div>
+  			
+  	  {% endif %}
+  
+  		
+  	  {% if page.handle == 'boxes' %}
+  
+  		  {% section "item-colors" %}
+  
+  		  <div class="flex flex-center">
+              
+              <div class="flex-10">
+                <div class="flex landing-banner displays-banner font-default">
+                  	
+                  	<h1 class="font-default">{{ page.title }}</h1>
+                  
+                </div>
+              </div> 
+              
+          </div>
+  
+          <div class="flex flex-align-top">
+            <div class="flex-2">
+              <div class="js-colors colors">
+                  <h4 class="text-center">
+                    <span>></span>
+                    Shop by color
+                  </h4>
+                <div class="colors-container">
+                	<div class="colors-container-inner"></div>
+                </div>
+              </div>
+              <div class="js-types types open">
+                  <h4 class="text-center">
+                    <span>></span>
+                    Shop by type                	
+                	</h4>
+                	<div class="types-container">
+                      {% for product_type in collections.boxes.all_types %}
+                          {% if product_type != 'logo' and product_type != blank %}
+                          <a href="/collections/shop/box+type_{{ product_type | downcase }}" class="type flex flex-align-center">
+                              <svg><use xlink:href="#{{ product_type | downcase }}-icon"></use></svg>
+                              {{ product_type }}
+                          </a>
+                          {% endif %}
+                      {% endfor %}
+                    </div>
+              </div>
+            </div>
+            <div class="js-available-collections available-collections flex flex-8">
+              	
+              	<h2 class="font-default">The following collections have the color you chose</h2>
+              
+                 {% for link in linklists[page.handle].links %}
+
+                    <div class="flex-third" data-collection="{{link.handle}}">
+                        <a class="collection-box flex" 
+                           href="{{link.url}}" 
+                           {%if collections[link.handle].image%}style="background-image:url({{collections[link.handle].image | img_url : 'large'}})" {%endif%}>
+                            <strong>{{link.title}}</strong><span class="gold"> Collection</span>
+                            <div class="overlay gold flex flex-center font-default">
+                                See Details >
+                            </div>
+                            {% if link.object.metafields.custom.label != blank %}
+                              <div class="collection-badge">
+                                {{ link.object.metafields.custom.label }}
+                              </div>
+                            {% endif %}
+                        </a>
+                    </div>
+
+                {% endfor %}
+              
+              	<div class="flex-third folders-box">
+                    <a class="collection-box flex" 
+                       href="{{collections.folders.url}}" 
+                       style="background-image:url({{collections.folders.image | img_url : 'master'}})">
+                      <strong>Pearl</strong><span class="gold"> Folders</span>
+                      <div class="overlay gold flex flex-center font-default">
+                        See Details >
+                      </div>
+                      {% if link.object.metafields.custom.label != blank %}
+                              <div class="collection-badge">
+                                {{ link.object.metafields.custom.label }}
+                              </div>
+                            {% endif %}
+                    </a>
+                </div>
+            </div>
+          </div>
+  		  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'landing.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+		  <!--[if lte IE 9]><script src="{{ 'landing.js' | asset_url }}"></script><![endif]-->
+  	  {% endif %}
+    
+</div>
+
+
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+      
+		<div class="page-width">
+          {{page.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}

@@ -1,0 +1,263 @@
+//displayAvailableColors();
+
+$(document).ready(function(){
+
+    if($(window).width() >= 960 ){
+		
+  		
+      	$('.js-colors').addClass('open');
+  		$('.colors-container').show();
+      	//$('.js-types').addClass('open');
+  		//$('.types-container').show();
+
+	}
+  	
+  	if(location.hash && $('.js-colors [data-color="'+location.hash.replace('#','')+'"]').length){
+    	$('.js-colors [data-color="'+location.hash.replace('#','')+'"]').click()
+    }
+  	
+	updateMaterialFilters()
+                  
+}).on('click', '.js-colors .color', function(e){
+  
+  
+	var color = $(this).data('color'),
+        colors = $(this).data('colors');
+  
+  	if(colors){
+    
+    	colors = colors.split('\n')	
+        
+        colors = _.map(colors, function(c){
+        	return handleize(c)
+        });
+            
+    }else{
+    
+    	colors = [];	
+      
+    }
+  
+  	colors.push(handleize(color))
+    
+	
+  	$(this).toggleClass('selected').siblings('.color').removeClass('selected');
+  
+  	filterCollections();
+
+	return;
+  
+    if($(this).hasClass('selected')){
+      
+      	$('.folders-box').hide();
+		//$('.available-collections h2').show();
+        $('[data-collection]').each(function(){
+            var collectionName = $(this).data('collection'),
+                collectionLink = $(this).data('link'),
+                collectionHasColor = $(this).find('.grid-item-colors div').filter(function(){
+					return colors.indexOf(handleize($(this).data('color'))) > -1
+				})
+				// _.find(SECTION_COLORS, function(colorObj){
+
+
+                //     return _.indexOf(colors, colorObj.item_name) > -1 && colorObj.item_collection === collectionName;
+                // });
+
+
+            if(collectionHasColor.length){
+              
+				collectionHasColor = collectionHasColor.first();
+              	if(collectionHasColor.data('image')){
+                    $(this).find('.img').css('background-image', 'url('+ collectionHasColor.data('image') +')')
+                }
+              
+                $(this).find('a').attr('href', collectionLink +'#'+collectionHasColor.item_name)
+                $(this).show();
+            }else{
+                $(this).hide();
+            }
+        });
+      
+      	location.hash = color;
+    
+    }else{
+      	$('[data-collection], .folders-box').each(function(){
+            var collectionLink = $(this).data('link'),
+                collectionImage = $(this).find('.img').data('image');
+          
+          	if(collectionImage){
+            	 $(this).find('.img').css('background-image', 'url('+ collectionImage +')')
+            }
+
+            $(this).show().find('a').attr('href', collectionLink)            
+        });
+      	//$('.available-collections h2').hide();
+      	location.hash = '';
+      	
+    }
+  
+}).on('click','.display-option-item', function(e){
+
+	var layout = $(this).data('layout');
+	$(this).addClass('selected').siblings().removeClass('selected');
+	$('.js-available-collections').removeClass('gallery-view').removeClass('grid-view').addClass(layout)
+	
+}).on('click', '.js-meterials a', function(e){
+  
+	e.preventDefault();
+	var meterial = $(this).data('material');
+	
+  	$(this).toggleClass('selected').siblings('a').removeClass('selected');
+  
+	filterCollections();
+
+	return;
+    if($(this).hasClass('selected')){
+      
+        $('[data-collection], .folders-box').each(function(){
+            var collectionMeterials = $(this).data('materials');
+            var collectionHasMeterial = collectionMeterials.indexOf(meterial) > -1;
+
+
+            if(collectionHasMeterial){
+                $(this).show();
+            }else{
+                $(this).hide();
+            }
+        });
+      
+    
+    }else{
+      	$('[data-collection], .folders-box').show();
+      	
+    }
+  
+}).on('change', '[data-boxes-sort]', function(){
+	var sortOption = $(this).val();
+	console.log(sortOption)
+	$('[data-sortby]').attr('data-sortby', sortOption)
+	console.log($('[data-sortby]').data('sortby'))
+})
+
+function filterCollections(){
+	var colors = $('.color.selected').data('colors'),
+		color = $('.color.selected').data('color'),
+		meterial = $('.meterials-container a.selected').data('material');
+
+		console.log('filter', meterial)
+		
+		
+  	if(colors){
+    
+    	colors = colors.split('\n')	
+        
+        colors = _.map(colors, function(c){
+        	return handleize(c)
+        });
+            
+    }else{
+    
+    	colors = [];	
+      
+    }
+  
+	if(color){
+		colors.push(handleize(color));
+        location.hash = color;
+	}
+
+	if(!colors.length && !meterial){
+		$('[data-collection], .folders-box').each(function(){
+			var collectionLink = $(this).data('link');
+		
+			var collectionImage = $(this).find('.img').data('image');
+			  
+			if(collectionImage){
+				$(this).find('.img').css('background-image', 'url('+ collectionImage +')').removeClass('contain')
+			}
+
+			$(this).show().find('a').attr('href', collectionLink)   
+		});
+        location.hash = '';
+	}else{
+
+  	
+
+		$('[data-collection], .folders-box').each(function(){
+			var collectionMeterials = $(this).data('materials');
+			var collectionHasMeterial = collectionMeterials.indexOf(meterial) > -1;
+			var collectionHasColor = $(this).find('.grid-item-colors div').filter(function(){
+				return colors.indexOf(handleize($(this).data('color'))) > -1
+			});
+			var showCollection = true;
+			var collectionLink = $(this).data('link');
+
+
+			if(meterial && !collectionHasMeterial){
+				showCollection = false;
+			}
+
+			if(colors.length && !collectionHasColor.length){
+				showCollection = false;
+			}
+
+		
+			if(showCollection){
+				if(collectionHasColor.length){
+				
+					collectionHasColor = collectionHasColor.first();
+					if(collectionHasColor.data('image')){
+						$(this).find('.img').css('background-image', 'url('+ collectionHasColor.data('image') +')').addClass('contain')
+					}
+				
+					$(this).find('a').attr('href', collectionLink +'#'+handleize(collectionHasColor.data('color')))
+				}
+				$(this).show();
+
+			}else{
+				var collectionImage = $(this).find('.img').data('image');
+			
+				if(collectionImage){
+					$(this).find('.img').css('background-image', 'url('+ collectionImage +')').removeClass('contain')
+				}
+
+				$(this).hide().find('a').attr('href', collectionLink)   
+			}
+		});
+
+        
+	}
+
+	$('.collections-count').text($('[data-collection]:visible, .folders-box:visible').length)
+
+	updateMaterialFilters()
+
+  
+	
+}
+
+function updateMaterialFilters(){
+	$('.js-meterials a').each(function(){
+		var meterial = $(this).data('material'),
+			// totalCollectionsWithMeterial = $('[data-collection]:visible, .folders-box:visible').filter(function(){
+			// 	var collectionMeterials = $(this).data('materials');
+			// 	return collectionMeterials.indexOf(meterial) > -1;
+			// });
+			totalCollectionsWithMeterial = $('[data-collection]:visible, .folders-box:visible').filter(function(){
+				var collectionMeterials = $(this).data('materials');
+				return collectionMeterials.indexOf(meterial) > -1;
+			});
+
+		$(this).find('.count').text(' ('+totalCollectionsWithMeterial.length+')')
+		// if(totalCollectionsWithMeterial.length){
+		// 	$(this).show()
+		// }else{
+		// 	$(this).hide()
+		// }
+		
+	})
+}
+
+function handleize(str) {
+    return str.toLowerCase().replace(/[^\w\u00C0-\u024f]+/g, "-").replace(/^-+|-+$/g, "");
+};

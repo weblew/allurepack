@@ -1,0 +1,65 @@
+{%- assign year = 'now' | date: '%Y' -%}
+
+<div class="promotion-strip-section">
+  	<div class="page-width">
+      <div class="flex">
+        <div class="promotion-strip-box">
+          <img src="{{ section.settings.image | img_url: '200x200'}}"/>  
+        <div class="content">
+            
+            <div class="title">{{section.settings.catalog_title | replace: "[year]", year}}</div>
+            <p>
+              Sign up to receive email updates on new collections, products lines and industry news
+            </p>
+            <div class="btns">
+              <a href="/pages/catalog" class="btn btn-gold">View catalog</a>
+              <a href="/pages/request" class="btn btn-gold-light">Order catalog</a>
+            </div>
+            
+          </div>
+          
+        </div>
+
+        <div class="promotion-strip-box">
+        <div class="content">
+            
+            <div class="title">Keep in touch</div>
+            <p>
+              Sign up to receive email updates on new collections, products lines and industry news
+            </p>
+            {% include 'klaviyo-sign-up' %}
+            
+          </div>
+          
+        </div>
+      </div>
+   	</div>
+  
+</div>
+
+{% schema %}
+  {
+    "name": "Promotion Strip",
+    "settings": [{
+        "type": "text",
+        "id": "catalog_title",
+        "label": "Catalog Title"
+      },{
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+    }],
+	"presets": [
+      {
+        "name": "Promotion Strip",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

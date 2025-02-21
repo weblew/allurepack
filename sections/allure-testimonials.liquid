@@ -1,0 +1,53 @@
+<div class="allure-testimonials flex">
+  <div class="flex-4 allure-testimonials-left flex flex-align-center">
+    <div>
+      <h2>Alluring</h2>
+      <h3>Testimonials</h3>  
+      <div class="line"></div>
+    </div>
+  </div>
+  <div class="flex-6 allure-testimonials-right">
+    <div class="allure-testimonials-slider">
+      {% for block in section.blocks %}
+      
+      <div>
+        <div>{{block.settings.text}}</div>
+        <div class="allure-testimonial-name">{{block.settings.name}}</div>
+      </div>
+      
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Testimonials",
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Testimonial",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Testimonial"
+          },
+		  {
+            "type": "text",
+            "id": "name",
+            "label": "Name"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

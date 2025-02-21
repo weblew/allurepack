@@ -1,0 +1,442 @@
+
+
+{{ 'cart.scss.css' | asset_url | stylesheet_tag }}
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'cart.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'cart.js' | asset_url }}"></script><![endif]-->
+
+<script>
+  var CART_PAGE = {{cart | json}},
+      JS_CART = [],
+      STAMP_SRC = '{{ 'stamp.png' | file_img_url }}',
+      JS_TOTAL_PRICE = {{cart.total_price}},
+      JS_TOTAL_ITEMS = {{cart.item_count}};
+</script>
+
+{% for item in cart.items %}
+
+	{% comment %}
+
+	{% for collection in item.product.collections %}
+		
+		{% if collection.description != blank %}
+			
+			
+
+		{% endif %}
+
+	{% endfor %}
+
+	{% if item.product.type == 'logo' %}
+			
+        <script>
+          JS_CART.push({
+            index : {{ forloop.index }},
+            item : {{item | json}},
+            product : {{item.product | json}}
+          });
+        </script>
+
+  {% endif %}
+
+	{% endcomment %}
+
+	<script>
+          var cart_item = {
+            index : {{ forloop.index }},
+            item : {{item | json}},
+            product : {{item.product | json}},
+            settings : {{item.product.metafields.settings | json}},
+            custom_settings : {{item.product.metafields.custom | json}},
+            collection : {{item.product.collections[0] | json}},
+          };
+
+          {% for v in item.product.variants %}
+            var variant = cart_item.product.variants.find(v => v.id == {{v.id}});
+            variant.group_items = [];
+            {% if v.metafields.custom.group_items != blank %}
+              
+              {% for gi in v.metafields.custom.group_items.value %}
+                  variant.group_items.push({{gi | json}})
+              {% endfor %}
+              
+            {% endif %}
+        
+          {% endfor %}
+
+          JS_CART.push(cart_item);
+    </script>
+
+	
+         
+  
+{% endfor %}
+
+<div class="displayNone">
+  	{% include 'icon-close' %}
+</div>
+
+<div class="page-width ng-cloak" data-section-id="{{ section.id }}" data-section-type="cart-template" ng-app="cart" ng-controller="CartController as vm">
+
+  {% if cart.item_count > 0 %}
+  <form action="/checkout" method="post" novalidate class="cart">
+    <div class="flex checkout-top">
+      	<h1 class="fs40 font-default gold">Shopping Cart</h1>
+      	<div>
+          <a href="/" class="btn btn-gold-light">Continue Shopping</a>
+      	</div>
+    </div>
+    
+    {% if shop.metafields.settings.printing_delay_message != blank %}
+    	<div class="printing_delay_message" ng-if="vm.CART.logos.logo"  ng-show="!vm.CART.logos['rush-printing'] && vm.getRushVariant()">
+        	{{shop.metafields.settings.printing_delay_message}}  
+            {% if shop.metafields.settings.printing_delay_popup_message != blank %}
+          		<div ng-show="!vm.CART.logos['rush-printing'] && vm.getRushVariant()">
+                  <br>
+                  <a class="pointer" onclick="openModal($('.rush-printing-option-container').html());" style="
+                      text-decoration: underline;
+                  ">RUSH MY PRINTING ORDER</a>
+                  <div class="displayNone rush-printing-option-container">
+                    <div class="modal-layer-close"></div>
+                    <div class="">
+ 
+                        <div class="">
+                          {{shop.metafields.settings.printing_delay_popup_message}}     
+                        </div>
+                        <div class="flex flex-center flex-column">
+						  <a class="btn btn-black-dark" href="/cart/add?quantity=1&id=<% vm.getRushVariant().id %>">Confirm rush printing</a>
+                          <br>
+                          <div class="btn btn-black-light" onclick="closeModal()">Proceed with regular printing</div>
+
+                        </div>
+
+                    </div>
+                  </div>
+                </div>
+          	{% endif %}
+    	</div>        
+    {% endif %}
+    
+    {% assign cartTotal = cart.total_price | divided_by:100 %}
+  
+    {% if shop.metafields.free_gift and shop.metafields.free_gift.item and shop.metafields.free_gift.code and shop.metafields.free_gift.min_order_amount and shop.metafields.free_gift.min_order_amount < cartTotal %}
+      
+      <div class="cart-freegift flex flex-align-center" ng-if="vm.showFreeGiftBanner()">
+        <div class="flex-2 cart-freegift-img">
+        	<img src="{{all_products[shop.metafields.free_gift.item].featured_image | img_url:'250x'}}">
+        </div>
+        <div class="flex-7">
+          	<h3 class="gold font-default">You are eligible for a free gift</h3>
+          	<p>{{all_products[shop.metafields.free_gift.item].title}}</p>
+          	<button class="btn btn-black-light btn-claim-gift">Claim Free Gift</button>
+        </div>
+      </div>
+    
+    {% endif %}
+
+    <div class="flex cart-grid">
+  	
+        <div class="cart-left">
+
+        <div class="flex cart-items-header">
+          		<div class="flex-5-5">
+                Item
+                </div>
+              	<div class="flex-1">
+                  Price
+                </div>
+              	<div class="flex-1-5">
+                  Qty
+                </div>
+              	<div class="flex-1">
+                  Subtotal
+                </div>
+              	<div class="flex-1 text-center">
+                  
+                </div>
+          	</div>
+          
+            <div class="cart-collection" ng-repeat="(collection, items) in vm.CART.collections">
+                    
+                <div class="cart-collection-items">
+                    
+                    <div class="cart-collection-item" ng-repeat="cartItem in items" ng-if="cartItem.item.product_type !== 'BUNDLE'">
+                      
+                      <div class="flex flex-align-center">
+                    
+                              
+                              
+                              <div class="flex-5-5 flex flex-align-center">
+
+                                <div class="cart-item-image" ng-if="cartItem.item.product_type !== 'plate'" ng-style="{'background-image':'url(<%cartItem.item.image%>)'}"></div>
+                                <div class="cart-item-image cart-item-plate" ng-if="cartItem.item.product_type == 'plate'"></div>
+
+                                  <div class="cart-item-info">
+                                    <div>
+
+                                    <span class="cart-item-sku fs14" ng-if="cartItem.item.product_type !== 'plate'" ng-bind="'Model# ' + cartItem.item.sku"></span>  
+                                    
+                                    <a href="<% cartItem.item.url %>" class="cart-item-title" ng-bind="cartItem.item.product_title"></a>
+                                      
+                                                                
+
+                                    </div>
+
+                                    <div class="cart-item-options" ng-show="cartItem.item.variant_options[0] !== 'Default Title'">
+
+                                      Color: <span ng-bind="cartItem.item.variant_options[0]"></span>
+
+                                    </div>
+                                
+                                    
+                                        
+                                    <div class="bundle-tag" ng-if="cartItem.item.properties['_Set Name']" ng-bind="cartItem.item.properties['_Set Name']"></div>
+                                  </div>
+
+                            </div>
+                            
+                            <div class="flex-1">
+                              
+                              <div class="cart-item-price" ng-if="cartItem.item.product_type !== 'plate'">
+                                  <span ng-bind="vm.itemPrice(cartItem.item)"></span>
+                              </div>
+
+                            </div>
+                            
+                              <div class="flex-1-5">
+                                  <div ng-if="cartItem.item.product_type !== 'plate'">
+                                    <div class="qty-box-wrapper" data-list="<%vm.getItemQtyList(cartItem.product.variants[0].option2, cartItem.custom_settings.sold_in)%>">
+                                    <div ng-if="::!vm.getItemQtyList(cartItem.product.variants[0].option2, cartItem.custom_settings.sold_in).length">
+                                      <input type="number" class="btn-black-light qty-box" ng-model="cartItem.item.quantity"/>
+                                    </div>
+                                    <div ng-if="::vm.getItemQtyList(cartItem.product.variants[0].option2, cartItem.custom_settings.sold_in).length">                
+                                      <select class="btn-black-light qty-box" ng-model="cartItem.item.quantity" ng-options="qty as qty for qty in vm.getItemQtyList(cartItem.product.variants[0].option2, cartItem.custom_settings.sold_in)">
+                                        <option value="select"></option>
+                                      </select>
+                                    </div>
+                                    <div class="fs14 text-underline pointer" ng-click="vm.updateQty(cartItem)">Update</div>
+                                    </div>
+                                  </div>
+                              </div>
+                            
+                              <div class="flex-1 cart-item-total">
+                              
+                                  <div class="" ng-if="!cartItem.item.properties['_free']">
+                                    <span  ng-bind="(cartItem.item.line_price | money)"></span>
+                                  </div>
+                                
+                                <div class="" ng-if="cartItem.item.properties['_free']">
+                                      Free
+                                  </div>
+
+                              </div>
+                              
+                              <div class="flex-1 cart-item-remove">
+                                  <a class="pointer" ng-if="cartItem.item.product_type !== 'plate'" ng-click="vm.removeItem($event, cartItem)">Remove</a>
+                              </div>
+                    
+                    
+                      </div>  
+                      
+                      <div class="flex">
+                        <div class="flex-10 cart-item-logo-wrapper">
+                          <div class="cart-item-logo" ng-if="vm.keys(cartItem.item.properties).length && !cartItem.item.properties['_Set Name'] && !cartItem.item.properties['_free']">
+                            
+                                        <div class="flex logo-edit-link">
+                                            <div class="">Imprinting</div>
+                                            {% comment %} <a class="text-underline fs14" href="<%cartItem.item.url%>#modal">
+                                              <span ng-if="cartItem.item.properties">EDIT</span>
+                                              <span ng-if="!cartItem.item.properties">ADD</span>
+                                            </a> {% endcomment %}
+                                        </div>
+
+                                      <div class="flex logo-preview">     
+                                          
+                                          <div class="" ng-if="cartItem.custom_settings.file_upload && cartItem.item.properties['Logo']">
+                                              <a href="<% cartItem.item.properties['Logo'] %>" target="_blank">View Logo</a>
+                                          </div>
+                                          <div class="" ng-repeat="(key, value) in cartItem.item.properties" ng-if="key.indexOf('color') > -1">
+                                              <div class="stamp-location" ng-bind="(key.replace('Printing', '').replace('color',''))"></div>
+                                              <label class="stamp-preview <% key %> fs14">
+                                                <div class="stamp-preview-image" ng-if="cartItem.item.properties['_'+key.replace('color','file')]">
+                                                  <% cartItem.item.properties['_'+key.replace('color','file')] %>
+                                                </div>
+                                                <div class="stamp-preview-image" ng-if="cartItem.item.properties['_'+key.replace('color','custom')]">
+                                                  <% cartItem.item.properties['_'+key.replace('color','custom')] %>
+                                                </div>
+                                                
+                                                <div class="" ng-if="cartItem.item.properties['_'+key.replace('color','plate')]">
+                                                  Existing plate
+                                                </div>
+                                              </label>
+                                              <div class="fs14 item-logo-properties">
+                                                
+                                                <div class="flex ">
+                                                  <span ng-if="cartItem.item.properties[key].indexOf('Met -') == -1" class="item-logo-printing-color item-logo-printing-color-gloss <% cartItem.item.properties[key].replace(' ', '-') %>"></span>
+                                                  <span ng-if="cartItem.item.properties[key].indexOf('Met -') > -1" class="item-logo-printing-color item-logo-printing-color-met <% cartItem.item.properties[key].replace('Met - ', '').replace(' ', '-') %>"></span>
+                                                  <span ng-bind="cartItem.item.properties[key]"></span>
+                                                </div>
+                                              </div>
+                                          </div>
+
+                                      </div>
+
+                                  </div> 
+                      </div>
+                        </div>
+                          
+                        </div>
+                </div>
+          
+            </div>
+              
+      
+        </div>
+
+        <div class="cart-right">
+          
+                
+              <div class=""></div>
+                <div class="cart-totals">
+                                            
+                    <h3>Order Totals</h3>
+                
+                    <div class="cart-totals-disclaimer">{{ 'cart.general.shipping_at_checkout' | t }}</div>              
+                    
+                    <div class="flex" ng-if="vm.CART.logos['plate-std']">
+                        <div>
+                          <span ng-bind="vm.CART.logos['plate-std'].item.product_title"></span>
+                        </div> 
+                        <div>
+                            <% vm.CART.logos['plate-std'].item.price | money %>
+                        </div> 
+                    </div>
+                      
+                    <div class="flex" ng-if="vm.CART.logos['plate-bag']">
+                        <div>
+                          <span ng-bind="vm.CART.logos['plate-bag'].item.product_title"></span>
+                        </div> 
+                        <div>
+                            <% vm.CART.logos['plate-bag'].item.price | money %>
+                        </div> 
+                    </div>
+
+                    <div class="flex" ng-if="vm.CART.logos['plate-large-bag']">
+                        <div>
+                          <span ng-bind="vm.CART.logos['plate-large-bag'].item.product_title"></span>
+                        </div> 
+                        <div>
+                            <% vm.CART.logos['plate-large-bag'].item.price | money %>
+                        </div> 
+                    </div>
+                    
+                    <div class="flex" ng-if="vm.CART.logos.logo">
+                        <div>
+                          <span ng-bind="vm.CART.logos.logo.item.product_title"></span> 
+                          <small>200 Prints</small>
+                        </div> 
+                        <div>
+                            <% vm.CART.logos.logo.item.price | money %>
+                        </div> 
+                    </div>
+                      
+                    <div class="flex" ng-if="vm.CART.logos['logo-200']">
+                        <div>
+                          <span ng-bind="vm.CART.logos['logo-200'].item.product_title"></span> 
+                          <small ng-bind="''+vm.CART.logos['logo-200'].item.quantity+' Prints'"></small>
+                        </div> 
+                        <div>
+                            <% (vm.CART.logos['logo-200'].item.quantity * vm.CART.logos['logo-200'].item.price) | money %>
+                        </div> 
+                    </div>
+                      
+                    <div class="flex" ng-if="vm.CART.logos['rush-printing']">
+                        <div>
+                          <span ng-bind="vm.CART.logos['rush-printing'].item.product_title"></span> <small><a href="/cart/change?id=<%vm.CART.logos['rush-printing'].item.id%>&quantity=0">Remove</a></small>
+                        </div> 
+                        <div>
+                            <% (vm.CART.logos['rush-printing'].item.quantity * vm.CART.logos['rush-printing'].item.price) | money %>
+                        </div> 
+                    </div>
+                      
+                    <div class="flex">
+                        <div>
+                          SUBTOTAL
+                        </div> 
+                        <div>
+                            <% vm.collectionsTotal | money %>
+                        </div> 
+                    </div>
+                      
+                    <div class="flex">
+                        <div>
+                          YOU PAY
+                        </div> 
+                        <div>
+                            <% (vm.collectionsTotal + vm.logosTotal) | money %>
+                        </div> 
+                    </div>
+
+                    <div class="">
+                  {% if section.settings.cart_notes_enable %}
+                    <div class="cart-note">
+                      <label for="CartSpecialInstructions" class="cart-note__label small--text-center">{{ 'cart.general.note' | t }}</label>
+                      <textarea name="note" id="CartSpecialInstructions" class="cart-note__input">{{ cart.note }}</textarea>
+                    </div>
+                  {% endif %}
+                  <br>
+                </div>
+                      
+                    <div class="printing_delay_message" ng-if="vm.CART.logos['plate-std'] || vm.CART.logos['plate-bag'] || vm.CART.logos['plate-large-bag']">
+                      {{shop.metafields.settings.plate_disclaimer}}
+                    </div>
+                  
+                    {% if customer.tags contains 'NET30' %}
+                      <div class="">
+                        <button type="button" name="checkout" ng-click="vm.getNetCheckout($event, {{customer.id}})" class="btn btn-black-dark">{{ 'cart.general.checkout' | t }}!</button>
+                      </div>
+                    {% else %}
+                        <div>
+                          <input type="submit" name="checkout" class="btn btn-black-dark" value="{{ 'cart.general.checkout' | t }}">
+
+
+                          {% if additional_checkout_buttons %}
+                            <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                  
+                </div>
+              
+        </div>
+    </div>
+
+</form>
+  {% else %}
+    <div class="empty-page-content text-center">
+      <h1>{{ 'cart.general.title' | t }}</h1>
+      <p class="cart--empty-message">{{ 'cart.general.empty' | t }}</p>
+      <div class="cookie-message">
+        <p>{{ 'cart.general.cookies_required' | t }}</p>
+      </div>
+      <a href="/" class="btn btn--has-icon-after cart__continue-btn">{{ 'general.404.link' | t }}{% include 'icon-arrow-right' %}</a>
+    </div>
+  {% endif %}
+</div>                 
+                  
+
+                  
+{% schema %}
+  {
+    "name": "Cart page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "Enable cart notes",
+        "default": false
+      }
+    ]
+  }
+{% endschema %}

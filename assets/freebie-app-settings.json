@@ -1,0 +1,22 @@
+{
+  "status": "checked",
+  "collectionName": "",
+  "productQuantity": "1",
+  "triggerPrice": "1000",
+  "collectionNameTwo": "",
+  "productQuantityTwo": "",
+  "triggerPriceTwo": "",
+  "collectionNameThree": "",
+  "productQuantityThree": "",
+  "triggerPriceThree": "",
+  "backgroundColor": "#444e5a",
+  "popupColor": "#ffffff",
+  "buttonColor": "#6328e0",
+  "buttonTextColor": "#ffffff",
+  "headerTextColor": "#222222",
+  "bodyTextColor": "#555555",
+  "title": "Claim Your Black Friday Free Gift",
+  "description": "All orders that are $1000 or more qualify for a free gift.",
+  "button": "Claim Gift",
+  "terms": ""
+}

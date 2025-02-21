@@ -1,0 +1,54 @@
+<div class="flex collection-landgin-box-grid">
+  
+{% for block in section.blocks %}
+  
+		<div class="flex flex-2-5">
+            <div class="collection-landgin-box" >
+              <a class="img" href="{{block.settings.link}}/{{block.settings.tags}}" style="background-image:url({{ block.settings.icon | img_url: 'large'}})"></a>
+              <a class="text" href="{{block.settings.link}}/{{block.settings.tags}}">
+                {{block.settings.title}}
+              </a>
+              {% if block.settings.link.object.metafields.custom.label != blank %}
+                <div class="collection-badge">
+                  {{ block.settings.link.object.metafields.custom.label }}
+                </div>
+              {% endif %}
+            </div>
+        </div> 
+
+{% endfor %}
+
+</div>
+{% schema %}
+  {
+    "name": "Display Types",
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Type",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+		  {
+            "type": "text",
+            "id": "tags",
+            "label": "Tags"
+          },
+		  {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

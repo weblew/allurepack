@@ -1,0 +1,211 @@
+<script>
+  
+  if(typeof PRODUCTS === 'undefined'){
+    PRODUCTS = {};
+  }
+
+  if(!PRODUCTS[{{product.id}}]){
+    
+    PRODUCTS[{{product.id}}] = {
+      title : {{product.title | json}},
+      handle : '{{product.handle}}',
+      image : {{ product.featured_image.src  | json}},
+      options : {{product.options_with_values | json}},
+      variants : {{product.variants | json}},
+      settings : {{product.metafields.settings | json}},
+      group_items : {},
+      upsell : []
+    };
+  
+    {% if product.metafields.group_items %}
+      
+    
+        {% if product.metafields.group_items.main %}
+              PRODUCTS[{{product.id}}].group_items.main = {{all_products[product.metafields.group_items.main].variants | json}}
+              {% if product.metafields.group_items.insert %}
+                 PRODUCTS[{{product.id}}].group_items.insert = {{all_products[product.metafields.group_items.insert].variants | json}}
+              {% endif %}
+        {% endif %}
+  
+          
+    {% endif %}
+   }           
+    {% if product.metafields.upsell and product.metafields.upsell.items %}  		
+          PRODUCTS[{{product.id}}].upsell = {{product.metafields.upsell.items | split:' '}}
+    {% endif %}
+
+  
+              
+</script>
+
+
+{% if product.metafields.custom.main_collection %}
+	{% assign collectionInfo = product.metafields.custom.main_collection.value %}
+{% else %}
+	{% for collection in product.collections %}
+			
+		{% if collection.metafields.custom.colors != blank  %}
+
+			{% assign collectionInfo = collection %}
+		{% elsif collection.description != blank %}
+
+			{% assign collectionInfo = collection %}
+
+    {% elsif collection.template_suffix == 'displays' %}
+
+        {% assign collectionInfo = collections.displays %}
+
+		{% endif %}
+
+	{% endfor %}
+
+{% endif %}
+
+{% assign featured_variant = product.variants[0] %}
+{% assign featured_image = product.featured_image %}
+
+{% if featured_variant.featured_image  %}
+{% assign featured_image = featured_variant.featured_image %}
+{%endif%}
+
+{% if collection.metafields.settings.defaultcolor != blank %}
+	{% assign find_featured_variant = product.variants | where:'option1', collection.metafields.settings.defaultcolor %}  
+  
+  	{% if find_featured_variant.size > 0 %}
+  		{% assign featured_variant = find_featured_variant | first %}
+  		{% assign featured_image = featured_variant.image %}
+  	{% endif %}
+    
+{% endif %}
+
+
+{% if product.selected_or_first_available_variant and product.selected_or_first_available_variant.image %}
+
+    {% assign featured_variant = product.selected_or_first_available_variant %}
+    {% assign featured_image = featured_variant.image %}
+
+{% endif  %}
+
+     
+<form action="/cart/add" method="post" class="home-grid-item-inner"  data-id="{{product.id}}">
+  	<script type="application/json" class="item-variants">
+      {{product.variants | json}}
+    </script>
+	{% if product.metafields.custom.label != blank %}
+	<span class="collection-badge">{{ product.metafields.custom.label }}</span>
+	{% endif %}
+      <div>
+        <a href="{{featured_variant.url | default:product.url | within: collectionInfo}}" class="home-grid-item-image" title="{{ product.featured_image.alt }}">
+          <img src="{{ featured_image.src | img_url: '450x450' }}" alt="">
+          {% if featured_variant.metafields.custom.hover_image %}
+            <img src="{{ featured_variant.metafields.custom.hover_image | img_url: '450x450' }}" class="hover-image" alt="">
+            {% endif %}
+        </a>
+        <div class="home-grid-item-colors">
+
+  
+			{% assign colors = collectionInfo.metafields.custom.colors.value %}                         
+      
+			{% for color in colors %}
+				{% assign variant = product.variants | where:'option1',color.name | first %}
+        {% if variant  %}
+				<div class="" title="{{color.name}}" style="background-image: url({{color.swatch | img_url: 'medium'}});" data-image="{{ variant.image  | img_url: '95x95', scale: 2 }}"></div>            
+        {% endif  %}
+		
+			{% endfor %}
+		
+		
+		</div>
+		<small class="home-grid-item-sku">{{ featured_variant.sku }}&nbsp;</small>
+		<a href="{{featured_variant.url | default:product.url | within: collectionInfo}}" class="home-grid-item-title">{{ product.title | replace: '(', '<br>(' }}</a> 
+        
+      </div>
+	<div>
+      <div>
+		<div class="home-grid-item-reviews" style="color: {% if product.metafields.reviews.rating_count > 0 %}#C7A049{% else  %}#ccc{% endif %};">
+				
+     <div class="stars" >
+				<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6.23124 11.7696C6.46372 11.6312 6.72929 11.5583 6.99982 11.5586C7.27036 11.5589 7.53578 11.6323 7.76799 11.7711L10.273 13.2689C10.873 13.6274 11.6065 13.0971 11.449 12.4266L10.7912 9.6366C10.7281 9.36868 10.7399 9.08854 10.8254 8.82688C10.9108 8.56522 11.0666 8.33212 11.2757 8.1531L13.4762 6.26835C14.005 5.8161 13.7207 4.95885 13.0262 4.9041L10.1147 4.66035C9.8435 4.63759 9.58357 4.54146 9.3628 4.38226C9.14203 4.22305 8.96873 4.00677 8.86149 3.7566L7.72599 1.10685C7.45749 0.476102 6.54249 0.476102 6.27399 1.10685L5.13999 3.74985C5.03259 3.99964 4.85932 4.21554 4.63871 4.37446C4.41809 4.53338 4.15843 4.62935 3.88749 4.6521L0.97374 4.8966C0.27999 4.95135 -0.00425977 5.8086 0.52374 6.26085L2.72499 8.1456C2.93396 8.3247 3.08963 8.55784 3.17495 8.8195C3.26027 9.08116 3.27196 9.36124 3.20874 9.6291L2.55099 12.4191C2.39349 13.0896 3.12699 13.6191 3.72624 13.2606L6.23124 11.7696V11.7696Z" fill="currentColor"/>
+				</svg>
+				<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6.23124 11.7696C6.46372 11.6312 6.72929 11.5583 6.99982 11.5586C7.27036 11.5589 7.53578 11.6323 7.76799 11.7711L10.273 13.2689C10.873 13.6274 11.6065 13.0971 11.449 12.4266L10.7912 9.6366C10.7281 9.36868 10.7399 9.08854 10.8254 8.82688C10.9108 8.56522 11.0666 8.33212 11.2757 8.1531L13.4762 6.26835C14.005 5.8161 13.7207 4.95885 13.0262 4.9041L10.1147 4.66035C9.8435 4.63759 9.58357 4.54146 9.3628 4.38226C9.14203 4.22305 8.96873 4.00677 8.86149 3.7566L7.72599 1.10685C7.45749 0.476102 6.54249 0.476102 6.27399 1.10685L5.13999 3.74985C5.03259 3.99964 4.85932 4.21554 4.63871 4.37446C4.41809 4.53338 4.15843 4.62935 3.88749 4.6521L0.97374 4.8966C0.27999 4.95135 -0.00425977 5.8086 0.52374 6.26085L2.72499 8.1456C2.93396 8.3247 3.08963 8.55784 3.17495 8.8195C3.26027 9.08116 3.27196 9.36124 3.20874 9.6291L2.55099 12.4191C2.39349 13.0896 3.12699 13.6191 3.72624 13.2606L6.23124 11.7696V11.7696Z" fill="currentColor"/>
+				</svg>
+				<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6.23124 11.7696C6.46372 11.6312 6.72929 11.5583 6.99982 11.5586C7.27036 11.5589 7.53578 11.6323 7.76799 11.7711L10.273 13.2689C10.873 13.6274 11.6065 13.0971 11.449 12.4266L10.7912 9.6366C10.7281 9.36868 10.7399 9.08854 10.8254 8.82688C10.9108 8.56522 11.0666 8.33212 11.2757 8.1531L13.4762 6.26835C14.005 5.8161 13.7207 4.95885 13.0262 4.9041L10.1147 4.66035C9.8435 4.63759 9.58357 4.54146 9.3628 4.38226C9.14203 4.22305 8.96873 4.00677 8.86149 3.7566L7.72599 1.10685C7.45749 0.476102 6.54249 0.476102 6.27399 1.10685L5.13999 3.74985C5.03259 3.99964 4.85932 4.21554 4.63871 4.37446C4.41809 4.53338 4.15843 4.62935 3.88749 4.6521L0.97374 4.8966C0.27999 4.95135 -0.00425977 5.8086 0.52374 6.26085L2.72499 8.1456C2.93396 8.3247 3.08963 8.55784 3.17495 8.8195C3.26027 9.08116 3.27196 9.36124 3.20874 9.6291L2.55099 12.4191C2.39349 13.0896 3.12699 13.6191 3.72624 13.2606L6.23124 11.7696V11.7696Z" fill="currentColor"/>
+				</svg>
+				<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6.23124 11.7696C6.46372 11.6312 6.72929 11.5583 6.99982 11.5586C7.27036 11.5589 7.53578 11.6323 7.76799 11.7711L10.273 13.2689C10.873 13.6274 11.6065 13.0971 11.449 12.4266L10.7912 9.6366C10.7281 9.36868 10.7399 9.08854 10.8254 8.82688C10.9108 8.56522 11.0666 8.33212 11.2757 8.1531L13.4762 6.26835C14.005 5.8161 13.7207 4.95885 13.0262 4.9041L10.1147 4.66035C9.8435 4.63759 9.58357 4.54146 9.3628 4.38226C9.14203 4.22305 8.96873 4.00677 8.86149 3.7566L7.72599 1.10685C7.45749 0.476102 6.54249 0.476102 6.27399 1.10685L5.13999 3.74985C5.03259 3.99964 4.85932 4.21554 4.63871 4.37446C4.41809 4.53338 4.15843 4.62935 3.88749 4.6521L0.97374 4.8966C0.27999 4.95135 -0.00425977 5.8086 0.52374 6.26085L2.72499 8.1456C2.93396 8.3247 3.08963 8.55784 3.17495 8.8195C3.26027 9.08116 3.27196 9.36124 3.20874 9.6291L2.55099 12.4191C2.39349 13.0896 3.12699 13.6191 3.72624 13.2606L6.23124 11.7696V11.7696Z" fill="currentColor"/>
+				</svg>
+				<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6.23124 11.7696C6.46372 11.6312 6.72929 11.5583 6.99982 11.5586C7.27036 11.5589 7.53578 11.6323 7.76799 11.7711L10.273 13.2689C10.873 13.6274 11.6065 13.0971 11.449 12.4266L10.7912 9.6366C10.7281 9.36868 10.7399 9.08854 10.8254 8.82688C10.9108 8.56522 11.0666 8.33212 11.2757 8.1531L13.4762 6.26835C14.005 5.8161 13.7207 4.95885 13.0262 4.9041L10.1147 4.66035C9.8435 4.63759 9.58357 4.54146 9.3628 4.38226C9.14203 4.22305 8.96873 4.00677 8.86149 3.7566L7.72599 1.10685C7.45749 0.476102 6.54249 0.476102 6.27399 1.10685L5.13999 3.74985C5.03259 3.99964 4.85932 4.21554 4.63871 4.37446C4.41809 4.53338 4.15843 4.62935 3.88749 4.6521L0.97374 4.8966C0.27999 4.95135 -0.00425977 5.8086 0.52374 6.26085L2.72499 8.1456C2.93396 8.3247 3.08963 8.55784 3.17495 8.8195C3.26027 9.08116 3.27196 9.36124 3.20874 9.6291L2.55099 12.4191C2.39349 13.0896 3.12699 13.6191 3.72624 13.2606L6.23124 11.7696V11.7696Z" fill="currentColor"/>
+				</svg>
+			</div>
+
+						
+			{% if product.metafields.reviews.rating_count %}
+				{{product.metafields.reviews.rating_count}} {{ product.metafields.reviews.rating_count | pluralize: 'Review', 'Reviews' }}
+			{% else %}
+				0 Reviews
+			{% endif %}
+			
+		</div>
+        <div class="home-grid-item-price">
+
+        {% include 'product-price' %}
+        <div class="volume-discount">
+
+        </div>
+        </div>
+        <div class="docapp-volume-discounts-promo" docapp-product-id="{{ product.id }}" docapp-variant-id="{{ product.selected_or_first_available_variant.id }}"></div>
+      </div>
+	  <input type="hidden" name="id" value="{{ featured_variant.id }}" checked data-sku="{{ featured_variant.sku }}"/>
+
+	  {% if product.has_only_default_variant and hideForm != true %}      
+        <div class="flex grid-view-item-actions">
+              <div class="flex-3">
+                {% assign soldIn = featured_variant.option2 %}
+
+                {% if soldIn == 1 or soldIn == '1' or soldIn == blank %}
+                      <input type="number" placeholder="Qty" name="quantity" class="btn-black-light qty-input">
+                {%else%}
+                      <select name="quantity" class="btn-black-light qty-input">
+                        {% for i in (1..200)  %}
+                            <option>{{i | times:soldIn}}</option>
+                        {% endfor %}
+                      </select>
+                {%endif%}
+              </div>
+              <div class="flex-7">
+                <button type="submit" class="btn btn-black-dark btn-add-to-cart"> Add To Order</button>  
+              </div>
+        </div> 
+      {% else %}
+        
+                 {% comment %}
+                 
+               
+       
+        {% if product.options[0] == 'Color' and product.options[1] == blank %}
+          <div class="grid-view-item-note">  
+        	Available in mutiple colors
+              </div>
+        {% endif %}
+       {% if product.options[0] == 'Color' and product.options[1] == 'Bulk' %}
+           <div class="grid-view-item-note">  	
+          Available in mutiple quantities
+           </div>
+        {% endif %}
+
+         {% endcomment %}  
+     
+      
+		<a href="{{ featured_variant.url | within: collectionInfo }}" class="home-grid-item-link flex-10 btn btn-black-light">View details</a>
+      {% endif %}
+      
+    
+  	  	
+  
+    </div>
+  
+</form>

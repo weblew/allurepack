@@ -1,0 +1,98 @@
+.main-content{
+	background-color: #1d1c19;
+}
+.main-content{
+	background-color: #1d1c19;
+}
+.shop-boxes-container {
+    margin: 0 -10px
+}
+
+.shop-page-boxes {
+    padding: 0
+}
+
+.shop-box {
+    border: 10px solid #1d1c19;
+    overflow: hidden;
+}
+
+.shop-box-inner {
+    height: 355px;
+    background-size: cover;
+    background-color: #b9bbbe;
+    position: relative;
+    transition: all 500ms
+}
+
+.shop-box-inner:hover {
+    opacity: 1;
+    transform: scale(1.1)
+}
+
+.shop-box-inner:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: background 400ms
+}
+
+.shop-box-inner:hover:after {
+    background-color: rgba(0,0,0,0.6)
+}
+
+.box-text {
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    text-align: center
+}
+
+.box-text-small {
+    color: #686768
+}
+.shop-box-inner:hover .box-text {
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 99
+}
+
+
+.shop-box-inner:hover .box-text-small {
+    color: #fff
+}
+.shop-btn{
+	display:none;
+  	border: 1px solid #fff;
+    min-width: 150px;
+  	padding:0 14px;
+    height: 40px;
+    line-height: 40px;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+.shop-box-inner:hover .shop-btn {
+    display:block;
+}
+.site-footer{
+	margin-top:0;
+}
+.shop-banner a{
+	background-color: #ffffffb0;
+    align-items: center;
+    justify-content: center;
+}
+.shop-banner a .font-script{
+	font-size:100px;
+  	line-height:100px;
+}

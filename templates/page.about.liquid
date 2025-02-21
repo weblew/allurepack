@@ -1,0 +1,84 @@
+{{ 'about.scss.css' | asset_url | stylesheet_tag }}
+
+
+<div class="about-page">
+<div class="">
+      <div class="section-header text-center">
+        <h1 class="gold font-default">About </h1>
+        <h2 class="gold font-default">Allure Box and Display Company</h2>
+        <h3>Design that keeps on giving... Allure® transforms everyday gift-giving into unforgettable experiences
+        </h3>
+        <a href="/">SHOP NOW</a>
+      </div>
+  
+	<div class="about-banner flex" style="background-image:url({{'building.jpg' | file_img_url : 'master'}});">
+      	<div class="page-width">
+      	<div class="about-banner-content">
+          	{% include 'allure-devider' %}
+          	<br><br>
+          <h2>Allure®</h2>	
+          <div>
+            	Inspired by decades of combined industry experience, we believe every piece of jewelry deserves a stunning showcase. While jewelers put extraordinary thought into their breathtaking designs, we go beyond the ordinary box to ensure the recipient gets to open breathlessness™ every single time.
+				<br><br>
+				Partnering with Allure® enables you to deliver that powerful first impression to your jewelry clients. 
+				<br><br>
+				Dedicated to providing the finest selection of high-end displays, innovative packaging, prompt shipping and sterling service, we add enduring value to every heartfelt gift.  
+          	</div>
+          	<h3>At Allure®, we think inside the box</h3>
+      	</div>
+      	</div>
+  	</div>
+  
+  	<div class="about-allure">      	
+      
+      	{% include 'allure-devider' %}
+      
+      	<div class="page-width">
+      
+      	<div class="flex">
+          	
+          	<div class="flex-5">
+              	<h3>Our passion</h3>
+              	<h4>Pushing the creative envelope</h4>
+              	<p>Savvy sellers know that jewelry trends come and go. Our skilled craftsmen take industry evolution seriously, studying the latest cutting-edge fashions and infusing them with other time-honored engineering techniques. This allows us to bring you an exclusive variety of striking options designed to complement jewelry of every style, size and sophistication.</p>
+            </div>
+          	<div class="flex-1"></div>
+          	<div class="flex-4">
+          		<img src="{{'passion-2.png' | file_img_url : 'master'}}" />
+          	</div>
+          
+      	</div>
+      
+      	<div class="flex">
+          	
+          	<div class="flex-4">
+          		<img src="{{'mission-2.jpg' | file_img_url : 'master'}}" />
+          	</div>
+          	<div class="flex-1"></div>
+          	<div class="flex-5">
+              	<h3>Our mission</h3>
+              	<h4>Making magic happen</h4>
+              	<p>Our products are marked by unparalleled standards of beauty and quality. But Allure Box & Display, it’s not just about the material. Our imaginative team is deeply passionate about designing the perfect collection to maximize jewelry presentations. Each collection carries a variety of striking options designed to complement jewelry of every style, size and sophistication.
+<br><br>
+When it’s time for the big reveal, buyers feel proud, recipients feel special, and sellers rejoice knowing they’ve earned a loyal customer for life. </p>
+          	</div>
+          
+      	</div>
+          
+      	</div>
+      
+  	</div>
+  
+	{% section 'allure-testimonials' %}
+  
+  	{% section 'promotion-strip' %}
+	
+      {{ page.content }}
+  	
+</div>
+
+
+</div>
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'about.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'about.js' | asset_url }}"></script><![endif]-->

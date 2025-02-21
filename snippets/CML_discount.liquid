@@ -1,0 +1,16 @@
+
+<!-- discount script -->
+{% assign customer_tag = "" %}
+{% if customer %}
+{% for tag in customer.tags %}
+{% for meta in shop.metafields.customer_tags %}
+{% assign tag_name = meta.last | split: "," %}
+{% if tag_name[0] contains tag %}
+{% assign customer_tag = tag %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+{% assign show_note = true %}
+{% assign store_logo = 'https://cdn.shopify.com/s/files/1/1901/6329/files/logo_53bf2d4d-6180-4e2b-880c-326745827130.jpg?4717' %}
+{% assign checkout_heading = 'Your Order details!' %}

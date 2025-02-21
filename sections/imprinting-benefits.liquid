@@ -1,0 +1,84 @@
+
+<div class="imprinting-benefits">
+    {% if section.settings.title != blank or section.settings.content != blank %}
+        <div class="imprinting-benefits-content">
+        
+            {% if section.settings.title %}
+                <h3 class="font-default">
+                    {{section.settings.title}}
+                </h3>
+            {% endif %}
+            {{ section.settings.content }}
+        </div>
+    {% endif %}
+<div class="imprinting-benefits-items">
+   
+                {% for block in section.blocks  %}                    
+                
+                        <div class="imprinting-benefits-item">
+                            
+                            <div class="imprinting-benefits-item-icon">
+                                <img src="{{block.settings.icon|img_url:'master'}}"/>
+                            </div>
+                            <div class="imprinting-benefits-item-title">
+                                    {{block.settings.title}}
+                                </div>
+                                <div class="imprinting-benefits-item-content">
+                                    {{block.settings.content}}
+                                </div>
+                        </div>
+                {% endfor  %}
+    </div>
+
+    <div class="imprinting-benefits-cta">
+                <a href="{{section.settings.link}}" class="btn btn-black-dark">{{section.settings.cta_title}}</a>
+    </div>
+</div>
+
+
+
+
+{% schema %}
+    {
+        "name": "Imprinting Benefits",
+        "settings": [{
+            "type" : "text",
+            "label":"Title",
+            "id":"title"
+        },{
+            "type" : "richtext",
+            "label":"Content",
+            "id":"content"
+        },{
+            "type" : "text",
+            "label":"CTA Title",
+            "id":"cta_title"
+        },{
+                "type" : "url",
+                "label":"CTA Link",
+                "id":"link"
+            }],
+        "blocks": [{
+            "type" : "icon-text",
+            "name" : "Icon/Text",
+            "settings" :[{
+                "type" : "text",
+                "label":"Title",
+                "id":"title"
+            },{
+                "type" : "richtext",
+                "label":"Content",
+                "id":"content"
+            },{
+                "type" : "image_picker",
+                "label":"Icon",
+                "id":"icon"
+            }]
+        }],
+        "presets": [
+            {
+            "name": "Imprinting Benefits"
+            }
+        ]
+    }
+  {% endschema %}

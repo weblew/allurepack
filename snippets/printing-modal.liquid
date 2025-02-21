@@ -1,0 +1,884 @@
+{% assign printingMessage = '' %}
+{% assign printingNotice = '' %}
+
+{% if collection.metafields.printing.message or collection.metafields.printing.delay_date %}
+	
+	{% assign printingMessage = collection.metafields.printing.message %}
+	{% assign printingNotice = collection.metafields.printing.delay_date %}
+
+{% else %}
+
+	{% for collection in product.collections %}
+		
+      {% if collection.metafields.printing.message or collection.metafields.printing.delay_date %}
+          
+			{% assign printingMessage = collection.metafields.printing.message %}
+			{% assign printingNotice = collection.metafields.printing.delay_date %}
+
+      {% endif %}
+
+  {% endfor %}
+{% endif %}
+
+
+<style>
+  {% for object in shop.metaobjects.imprinting_colors.values %}
+    [data-imprinting-color="{{object.color}}"]{
+      background-image: url('{{object.image |  image_url }}');
+    }
+  {% endfor %}
+</style>
+
+<script>
+  var printing_options = {{collectionInfo.metafields.collectionPrinting | json}};
+  var existing_logos = {{customer.metafields.custom.logos.value | json}};
+</script>
+<!--  -->
+
+
+
+<div class="printing-panel" ng-class="{'open':vm.isPanelOpen}" >
+  <div class="printing-panel-backdrop" ng-click="vm.closePanel();">
+
+  </div>
+  <div data-plate-fees style="display: none;">
+    {{shop.metafields.settings.plate_fees}}
+  </div>
+  <div class="printing-panel-view">
+    <div class="printing-panel-close" ng-click="vm.closePanel()">
+      		
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7 5.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L8.41421 7L13.7071 12.2929C14.0976 12.6834 14.0976 13.3166 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L7 8.41421L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="#3D4246"/>
+      </svg>
+
+    </div>
+		<div class="printing-panel-body">
+      <div>
+          <div class="printing-panel-header">
+            Add imrpinting
+          </div>
+          <div class="selected-printing-options">
+              <span class="" ng-click="vm.togglePrintingPricing()">
+                Details & Pricing 
+                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99957 3.40866C5.18793 3.40866 2.90866 5.68793 2.90866 8.49957C2.90866 11.3112 5.18793 13.5905 7.99957 13.5905C10.8112 13.5905 13.0905 11.3112 13.0905 8.49957C13.0905 5.68793 10.8112 3.40866 7.99957 3.40866ZM1.77734 8.49957C1.77734 5.06313 4.56313 2.27734 7.99957 2.27734C11.436 2.27734 14.2218 5.06313 14.2218 8.49957C14.2218 11.936 11.436 14.7218 7.99957 14.7218C4.56313 14.7218 1.77734 11.936 1.77734 8.49957ZM7.43391 6.23694C7.43391 5.92454 7.68716 5.67128 7.99957 5.67128H8.00522C8.31763 5.67128 8.57088 5.92454 8.57088 6.23694C8.57088 6.54934 8.31763 6.8026 8.00522 6.8026H7.99957C7.68716 6.8026 7.43391 6.54934 7.43391 6.23694ZM7.99957 7.93391C8.31197 7.93391 8.56522 8.18716 8.56522 8.49957V10.7622C8.56522 11.0746 8.31197 11.3278 7.99957 11.3278C7.68716 11.3278 7.43391 11.0746 7.43391 10.7622V8.49957C7.43391 8.18716 7.68716 7.93391 7.99957 7.93391Z" fill="#895F67"/>
+                </svg>
+              </span>
+          </div>
+          <div class="printing-panel-locations-title">
+            Stamp Placement:
+          </div>
+          <div class="printing-panel-locations">
+            
+            {% raw %}
+                <div class="printing-panel-location" ng-repeat="(location, value) in vm.printing_options" ng-if="value === 'on'">
+                   
+                  <div ng-init="location_name = location.split('_').join(' ')"></div>        
+                  <div class="flex flex-align-center flex-justify-between printing-panel-location-option" ng-show="!vm.locationIsSelected(location_name) || vm.locationIsSelected(location_name).saved">
+                      <div>
+                        <strong>{{ location_name }}</strong>                           
+                      </div>
+                    
+                      <button class="btn btn-gold-light" ng-hide="vm.locationIsSelected(location_name)" ng-click="vm.addLocation(location_name)">
+                        <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect x="6" y="0.5" width="1" height="13" fill="#C7A049"/>
+                          <rect x="13" y="6.5" width="1" height="13" transform="rotate(90 13 6.5)" fill="#C7A049"/>
+                        </svg>
+                        Add Stamp
+                      </button>
+                      <button class="btn btn-remove" ng-show="vm.locationIsSelected(location_name).saved" ng-click="vm.removeLocation(location_name)">Remove</button>
+                      
+                  </div>
+                
+                  
+                  
+                  <div class="printing-panel-location-options" ng-show="vm.locationIsSelected(location_name) && !vm.locationIsSelected(location_name).saved">
+                      <div class="printing-panel-tabs">
+                        <div class="printing-panel-tab" ng-click="vm.locationIsSelected(location_name).tab = 'logo'" ng-class="{'active':!vm.locationIsSelected(location_name).tab || vm.locationIsSelected(location_name).tab === 'logo'}">
+                          Logo
+                        </div>
+                        <div class="printing-panel-tab" ng-click="vm.locationIsSelected(location_name).tab = 'color'" ng-class="{'active':vm.locationIsSelected(location_name).tab === 'color'}">
+                          Color
+                        </div>
+                      </div>
+                      
+                      <!-- Select Type -->
+                      <div class="printing-panel-tab-content"  ng-show="!vm.locationIsSelected(location_name).tab || vm.locationIsSelected(location_name).tab === 'logo'">
+                          
+                          <label>Choose File:</label>
+                          <div ng-show="vm.locationIsSelected(location_name).error"  class="printing-location-error">
+                            <small ng-bind="vm.locationIsSelected(location_name).error" class="printing-location-error-text"></small>
+                          </div> 
+                          <div>
+                              <div class="printing-panel-location-option">
+                                  <strong>Existing plates:</strong>
+                                 
+                                  <button class="printing-panel-location-option-btn"  ng-click="vm.selectLocationOption(location_name, 'plate')" ng-class="{'selected':vm.locationIsSelected(location_name).type === 'plate'}">
+                                    Use plate on file
+                                    <svg class="check" width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5303 0.96967C13.8232 1.26256 13.8232 1.73744 13.5303 2.03033L5.28033 10.2803C4.98744 10.5732 4.51256 10.5732 4.21967 10.2803L0.46967 6.53033C0.176777 6.23744 0.176777 5.76256 0.46967 5.46967C0.762563 5.17678 1.23744 5.17678 1.53033 5.46967L4.75 8.68934L12.4697 0.96967C12.7626 0.676777 13.2374 0.676777 13.5303 0.96967Z" fill="#C7A049"/>
+                                    </svg>
+
+                                  </button>
+                              </div>
+
+                              <div class="printing-panel-location-option">
+                                  <strong>Upload a new file </strong>
+                                  <div class="p">
+                                    <div class="span">
+                                      <span ng-click="vm.show_platefee_popover = !vm.show_platefee_popover;vm.show_platefee_popover_2 = false;">
+                                        Plate fee
+                                      </span>
+                                      <div class="printing-panel-popever" ng-show="vm.show_platefee_popover">
+                                        <svg  ng-click="vm.show_platefee_popover = false" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <g opacity="0.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.96967 3.96967C4.26256 3.67678 4.73744 3.67678 5.03033 3.96967L9 7.93934L12.9697 3.96967C13.2626 3.67678 13.7374 3.67678 14.0303 3.96967C14.3232 4.26256 14.3232 4.73744 14.0303 5.03033L10.0607 9L14.0303 12.9697C14.3232 13.2626 14.3232 13.7374 14.0303 14.0303C13.7374 14.3232 13.2626 14.3232 12.9697 14.0303L9 10.0607L5.03033 14.0303C4.73744 14.3232 4.26256 14.3232 3.96967 14.0303C3.67678 13.7374 3.67678 13.2626 3.96967 12.9697L7.93934 9L3.96967 5.03033C3.67678 4.73744 3.67678 4.26256 3.96967 3.96967Z" fill="#2F2923"/>
+                                          </g>
+                                        </svg>
+                                        <div data-plate-fees-elm></div>
+                                      </div>
+                                    </div> 
+                                    will be added to your order for new files.
+                                    <br>
+                                    <span ng-click="vm.show_platefee_popover_3 = !vm.show_platefee_popover_3;vm.show_platefee_popover = false;vm.show_platefee_popover_2 = false;">File requirments</span>
+                                    <div class="printing-panel-popever printing-panel-popever-full" ng-show="vm.show_platefee_popover_3">
+                                        <svg  ng-click="vm.show_platefee_popover_3 = false" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <g opacity="0.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.96967 3.96967C4.26256 3.67678 4.73744 3.67678 5.03033 3.96967L9 7.93934L12.9697 3.96967C13.2626 3.67678 13.7374 3.67678 14.0303 3.96967C14.3232 4.26256 14.3232 4.73744 14.0303 5.03033L10.0607 9L14.0303 12.9697C14.3232 13.2626 14.3232 13.7374 14.0303 14.0303C13.7374 14.3232 13.2626 14.3232 12.9697 14.0303L9 10.0607L5.03033 14.0303C4.73744 14.3232 4.26256 14.3232 3.96967 14.0303C3.67678 13.7374 3.67678 13.2626 3.96967 12.9697L7.93934 9L3.96967 5.03033C3.67678 4.73744 3.67678 4.26256 3.96967 3.96967Z" fill="#2F2923"/>
+                                          </g>
+                                        </svg>
+                                        <div>
+                                          <h4>
+                                            <span>File Requirments</span>
+                                          </h4>
+                                          <p>
+                                            For a smooth upload process please upload a vector image in an .ai, .eps, .psd, or .pdf file format.
+                                          </p>
+                                          <p>
+                                            If you only have a .jpg or .png, it must be a high resolution black and white version.
+                                          </p>
+                                          <p>
+                                            Logo files that do not meet above requirements may be charged an additional fee.
+                                          </p>
+                                          <p>
+                                            If you need a logo you can make use of our Create your own logo software free of charge.
+                                          </p>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <label class="printing-panel-location-option-btn" ng-class="{'selected':vm.locationIsSelected(location_name).type === 'upload'}">
+                                    <svg ng-hide="vm.locationIsSelected(location_name).file.name" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5286 0.863231C7.78895 0.602881 8.21106 0.602881 8.4714 0.863231L11.1381 3.5299C11.3984 3.79025 11.3984 4.21236 11.1381 4.47271C10.8777 4.73306 10.4556 4.73306 10.1953 4.47271L8.66667 2.94411V10.0013C8.66667 10.3695 8.36819 10.668 8 10.668C7.63181 10.668 7.33333 10.3695 7.33333 10.0013V2.94411L5.80474 4.47271C5.54439 4.73306 5.12228 4.73306 4.86193 4.47271C4.60158 4.21236 4.60158 3.79025 4.86193 3.5299L7.5286 0.863231ZM2.66667 7.33464C3.03486 7.33464 3.33333 7.63311 3.33333 8.0013V13.3346C3.33333 13.5114 3.40357 13.681 3.5286 13.806C3.65362 13.9311 3.82319 14.0013 4 14.0013H12C12.1768 14.0013 12.3464 13.9311 12.4714 13.806C12.5964 13.681 12.6667 13.5114 12.6667 13.3346V8.0013C12.6667 7.63311 12.9651 7.33464 13.3333 7.33464C13.7015 7.33464 14 7.63311 14 8.0013V13.3346C14 13.8651 13.7893 14.3738 13.4142 14.7488C13.0391 15.1239 12.5304 15.3346 12 15.3346H4C3.46957 15.3346 2.96086 15.1239 2.58579 14.7488C2.21071 14.3738 2 13.8651 2 13.3346V8.0013C2 7.63311 2.29848 7.33464 2.66667 7.33464Z" fill="#2F2923"/>
+                                    </svg>
+                                    <span title="{{vm.locationIsSelected(location_name).file.name}}">{{vm.locationIsSelected(location_name).file.name || 'Upload file'}}</span>
+                                    
+                                    <svg class="check" width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5303 0.96967C13.8232 1.26256 13.8232 1.73744 13.5303 2.03033L5.28033 10.2803C4.98744 10.5732 4.51256 10.5732 4.21967 10.2803L0.46967 6.53033C0.176777 6.23744 0.176777 5.76256 0.46967 5.46967C0.762563 5.17678 1.23744 5.17678 1.53033 5.46967L4.75 8.68934L12.4697 0.96967C12.7626 0.676777 13.2374 0.676777 13.5303 0.96967Z" fill="#C7A049"/>
+                                    </svg>
+
+                                    <input type="file" data-location="{{location_name}}" onchange="angular.element(this).scope().vm.fileSelected(this)" />
+
+                                  </label>
+                              </div>
+
+
+                              <div class="printing-panel-location-option">
+                                  <strong>Create custom design</strong>
+                                  <div class="p">
+                                    Create a custom design with our FREE design tool
+                                    <br>
+                                    <div class="span">
+                                      <span  ng-click="vm.show_platefee_popover_2 = !vm.show_platefee_popover_2;vm.show_platefee_popover = false;">
+                                        New Plate fee
+                                      </span>
+                                      <div class="printing-panel-popever" ng-show="vm.show_platefee_popover_2">
+                                        <svg  ng-click="vm.show_platefee_popover_2 = false" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <g opacity="0.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.96967 3.96967C4.26256 3.67678 4.73744 3.67678 5.03033 3.96967L9 7.93934L12.9697 3.96967C13.2626 3.67678 13.7374 3.67678 14.0303 3.96967C14.3232 4.26256 14.3232 4.73744 14.0303 5.03033L10.0607 9L14.0303 12.9697C14.3232 13.2626 14.3232 13.7374 14.0303 14.0303C13.7374 14.3232 13.2626 14.3232 12.9697 14.0303L9 10.0607L5.03033 14.0303C4.73744 14.3232 4.26256 14.3232 3.96967 14.0303C3.67678 13.7374 3.67678 13.2626 3.96967 12.9697L7.93934 9L3.96967 5.03033C3.67678 4.73744 3.67678 4.26256 3.96967 3.96967Z" fill="#2F2923"/>
+                                          </g>
+                                        </svg>
+                                        <div data-plate-fees-elm></div>
+                                      </div>
+                                    </div> 
+                                    will be added to your order for new files.
+                                  </div>
+
+                                  <button class="printing-panel-location-option-btn"  ng-click="vm.selectLocationOption(location_name, 'custom')" ng-class="{'selected':vm.locationIsSelected(location_name).type === 'custom'}">
+                                    Create custom design
+                                    <svg class="check" width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5303 0.96967C13.8232 1.26256 13.8232 1.73744 13.5303 2.03033L5.28033 10.2803C4.98744 10.5732 4.51256 10.5732 4.21967 10.2803L0.46967 6.53033C0.176777 6.23744 0.176777 5.76256 0.46967 5.46967C0.762563 5.17678 1.23744 5.17678 1.53033 5.46967L4.75 8.68934L12.4697 0.96967C12.7626 0.676777 13.2374 0.676777 13.5303 0.96967Z" fill="#C7A049"/>
+                                    </svg>
+
+                                  </button>
+                              </div>
+                          </div>
+                        
+                          <!--
+                          <div ng-show="vm.locationIsSelected(location_name).type === 'plate'">
+                              <div class="printing-panel-location-selected-option flex flex-align-center flex-justify-between" ng-click="vm.selectLocationOption(location_name, '')">
+                                    <span>Use plate on file</span>
+
+                                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.529247 0.528575C0.789596 0.268226 1.21171 0.268226 1.47206 0.528575L5.00065 4.05717L8.52925 0.528575C8.7896 0.268226 9.21171 0.268226 9.47206 0.528575C9.73241 0.788925 9.73241 1.21103 9.47206 1.47138L5.47206 5.47138C5.21171 5.73173 4.7896 5.73173 4.52925 5.47138L0.529247 1.47138C0.268897 1.21103 0.268897 0.788925 0.529247 0.528575Z" fill="#202020"/>
+                                    </svg>
+
+                              </div>
+                          </div>
+                        
+                          <div ng-show="vm.locationIsSelected(location_name).type === 'upload'">
+                              <div class="printing-panel-location-selected-option flex flex-align-center flex-justify-between" ng-click="vm.selectLocationOption(location_name, '')">
+                                    <span>Upload Logo</span>
+
+                                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.529247 0.528575C0.789596 0.268226 1.21171 0.268226 1.47206 0.528575L5.00065 4.05717L8.52925 0.528575C8.7896 0.268226 9.21171 0.268226 9.47206 0.528575C9.73241 0.788925 9.73241 1.21103 9.47206 1.47138L5.47206 5.47138C5.21171 5.73173 4.7896 5.73173 4.52925 5.47138L0.529247 1.47138C0.268897 1.21103 0.268897 0.788925 0.529247 0.528575Z" fill="#202020"/>
+                                    </svg>
+
+                              </div>
+                            
+                              <div class="printing-panel-location-upload-guid" ng-hide="vm.locationIsSelected(location_name).file">
+                                  For a smooth upload process please upload a vector
+                                  image in an <strong>.ai, .eps, .psd</strong>, or <strong>.pdf</strong> file format.
+                                  <br><br>
+                                  If you only have a <strong>.jpg</strong> or <strong>.png</strong>, it must
+                                  be a high resolution black and white version.
+                                  <br><br>
+                                  Logo files that do not meet above requirements
+                                  may be charged an additional fee.
+                                  <br><br>
+                                  If you need a logo you can make use of our 
+                                  <span class="printing-custom-btn enabled">Create your own logo</span> software free of charge.   
+                              </div>
+                            
+                              <div>
+                                <input type="file" data-location="{{location_name}}" onchange="angular.element(this).scope().vm.fileSelected(this)" />
+                              </div>
+                          </div>
+                          
+                        
+                          <div ng-show="vm.locationIsSelected(location_name).type === 'custom'">
+                              <div class="printing-panel-location-selected-option flex flex-align-center flex-justify-between" ng-click="vm.selectLocationOption(location_name, '')">
+                                    <span>Custom Logo</span>
+
+                                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.529247 0.528575C0.789596 0.268226 1.21171 0.268226 1.47206 0.528575L5.00065 4.05717L8.52925 0.528575C8.7896 0.268226 9.21171 0.268226 9.47206 0.528575C9.73241 0.788925 9.73241 1.21103 9.47206 1.47138L5.47206 5.47138C5.21171 5.73173 4.7896 5.73173 4.52925 5.47138L0.529247 1.47138C0.268897 1.21103 0.268897 0.788925 0.529247 0.528575Z" fill="#202020"/>
+                                    </svg>
+
+                              </div>
+                          </div>
+                          -->
+                      </div>
+
+                      <!-- Select Color -->
+                      <div class="printing-panel-tab-content" ng-show="vm.locationIsSelected(location_name).tab === 'color'">                                
+                        <div class="printing-panel-location-color">
+                            
+                            <label>Choose color:</label>
+                            <div ng-show="vm.locationIsSelected(location_name).error"  class="printing-location-error">
+                                <small ng-bind="vm.locationIsSelected(location_name).error" class="printing-location-error-text"></small>
+                            </div> 
+                            <div class="">
+
+                                <h4>Metallic Colors</h4>
+
+                                <div class="metallic-colors printing-colors-row flex">
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Gold'}" ng-click="vm.setLocationColor(location_name, 'Met - Gold')"></div>
+                                          Gold
+                                    </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Rose Gold' }" ng-click="vm.setLocationColor(location_name, 'Met - Rose Gold')" style="background-position: -1019px 0px;"></div>
+                                          Rose Gold
+                                    </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Silver' }" ng-click="vm.setLocationColor(location_name, 'Met - Silver')" style="background-position: -93px 0px;"></div>
+                                          Silver
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Copper' }" ng-click="vm.setLocationColor(location_name, 'Met - Copper')" style="background-position: -185px 0px;"></div>
+                                          Copper
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Bronze' }" ng-click="vm.setLocationColor(location_name, 'Met - Bronze')" style="background-position: -277px 0px;"></div>
+                                          Bronze
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Red' }" ng-click="vm.setLocationColor(location_name, 'Met - Red')" style="background-position: -369px 0px;"></div>
+                                          Red
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Magenta' }" ng-click="vm.setLocationColor(location_name, 'Met - Magenta')" style="background-position: -460px 0px;"></div>
+                                          Magenta
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Purple' }" ng-click="vm.setLocationColor(location_name, 'Met - Purple')" style="background-position: -552px 0px;"></div>
+                                          Purple
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Blue' }" ng-click="vm.setLocationColor(location_name, 'Met - Blue')" style="background-position: -644px 0px;"></div>
+                                          Blue
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Light Blue' }" ng-click="vm.setLocationColor(location_name, 'Met - Light Blue')" style="background-position: -736px 0px;"></div>
+                                            Light Blue
+                                        </div>
+                                    <div class="printing-color">
+                                            <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Teal' }" ng-click="vm.setLocationColor(location_name, 'Met - Teal')" style="background-position: -828px 0px;"></div>
+                                            Teal
+                                        </div>
+                                    <div class="printing-color">
+                                            <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Met - Green' }" ng-click="vm.setLocationColor(location_name, 'Met - Green')" style="background-position: -919px 0px;"></div>
+                                            Green
+                                        </div>
+                                </div>
+
+                                <h4>Gloss Colors</h4>
+
+                                <div class="gloss-colors printing-colors-row flex">
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Black' }" ng-click="vm.setLocationColor(location_name, 'Black')"></div>
+                                          Black
+                                    </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Dark Gray' }" ng-click="vm.setLocationColor(location_name, 'Dark Gray')" style="background-position: -89px 0px;"></div>
+                                          Dark Gray
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'White' }" ng-click="vm.setLocationColor(location_name, 'White')" style="background-position: -178px 0;"></div>
+                                          White
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Cream' }" ng-click="vm.setLocationColor(location_name, 'Cream')" style="background-position: -267px 0;"></div>
+                                          Cream
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Brown' }" ng-click="vm.setLocationColor(location_name, 'Brown')" style="background-position: -356px 0;"></div>
+                                          Brown
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Burgundy' }" ng-click="vm.setLocationColor(location_name, 'Burgundy')" style="background-position: -445px 0;"></div>
+                                          Burgundy
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Pink' }" ng-click="vm.setLocationColor(location_name, 'Pink')" style="background-position: -534px 0;"></div>
+                                          Pink
+                                      </div>
+                                    <div class="printing-color">
+                                          <div class="printing-color-circle" ng-class="{'selected': vm.locationIsSelected(location_name).color === 'Gloss Teal' }" ng-click="vm.setLocationColor(location_name, 'Gloss Teal')" style="background-position: -623px 0;"></div>
+                                          Gloss Teal
+                                      </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                      </div>
+                    
+                  </div>
+                
+                  <!-- Summery -->
+                  <div class="printing-panel-location-summery" ng-show="vm.locationIsSelected(location_name).saved">
+                      <div class="" ng-click="vm.editLocation(location_name, 'logo');">
+                        <div>
+                          <strong ng-show="vm.locationIsSelected(location_name).type === 'plate'">Plate on file</strong>
+                          <strong ng-show="vm.locationIsSelected(location_name).type === 'upload'">Upload Logo</strong>
+                          <strong ng-show="vm.locationIsSelected(location_name).type === 'custom'">Custome Logo</strong>
+                        </div>
+                        <div ng-show="vm.locationIsSelected(location_name).type === 'plate'">
+                          <div class="plate-logo">
+                            <svg width="64px" height="64px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs> <style>.b{fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;}</style> </defs> <g> <circle class="b" cx="34.1623" cy="25.8047" r="2.8"></circle> <path class="b" d="m39.5623,34.0047c0-2.9823-2.4177-5.4-5.4-5.4s-5.4,2.4177-5.4,5.4h10.8Z"></path> </g> <g> <path class="b" d="m41.6801,13.015h-16.91c-2-.1-5.93-4.23-8.19-4.23H6.6801c-1.204-.0003-2.1803.9754-2.1806,2.1794,0,.0169.0002.0337.0006.0506h0v7.29h39v-3.42c.0221-1.0104-.7791-1.8475-1.7895-1.8696-.0102-.0002-.0203-.0004-.0305-.0004Z"></path> <path class="b" d="m4.5001,18.295v18.72c-.0111,1.2039.956,2.1889,2.1599,2.1999.0034,0,.0067,0,.0101,0h34.65c1.204,0,2.18-.9759,2.1801-2.1799,0-.0067,0-.0134,0-.0201h0v-18.72"></path> </g> </g></svg>
+                          </div>
+                        </div>
+                        <div ng-show="vm.locationIsSelected(location_name).type === 'upload'">
+                          <strong ng-bind="vm.locationIsSelected(location_name).file.name" title="{{vm.locationIsSelected(location_name).file.name}}"></strong>
+                        </div>
+                      </div>
+                      <div class=""  ng-click="vm.editLocation(location_name, 'color');">
+                        <strong ng-bind="vm.locationIsSelected(location_name).color"></strong>
+                        
+                        
+                        <div class="logo-color" data-imprinting-color="{{vm.locationIsSelected(location_name).color}}"></div>
+                        
+                      </div>
+                  </div>
+                        
+                </div>
+            
+            {% endraw %}
+          </div>
+      </div>
+
+    </div>
+    <div class="printing-panel-footer">
+      <button class="btn btn-black-light" ng-click="vm.closePanel()">Cancel</button>
+      <button class="btn btn-black-dark" ng-click="vm.savePrintingPanel()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="printing-pricing-popup ng-hide" ng-show="vm.showPrintingPricing">
+  <div class="printing-pricing-popup-backdrop" ng-click="vm.togglePrintingPricing()"></div>
+  <div class="printing-pricing-popup-content">
+      <div class="printing-pricing-popup-close" ng-click="vm.togglePrintingPricing()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.75">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M3.96967 3.96967C4.26256 3.67678 4.73744 3.67678 5.03033 3.96967L9 7.93934L12.9697 3.96967C13.2626 3.67678 13.7374 3.67678 14.0303 3.96967C14.3232 4.26256 14.3232 4.73744 14.0303 5.03033L10.0607 9L14.0303 12.9697C14.3232 13.2626 14.3232 13.7374 14.0303 14.0303C13.7374 14.3232 13.2626 14.3232 12.9697 14.0303L9 10.0607L5.03033 14.0303C4.73744 14.3232 4.26256 14.3232 3.96967 14.0303C3.67678 13.7374 3.67678 13.2626 3.96967 12.9697L7.93934 9L3.96967 5.03033C3.67678 4.73744 3.67678 4.26256 3.96967 3.96967Z" fill="#2F2923"/>
+          </g>
+        </svg>
+      </div>
+      <h3>Logo Imprinting</h3>
+
+      <div class="printing-pricing-popup-instructions">
+        <p>Imprinting on packaging items is available in standard pigment and metallic colors as a foil hotstamp.</p>
+        
+        <div class="flex">
+          <div class="flex-5">
+            {{shop.metafields.settings.printing_fees}}
+          </div>
+          <div class="flex-5">
+            {{shop.metafields.settings.plate_fees}}
+          </div>
+        </div>
+      </div>
+
+      {% if collectionInfo.metafields.custom.printing_mockup %}
+        <div class="printing-pricing-popup-mockup">
+          <div class="printing-pricing-popup-mockup-img">
+            <img src="{{collectionInfo.metafields.custom.printing_mockup |  image_url: width:300 }}"/>
+        </div>
+        <p>
+          Logo placement for {{collectionInfo.title}} {{collectionInfo.metafields.custom.additional_title}}
+        </p>
+        </div>
+          
+      {% endif %}
+  </div>       
+</div>
+
+<div class="printing-modal-section">
+  
+  	<div class="printing-modal-overlay"></div>
+    <div class="printing-modal">
+      <div class="printing-modal-close"></div>
+      <div class="printing-modal-content">
+
+        <p class="printing-modal-header font-default fs40">PRINTING <span class="font-script gold">options</span></p>
+
+        <div class="printing-modal-text fs16">
+
+            <p>Imprinting on packaging items is available in standard pigment and metallic colors as a foil hotstamp.</p>
+
+            <br>
+          	<div>
+              <p class="gold"><strong>$60 imprinting fee</strong> (includes first 200 prints)</p>
+              <p class="gold"><strong>$0.27</strong> each additional print.</p>
+              <p class="gold"><strong>$69</strong> New Box & Pouch Plate.</p>
+              <p class="gold"><strong>$89</strong> New Bags Plate.</p>
+            </div>
+            <br>
+         
+
+        </div>
+
+        <form class="text-left fs14" name="printing-modal-form" enctype='multipart/form-data'>
+            <input type="hidden" name="quantity">
+            <input type="hidden" name="id">
+
+            <div class="flex flex-align-center flex-justify-center">
+
+                <div class="flex-2">
+                    <div class="gold">LOCATION</div>
+                </div>
+                <div class="flex-2">
+                    <div class="gold">
+                      PLATE ON FILE
+                      <div class="info-icon">
+                        	<span>i</span>
+                        	<div class="tooltip">
+                              	<strong>Plates</strong> that are ordered are stored with us for future use. 
+								<br><br>
+                              	If you have a plate with us already choose option plate on file. 
+                        	</div>
+                      </div>
+                  	</div>
+                </div>
+              	<div class="flex-2">
+                    <div class="gold">
+                      LOGO 
+                      <div class="info-icon">
+                        	<span>i</span>
+                        	<div class="tooltip">
+                        		For first time print choose upload logo option.
+                              	<br><br>
+          						Price for plate is 
+                              	<br>
+                              	Box & Pouch: <strong>$50</strong>.
+                              	<br>
+                              	Bags: <strong>$75</strong>.
+                        	</div>
+                      </div>
+                     </div>
+                </div>
+              	{% if true or customer.email contains '@allure' or customer.email == 'solguttman@gmail.com' %}
+              	<div class="flex-2">
+                    <div class="gold">
+                      DESIGN 
+					  <div class="info-icon">
+                        	<span>i</span>
+                        	<div class="tooltip">
+          						Price for plate is 
+                              	<br>
+                              	Box & Pouch: <strong>$50</strong>.
+                              	<br>
+                              	Bags: <strong>$75</strong>.
+                        	</div>
+                      </div>
+                     </div>
+                </div>
+              	{% endif %}
+                <div class="flex-1-5">
+                    <div class="gold">COLOR</div>
+                </div>
+
+            </div>
+            <br>
+          
+
+            {% for printingOption in collectionInfo.metafields.collectionPrinting %}
+                {% if printingOption[1] == 'on' %}
+
+                <div class="flex flex-align-center flex-justify-center logo-row" data-name="{{printingOption[0] | replace: '_', ' ' }}">
+
+                  	<div class="flex-2">
+                        <label class="checkbox">
+                            <input type="checkbox" class="js-select-position" name="properties[Printing {{printingOption[0] | replace: '_', ' ' }}]">
+                            <span></span>
+                            {{printingOption[0] | replace: '_', ' ' | capitalize }}
+                        </label>
+                    </div>
+                    <div class="flex-2 disabled">
+                        <label class="checkbox">
+                            <input type="checkbox" class="js-plate" name="properties[Printing {{printingOption[0] | replace: '_', ' ' }} plate]">
+                            <span></span>
+                            Plate on file
+                        </label>
+                    </div>
+                    <div class="flex-2 disabled logo-upload-button">
+                        <label class="btn btn-small btn-black-light stamp-preview">
+                            <div class="">UPLOAD LOGO</div>                            
+                        </label>
+                    </div>
+                  {% if true or customer.email contains '@allure' or customer.email == 'solguttman@gmail.com' %}
+                  	<div class="flex-2">
+                      	<label class="btn btn-small btn-black-light disabled printing-custom-btn" data-design>
+                          	Create Logo
+                      	</label>
+                    </div>
+                  {% endif %}
+                    <div class="flex-1-5 disabled">
+                        <label class="printing-colors btn btn-small btn-black-light">
+                          	<input class="logo-color-val" type="hidden" name="properties[Printing {{printingOption[0] | replace: '_', ' ' }} color]">
+                          	<span>Color</span>
+                        </label>
+                    </div>
+                  
+                  	<div class="upload-layer-overlay"></div>
+                    <div class="upload-layer">
+
+                      <div class="upload-layer-header">
+
+                        <span class="font-default gold">Upload Logo</span>
+                        <div class="upload-layer-close"></div>
+
+                      </div>
+
+                      <div class="upload-layer-body">
+                                                	
+                        	<div class="upload-layer-guid">
+                              	For a smooth upload process please upload a vector
+                              image in an <strong>.ai, .eps, .psd</strong>, or <strong>.pdf</strong> file format.
+                        	</div>
+                        
+                        	<div class="upload-layer-guid">
+                              If you only have a <strong>.jpg</strong> or <strong>.png</strong>, it must
+								be a high resolution black and white version.
+                        	</div>
+                        
+                            <div class="upload-layer-guid">
+                              Logo files that do not meet above requirements
+							  may be charged an additional fee.
+                            </div>
+                        
+                            <div class="upload-layer-guid">
+                              If you need a logo you can make use of our 
+                              <span class="printing-custom-btn enabled gold">Create your own logo</span> software free of charge.   
+                            </div>
+                        
+                        
+                            <input type="file" name="properties[Printing {{printingOption[0] | replace: '_', ' ' }} file]" class=""/>
+
+                      </div>
+
+                    </div>
+
+                </div>
+                <br>          		
+          
+                {% endif %}
+            {% endfor %}
+
+<!-- 			<div class="printing-delay-message">
+                <strong>Please note: </strong>
+              	<br>
+              	Due to the holiday season, our printing timeline is a little delayed from our normal fast delivery time. Printing orders may take about 10-12 business days.
+				<br>	
+              We appreciate your understanding.  
+          	</div> -->
+
+        </form>
+        
+        <div class="printing-error"></div>
+
+        <div class="flex flex-center">
+            <div class="btn btn-black-light js-cancel-printing">Cancel</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="btn btn-black-dark js-add-printing">Confirm</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="colors-layer-overlay"></div>
+    <div class="colors-layer">
+      
+      <style>
+        .gloss-colors .printing-color-circle{
+        	background-image:url({{ 'gloss-colors.png' | file_img_url: 'master'}});
+        }
+        .metallic-colors .printing-color-circle{
+        	background-image:url({{ 'metallic-colors.png' | file_img_url: 'master'}});
+        }
+      </style>
+
+      <div class="colors-layer-header">
+
+            <span>Select stamp color</span>
+            <div class="colors-layer-close"></div>
+
+      </div>
+
+      <div class="colors-layer-body">
+        
+        	<h4>Metallic Colors</h4>
+        
+        	<div class="metallic-colors printing-colors-row flex">
+              	<div class="printing-color">
+                      <div class="printing-color-circle"></div>
+                      Gold
+              	</div>
+              	<div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -1019px 0px;"></div>
+                      Rose Gold
+              	</div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -93px 0px;"></div>
+                      Silver
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -185px 0px;"></div>
+                      Copper
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -277px 0px;"></div>
+                      Bronze
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -369px 0px;"></div>
+                      Red
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -460px 0px;"></div>
+                      Magenta
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -552px 0px;"></div>
+                      Purple
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -644px 0px;"></div>
+                      Blue
+                  </div>
+                <div class="printing-color">
+                        <div class="printing-color-circle" style="background-position: -736px 0px;"></div>
+                        Light Blue
+                    </div>
+                <div class="printing-color">
+                        <div class="printing-color-circle" style="background-position: -828px 0px;"></div>
+                        Teal
+                    </div>
+                <div class="printing-color">
+                        <div class="printing-color-circle" style="background-position: -919px 0px;"></div>
+                        Green
+                    </div>
+        	</div>
+        
+			<h4>Gloss Colors</h4>
+        
+        	<div class="gloss-colors printing-colors-row flex">
+              	<div class="printing-color">
+                      <div class="printing-color-circle"></div>
+                      Black
+              	</div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -89px 0px;"></div>
+                      Dark Gray
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -178px 0;"></div>
+                      White
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -267px 0;"></div>
+                      Cream
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -356px 0;"></div>
+                      Brown
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -445px 0;"></div>
+                      Burgundy
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -534px 0;"></div>
+                      Pink
+                  </div>
+                <div class="printing-color">
+                      <div class="printing-color-circle" style="background-position: -623px 0;"></div>
+                      Gloss Teal
+                  </div>
+        	</div>
+        </div>
+
+    </div>
+  
+    <div class="addToCart-modal-section">
+        <div class="addToCart-layer-overlay"></div>
+        <div class="addToCart-layer">
+
+
+          <div class="addToCart-layer-header">
+
+                <span class=""></span>
+                <div class="addToCart-layer-close"></div>
+
+          </div>
+
+          <div class="addToCart-layer-body">
+
+
+
+            <div class="flex flex-no-wrap">
+                <input type="hidden" class="addToCart-item-variant"/>
+                <div>
+                  <div class="addToCart-item-image"></div>
+                </div>
+                <div>
+                    <div class="addToCart-item-name"></div>
+                    <div class="addToCart-item-message"></div>
+                    <div class="addToCart-item-qty"></div>
+                    <div class="addToCart-item-color"></div>
+                </div>
+            </div>
+
+            <div class="addToCart-actions addToCart-conform">
+               <br/>
+                <div class="flex flex-justify-end">
+                    {% if settings.show_out_of_stock %}
+                        <div class="btn btn-black-light js-subscribe-back-in-stock">Notify me when available</div>
+                    {% endif %}
+                    <div class="btn btn-black-light js-cancel-addToCart">Continue Shopping</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div class="btn btn-black-dark js-add-addToCart">Add to cart</div>
+                </div>
+            </div>
+            <form class="subscribe-back-in-stock-from">
+               <br/>
+                <div class="flex flex-justify-end">
+                    <input type="email" placeholder="Email Address" class="flex-6 btn-black-light">
+                    <button class="flex-3 btn btn-black-dark js-subscribe-backInStock">SIGN UP</button>
+                </div>
+            </form>
+            <div class="addToCart-actions addToCart-added">
+                <div class="flex flex-justify-end">
+                    <div class="btn btn-black-dark js-cancel-addToCart">Continue Shopping</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <a href="/cart" class="btn btn-black-light js-go-addToCart">Go to cart</a>
+                </div>
+                <div class="atc-upsell">
+
+                </div>
+            </div>
+
+
+          </div>
+
+        </div>
+    </div>
+  
+</div>
+
+{% if printingMessage != blank or printingNotice != blank %}
+  <div class="displayNone printing-notice-container">
+    <div class="modal-layer-close"></div>
+    <div class="printing-notice">
+        
+       {% if printingNotice %}
+            <div class="printing-notice-body">
+              {% if printingMessage %}
+            <div class="printing-notice-header">
+                {{printingMessage}}      
+            </div>
+
+        {% endif %}
+              {{printingNotice | newline_to_br}}      
+            </div>
+
+        {% endif %}
+        <div class="printing-notice-actions">
+
+          <div class="btn btn-black-light">ADD WITH PRINT FOR LATE ARRIVAL</div>
+
+          <div class="btn btn-black-dark">ADD WITH NO PRINT</div>
+
+        </div>
+
+    </div>
+  </div>
+{% endif %}
+{% if customer.metafields.settings.has_plate == 1 or customer.metafields.settings.has_plate == 'true' %}
+  <div class="displayNone customer-plate-container">
+    <div class="modal-layer-close"></div>
+    <div class="customer-plate-notice">
+          <br>
+        <div class="flex flex-align-center">
+            <div><strong>Do you want to use your plate on file?&nbsp;&nbsp;&nbsp;&nbsp;</strong></div>
+
+              <div class="flex">
+
+                <div class="btn btn-black-light customer-plate-notice-yes">Yes</div>
+                <span>&nbsp;&nbsp;</span>
+                <div class="btn btn-black-light customer-plate-notice-no">No</div>
+
+              </div>
+        </div>
+
+        <div>
+          <div><strong>Reasons to choose no:</strong></div>
+          <ul>
+            <li>A new logo</li>
+            <li>The printing is on somthing larger like bags</li>
+            <li>The printing is on somthing smaller like boxes</li>
+          </ul>
+        </div>
+
+    </div>
+  </div>
+{% endif %}

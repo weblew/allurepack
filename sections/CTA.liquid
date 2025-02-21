@@ -1,0 +1,140 @@
+<style>
+    #shopify-section-{{section.id}}{
+        background-color:{{section.settings.background_color}};
+        padding-top:{{section.settings.top_spacing | append: 'px'}};
+        padding-bottom:{{section.settings.bottom_spacing |  append: 'px'}};
+    }
+    {% for block in section.blocks  %}
+        {% if block.type == 'spacer'  %}
+              #shopify-section-{{section.id}}  #shopify-block-{{block.id}}{
+                height:{{ block.settings.height }}px;
+              }
+          {% endif %}
+    {% endfor %}
+
+    @media screen and (max-width:1024px){
+      #shopify-section-{{section.id}}{
+        background-color:{{section.settings.background_color}};
+        padding-top:{{section.settings.top_spacing | divided_by:1.6 | append: 'px'}};
+        padding-bottom:{{section.settings.bottom_spacing | divided_by:1.6 |  append: 'px'}};
+    }
+    {% for block in section.blocks  %}
+        {% if block.type == 'spacer'  %}
+              #shopify-section-{{section.id}}  #shopify-block-{{block.id}}{
+                height:{{ block.settings.height | divided_by:1.6 }}px;
+              }
+          {% endif %}
+    {% endfor %}
+    }
+</style>
+<div>
+
+  <div class="page-width">
+      {% for block in section.blocks  %}
+          {% if block.type == 'content'  %}
+              <div class="" style="text-align:{{ block.settings.alignment }}">
+                  {{ block.settings.content }}
+              </div>
+          {% endif %}
+          {% if block.type == 'spacer'  %}
+              <div id="shopify-block-{{block.id}}" >
+                  &nbsp;
+              </div>
+          {% endif %}
+          {% if block.type == 'button'  %}
+              <div class="" style="text-align:{{ block.settings.alignment }}">
+                  <a href="{{ block.settings.url }}" class="btn btn-gold">
+                    {{ block.settings.text }}
+                  </a>
+              </div>
+          {% endif %}
+      {% endfor %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Call to action",
+    "settings": [{
+      "type": "color",
+      "id": "background_color",
+      "label": "Background"
+    },{
+      "type": "header",
+      "content": "Spacing"
+    },{
+      "type": "number",
+      "id": "top_spacing",
+      "label": "Top Spacing",
+      "default":70
+    },{
+      "type": "number",
+      "id": "bottom_spacing",
+      "label": "Bottom Spacing",
+      "default":70
+    }],
+    "blocks": [{
+      "type": "content",
+      "name" : "content",
+      "settings": [{
+        "type": "richtext",
+        "id": "content",
+        "label": "Content"
+      },{
+        "type": "radio",
+        "id": "alignment",
+        "default":"center",
+        "label": "Alignment",
+        "options": [{
+          "label": "Left",
+          "value": "left"
+        },{
+          "label": "Center",
+          "value": "center"
+        },{
+          "label": "Right",
+          "value": "right"
+        }]
+      }]
+    },{
+      "type": "spacer",
+      "name" : "spacer",
+      "settings": [{
+        "type": "number",
+        "id": "height",
+        "label": "Height"
+      }]
+    },{
+      "type": "button",
+      "name" : "button",
+      "settings": [{
+        "type": "text",
+        "id": "text",
+        "label": "Button Text"
+      },{
+        "type": "url",
+        "id": "url",
+        "label": "Button Url"
+      },{
+        "type": "radio",
+        "id": "alignment",
+        "default":"center",
+        "label": "Alignment",
+        "options": [{
+          "label": "Left",
+          "value": "left"
+        },{
+          "label": "Center",
+          "value": "center"
+        },{
+          "label": "Right",
+          "value": "right"
+        }]
+      }]
+    }],
+    "presets": [
+      {
+        "name": "Call to action"
+      }
+    ]
+  }
+{% endschema %}

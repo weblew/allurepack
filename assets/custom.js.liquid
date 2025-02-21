@@ -1,0 +1,35 @@
+$(document).on('click', '.js-scroll-to-inspire', function(){
+		
+  	var top = $('.get-inspired-top').offset().top;
+  
+  	$('html, body').animate({
+      scrollTop : top
+  	}, 700);
+  
+  	return false;
+  
+})
+
+$('.slider').on('init', function() {
+  
+  doAnimations(1000);
+
+}).on('beforeChange', function(e, slick, currentSlide, nextSlide) {
+	
+  doAnimations(600);
+
+}).slick({
+  dots:true,
+  loop:false,
+  infinite: false,
+  prevArrow: null,
+   nextArrow: null,
+  autoplay: true,
+  autoplaySpeed: 2000,
+});
+
+function doAnimations(time) {
+  setTimeout(function(){
+  	$('.slick-active').addClass('animate').siblings('.slide').removeClass('animate');
+  },time);
+}

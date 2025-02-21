@@ -1,0 +1,18 @@
+$('.allure-testimonials-slider').on('init', function() {
+  
+  doAnimations(1000);
+
+}).on('beforeChange', function(e, slick, currentSlide, nextSlide) {
+	
+  doAnimations(600);
+
+}).slick({
+  dots:true,
+  autoplay: true
+});
+
+function doAnimations(time) {
+  setTimeout(function(){
+  	$('.slick-active').addClass('animate').siblings('.slide').removeClass('animate');
+  },time);
+}

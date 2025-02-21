@@ -1,0 +1,396 @@
+<header class="header">
+  {% comment %}
+    <div class="header-top">
+        <div class="page-width flex flex-justify-between">
+        
+          <div class="flex-third header-phone flex flex-align-center">
+              Need Help? 
+              {% include 'icon-phone' %}
+              <a href="tel:800.859.1788">800.859.1788</a>
+          </div>
+          
+          {% if section.settings.show_announcement %}
+          
+          <div class="header-announcement flex-third text-center flex flex-justify-center">
+            {{section.settings.announcement}}
+          </div>
+          
+          {% endif %}
+          
+          <div class="flex-5 header-top-nav flex flex-justify-end flex-align-center">
+              
+              {% for link in linklists['top-nav'].links %}
+                
+                <div class="header-top-nav-link">
+                    <a href="{{link.url}}" {% if link.current %}class="active"{% endif %}>
+                      {{link.title}}
+                      {% if link.links != blank %}
+                      {% include 'icon-chevron-down' %}
+                      {% endif %}
+                    </a>
+                    {% if link.links != blank %}
+                          <div class="header-top-link-menu">
+                              {% for childlink in link.links %}
+                                <a href="{{childlink.url}}">{{childlink.title}}</a>
+                              {% endfor %}
+                        </div>
+                      {% endif %}
+                  </div>
+            
+              {% endfor %}
+            
+          </div>
+          
+          
+          <div class="header-menu-open">                            
+            {% include 'icon-hamburger' %}
+          </div>
+          
+        </div>
+    </div>
+  {% endcomment %}
+  <div class="header-bottom">
+    <div class="page-width">
+          <div class="header-main flex flex-justify-between flex-align-center">
+
+                <div class="header-left-icons">
+                  <div class="header-menu-open">                            
+                  {% include 'icon-hamburger' %}
+                </div>
+                <a href="tel:800.859.1788" class="header-bottom-phone">
+                          <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.4146 16.8676C18.0919 17.9336 16.4903 18.8552 15.2556 19.0148C15.2065 19.0209 15.1528 19.024 15.0935 19.024C13.5614 19.024 9.74064 17.4706 6.40684 14.1373C2.60842 10.3394 1.39448 6.32257 1.52824 5.28798C1.68784 4.05376 2.60944 2.45324 3.67596 2.12948C3.8163 2.08743 3.9384 2.06564 4.03923 2.06564C4.40858 2.06564 4.65887 2.49224 5.18174 3.5395L5.39504 3.96307C5.78162 4.71799 6.42002 5.96487 6.38962 6.37374C6.05218 6.68686 5.49891 6.97819 5.30536 7.06838C4.95729 7.23 4.78351 7.62621 4.90105 7.991C4.92841 8.07662 5.60328 10.1109 8.01801 12.5261C10.4317 14.9398 12.4639 15.6172 12.5491 15.6451C12.9149 15.7641 13.3121 15.5898 13.4737 15.2408C13.5634 15.0467 13.8547 14.4939 14.1673 14.156C14.1688 14.156 14.1698 14.156 14.1719 14.156C14.6441 14.156 15.7182 14.7073 16.5831 15.1506L17.0031 15.3624C18.5144 16.1173 18.5955 16.2678 18.4146 16.8676ZM17.682 14.0025L17.2751 13.7973C16.1108 13.2004 15.0114 12.636 14.1719 12.636C13.646 12.636 13.3212 12.8509 13.1408 13.0312C12.8657 13.3063 12.6266 13.6504 12.4462 13.9478C11.7516 13.6027 10.4996 12.858 9.09263 11.4515C7.68463 10.043 6.94136 8.78948 6.59785 8.09587C6.89373 7.91601 7.23725 7.67737 7.51236 7.40226C8.4056 6.50801 7.63752 5.00729 6.74732 3.26996L6.54161 2.86008C5.9473 1.67045 5.38541 0.545671 4.03923 0.545671C3.7859 0.545671 3.52346 0.588221 3.23567 0.67486C1.51354 1.19672 0.248423 3.33077 0.0204271 5.09292C-0.210102 6.87838 1.50746 11.3886 5.33222 15.2119C9.21676 19.0959 13.381 20.5439 15.0935 20.5439C15.2237 20.5439 15.3428 20.5358 15.4502 20.5222C17.2128 20.2942 19.3479 19.03 19.8697 17.3074C20.4499 15.3841 18.9795 14.65 17.682 14.0025Z" fill="currentColor"/>
+                            </svg>
+                              
+                          <span>800.859.1788</span>
+                                
+                        </a>  
+                </div>
+
+                  <div class="logo">
+                      <a href="/">
+                          <img src="{{section.settings.logo | img_url:'master'}}">
+                      </a>
+                  </div>
+
+                  <div class="search-container">
+                    <form action="/search" method="get" role="search">
+                      <input class=""
+                        type="search"
+                        name="q"
+                        placeholder="{{ 'general.search.placeholder' | t }}"
+                        aria-label="{{ 'general.search.placeholder' | t }}">
+                      <button class="" type="submit">
+                        {% include 'icon-search' %}
+                      </button>
+                    </form>
+                  </div>
+            
+            	  <div class="flex flex-justify-end flex-align-center header-right-icons">
+
+                      {% comment %}
+                        
+                      
+                    	<div class="header-mobile-chat">
+                            <div id="chat-toggle" class="" onclick="Tawk_API.toggle();">
+                              {% include 'icon-chat' %}
+                            </div>
+                        </div>
+{% endcomment %}
+                        <a href="tel:800.859.1788" class="header-bottom-phone">
+                          <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.4146 16.8676C18.0919 17.9336 16.4903 18.8552 15.2556 19.0148C15.2065 19.0209 15.1528 19.024 15.0935 19.024C13.5614 19.024 9.74064 17.4706 6.40684 14.1373C2.60842 10.3394 1.39448 6.32257 1.52824 5.28798C1.68784 4.05376 2.60944 2.45324 3.67596 2.12948C3.8163 2.08743 3.9384 2.06564 4.03923 2.06564C4.40858 2.06564 4.65887 2.49224 5.18174 3.5395L5.39504 3.96307C5.78162 4.71799 6.42002 5.96487 6.38962 6.37374C6.05218 6.68686 5.49891 6.97819 5.30536 7.06838C4.95729 7.23 4.78351 7.62621 4.90105 7.991C4.92841 8.07662 5.60328 10.1109 8.01801 12.5261C10.4317 14.9398 12.4639 15.6172 12.5491 15.6451C12.9149 15.7641 13.3121 15.5898 13.4737 15.2408C13.5634 15.0467 13.8547 14.4939 14.1673 14.156C14.1688 14.156 14.1698 14.156 14.1719 14.156C14.6441 14.156 15.7182 14.7073 16.5831 15.1506L17.0031 15.3624C18.5144 16.1173 18.5955 16.2678 18.4146 16.8676ZM17.682 14.0025L17.2751 13.7973C16.1108 13.2004 15.0114 12.636 14.1719 12.636C13.646 12.636 13.3212 12.8509 13.1408 13.0312C12.8657 13.3063 12.6266 13.6504 12.4462 13.9478C11.7516 13.6027 10.4996 12.858 9.09263 11.4515C7.68463 10.043 6.94136 8.78948 6.59785 8.09587C6.89373 7.91601 7.23725 7.67737 7.51236 7.40226C8.4056 6.50801 7.63752 5.00729 6.74732 3.26996L6.54161 2.86008C5.9473 1.67045 5.38541 0.545671 4.03923 0.545671C3.7859 0.545671 3.52346 0.588221 3.23567 0.67486C1.51354 1.19672 0.248423 3.33077 0.0204271 5.09292C-0.210102 6.87838 1.50746 11.3886 5.33222 15.2119C9.21676 19.0959 13.381 20.5439 15.0935 20.5439C15.2237 20.5439 15.3428 20.5358 15.4502 20.5222C17.2128 20.2942 19.3479 19.03 19.8697 17.3074C20.4499 15.3841 18.9795 14.65 17.682 14.0025Z" fill="currentColor"/>
+                            </svg>
+                              
+                          <span>800.859.1788</span>
+                                
+                        </a>  
+                    
+                    
+                    	<div class="header-bottom-account">
+                        	
+                          	<a href="/account" class="{% if customer %} active{% endif %}">
+                            	
+                                <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M9.9944 11.5758C14.3527 11.5758 17.9455 14.9146 18.3501 19.1688H1.63922C2.04382 14.9146 5.63666 11.5758 9.9944 11.5758ZM5.96919 5.94932C5.96919 3.72882 7.77443 1.92199 9.9944 1.92199C12.2138 1.92199 14.0196 3.72882 14.0196 5.94932C14.0196 8.16876 12.2138 9.97451 9.9944 9.97451C7.77443 9.97451 5.96919 8.16876 5.96919 5.94932ZM0 19.9694C0 20.4114 0.358697 20.7701 0.800662 20.7701H19.1887C19.1924 20.7706 19.1967 20.7706 19.1993 20.7701C19.6418 20.7701 20 20.4114 20 19.9694C20 19.923 19.9963 19.8771 19.9883 19.8328C19.9301 15.522 17.124 11.8705 13.2494 10.5296C14.682 9.50906 15.6209 7.83835 15.6209 5.94932C15.6209 2.84542 13.0967 0.320669 9.9944 0.320669C6.89156 0.320669 4.36787 2.84542 4.36787 5.94932C4.36787 7.83835 5.30625 9.50906 6.73837 10.5296C2.82367 11.8849 0 15.5994 0 19.9694Z" fill="currentColor"/>
+                                </svg>
+                                <span>
+                                  Hi, {% if customer %} {{customer.first_name}} {% else %} Login{% endif %}
+                                  {% include 'icon-chevron-down' %}                              	
+                              </span>
+                                   
+                          	</a>
+                          
+                          	{% if customer %}
+                          
+                          		<div class="header-bottom-account-dropdown">
+                                    {% for link in linklists['account'].links %}
+                                    <a href="{{ link.url }}">
+                                      {{ link.title }}
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                          
+                          	{% else %}
+                          
+                              <div class="header-bottom-account-dropdown guest">
+                                  {% comment %} <div class="header-bottom-login-dropdown-title">Log In to Your Account</div> {% endcomment %}
+                                  <a href="/account/login" class="btn btn-gold">
+                                    {{ 'layout.customer.log_in' | t }}
+                                  </a>
+                                  <div class="create-account-promot">
+                                    <p>
+                                      <strong>
+                                        Benefits of having an account
+                                      </strong>
+                                    </p>
+                                    <ul>
+                                      <li>Faster checkout</li>  
+                                      <li>Track your order</li>  
+                                      <li>Save and re-use multiple shipping address</li>  
+                                      <li>Product history offers effortless reordering</li>  
+                                      <li>Order history for your records</li>
+                                    </ul>
+                                  </div>
+                                  <a href="/account/register" class="btn btn-gold-light">
+                                  CREATE AN ACCOUNT
+                                  </a>
+                              </div>
+
+                            {% endif %}
+                          
+                    	</div>
+            		
+                    	<a href="/cart" class="header-bottom-cart {% if cart.items.size > 0 %} active{% endif %}">
+                          <svg width="18" height="24" viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.4556 6.72072C15.9871 6.72072 16.4196 7.15268 16.4196 7.68421V20.5464C16.4196 21.0779 15.9871 21.5104 15.4556 21.5104H2.54389C2.01235 21.5104 1.58038 21.0779 1.58038 20.5464V7.68421C1.58038 7.15268 2.01235 6.72072 2.54389 6.72072H4.6284V8.41488C4.6284 8.85159 4.98241 9.20507 5.41859 9.20507C5.85531 9.20507 6.20878 8.85159 6.20878 8.41488V6.72072H11.7907V8.41488C11.7907 8.85159 12.1442 9.20507 12.5809 9.20507C13.0176 9.20507 13.3711 8.85159 13.3711 8.41488V6.72072H15.4556ZM6.20878 4.37174C6.20878 2.83245 7.46098 1.58079 8.99974 1.58079C10.539 1.58079 11.7907 2.83245 11.7907 4.37174V5.14034H6.20878V4.37174ZM8.99974 0.000413895C6.58913 0.000413895 4.6284 1.96114 4.6284 4.37174V5.14034H2.54389C1.14156 5.14034 0 6.28189 0 7.68421V20.5464C0 21.9493 1.14156 23.0908 2.54389 23.0908H15.4556C16.8584 23.0908 18 21.9493 18 20.5464V7.68421C18 6.28189 16.8584 5.14034 15.4556 5.14034H13.3711V4.37174C13.3711 1.96114 11.4103 0.000413895 8.99974 0.000413895Z" fill="currentColor"/>
+                          </svg>      
+                          <span>My Cart</span>
+                                
+                              
+                            <div id="CartCount">
+                              {{ cart.items.size }}
+                            </div>
+                        </a>  
+
+                        
+                    
+            	  </div>
+
+          </div>
+          <div class="header-bottom-nav-overlay"></div>
+          <div class="header-nav flex flex-justify-between">
+            
+              <div class="flex header-bottom-nav">
+                {% for link in linklists['site-nav-bottom'].links %}
+                  <div class="header-bottom-nav-link">
+                      <a href="{{link.url}}" {% if link.current or link.child_current %}class="active"{% endif %}>
+                        {%  if link.title contains 'Gift Boxes' %}
+                          {{link.title | replace:'Gift','<span>Gift</span>'}}
+                          {%  elsif link.title contains 'Supplies' %}
+                            {{link.title | replace:'Retail','<span>Retail</span>'}}
+                            {% else  %}
+                        {{link.title | replace:'Jewelry','<span>Jewelry</span>'}}
+                        {% endif  %}
+                        {% if link.links != blank %}
+                        {% include 'icon-chevron-down' %}
+                        {% endif %}
+                      </a>
+                      {% if link.links != blank %}
+					  		{% assign mega_menu = blank %}
+							{% for block in section.blocks %}
+								{% assign block_menu = block.settings.menu_item | handle %}
+								{% assign link_menu = link.title | handle %}
+								{% if block_menu == link_menu %}
+									{% assign mega_menu = block.settings %}
+								{% endif %}
+							{% endfor %}
+							<div class="header-bottom-nav-link-menu  {% if mega_menu != blank %}megamenu{% endif %}">
+								<div class="menu-inside">
+								{% if mega_menu != blank %}
+									<a href="{{mega_menu.link}}" class="header-bottom-nav-img" style="width:{{mega_menu.width}}px;">
+										<img src="{{mega_menu.image | img_url:'master'}}" />
+										<div class="mega-menu-content">
+											<div class="mega-menu-title">{{mega_menu.title}}</div>
+											<div>{{mega_menu.content}}</div>
+										</div>
+									</a>
+								{% endif %}
+								{%assign links = link.links %}
+								{% if mega_menu.menu != blank %}
+									{%assign links = mega_menu.menu.links %}
+								{% endif %}
+								<div class="{% if link.links.size > 8 %}columns{% endif %}">
+ 									{% for childlink in links %}
+									<div>
+										<a href="{{childlink.url}}" class="{% if childlink.links != blank %}link-title{% endif %}">{{childlink.title}}</a>
+										{% if childlink.links != blank %}
+											<div class="{% if childlink.links.size > 8 %}columns{% endif %}">
+												{% for grandChildlink in childlink.links %}
+                          {% if childlink.title contains 'Material'  %}
+                            <style>
+                              [data-material="{{grandChildlink.title}}"],
+                              [data-materials="{{grandChildlink.title}}"]{
+                                order:{{forloop.index}} !important;
+                              }
+                            </style>
+                          {% endif  %}
+                          {% if childlink.title contains 'By Type'  %}
+                            <style>
+                              [data-product_type="{{grandChildlink.title}}"]{
+                                order:{{forloop.index}} !important;
+                              }
+                            </style>
+                          {% endif  %}
+												<a href="{{grandChildlink.url}}" class="">{{grandChildlink.title}}</a>
+												{% endfor %}
+											</div>
+										{% endif %}
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+                        </div>
+                      {% endif %}
+                  </div>
+                {% endfor %}
+                {% comment %}
+                  
+                
+                <div class="header-bottom-nav-mobile">
+                  {% for link in linklists['top-nav'].links %}
+                    <div class="header-bottom-nav-link">
+                        <a href="{{link.url}}" {% if link.current or link.child_current %}class="active"{% endif %}>
+                          {{link.title}}
+                          {% if link.links != blank %}
+                          {% include 'icon-chevron-down' %}
+                          {% endif %}
+                        </a>
+                        {% if link.links != blank %}
+                            <div class="header-bottom-nav-link-menu">
+                                {% for childlink in link.links %}
+                                    <a href="{{childlink.url}}">{{childlink.title}}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+{% endcomment %}
+              </div>
+            
+              <div class="flex flex-align-center header-bottom-nav">
+                {% for link in linklists['top-nav'].links %}
+                  <div class="header-bottom-nav-link">
+                      <a href="{{link.url}}" {% if link.current or link.child_current %}class="active"{% endif %}>
+                        {{link.title}}
+                        {% if link.links != blank %}
+                        {% include 'icon-chevron-down' %}
+                        {% endif %}
+                      </a>
+                      {% if link.links != blank %}
+                          <div class="header-bottom-nav-link-menu">
+                              {% for childlink in link.links %}
+                                <a href="{{childlink.url}}">{{childlink.title}}</a>
+                              {% endfor %}
+                        </div>
+                      {% endif %}
+                  </div>
+                  {% endfor %}
+              </div>
+
+          </div>
+          
+    </div>
+    
+  </div>
+  
+  {% if section.settings.holiday_banner %}
+    <div>
+
+
+          <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">		
+            <symbol id='calendar' viewBox='0 0 28 30'><g><path d='M0,30c9.3,0,18.7,0,28,0c0-7.3,0-14.7,0-22C18.7,8,9.3,8,0,8C0,15.4,0,22.7,0,30z M21,11c1.3,0,2.7,0,4,0 c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C21,13.7,21,12.4,21,11z M21,17c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0 C21,19.7,21,18.4,21,17z M21,23c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C21,25.7,21,24.4,21,23z M15,11 c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C15,13.7,15,12.4,15,11z M15,17c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4 c-1.3,0-2.7,0-4,0C15,19.7,15,18.4,15,17z M15,23c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C15,25.7,15,24.4,15,23z M9,11c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C9,13.7,9,12.4,9,11z M9,17c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4 c-1.3,0-2.7,0-4,0C9,19.7,9,18.4,9,17z M9,23c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C9,25.7,9,24.4,9,23z M3,11 c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C3,13.7,3,12.4,3,11z M3,17c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0 C3,19.7,3,18.4,3,17z M3,23c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C3,25.7,3,24.4,3,23z'/></g><g><path d='M22,3c0-4-3-4-3,0H9c0-4-3-4-3,0H0v4h28V3H22z'/></g></symbol>
+          </svg>
+          <div class="holiday-banner lightbox-image" data-year="{{date}}" src="{{section.settings.holiday_popup | img_url: '1000x'}}">
+              <svg class="svg-icon"><use xlink:href="#calendar"></use></svg>
+              See Our Upcoming Holiday Schedule 
+          </div>
+          {{ 'lightbox.scss.css' | asset_url | stylesheet_tag }}
+          <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'lightbox.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+          <!--[if lte IE 9]><script src="{{ 'lightbox.js' | asset_url }}"></script><![endif]-->
+
+
+    </div>
+  {% endif %}
+  
+</header>
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [{
+		"id" : "logo",
+		"type" : "image_picker",
+		"label" : "Logo"
+	},{
+        "type": "checkbox",
+        "id": "show_announcement",
+        "label": "Show announcement",
+        "default": false
+      },{
+		"id" : "announcement",
+		"type" : "richtext",
+		"label" : "Announcement"
+	},{
+        "type": "checkbox",
+        "id": "holiday_banner",
+        "label": "Show Holiday Banner",
+        "default": false
+      },
+	  {
+        "type": "image_picker",
+        "id": "holiday_popup",
+        "label": "Holiday Popup Image"
+      }],
+	  "blocks" : [{
+			"type" : "megamenu",
+			"name" : "Mega Menu",
+			"settings" : [{
+				"type" : "text",
+				"label" : "Title",
+				"id" : "title"
+			},{
+				"type" : "text",
+				"label" : "Content",
+				"id" : "content"
+			},{
+				"type" : "image_picker",
+				"label" : "Image",
+				"id" : "image"
+			},{
+				"type" : "url",
+				"label" : "Link",
+				"id" : "link"
+			},{
+				"type" : "text",
+				"label" : "Menu Item",
+				"id" : "menu_item"
+			},{
+				"type" : "number",
+				"label" : "Width",
+				"id" : "width",
+				"default" : 340
+			},{
+				"type" : "link_list",
+				"label" : "Menu",
+				"id" : "menu"
+			}]
+	  }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

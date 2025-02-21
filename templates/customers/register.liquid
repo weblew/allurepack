@@ -1,0 +1,107 @@
+<div class="page-width login-page">
+  
+  
+ 
+
+	
+      	<div class="form-vertical">
+          <h1 class="font-default gold">{{ 'customer.register.title' | t }}</h1>
+        {% form 'create_customer' %}
+
+
+          {{ form.errors | default_errors }}
+          
+          <input type="hidden" name="contact[tags]" value="newsletter">
+
+          <label for="FirstName">{{ 'customer.register.first_name' | t }}</label>
+          <input type="text" name="customer[first_name]" id="FirstName" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autofocus>
+
+          <label for="LastName">{{ 'customer.register.last_name' | t }}</label>
+          <input type="text" name="customer[last_name]" id="LastName" {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+
+          <label for="Email">{{ 'customer.register.email' | t }}</label>
+          <input type="email" name="customer[email]" id="Email" class="{% if form.errors contains 'email' %} input--error{% endif %}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+
+          <label for="CreatePassword">{{ 'customer.register.password' | t }}</label>
+          <input type="password" name="customer[password]" id="CreatePassword" class="{% if form.errors contains 'password' %} input--error{% endif %}">
+			
+          
+          <label class="checkbox">
+            	<input type="checkbox" class="hidden" id="marketing" style="display:none" checked name="customer[accepts_marketing]">
+            	<span></span>
+            	Keep me up to date on news and exclusive offers
+          </label>
+          
+          <br>
+          
+          <div class="">
+            <input type="submit" class="btn btn-register btn-gold" value="{{ 'customer.register.submit' | t }}">
+            <hr>
+            <a href="/account/login" class="btn btn-gold-light">
+            <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.83263 3.79237C10.0558 4.01552 10.0558 4.37733 9.83263 4.60049L6.80812 7.625L9.83263 10.6495C10.0558 10.8727 10.0558 11.2345 9.83263 11.4576C9.60948 11.6808 9.24767 11.6808 9.02451 11.4576L5.59594 8.02906C5.37278 7.8059 5.37278 7.4441 5.59594 7.22094L9.02451 3.79237C9.24767 3.56921 9.60948 3.56921 9.83263 3.79237Z" fill="#C7A049"/>
+            </svg>
+
+            <span>Back to Login</span>
+            </a>                
+          </div>
+
+        {% endform %}
+      </div>
+      
+    
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    $(".btn-register").click(function(e) {
+      
+      	$(this).loading()
+
+        if($("#marketing").is(':checked')) {
+
+            e.preventDefault();
+
+            //grab fields
+            var email = $('input#Email').val();
+
+            var firstname = $('input#FirstName').val();
+
+            var lastname = $('input#LastName').val();
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://manage.kmail-lists.com/ajax/subscriptions/subscribe",
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache"
+                },
+                "data": {
+                    "g": "List_ID",
+                    "email": email,
+                    //pass in additional fields
+                    "$fields": "$source, $first_name, $last_name",
+                    "$source": "Account Creation",
+                    "$first_name": firstname,
+                    "$last_name": lastname
+                }
+            };
+
+            $.ajax(settings).done(function(response) {
+                console.log(response);
+                //select and submit form after subscribing
+                $("#create_customer").submit();
+            })
+
+        }
+
+    })
+
+});
+
+</script>

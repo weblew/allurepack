@@ -1,0 +1,52 @@
+<div class="custom-slider">
+  {% include 'allure-devider' %}
+  <br><br>
+  <div class="flex">
+      <div class="flex-5">
+          <div class="gold fs20">With everything you need</div>
+          <div class="gold fs20"><strong>What more could they want?</strong></div>
+          <br>
+          <div class="fs14">The mark of a professional jeweler is exactly that—a unique mark that distinguishes your brand from the next. Whether you need a nontraditional box design, logo imprinting on an innovative substrate, uniquely shaped displays, or one-of-a-kind jewelry cards, our designers are here to put the custom in customer.</div>
+      </div>
+    	<div class="flex-0-5"></div>
+      <div class="flex-4-5 slider">
+          {% for block in section.blocks %}
+                <div class="slide">
+                    <img src="{{block.settings.image | img_url:'master'}}" alt="{{block.settings.image.alt}}"/>
+                </div>
+            {% endfor %}
+      </div>
+  </div>
+</div>
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'custom.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'custom.js' | asset_url }}"></script><![endif]-->
+
+{% schema %}
+  {
+    "name": "Slider",
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

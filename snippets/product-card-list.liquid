@@ -1,0 +1,372 @@
+<script>
+
+  if (typeof PRODUCTS === 'undefined') {
+    PRODUCTS = {};
+  }
+
+
+  PRODUCTS[{{ product.id }}] = {
+    title: {{ product.title | json }},
+    handle: '{{product.handle}}',
+      image : {{ product.featured_image.src | json }},
+    options: {{ product.options_with_values | json }},
+    variants: {{ product.variants | json }},
+    settings: {{ product.metafields.settings | json }},
+    group_items: { },
+    upsell: []
+  };
+
+  {% if product.metafields.group_items %}
+
+
+  {% if product.metafields.group_items.main %}
+  PRODUCTS[{{ product.id }}].group_items.main = {{ all_products[product.metafields.group_items.main].variants | json }}
+  {% if product.metafields.group_items.insert %}
+  PRODUCTS[{{ product.id }}].group_items.insert = {{ all_products[product.metafields.group_items.insert].variants | json }}
+  {% endif %}
+  {% endif %}
+
+
+  {% endif %}
+
+
+  {% if product.metafields.upsell and product.metafields.upsell.items %}
+
+  PRODUCTS[{{ product.id }}].upsell = {{ product.metafields.upsell.items | split: ' ' }}
+
+  {% endif %}
+
+
+</script>
+
+<form action="/cart/add" method="post" class="list-view-item product-{{product.id}}" data-id="{{product.id}}" id="{{product.id}}">
+
+  {% if collection.metafields.settings.default %}
+  {% assign productCollection = collection %}
+  {% else %}
+
+  {% for collection in product.collections %}
+
+  {% if collection.description != blank %}
+
+  {% assign productCollection = collection %}
+
+  {% endif %}
+
+  {% endfor %}
+
+  {% if productCollection == blank and collection != blank %}
+  {% assign productCollection = collection %}
+  {% endif %}
+
+  {% if collection.template_suffix == 'displays' %}
+  {% assign productCollection = collections.displays %}
+  {%endif%}
+  {%endif%}
+
+  <script>
+
+    {% for variant in product.variants %}
+
+    {% unless variant.option1 contains 'Default' %}
+
+    {% assign bgColor = variant.option1 | replace: ' ', '_' | replace: '/', '_' | downcase %}
+    {% assign bgColorFromSetting = 'item_color_' | append : bgColor %}
+
+    if (!AVAILABLE_COLORS['{{bgColor}}']) {
+
+      AVAILABLE_COLORS['{{bgColor}}'] = {
+        colorVal: '{{variant.option1}}',
+        color: '{{variant.option1 | handleize}}',
+        hex: '{{ settings[bgColorFromSetting] }}',
+        image: '{{variant.featured_image.src}}',
+        src: '{{variant.featured_image.src | img_url}}'
+      };
+
+    } else if (!AVAILABLE_COLORS['{{bgColor}}'].image) {
+      AVAILABLE_COLORS['{{bgColor}}'].image = '{{variant.featured_image.src}}';
+      AVAILABLE_COLORS['{{bgColor}}'].src = '{{variant.featured_image.src | img_url}}';
+    }
+
+    {% endunless %}
+
+
+    {% endfor %}
+
+  </script>
+
+  <div class="page-width">
+
+    <div class="flex">
+
+      <div class="flex flex-7 list-view-item-top">
+
+        {% if product.metafields.custom.label != blank %}
+        <span class="custom-label">{{ product.metafields.custom.label }}</span>
+        {% endif %}
+
+        <a href="{{ product.url | within: collection }}" class="flex-3 flex flex-center list-view-item-image">
+          <img src="{{ 'ajax-loader.gif' | asset_url }}" alt="{{ product.featured_image.alt | escape }}" class="open-image" />
+          
+        </a>
+
+        <div class="flex-7 list-view-item-info">
+
+          <div class="list-view-item-title-container">
+            <a href="{{ product.url | within: collection }}" class="list-view-item-title">
+              <span class="">{{ product.title }}</span>
+            </a>
+            <div class="list-view-item-arrow">
+
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" y="-0.5" width="39" height="39" transform="matrix(1 0 0 -1 0 39)" fill="white"
+                  stroke="#BFA159" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M13.2929 16.2929C13.6834 15.9024 14.3166 15.9024 14.7071 16.2929L20 21.5858L25.2929 16.2929C25.6834 15.9024 26.3166 15.9024 26.7071 16.2929C27.0976 16.6834 27.0976 17.3166 26.7071 17.7071L20.7071 23.7071C20.3166 24.0976 19.6834 24.0976 19.2929 23.7071L13.2929 17.7071C12.9024 17.3166 12.9024 16.6834 13.2929 16.2929Z"
+                  fill="#BFA159" />
+              </svg>
+
+            </div>
+          </div>
+
+          <div class="flex list-view-item-metafields">
+            {% if product.metafields.dimension.size > 0 or product.metafields.style.style_i != blank %}
+            <div class="flex-2-5">
+              <div class="">
+                <div>
+                  <strong>Model #</strong>
+
+                  <span class="text-muted list-view-item-sku"></span>
+                </div>
+                {% if product.tags contains 'box' %}
+                <div>
+                  <strong>Insert</strong>
+
+                  <span class="text-muted">{{product.metafields.style.style_i | default :'N\A'}}</span>
+                </div>
+                {% endif %}
+
+
+                <div class="">
+                  <strong>Size&nbsp;&nbsp;</strong>
+
+                  <div class="flex">
+
+                    {% if product.metafields.dimension.dimension_w != blank %}
+                    <div class="flex">
+                      <span>W&nbsp;</span>
+                      <span class="text-muted">{{product.metafields.dimension.dimension_w}}&nbsp;</span>
+                    </div>
+                    {% endif %}
+                    {% if product.metafields.dimension.dimension_d != blank %}
+                    <div class="flex">
+                      <span>D&nbsp;</span>
+                      <span class="text-muted">{{product.metafields.dimension.dimension_d}}&nbsp;</span>
+                    </div>
+                    {% endif %}
+                    {% if product.metafields.dimension.dimension_h != blank %}
+                    <div class="flex">
+                      <span>H&nbsp;</span>
+                      <span class="text-muted">{{product.metafields.dimension.dimension_h}}&nbsp;</span>
+                    </div>
+                    {% endif %}
+                    {% if product.metafields.dimension.dimension_l != blank %}
+                    <div class="flex">
+                      <span>L&nbsp;</span>
+                      <span class="text-muted">{{product.metafields.dimension.dimension_l}}&nbsp;</span>
+                    </div>
+                    {% endif %}
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            {% endif %}
+            <div class="flex-2-5">
+              <strong>Price</strong>
+              {% include 'product-price' %}
+              <div class="list-view-item-pricing">
+                <div class="volume-discount"></div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <div class="flex-3 list-view-item-form">
+        <div class="">
+          <div class="">
+            {% if showPringing and product.metafields.custom.disable_printing != true %}
+
+            <div class="list-view-item-printing">
+              {% comment %} <strong class="gold">
+                Imprinting &nbsp;&nbsp;
+              </strong> {% endcomment %}
+
+                <div class="btn btn-gold-light" ng-show="!vm.applyToItems['{{product.id}}']" ng-click="vm.openPrintingPanel('{{product.id}}')">
+                      <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="0.5" width="1" height="13" fill="#C7A049"/>
+                        <rect x="13" y="6.5" width="1" height="13" transform="rotate(90 13 6.5)" fill="#C7A049"/>
+                      </svg>                      
+                      ADD STAMP                        
+                  </div>
+
+              <div class="displayNone product-printing-selected-locations" ng-class="{'displayNone':!vm.applyToItems['{{product.id}}'].length}">
+                <div ng-repeat="location in vm.applyToItems['{{product.id}}']" data-productid="{{product.id}}"
+                  class="stamp-preview-container flex flex-align-center flex-justify-between js-open-printing-modal js-open-printing-modal-add"
+                  ng-click="vm.openPrintingPanel('{{product.id}}')">
+
+                
+                  {% raw %}
+                    <div class="js-item-properties selected-printing-options">
+                        <div class="no-wrap location-title" ng-bind="location.location"></div>
+                        <div ng-if="location.type === 'plate'">Plate on file</div>
+                        <div ng-if="location.type === 'upload'" ng-bind="location.file.name"></div>
+                        <div ng-if="location.type === 'custom'">Custom</div>
+                        <div class="location-color">
+                          <div class="location-color-img" data-imprinting-color="{{location.color}}"></div>
+                          <div ng-bind="location.color"></div>
+                        </div>
+                    </div>
+                  {% endraw %}
+                  
+                  {% raw %}
+                  <input type="hidden" data-location-color="{{location.location}}"
+                    name="properties[Printing {{location.location}} color]" value="{{location.color}}">
+                  <input type="hidden" data-location-plate="{{location.location}}" ng-if="location.type === 'plate'"
+                    name="properties[_Printing {{location.location}} plate]" value="Yes">
+                  <input type="hidden" data-location-file="{{location.location}}" ng-if="location.type === 'upload'"
+                    name="properties[_Printing {{location.location}} file]" value="{{location.file.name}}">
+                  <div data-location-custom ng-if="location.type === 'custom'">
+                    <input type="hidden" name="properties[_Printing {{location.location}} custom]" value="custom">
+                    <div ng-repeat="(group, groupValue) in location.logoSettings">
+                      <input type="hidden" ng-repeat="(setting, settingValue) in location.logoSettings[group]"
+                        name="properties[_Printing {{location.location}} {{group}} {{setting}}]"
+                        value="{{location.logoSettings[group][setting]}}">
+                    </div>
+                  </div>
+                  {% endraw %}
+                </div>
+              </div>
+
+
+
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+        <div class="product-vailable-colors {% if product.options_by_name['Color'].values.size < 1 %} hide{% endif %}">
+          <strong class="gold">Color</strong>
+          <div class="flex">
+
+            {% for variant in product.variants %}
+            {% if variant.option1 contains 'Default' %}
+            <input type="hidden" name="id" value="{{ variant.id }}" checked data-sku="{{ variant.sku }}" />
+            {% else %}
+            <div
+              class="displayNone list-view-item-color list-view-item-color-{{ variant.option1 | handleize }} list-view-item-bulk-{{ variant.option2 | escape }}">
+              <label class="checkbox" title="{{ variant.option1 }}">
+
+                {% if variant.available %}{% endif %}
+                <input type="radio" name="id" value="{{ variant.id }}" {% if forloop.first==true %} checked {%endif%}
+                  data-sku="{{ variant.sku }}" data-color="{{ variant.option1 | handleize }}"
+                  data-image="{{ variant.image  | img_url: '95x95', scale: 2 }}"
+                  {% if variant.metafields.custom.hover_image %}
+                  data-hover-image="{{ variant.metafields.custom.hover_image  | img_url: '95x95', scale: 2 }}"
+                  {% endif %}
+                >
+
+
+                {% assign bgColor = variant.option1 | handleize %}
+                {% assign bgColorFromSetting = 'item_color_' | append : bgColor %}
+                {% assign collectionColor = productCollection | append : bgColor %}
+
+                <span class="{{bgColorFromSetting}} color-{{productCollection.handle}}_{{bgColor}}"
+                  data-color="{{productCollection.handle}}_{{bgColor}}"
+                  style="background-color:{{ settings[bgColorFromSetting] }};"></span>
+
+              </label>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+
+
+          </div>
+        </div>
+
+        <div class="flex list-view-item-actions">
+
+
+          {% assign soldIn = product.variants[0].option2 %}
+
+          {% if soldIn == 1 or soldIn == '1' or soldIn == blank %}
+          <input type="number" placeholder="Qty" name="quantity" class="btn-black-light qty-input">
+          {%else%}
+          <select name="quantity" class="btn-black-light qty-input">
+            {% for i in (1..200) %}
+            <option>{{i | times:soldIn}}</option>
+            {% endfor %}
+          </select>
+          {%endif%}
+
+          <span>&nbsp;&nbsp;</span>
+          <div class="flex-auto">
+            <button type="submit" class="btn btn-black-dark"> Add To Order</button>
+            <div class="qty-error"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+</form>
+
+{% comment %}
+
+<div class="list-view-item__image-column">
+  <div class="list-view-item__image-wrapper">
+
+  </div>
+</div>
+
+<div class="list-view-item__title-column">
+
+  <a href="{{ product.url | within: collection }}" class="list-view-item__title">{{ product.title }}</a>
+
+  {% if product.compare_at_price > product.price %}
+  <div class="list-view-item__on-sale">{{ 'products.product.on_sale' | t }}</div>
+  {% endif %}
+  {% if section.settings.show_vendor %}
+  <div class="list-view-item__vendor medium-up--hide">{{ product.vendor }}</div>
+  {% endif %}
+  {% unless product.available %}
+  <div class="list-view-item__sold-out">{{ 'products.product.sold_out' | t }}</div>
+  {% endunless %}
+</div>
+
+{% if section.settings.show_vendor %}
+<div class="list-view-item__vendor-column small--hide">
+  <div class="list-view-item__vendor">{{ product.vendor }}</div>
+</div>
+{% endif %}
+
+<div class="list-view-item__price-column">
+  {% include 'product-price' %}
+</div>
+
+{% endcomment %}

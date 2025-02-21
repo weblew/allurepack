@@ -1,0 +1,101 @@
+<div class="jewelry-packaging-content">
+    <div class="page-width">
+        {% for block in section.blocks  %}
+            {% if block.type == 'text'  %}
+                <div class="jewelry-packaging-content-text">
+                    {{block.settings.content}}
+                </div>
+            {% endif  %}
+            {% if block.type == 'collections'  %}
+                <div class="jewelry-packaging-content-collections">
+                    <div class="jewelry-packaging-content-collections-title gold text-center">
+                        {{block.settings.title}}
+                    </div>
+                    <div class="flex flex-justify-between">
+                    {% for collection in block.settings.collection_list %}
+
+                        <div class="collection-box-item" data-collection="{{collection.handle}}" data-link="{{collection.url}}" data-materials="{{collection.metafields.custom.materials.value}}">
+                            <div class="collection-box">
+                                <a 
+                                  href="{{collection.url}}" 
+                                  class="img" 
+                                  {% if collection.metafields.custom.image %}
+                                    style="background-image:url({{collection.metafields.custom.image | img_url : 'large'}});display:block;" 
+                                    data-image="{{collection.metafields.custom.image | img_url : 'large'}}"
+                                  {% else  %}
+                                    {%if collection.image%}style="background-image:url({{collection.image | img_url : 'large'}});display:block;" 
+                                    data-image="{{collection.image | img_url : 'large'}}"{%endif%}
+                                  {% endif  %}
+                                >
+    
+                                </a>
+                                <div class="grid-item-colors">
+    
+                                {% assign colors = collection.metafields.custom.colors.value %}                         
+                                {% for color in colors %}
+                
+                                    <div class="" style="background-image: url({{color.swatch | img_url: 'medium'}});" data-color="{{color.name}}" data-image="{{color.image | img_url: '430x'}}"></div>            
+                            
+                                {% endfor %}
+                            </div>
+                               <a  href="{{collection.url}}">
+                                <strong>{{collection.title}}</strong><span class=""> Collection</span>
+                               </a>
+    
+                               {% if collection.metafields.custom.label != blank %}
+                                  <div class="collection-badge">
+                                    {{ collection.metafields.custom.label }}
+                                  </div>
+                                {% endif %}
+                            </div>
+                        </div>
+    
+                    {% endfor %}
+                    </div>
+                </div>
+            {% endif  %}
+        {% endfor %}
+    </div>
+</div>
+{% schema %}
+    {
+      "name": "Jewelry Packaging Content",
+      "blocks": [
+          {
+            "type": "text",
+            "name": "Text",
+            "settings": [
+              {
+                "type": "richtext",
+                "id": "content",
+                "label": "Content"
+              }
+            ]
+          },
+          {
+            "type": "collections",
+            "name": "Collections",
+            "settings": [
+                {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+              },
+              {
+                "type": "collection_list",
+                "id": "collection_list",
+                "label": "Collection list"
+              }
+            ]
+          }
+      ],
+      "presets": [
+        {
+          "name": "Jewelry Packaging Content"
+        }
+      ]
+    }
+  {% endschema %}
+  
+ 
+  

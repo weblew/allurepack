@@ -1,0 +1,164 @@
+
+<style>
+  .logo-builder-header{
+  	background-color:#1d1b19;
+        margin-top: -11px;
+    padding: 50px 0;
+  }
+  .logo-builder-header p{
+  	color:#aaa;
+  }
+  .logo-builder-header h1{
+  	color:#c5a04c;
+    text-align:center;
+    max-width:730px;
+    margin:auto;
+  }
+  .logo-builder-header div{
+  	color:#fff;
+  }
+  .logo-builer-content{
+  	padding:50px 15px;
+  }
+  .logo-builer-content h2{
+  	font-size:48px;
+    text-transform:capitalize;
+    max-width: 350px;
+    letter-spacing:0px;
+  }
+  .custom-logo-layer{
+  	opacity: 1;
+    visibility: visible;
+    background-color: #fff;
+    position: relative;
+    width:100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    transform: none;
+    transition: all 400ms;
+    max-height: none;
+    max-width: none;
+    overflow: auto;
+    margin: 50px auto;
+    border: 6px solid #f1f1f1;
+  }
+  .custom-logo-layer .custom-logo-settings h4,
+  .custom-logo-layer .custom-logo-layer-close{
+  	display:none;
+  }
+  
+  
+</style>
+<div class="logo-builder-header">
+  <div class="page-width">
+    <h1 class="font-default">{{ page.title }}</h1>
+  </div>
+</div>
+<div class="page-width logo-builer-content">
+ 
+    <div class="flex">
+      <div class="flex-4">
+        <h2 class="font-default">
+        	Create a Professional Jewelry Logo for Your Brand
+        </h2> 
+        <br>
+        <a href="#logo-builder" class="btn">Create Your Logo</a>
+      </div>
+      <div class="flex-6">
+        {{ page.content }}
+      </div>
+    </div>
+ 
+  </div>
+<div class="page-width" id="logo-builder">
+
+  
+  {% section 'logo-icons' %}
+  
+  {% section 'logo-insperations' %}
+</div>
+
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+      
+		<div class="page-width">
+          {{page.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<script src="{{ 'custom-logo.js' | asset_url }}"></script>
+
+<script>
+  	loadCustomLogoFonts();
+  	setUpCustomLogoEvents();
+  	$(document).on('click', '.submit-custom-icon', function(){
+    
+    	CreatePDFfromHTML()
+    })
+    
+    function CreatePDFfromHTML() {
+        var HTML_Width = $(".custom-logo-preview-elements").width();
+        var HTML_Height = $(".custom-logo-preview-elements").height();
+        var top_left_margin = 15;
+        var PDF_Width = HTML_Width + (top_left_margin * 2);
+        var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+      	var logo_width = $(".custom-logo-preview-logo").width();
+      	var logo_height = $(".custom-logo-preview-logo").height();
+      
+      
+
+        var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+      
+//       domtoimage.toSvg($(".custom-logo-preview-elements")[0], {
+//         filter: function(node){
+//            console.log(node)
+//         	return (node.tagName !== 'div');
+//         }
+//       }).then(function (dataUrl) {
+//             console.log(dataUrl.replace(/data:image\/svg\+xml;base64,/, ''))
+//             var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+//             pdf.addSVG(dataUrl.replace(/data:image\/svg\+xml;base64,/, ''), top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+//             pdf.save("logo.pdf");
+//         }).catch(function (error) {
+//             console.error('oops, something went wrong!', error);
+//         });
+
+          html2canvas($(".custom-logo-preview-elements")[0], {
+              dpi: 300,
+              scale: 3
+          }).then(function (canvas) {
+              var imgData = canvas.toDataURL("image/png", 1.0);
+              console.log(imgData)
+              var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+              pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+              pdf.save("logo.pdf");
+          });
+    }
+  
+    function addText(myText) {
+
+      // create a new text node to add to the SVG block
+      var newText = document.createElementNS("http://www.w3.org/2000/svg","text");
+      newText.setAttributeNS(null,"x","0");
+      newText.setAttributeNS(null,"y",24);
+      newText.setAttributeNS(null,"width","100%");
+      newText.setAttributeNS(null,"height","auto");
+      newText.setAttributeNS(null,"font-size","30");
+      newText.appendChild(document.createTextNode(myText));
+      // add the text node to the SVG element
+      $(".custom-logo-preview-name").html('<svg xmlns="http://www.w3.org/2000/svg" height="30" version="1.1"></svg>');
+      $(".custom-logo-preview-name svg").html(newText); 
+      var textWidth = $(".custom-logo-preview-name svg text")[0].clientWidth;
+      $(".custom-logo-preview-name svg").attr('width', textWidth);
+
+    }
+</script>

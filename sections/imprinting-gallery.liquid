@@ -1,0 +1,98 @@
+<div class="imprinting-gallery">
+    <div class="imprinting-gallery-content">
+          {% if section.settings.sub_title %}
+              <div class="section-title">
+                {{section.settings.sub_title}}
+            </div>
+          {% endif %}
+          {% if section.settings.title %}
+              <h2 class="font-default gold">
+                  {{section.settings.title}}
+              </h2>
+          {% endif %}
+          {{ section.settings.content }}
+    </div>
+    <div class="imprinting-gallery-slider">
+        <div class="imprinting-gallery-slider-inner">
+            {% for block in section.blocks  %}
+                <div class="slide-item">
+                    <div class="slide-item-img">
+                        <img src="{{block.settings.image | img_url :'master'}}"/>
+                    </div>
+                </div>
+            {% endfor  %}
+        </div>
+        <div class="prev-arrow">
+            <svg width="17" height="29" viewBox="0 0 17 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.3609 1L16.1484 2.75L4.50844 14.6L16.1484 26.465L14.3609 28.2125L1.00094 14.6025L14.3609 1Z" fill="#C7A049"/>
+            </svg>
+        </div>
+        <div class="next-arrow">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.63906 0L0.851562 1.75L12.4916 13.6L0.851562 25.465L2.63906 27.2125L15.9991 13.6025L2.63906 0Z" fill="#C7A049"/>
+            </svg>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        var windowWidth = $(window).width();
+        $('.imprinting-gallery-slider-inner').on('init', function() {
+    
+            // setTimeout(function(){
+            //     $('.imprinting-gallery-slider-inner .slick-track').css('transform', 'translate3d(0px, 0px, 0px)')
+            // }, 500)
+
+        }).on('beforeChange', function(e, slick, currentSlide, nextSlide) {
+            
+        
+
+        }).slick({
+            dots:false,
+            loop:false,
+            infinite: false,
+            slidesToShow: windowWidth < 480 ? 1.7 : windowWidth < 600 ? 2 : windowWidth < 1024 ? 3 : 4,
+            variableWidth: true,
+            prevArrow: '.prev-arrow',
+            nextArrow: '.next-arrow',
+            autoplay: false,
+            // autoplaySpeed: 2000,
+        });
+    })
+</script>
+
+
+{% schema %}
+    {
+        "name": "Imprinting Gallery",
+        "settings": [{
+            "type" : "text",
+            "label":"Sub Title",
+            "id":"sub_title"
+        },{
+            "type" : "text",
+            "label":"Title",
+            "id":"title"
+        },{
+            "type" : "richtext",
+            "label":"Content",
+            "id":"content"
+        }],
+        "blocks": [{
+            "type" : "image",
+            "name" : "Image",
+            "settings" :[{
+                "type" : "image_picker",
+                "label":"Image",
+                "id":"image"
+            }]
+        }],
+        "presets": [
+            {
+            "name": "Imprinting Gallery"
+            }
+        ]
+    }
+  {% endschema %}

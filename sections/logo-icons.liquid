@@ -1,0 +1,256 @@
+{% capture 'fonts' %}
+<select style="font-family: 'Roboto', sans-serif;">
+  <option value="Roboto" style="font-family: 'Roboto';">A</option>
+  <option value="Muli" style="font-family: 'Muli';">A</option>
+  <option value="Prata" style="font-family: 'Prata';">A</option>
+  <option value="Cinzel" style="font-family: 'Cinzel';">A</option>
+  <option value="EB Garamond" style="font-family: 'EB Garamond';">A</option>
+  <option value="Dancing Script" style="font-family: 'Dancing Script';">A</option>
+  <option value="Pinyon Script" style="font-family: 'Pinyon Script';">A</option>
+  <option value="Berkshire Swash" style="font-family: 'Berkshire Swash';">A</option>
+  <option value="Great Vibes" style="font-family: 'Great Vibes';">A</option>
+</select>
+{% endcapture %}
+
+<div class="custom-logo-section">
+	<div class="custom-logo-layer-overlay"></div>
+    <div class="custom-logo-layer">
+      
+
+
+      <div class="custom-logo-layer-body">
+        
+        	
+        	<div class="flex">
+              	
+              	<div class="flex-5 custom-logo-settings">
+              	
+                  	<h4 class="font-default">Create your own logo</h4>
+                  
+                  	<div class="custom-logo-setting" data-field="name">
+                      	
+                      	<div class="custom-logo-setting-text">
+                          	<label>Name</label> 
+                          	<input type="text"/>
+                      	</div>
+                      	<div class="custom-logo-setting-font">
+                          	<label>Font</label> 
+                          	{{fonts}}
+                      	</div>                      	
+                      
+                  	</div>
+                  
+                  	<div class="custom-logo-setting" data-field="tagline">
+                      	
+                      	<div class="custom-logo-setting-text">
+                          	<label>Tagline</label> 
+                          	<input type="text"/>
+                      	</div>
+                      	<div class="custom-logo-setting-font">
+                          	<label>Font</label> 
+                          	{{fonts}}
+                      	</div>                      	
+                      
+                  	</div>
+                  
+                  	<div class="custom-logo-setting"  data-field="address">
+                      	
+                      	<div class="custom-logo-setting-text">
+                          	<label>Address</label> 
+                          	<input type="text"/>
+                      	</div>
+                      	<div class="custom-logo-setting-font">
+                          	<label>Font</label> 
+                          	{{fonts}}
+                      	</div>                      	
+                      
+                  	</div>
+                  
+                  	<div class="custom-logo-setting">
+                      	
+                      	<div class="custom-logo-setting-icons-container">
+                          	<div class="flex flex-justify-between">
+                            	<label>Icons</label> 
+                              	<div class="custom-logo-setting-icon-position">
+                                  	<label class="left">
+                                  		<input name="iconPosition" value="left" type="radio"/>
+                                      	<
+                                  	</label> 
+                                    <label class="top selected">
+                                  		<input name="iconPosition" value="top" type="radio" checked/>
+                                      	<span><</span>
+                                  	</label> 
+                                    <label class="bottom">
+                                  		<input name="iconPosition" value="bottom" type="radio"/>
+                                      	<span><</span>
+                                  	</label> 
+                                    <label class="right">
+                                  		<input name="iconPosition" value="right" type="radio"/>
+                                      	>
+                                  	</label> 
+                              	</div>
+                          	</div>
+                          	<div class="custom-logo-setting-icons">
+                              	{% for block in section.blocks %}
+                                    <div class="custom-logo-setting-icon" data-icon="{{block.settings.id}}">
+										{{block.settings.icon}}
+                                    </div>
+                              	{% endfor %}
+                          	</div>
+                      	</div>                    	
+                      
+                  	</div>
+                              
+                    <div class="custom-logo-setting">
+                      <div class="flex-10">
+                        
+                        <div>
+                        
+                        <label>Color</label> 
+                      </div>
+                       <div class="custom-logo-setting-colors-container">
+                          <div class="custom-logo-setting-color" title="Gold" style="background-color:#c99d3f;" data-color="#c99d3f">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Rose Gold" style="background-color:#c4915e;" data-color="#c4915e">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="SIlver" style="background-color:#c3c0c3;" data-color="#c3c0c3">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Copper" style="background-color:#b96f67;" data-color="#b96f67">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Bronze" style="background-color:#4a301d;" data-color="#4a301d">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Red" style="background-color:#ac151a;" data-color="#ac151a">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Magenta" style="background-color:#ad1d67;" data-color="#ad1d67">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Purple" style="background-color:#4a2b6c;" data-color="#4a2b6c">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Blue" style="background-color:#0f4a8f;" data-color="#0f4a8f">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Light Blue" style="background-color:#80a6bb;" data-color="#80a6bb">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Teal" style="background-color:#0f5d57;" data-color="#0f5d57">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Green" style="background-color:#176a43;" data-color="#176a43">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Black" style="background-color:#090909;" data-color="#090909">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Dark Grey" style="background-color:#565658;" data-color="#565658">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="White" style="background-color:#fafafa;" data-color="#fafafa">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Cream" style="background-color:#f8e3b5;" data-color="#f8e3b5">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Brown" style="background-color:#4b2d13;" data-color="#4b2d13">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Burgundy" style="background-color:#74002c;" data-color="#74002c">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Pink" style="background-color:#dc7d9f;" data-color="#dc7d9f">
+                            
+                          </div>
+                         <div class="custom-logo-setting-color" title="Gloss Teal" style="background-color:#1c6669;" data-color="#1c6669">
+                            
+                          </div>
+                       </div>
+                      </div>
+                    </div>
+              
+        		</div>
+              
+                <div class="flex-5 custom-logo-preview">
+
+					<div class="custom-logo-layer-close"></div>
+                  
+                  	<h4 class="text-center">
+<!--                     	Don’t like below options? Have a custom logo created 
+						starting at $60.00 per hour, 
+                      	<br>
+                      	this is not a preview of the actual item. -->
+                        Preview Your Logo Here
+                  	</h4>
+                  
+                  	<div class="custom-logo-preview-elements">
+                      	
+                      	<div class="custom-logo-preview-logo">
+                          
+                      	</div>
+                      
+                      	<div>
+                      
+                            <div class="custom-logo-preview-name" data-field="name">
+
+                            </div>
+
+                            <div class="custom-logo-preview-tagline" data-field="tagline">
+
+                            </div>
+
+                            <div class="custom-logo-preview-address" data-field="address">
+
+                            </div>
+
+                        </div>
+                                            
+                  	</div>
+                  
+                  	<button class="btn btn-black-dark submit-custom-icon">                      
+                      {% if page %}
+                      	Download
+                      {% else %}
+                      	Submit
+                      {% endif %}
+                  	</button>
+
+              </div>
+              
+        	</div>
+        
+        	
+     </div>
+
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Custom Logo Icons",
+    "settings": [],
+	"blocks" : [{
+		"type" : "Icon",
+		"name" : "Icon",
+		"settings" : [{
+			"type" : "text",
+			"id" : "id",
+			"label" : "Icon ID"
+		},{
+			"type" : "textarea",
+			"id" : "icon",
+			"label" : "Icon SVG"
+		}]
+	}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,146 @@
+
+  
+  	{% for block in section.blocks %}
+
+		{% if block.settings.active %}
+
+		{% if block.settings.fullScreen %}
+			<a href="{{block.settings.link}}" class="home-banner fullScreen">
+  			
+              <div class="home-banner-content page-width" style="background-image:url({{block.settings.image | img_url:'master'}});"></div>
+			</a>
+		{% else %}
+
+		<div class="home-banner">
+  			
+          	
+          
+                <div class="home-banner-content page-width">
+
+                <div class="home-banner-text">
+                    <div class="home-banner-text-large">
+                        <div>{{block.settings.header}}</div>
+                        <div>{{block.settings.header2}}</div>
+                    </div>
+                    <div class="home-banner-text-small">
+                        {{block.settings.text}}
+                    </div>
+                    <a href="{{block.settings.link}}" class="home-banner-btn">
+                        {{block.settings.linkText}}
+                    </a>
+                </div>
+
+                {% if block.settings.sketch %}
+
+                <div class="home-banner-img-container home-banner-sketch-box">
+                    <img data-image="{{block.settings.sketch | img_url:'master'}}"/>
+                </div>
+
+                {% endif %}
+
+                {% if block.settings.image %}
+
+                <div class="home-banner-img-container home-banner-img-box">
+                    <img data-image="{{block.settings.image | img_url:'master'}}"/>
+                </div>
+
+
+                {% endif %}
+                </div>
+          
+          	
+
+            {% if block.settings.bg %}
+
+            <div class="home-banner-image" style="background-image:url('{{block.settings.bg | img_url:'master'}}')" data-image="{{block.settings.bg | img_url:'master'}}">
+
+          	</div>
+
+            {% endif %}
+      
+      	</div>
+		
+		{% endif %}
+
+  		{% endif %}
+	{% endfor %}
+  
+
+
+{% schema %}
+  {
+    "name": "Home Slider",
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "bg",
+            "label": "Background Image"
+          },
+		  {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+		  {		
+            "type": "image_picker",
+            "id": "sketch",
+            "label": "Sketch"
+          },
+          {
+            "type": "text",
+            "id": "header",
+            "label": "Heading Line 1"
+          },
+		  {
+            "type": "text",
+            "id": "header2",
+            "label": "Heading Line 2"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },
+		  {
+            "type": "text",
+            "id": "linkText",
+            "label": "Link Text"
+          },
+		  {
+            "type": "url",
+            "id": "link",
+            "label": "Slide link"
+          },
+		  {
+            "type": "checkbox",
+            "id": "fullScreen",
+            "label": "Full screen image",
+            "default": true
+          },
+		  {
+            "type": "checkbox",
+            "id": "active",
+            "label": "Active",
+            "default": true
+          }
+        ]
+      }
+    ],
+	"presets": [
+      {
+        "name": "Home Slider",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

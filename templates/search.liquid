@@ -1,0 +1,79 @@
+{{ 'shop.scss.css' | asset_url | stylesheet_tag }}
+{{ 'listting.css' | asset_url | stylesheet_tag }}
+
+<style>
+	
+  .main-content {
+      background-color: inherit;
+      padding-top: 55px;
+  }
+	
+</style>
+<script>
+
+  var AVAILABLE_COLORS = {};
+
+</script>
+
+{% paginate search.results by 10 %}
+
+<div class="page-width">
+  {% if search.results_count == 0 or search.performed == false %}
+    <div class="empty-page-content text-center">
+      <h1 class="h2">{{ 'general.search.title' | t }}</h1>
+  {% else %}
+    <div class="section-header text-center">
+      <h1 class="h2">{{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}</h1>
+  {% endif %}
+        <div class="grid">
+          <div class="grid__item medium-up--two-fifths medium-up--push-three-tenths">
+            <form action="/search" method="get" role="search" class="search">
+              <div class="input-group">
+                <input type="search"
+                  id="SearchInput"
+                  class="input-group__field search__input"
+                  name="q"
+                  value="{{ search.terms | escape }}"
+                  placeholder="{{ 'general.search.placeholder' | t }}"
+                  aria-label="{{ 'general.search.placeholder' | t }}"
+                  autofocus>
+                <span class="input-group__btn">
+                  <button class="btn search__submit" type="submit">{{ 'general.search.submit' | t }}</button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        {% if search.performed and search.results_count == 0 %}
+          <hr class="hr--small hr--invisible">
+          <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+      	{% include 'shop-boxes' %}
+        {% endif %}
+  </div>
+</div>
+
+
+{% if search.performed %}
+  {% if search.results_count > 0 %}
+    <hr>
+  {% endif %}
+  <div class="page-width list-view-items">
+    {% for item in search.results %}
+      {% if item.object_type == 'product' %}
+          {% include 'product-card-list', product: item %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    {% include 'pagination' %}
+  {% endif %}
+{% endif %}
+
+{% endpaginate %}
+{% include "printing-modal" %}
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'listing.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'listing.js' | asset_url }}"></script><![endif]-->
+ {% section "item-colors" %}

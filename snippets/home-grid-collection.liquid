@@ -1,0 +1,33 @@
+<div class="home-grid-item-inner">
+  	
+    
+      <div>
+          <a href="{{ url }}" 
+              class="home-grid-item-image" 
+              
+              {% if collection.metafields.custom.image and use_custom_image != true %}
+                style="background-image:url({{collection.metafields.custom.image | img_url : 'large'}});" 
+              {% else  %}
+              style="background-image:url({{ image | img_url: '400x400' }})" 
+              {% endif  %}
+              title="{{ image.alt }}"></a>
+          <div class="home-grid-item-colors">
+
+                {% assign colors = collection.metafields.custom.colors.value %}                         
+                {% for color in colors %}
+
+                    <div class="" style="background-image: url({{color.swatch | img_url: 'medium'}});" {% if color.image  %} data-image="{{color.image | img_url: '430x'}}"{% endif  %}></div>            
+            
+                {% endfor %}
+            </div>
+        
+          <div class="home-grid-item-title text-center">{{ title }}</div> 
+      </div>
+    <div>
+
+      
+  	  	<a href="{{ url }}" class="home-grid-item-link home-grid-item-collection-link flex-10 btn btn-black-light">View details</a>
+  
+    </div>
+  
+</div>

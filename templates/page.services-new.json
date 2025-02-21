@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "services_hero_3WmNaP": {
+      "type": "services-hero",
+      "settings": {
+        "title": "for seamless supply",
+        "sub_title": "Allure’s shipping solutions",
+        "image": "shopify:\/\/shop_images\/c1e8226c30d88be803bbe78699a02252_1.png"
+      }
+    },
+    "services_tabs_WALNpU": {
+      "type": "services-tabs",
+      "blocks": {
+        "content_34LiYc": {
+          "type": "content",
+          "settings": {
+            "tab": "",
+            "content": "<p>Allure offers shipping and storage services tailored to meet our customers' various business models. <\/p><p>We'll save you time on logistics and problem-solving. You concentrate on providing stellar service, acquiring new clients, or launching new products.<\/p>"
+          }
+        },
+        "image_text_VLFJyX": {
+          "type": "image_text",
+          "settings": {
+            "tab": "Drop Shipping",
+            "image": "shopify:\/\/shop_images\/Box_Logos.jpg",
+            "content": "<h4>From our door to all of yours<\/h4><h2>Drop Shipping<\/h2><p><strong>In addition to our standard shipping options, we also offer drop shipping for customers who have multiple locations, such as chain retailers.<\/strong><\/p><p>This allows you to have orders shipped directly to your customers, skipping your stockroom, greatly reducing shipping time and storage costs. <\/p><p>It’s smooth and hitch-proof. Contact us to learn more about this option.<\/p>"
+          }
+        },
+        "image_text_nFEbdL": {
+          "type": "image_text",
+          "settings": {
+            "tab": "Stock & Ship",
+            "image": "shopify:\/\/shop_images\/Warehouse_Image_-_cropped.jpg",
+            "content": "<h4>Delivered – on your demand.<\/h4><h3>Stock & Ship<\/h3><p>Ensure peace of mind for when you need your branded boxes ASAP to fill large orders or, simply when you run low. <\/p><p><strong>Our Stock & Ship program allows you to place custom printed orders for the next 12 months, without worrying about storage space. We will keep them in our storage and ship them as needed.  <\/strong><\/p><p><strong>The best part?  We only charge you once the stock ships. We’ll also help you with a steady stream of supply by keeping track of your usage. <\/strong><\/p><p>We charge an upfront deposit of 25% of the total order, and then charge for the items only once they ship.<\/p><p>For Stock & Ship, there is a minimum order quantity of 3000 items.  All stock must be shipped within 12 months of ordering.<\/p>"
+          }
+        },
+        "faq_LPUQnE": {
+          "type": "faq",
+          "settings": {
+            "tab": "Shipping policies",
+            "title": "Shipping policies",
+            "content": "<p><strong>We offer shipping to addresses within the 48 contiguous states.<br\/><\/strong>In-stock items generally ship on the same or next business day after the order was placed.<br\/>Note: Custom items and custom printed items will ship within 24 hours of when the customizations are completed.<\/p>"
+          }
+        },
+        "faq_i9yVqQ": {
+          "type": "faq",
+          "settings": {
+            "tab": "Pickup",
+            "title": "Pickup",
+            "content": "<p>We also offer the option to pick up your order from our warehouse, located at <strong>141 Lanza Ave. Bldg. 29N Garfield NJ, 07026.<br\/><\/strong>Choose \"Pickup\" during checkout and you will be notified once your order is ready for pickup.<\/p>"
+          }
+        },
+        "faq_XQY7yd": {
+          "type": "faq",
+          "settings": {
+            "tab": "Returns & Refunds",
+            "title": "Returns & Refunds",
+            "content": "<p>Returns are accepted within 60 days of shipment. All returns must be authorized by an Allure representative in advance.<br\/>Printed or custom products cannot be canceled or refunded once production has begun.<br\/>Printed orders cannot be returned unless damaged. Damaged products must be reported within 10 days of delivery.<br\/>Shipping costs are non-refundable.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "content_34LiYc",
+        "image_text_VLFJyX",
+        "image_text_nFEbdL",
+        "faq_LPUQnE",
+        "faq_i9yVqQ",
+        "faq_XQY7yd"
+      ],
+      "settings": {}
+    },
+    "b041bc6f-421d-4fbf-800d-324402ef99c1": {
+      "type": "promotion-strip",
+      "settings": {
+        "catalog_title": "Get our 2024 Catalog",
+        "image": "shopify:\/\/shop_images\/Mask_Group_2.png"
+      }
+    }
+  },
+  "order": [
+    "services_hero_3WmNaP",
+    "services_tabs_WALNpU",
+    "b041bc6f-421d-4fbf-800d-324402ef99c1"
+  ]
+}

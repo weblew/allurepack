@@ -1,0 +1,100 @@
+
+<div class="page-width shop-page-boxes">
+  
+  {% if section.settings.title != blank %}
+  <div class="section-title">
+    <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3.42254 4.53809H0C0.614301 4.88912 1.8429 5.80179 1.8429 6.64426V19.5446H10.7344V17.9649H3.42254V4.53809Z" fill="#C7A049"/>
+      <path d="M12.5775 4.53809H16C15.3857 4.88912 14.1571 5.80179 14.1571 6.64426V19.5446H9.15493V17.965H12.5775V4.53809Z" fill="#C7A049"/>
+      <path d="M5.44889 1.11568C4.92235 0.852412 3.68978 1.00726 3.86926 1.90554C4.13257 2.9586 4.92239 3.22189 7.23914 3.22189C6.76525 2.16858 5.97543 1.37896 5.44889 1.11568Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.5"/>
+      <path d="M10.8126 1.11568C11.3391 0.852412 12.5717 1.00726 12.3922 1.90554C12.1289 2.9586 11.3391 3.22189 9.02234 3.22189C9.49622 2.16858 10.286 1.37896 10.8126 1.11568Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.5"/>
+    </svg>      
+   {{section.settings.title}}
+  </div>
+  {% endif  %}
+  <div class="flex">
+    	{% for block in section.blocks %}
+      
+    	<div class="shop-box width-{{block.settings.width}}">
+          <div class="shop-box-inner flex">
+              <a href="{{block.settings.url}}" class="img" style="background-image:url('{{ block.settings.image | img_url: 'large' }}');"></a>
+              {% if block.settings.content == blank %}
+                <div class="box-text">
+                      <a href="{{block.settings.url}}" class="box-text-large">{{block.settings.title}}</a>
+                </div>
+              {% endif %}
+          </div>
+          {% if block.settings.content != blank %}
+               
+                <a href="{{block.settings.url}}" class="box-content">
+                    {{block.settings.content}}
+                </a>
+              {% endif %}
+    
+    	</div>
+
+  		{% endfor %}
+  </div>
+  
+  
+</div>
+
+
+{% schema %}
+  {
+    "name": "Shop boxes",
+    "settings" :[
+      {
+        "type" : "text",
+        "label":"Title",
+        "id":"title",
+        "default":"Shop by category"
+      }
+    ],
+    "blocks": [
+		{
+          "type": "page",
+          "name": "Page",
+          "settings": [
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            },
+            {
+              "type": "richtext",
+              "id": "content",
+              "label": "Content"
+            },
+            {
+              "id": "url",
+              "type": "url",
+              "label": "Link"
+            },
+			{
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image"
+            },
+            {
+              "type": "number",
+              "id": "width",
+              "label": "Width"
+            }
+          ]
+        }
+	],
+	"presets": [
+      {
+        "name": "Shop boxes",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

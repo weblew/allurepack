@@ -1,0 +1,148 @@
+function loadCustomLogoFonts(){
+	var fontsLoaded = $('#customFonts').length;
+  	if(!fontsLoaded){
+    	$('head').append('<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Cinzel|Dancing+Script|EB+Garamond:800|Great+Vibes|Muli|Pinyon+Script|Prata|Roboto&display=swap" rel="stylesheet">');
+    }
+}
+
+function setUpCustomLogoEvents(){
+  
+
+	$(document)
+    	.on('change', '.custom-logo-setting-font select', function(){
+    
+    		var font = $(this).val(),
+                fontFamily = $(this).find("option:selected").css('font-family'),
+                field = $(this).closest('[data-field]').data('field');
+      
+      		$(this).css('font-family', fontFamily)
+            $('.custom-logo-preview-elements').find('[data-field="'+field+'"]').css('font-family', fontFamily)
+      
+    	})
+    	.on('keyup', '.custom-logo-setting-text input', function(){
+    
+    		var val = $(this).val(),
+                field = $(this).closest('[data-field]').data('field');
+                  
+            $('.custom-logo-preview-elements').find('[data-field="'+field+'"]').text(val)
+      
+    	})
+    	.on('click', '.custom-logo-setting-icon', function(){
+    
+    		var isSelected = $(this).hasClass('selected'),
+            	id = $(this).data('icon'),
+                svg = $(this).html();
+            
+      		
+            
+            if(!isSelected){
+            	$('.custom-logo-preview-logo').html(svg);
+              	$(this).addClass('selected').siblings().removeClass('selected');
+              
+              	var svgWidth = $('.custom-logo-preview-logo svg').width(),
+                    svgHeight = $('.custom-logo-preview-logo svg').height();
+              
+              	$('.custom-logo-preview-logo svg').attr('width', svgWidth).attr('height', svgHeight)
+            }else{
+            	$('.custom-logo-preview-logo').html('');
+              	$(this).removeClass('selected')
+            }
+      
+    	})
+       .on('click', '.custom-logo-setting-color', function(){
+    
+    		var isSelected = $(this).hasClass('selected'),
+            	color = $(this).data('color');
+            
+      		
+            
+            if(!isSelected){
+            	$('.custom-logo-preview-elements').css('color', color);
+              	$(this).addClass('selected').siblings().removeClass('selected');
+              
+            }else{
+            	$('.custom-logo-preview-elements').css('color', '#000');
+              	$(this).removeClass('selected')
+            }
+      
+    	})
+    	.on('change', '.custom-logo-setting-icon-position input', function(){
+    
+    		var position = $(this).val();
+            
+      		$(this).parent().addClass('selected').siblings().removeClass('selected')
+            $('.custom-logo-preview-elements').removeClass('left top right bottom').addClass(position)
+      
+    	})
+    	.on('click', '.submit-custom-icon', function(e){
+    		
+      
+      		var logoSettings = {};
+    		var icon = $('.custom-logo-setting-icon.selected').data('icon'),
+                iconPosition = $('.custom-logo-setting-icon-position input:checked').val(),
+                name = $('[data-field="name"] input').val(),
+                nameFont = $('[data-field="name"] select').val(),
+            	tagline = $('[data-field="tagline"] input').val(),
+                taglineFont = $('[data-field="tagline"] select').val(),
+                address = $('[data-field="address"] input').val(),
+                addressFont = $('[data-field="address"] select').val(),
+                color = $('.custom-logo-setting-icon.selected').attr('title');
+      
+      		if(icon){
+              	logoSettings.icon = {
+                  id: icon,
+                  position:iconPosition
+                }                                
+            }
+      
+      		if(name){
+            	logoSettings.name = {
+                  value: name,
+                  font:nameFont
+                }
+            }
+      
+      		if(tagline){
+            	logoSettings.tagline = {
+                  value: tagline,
+                  font:taglineFont
+                }
+            }
+      
+      		if(address){
+            	logoSettings.address = {
+                  value: address,
+                  font:addressFont
+                }
+            }
+      
+      		if(color){
+            	logoSettings.color = {
+                  value: color.trim()
+                }
+            }
+            
+      		if(window.currentPrintingOption){
+//                 window.currentPrintingOption.data('design', logoSettings);      
+//                 window.currentPrintingOption.text('Custom');
+
+//                 window.currentPrintingOption.closest('.logo-row').find('input[type=file]').val('');
+//                 window.currentPrintingOption.closest('.logo-row').find('.stamp-preview').removeClass('has-logo');
+//                 window.currentPrintingOption.closest('.logo-row').find('.stamp-preview > div').replaceWith('<div>Upload Logo</div>');
+	
+             
+                hideCustomLogoModal();
+              
+                document.dispatchEvent(new CustomEvent('custom-logo', {
+                  detail:logoSettings
+                }));
+            }
+      			
+    	})
+  
+}
+
+function hideCustomLogoModal(){
+	$('.custom-logo-layer').removeClass('in');
+	$('.custom-logo-layer-overlay').removeClass('in');
+}

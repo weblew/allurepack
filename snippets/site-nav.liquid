@@ -1,0 +1,49 @@
+<ul class="site-nav list--inline {{ nav_alignment }}" id="SiteNav">
+  {% for link in linklists[section.settings.main_linklist].links %}
+    {%- assign child_list_handle = link.title | handleize -%}
+
+    {% if linklists[child_list_handle].links != blank %}
+      <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}">
+        <a href="{{ link.url }}" class="site-nav__link site-nav__link--main" aria-has-popup="true" aria-expanded="false" aria-controls="SiteNavLabel-{{ child_list_handle }}">
+          {{ link.title }}
+          {% include 'icon-chevron-down' %}
+          <span class="visually-hidden">{{ 'layout.navigation.expand' | t }}</span>
+        </a>
+
+        <div class="site-nav__dropdown" id="SiteNavLabel-{{ child_list_handle }}">
+          <ul>
+            {% for childlink in linklists[child_list_handle].links %}
+              <li {% if childlink.active %}class="site-nav--active"{% endif %}>
+                <a href="{{ childlink.url }}" class="site-nav__link site-nav__child-link{% if forloop.last %} site-nav__link--last{% endif %}">
+                  {% if collections[childlink.handle].image != blank %}
+                  	<img class="" src="{{collections[childlink.handle].image | img_url: 'medium'}}">
+                  {% endif %}
+                  {{ childlink.title | escape }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </li>
+    {% else %}
+      <li {% if link.active %}class="site-nav--active"{% endif %}>
+        <a href="{{ link.url }}" class="site-nav__link site-nav__link--main">{{ link.title }}</a>
+      </li>
+    {% endif %}
+  {% endfor %}
+  {% if shop.customer_accounts_enabled %}
+      {% if customer %}
+      <li class="">
+          <a href="/account" class="site-nav__link">
+            {{ 'layout.customer.account' | t }}
+          </a>
+      </li>
+      {% else %}
+      <li class="">
+        <a href="/account/login" class="site-nav__link">
+          {{ 'layout.customer.log_in' | t }}
+        </a>
+      </li>
+      {% endif %}
+      {% endif %}
+</ul>

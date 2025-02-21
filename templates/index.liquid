@@ -1,0 +1,7 @@
+{{ 'home_new.css' | asset_url | stylesheet_tag }}
+
+
+{{ content_for_index }}
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'home.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'home.js' | asset_url }}"></script><![endif]-->

@@ -1,0 +1,53 @@
+{{ 'landing.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width">
+  
+  		  
+    <div class="flex flex-center">
+
+      <div class="flex-10">
+        <div class="flex font-default">
+
+          <h1 class="font-default gold">
+          	{{page.title}}
+          </h1>
+
+        </div>
+      </div> 
+
+
+
+      <div class="flex flex-10 collection-landgin-box-grid">
+        {% for link in linklists[page.handle].links %}
+        <div class="flex-2-5">
+          <div class="collection-landgin-box" >
+            <a class="img"href="{{link.url}}" {%if link.object.image%}style="background-image:url({{link.object.image | img_url : 'large'}})" {%endif%}></a>
+            <a href="{{link.url}}" class="text">
+              {{link.title}}
+            </a>
+            {% if link.object.metafields.custom.label != blank %}
+              <div class="collection-badge">
+                {{ link.object.metafields.custom.label }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  			
+
+    
+</div>
+
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+      
+		<div class="page-width">
+          {{page.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}
+

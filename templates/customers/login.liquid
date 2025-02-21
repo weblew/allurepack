@@ -1,0 +1,110 @@
+<div class="page-width login-page">
+  	
+  
+ 
+  <div class="flex flex-justify-between flex-align-top">
+    <div class="flex-4-5">
+      
+
+        <div id="CustomerLoginForm" class="form-vertical">
+          {% form 'customer_login' %}
+            <h1 class="font-default gold">{{ 'customer.login.title' | t }}</h1>
+          <div class="note form-success hide" id="ResetSuccess">
+              {{ 'customer.recover_password.success' | t }}
+            </div>
+
+            {{ form.errors | default_errors }}
+          
+          	<input type="hidden" name="checkout_url" value="/" />
+
+            <label for="CustomerEmail">{{ 'customer.login.email' | t }}</label>
+            <input type="email" name="customer[email]" id="CustomerEmail" class="{% if form.errors contains 'email' %} input--error{% endif %}" autocorrect="off" autocapitalize="off" autofocus>
+
+            {% if form.password_needed %}
+              <label for="CustomerPassword">{{ 'customer.login.password' | t }}</label>
+              <input type="password" value="" name="customer[password]" id="CustomerPassword" class="{% if form.errors contains 'password' %} input--error{% endif %}">
+            {% endif %}
+
+            <div class="">
+              {% if form.password_needed %}              	
+                <input type="submit" class="btn btn-gold" value="{{ 'customer.login.sign_in' | t }}">
+                <a href="#recover" id="RecoverPassword" class="btn-link">{{ 'customer.login.forgot_password' | t }}</a>
+              	
+              {% else %}
+              	<input type="submit" class="btn" value="{{ 'customer.login.sign_in' | t }}">
+              {% endif %}              
+
+ 
+            </div>
+
+          {% endform %}
+          
+          
+        </div>
+      
+      	<div id="RecoverPasswordForm" class="hide">
+
+          <div class="">
+            <h2 class="font-default gold h1">{{ 'customer.recover_password.title' | t }}</h2>
+            <p>{{ 'customer.recover_password.subtext' | t }}</p>
+          </div>
+
+          <div class="form-vertical">
+            {% form 'recover_customer_password' %}
+
+              {{ form.errors | default_errors }}
+
+              {% comment %}
+                Add a hidden span to indicate the form was submitted succesfully.
+              {% endcomment %}
+              {% if form.posted_successfully? %}
+                <span class="hide reset-password-success"></span>
+              {% endif %}
+
+              <label for="RecoverEmail">{{ 'customer.recover_password.email' | t }}</label>
+              <input type="email" value="" name="email" id="RecoverEmail" class="input-full"autocorrect="off" autocapitalize="off">
+
+              <div class="">
+                  <input type="submit" class="btn btn-gold" value="{{ 'customer.recover_password.submit' | t }}">
+                  <button type="button" id="HideRecoverPasswordLink" class="text-link btn-link">{{ 'customer.recover_password.cancel' | t }}</button>                
+              </div>
+            {% endform %}
+          </div>
+
+        </div>
+      
+        {% comment %}
+          If accounts are set as optional, the following will be shown as an option
+          during checkout, not on the default /login page.
+        {% endcomment %}
+        {% if shop.checkout.guest_login %}
+          <div class="flex-4">
+			<br><br>
+            {% form 'guest_login' %}
+              <input type="submit" class="btn" value="{{ 'customer.login.guest_title' | t }}">
+            {% endform %}
+          </div>
+        {% endif %}
+    </div>
+    
+    <div class="flex-4-5 create-account-promot">
+      	<h3>New Customer?</h3>
+      	<p>
+          <strong>
+            Benefits of having an account
+          </strong>
+        </p>
+      	<ul>
+          <li>Faster checkout</li>  
+          <li>Track your order</li>  
+          <li>Save and re-use multiple shipping address</li>  
+          <li>Product history offers effortless reordering</li>  
+          <li>Order history for your records</li>
+      	</ul>
+      	<a class="btn btn-gold-light" href="/account/register"> {{ 'layout.customer.create_account' | t }}</a>
+    	
+    </div>
+  </div>
+  
+
+</div>

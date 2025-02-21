@@ -1,0 +1,186 @@
+
+<div id="{{ section.id }}" class="imprinting-video">
+    {% if section.settings.title != blank or section.settings.content != blank %}
+        <div class="imprinting-video-content">
+        
+            {% if section.settings.title %}
+                <h3 class="font-default">
+                    {{section.settings.title}}
+                </h3>
+            {% endif %}
+            {{ section.settings.content }}
+        </div>
+    {% endif %}
+<div class="imprinting-video-grid {% if section.settings.reverse  %}reverse{% endif  %}">
+    {% if section.settings.slider  %}
+        <div class="imprinting-slider-column">
+            <div class="imprinting-slider-column-inner">
+                {% for block in section.blocks  %}
+                    {% if block.type == 'slide'  %}
+                        <div class="imprinting-slider-column-slide">
+                            <div class="imprinting-slider-column-slide-img">
+                                <img src="{{block.settings.image|img_url:'master'}}"/>
+                            </div>
+                        </div>
+                    {% endif  %}
+                {% endfor  %}
+                
+            </div>
+            <div class="imprinting-slider-column-arrows">
+                    <div class="prev-arrow">
+                        <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.31994 0.0175781L10.5 1.17288L2.81556 8.99596L10.5 16.8289L9.31994 17.9826L0.5 8.99761L9.31994 0.0175781Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="next-arrow">
+                        <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.68006 0.0175781L0.5 1.17288L8.18444 8.99596L0.5 16.8289L1.68006 17.9826L10.5 8.99761L1.68006 0.0175781Z" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+        </div>
+    {% elsif section.blocks.size > 0  %}
+        <div class="imprinting-video-column">
+            <div class="imprinting-video-column-img"  style="background-image: url('{{section.settings.image|img_url:'master'}}');">
+
+            </div>
+        </div>
+    {% endif  %}
+        {% if section.blocks.size > 0  %}
+        <div class="imprinting-text-icon-column">
+            <div class="imprinting-text-icon-column-inner">
+                {% for block in section.blocks  %}
+                    
+                    {% if block.type == 'title'  %}
+                        <div class="imprinting-text-icon-column-title">
+                            {{block.settings.title}}
+                        </div>
+                    {% endif  %}
+
+                    {% if block.type == 'devider'  %}
+                        <div class="imprinting-text-icon-devider"></div>
+                    {% endif  %}
+
+                    {% if block.type == 'icon-text'  %}
+                        <div class="imprinting-text-icon-column-icon-text">
+                            
+                            <div class="imprinting-text-icon-column-icon-text-img"   style="background-image: url('{{block.settings.icon|img_url:'master'}}');">
+
+                            </div>
+                            <div class="imprinting-text-icon-column-icon-text-content">
+                                <div class="imprinting-text-icon-column-icon-text-content-title">
+                                    {{block.settings.title}}
+                                </div>
+                                <div>
+                                    {{block.settings.content}}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif  %}
+                {% endfor  %}
+            </div>
+        </div>
+    {% endif  %}
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function(){
+        $('#{{ section.id }} .imprinting-slider-column-inner').on('init', function() {
+    
+            // setTimeout(function(){
+            //     $('.imprinting-gallery-slider-inner .slick-track').css('transform', 'translate3d(0px, 0px, 0px)')
+            // }, 500)
+
+        }).on('beforeChange', function(e, slick, currentSlide, nextSlide) {
+            
+        
+
+        }).slick({
+            dots:false,
+            loop:true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll : 1,
+            prevArrow: '#{{ section.id }} .prev-arrow',
+            nextArrow: '#{{ section.id }} .next-arrow',
+            autoplay: false,
+            // autoplaySpeed: 2000,
+        });
+    })
+</script>
+
+{% schema %}
+    {
+        "name": "Imprinting Video",
+        "settings": [{
+            "type" : "text",
+            "label":"Title",
+            "id":"title"
+        },{
+            "type" : "richtext",
+            "label":"Content",
+            "id":"content"
+        },{
+            "type" : "image_picker",
+            "label":"Image",
+            "id":"image"
+        },{
+            "type" : "video",
+            "label":"Video",
+            "id":"video"
+        },{
+            "type" : "checkbox",
+            "label":"Use Slider",
+            "id":"slider"
+        },{
+            "type" : "checkbox",
+            "label":"Slider on Right",
+            "id":"reverse"
+        }],
+        "blocks": [{
+            "type" : "title",
+            "name" : "Title",
+            "settings" :[{
+                "type" : "text",
+                "label":"Title",
+                "id":"title"
+            }]
+        },{
+            "type" : "icon-text",
+            "name" : "Icon/Text",
+            "settings" :[{
+                "type" : "text",
+                "label":"Title",
+                "id":"title"
+            },{
+                "type" : "richtext",
+                "label":"Content",
+                "id":"content"
+            },{
+                "type" : "image_picker",
+                "label":"Icon",
+                "id":"icon"
+            }]
+        },{
+            "type" : "slide",
+            "name" : "Slide",
+            "settings" :[{
+                "type" : "image_picker",
+                "label":"Image",
+                "id":"image"
+            }]
+        },{
+            "type" : "devider",
+            "name" : "Devider",
+            "settings" :[]
+        }],
+        "presets": [
+            {
+            "name": "Imprinting Video"
+            }
+        ]
+    }
+  {% endschema %}

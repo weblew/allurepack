@@ -1,0 +1,49 @@
+{{ 'landing.css' | asset_url | stylesheet_tag }}
+
+
+<div class="page-width">
+
+    <div class="">
+
+    <h1 class="font-default gold">{{ page.title }}</h1>
+
+    </div>
+  
+  	{% if page.handle == 'gift-wrapping' %}
+    	{% section 'gift-wrapping' %}
+  	{% else %}
+      {% assign links = linklists[page.handle].links %}
+        {% assign linksSize = links.size %}
+  		<div class="flex collection-landgin-box-grid">
+        
+              {% for link in links %}
+                <div class="flex-2-5">
+                    <div class="collection-landgin-box">
+                      <a href="{{link.url}}" class="img" style="background-image:url({{ link.object.featured_image | img_url: 'large'}})"></a>
+                      <a href="{{link.url}}" class="text">
+                        {{link.title}}
+                      </a>
+                      {% if link.object.metafields.custom.label != blank %}
+                        <div class="collection-badge">
+                          {{ link.object.metafields.custom.label }}
+                        </div>
+                      {% endif %}
+                    </div>
+              </div>
+              {% endfor %}
+        </div>
+  	{% endif %}
+    
+</div>
+
+<br>
+
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+		<div class="page-width">
+          {{page.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}
+

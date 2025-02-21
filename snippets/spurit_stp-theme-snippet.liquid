@@ -1,0 +1,27 @@
+<script>
+    if(typeof(Spurit) === 'undefined'){
+      Spurit = {};
+    }
+    if(!Spurit.tieredPricing){
+        Spurit.tieredPricing = {};
+    }
+    if(!Spurit.tieredPricing.snippet){
+        Spurit.tieredPricing.snippet = {};
+    }
+    Spurit.tieredPricing.snippet.appId = '44';
+    Spurit.tieredPricing.snippet.shopHash = '7fb7248ccc4cb54bc6acef8aecca45b9';
+    Spurit.tieredPricing.snippet.shopDomain = 'allurepack.myshopify.com';
+    Spurit.tieredPricing.snippet.folderStore = 'https://s3.amazonaws.com/shopify-apps/pricing-by-quantity/store/';
+    Spurit.tieredPricing.snippet.folderCss = 'https://s3.amazonaws.com/shopify-apps/pricing-by-quantity/css/';
+    Spurit.tieredPricing.snippet.moneyFormat = '{{ shop.money_format }}';
+
+    if(typeof(Spurit.globalSnippet) === 'undefined'){
+      Spurit.globalSnippet = {
+        shop_currency: '{{ shop.currency }}',
+        money_format: '{{ shop.money_format }}',
+        cart: {{ cart | json }},
+        customer_id: '{{ customer.id }}'
+      };
+    }
+</script>
+<script src="https://s3.amazonaws.com/shopify-apps/pricing-by-quantity/js/common.js"></script>

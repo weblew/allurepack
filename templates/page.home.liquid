@@ -1,0 +1,11 @@
+{{ 'home_new.css' | asset_url | stylesheet_tag }}
+<div>
+  {% section 'slider' %}
+</div>
+<div class="page-width">  
+  <div class="shop-boxes-container">
+    {% section 'shop-boxes' %}
+  </div>
+  {% section 'home-collection' %}
+  {% section 'promotion-strip' %}
+</div>

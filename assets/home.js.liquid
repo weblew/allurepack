@@ -1,0 +1,160 @@
+var sliderTimeout,
+    transitionTimeout,
+    textTimeout,
+    imgTimeout,
+    sketchTimeout,
+    sketchAndImgTimeout,
+    aa = 0;
+
+$(document).ready(function(){
+  
+  	$('.home-banner').first().addClass('in');
+  	initSlider();		
+  
+  
+});
+
+function initSlider(){
+	
+  	showSlide(function(time){
+      	clearTimeout(transitionTimeout);
+      	transitionTimeout = setTimeout(function(){
+        	
+          	console.log('done', aa++);
+          	switchSlide();
+          
+        }, time);
+    });
+  
+}
+
+function switchSlide(){
+  	clearTimeout(sliderTimeout);
+  	sliderTimeout = setTimeout(function(){
+  		
+      	hideSlide();
+
+        if(!$('.home-banner.in').next().length){
+            console.log('switch to first');
+            $('.home-banner.in').removeClass('in');
+            $('.home-banner:first').addClass('in');
+        }else{
+            console.log('switch to next');
+            $('.home-banner.in').removeClass('in').next().addClass('in');
+        }    
+
+        initSlider();
+      
+  	}, 5000);
+}
+
+function showSlide(cb){
+
+    var imageTag = $('<img/>'),
+        $text = $('.home-banner.in .home-banner-text'),
+        $bg = $('.home-banner.in .home-banner-image'),
+        $imgContainer = $('.home-banner.in .home-banner-img-box'),
+        $sketchContainer = $('.home-banner.in .home-banner-sketch-box'),
+        $img = $imgContainer.find('img'),
+        $sketch = $sketchContainer.find('img'),
+        $fullScreen = $('.home-banner.in').hasClass('fullScreen'); 
+	
+    if($fullScreen){
+
+		cb(700);
+
+    }else if($bg.length){
+
+        imageTag.attr('src', $bg.data('image')).load(function(){
+
+            showText();
+
+            if($sketch.length){
+
+              	showSketchAndImg();                            	
+
+            }else{          
+
+              	showImg();
+
+            }              
+
+        });  
+
+    }else{
+
+        showText();
+
+        if($sketch.length){
+
+          	showSketchAndImg();                            	
+
+        }else{          
+
+          	showImg();
+
+        } 
+
+    }
+
+    function showText(){
+
+      	clearTimeout(textTimeout);
+      	textTimeout = setTimeout(function(){
+      		$bg.addClass('in');
+        	$text.addClass('in');
+      	}, 300);
+
+    }
+
+    function showImg(){
+      
+      	clearTimeout(imgTimeout);
+        imgTimeout = setTimeout(function(){
+
+            $img.attr('src', $img.data('image')).load(function(){
+              	$imgContainer.addClass('in');
+              	imageTag.remove();
+              	cb(700);
+            });
+
+        }, 700);
+    }
+
+    function showSketchAndImg(){
+        $sketch.attr('src', $sketch.data('image')).load(function(){
+          	clearTimeout(sketchTimeout);
+            sketchTimeout = setTimeout(function(){
+                $sketchContainer.addClass('in');
+
+                $img.attr('src', $img.data('image')).load(function(){
+                                    	
+                    clearTimeout(sketchAndImgTimeout);
+                    sketchAndImgTimeout = setTimeout(function(){
+                      	$imgContainer.addClass('in');
+                      	$sketchContainer.removeClass('in').addClass('out');
+                      	imageTag.remove();
+                      	cb(1200);
+                    }, 1500);
+                  
+                });
+
+            }, 700);
+        }); 
+    }
+}
+
+function hideSlide(){
+	 var $text = $('.home-banner.in .home-banner-text'),
+         $bg = $('.home-banner.in .home-banner-image'),
+         $imgContainer = $('.home-banner.in .home-banner-img-box'),
+         $sketchContainer = $('.home-banner.in .home-banner-sketch-box');
+  
+  	 $bg.removeClass('in');
+     $text.removeClass('in');
+     $imgContainer.removeClass('in');
+  	 $sketchContainer.removeClass('in').removeClass('out')
+}
+
+
+

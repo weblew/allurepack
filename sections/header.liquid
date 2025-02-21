@@ -1,0 +1,295 @@
+{% if section.settings.message %}
+  <style>
+    .notification-bar {
+      background-color: {{ section.settings.color_bg }};
+    }
+    
+    .notification-bar a{
+    	color:#fff;
+    }
+    
+    .notification-bar span{
+        text-align: right;
+    }
+
+    .notification-bar__message {
+      color: {{ section.settings.color_text }};
+    }
+    
+    .notification-bar .notification-bar__message span{    	
+        background-image: url(https://cdn.shopify.com/s/files/1/1901/6329/files/headset.png?1480540…);
+        background-repeat: no-repeat;
+        background-size: contain;
+        padding-left: 26px;
+    }
+  </style>
+{% endif %}
+
+{% if section.settings.align_logo == 'center' %}
+{%- assign logo_classes = 'medium--one-third large-up--one-quarter logo-align--center' -%}
+{% else %}
+{%- assign logo_classes = 'medium-up--one-fifth logo-align--left' -%}
+{% endif %}
+
+<div class="" data-section-id="{{ section.id }}" data-section-type="header-section">
+  <nav class="mobile-nav-wrapper medium-up--hide" role="navigation">
+    <ul id="MobileNav" class="mobile-nav">
+      {% for link in linklists[section.settings.main_linklist].links %}
+        {%- assign child_list_handle = link.title | handleize -%}
+
+        <li class="mobile-nav__item border-bottom">
+          {% if linklists[child_list_handle].links != blank %}
+            <button type="button" class="btn--link js-toggle-submenu mobile-nav__link" data-target="{{ child_list_handle }}" data-level="1">
+              {{ link.title }}
+              <div class="mobile-nav__icon">
+                {% include 'icon-chevron-right' %}
+                <span class="icon__fallback-text">{{ 'layout.navigation.expand' | t }}</span>
+              </div>
+            </button>
+            <ul class="mobile-nav__dropdown" data-parent="{{ child_list_handle }}" data-level="2">
+              <li class="mobile-nav__item border-bottom">
+                <div class="mobile-nav__table">
+                  <div class="mobile-nav__table-cell mobile-nav__return">
+                    <button class="btn--link js-toggle-submenu mobile-nav__return-btn" type="button">
+                      {% include 'icon-chevron-left' %}
+                      <span class="icon__fallback-text">{{ 'layout.navigation.collapse' | t }}</span>
+                    </button>
+                  </div>
+                  <a href="{{ link.url }}" class="mobile-nav__sublist-link mobile-nav__sublist-header">
+                    {{ link.title }}
+                  </a>
+                </div>
+              </li>
+
+              {% for childlink in linklists[child_list_handle].links %}
+                <li class="mobile-nav__item{% unless forloop.last %} border-bottom{% endunless %}">
+                  <a href="{{ childlink.url }}" class="mobile-nav__sublist-link">
+                    {{ childlink.title | escape }}
+                  </a>
+                </li>
+              {% endfor %}
+
+            </ul>
+          {% else %}
+            <a href="{{ link.url }}" class="mobile-nav__link">
+              {{ link.title }}
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+      
+      
+      
+      {% if shop.customer_accounts_enabled %}
+      {% if customer %}
+      <li class="mobile-nav__item">
+          <a href="/account" class="mobile-nav__link">
+            {{ 'layout.customer.account' | t }}
+          </a>
+      </li>
+      {% else %}
+      <li class="mobile-nav__item">
+        <a href="/account/login" class="mobile-nav__link">
+          {{ 'layout.customer.log_in' | t }}
+        </a>
+      </li>
+      {% endif %}
+      {% endif %}
+      
+    </ul>
+  </nav>
+
+  {% if section.settings.message %}
+  		{% if true or template != 'index' %}
+            <div class="notification-bar">
+              {% if section.settings.message %}
+                {% if section.settings.message_link != blank %}
+                  <a href="{{ section.settings.message_link }}" class="notification-bar__message page-width">
+                    {{ section.settings.message_text | escape }}
+                  </a>
+                {% else %}
+                  <span class="notification-bar__message page-width">{{ section.settings.message_text }}</span>
+                {% endif %}
+              {% endif %}
+            </div>
+  		{% endif %}
+  {% endif %}
+  
+  
+<!--    <div class="decship"><img src="https://cdn.shopify.com/s/files/1/1901/6329/files/DEC_ShipBanner-2.png?3627346592299126767"></div> -->
+
+
+  <header class="site-header{% if section.settings.align_logo == 'left' %} logo--left{% else %} logo--center{% endif %}" role="banner">
+    <div class="page-width">
+      
+    	<div class="flex flex-align-center">
+		  <!-- LOGO -->
+          <div class="small--one-half {{ logo_classes }}">
+            {% comment %}
+              Use the uploaded logo from theme settings if enabled.
+              Site name gets precedence with H1 tag on homepage, div on other pages.
+            {% endcomment %}
+            {% if template.name == 'index' %}
+              <h1 class="h2 site-header__logo" itemscope itemtype="http://schema.org/Organization">
+            {% else %}
+              <div class="h2 site-header__logo" itemscope itemtype="http://schema.org/Organization">
+            {% endif %}
+                
+              {% if section.settings.logo %}
+                <a href="/" itemprop="url" class="site-header__logo-image{% if section.settings.align_logo == 'center' %} site-header__logo-image--centered{% endif %}">
+                  {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+                  <img src="{{ section.settings.logo | img_url: image_size }}"
+                       srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                       alt="{{ section.settings.logo.alt | default: shop.name }}"
+                       itemprop="logo">
+                </a>
+              {% else %}
+                <a class="site-header__logo-link" href="/" itemprop="url">{{ shop.name }}</a>
+              {% endif %}
+                
+            {% if template.name == 'index' %}
+              </h1>
+            {% else %}
+              </div>
+            {% endif %}
+          </div>
+          <!-- NAVIGATION --> 
+
+          
+          <div class="medium-up--four-fifths small--one-half text-right">
+            	
+            
+            		<div class="text-right site-nav small--hide">
+                      		
+                      	<div class="site-nav-top text-right">
+                      		{% include 'site-nav-top' %}
+                      	</div>
+                      	<div class="site-nav-bottom flex flex-align-center flex-right">                      		 
+                            {% include 'site-nav-bottom' %}
+                          	{% include 'open-search' %}
+                      	</div>
+                      
+            		</div>
+            		<div class="flex flex-align-center flex-right">
+                        <div class="medium-up--hide">
+                            {% include 'mobile-search' %}
+                        </div>
+                      	<div class="medium-up--hide">
+                            <a href="/cart" class="site-header__cart">
+                              <span class="small--hide">My Cart</span>
+                              {% include 'icon-cart' %}
+                              <div id="CartCount" class="site-header__cart-count">
+                                {{ cart.items.size }}
+                              </div>
+                            </a>
+                          &nbsp;&nbsp;
+                        </div>
+                        {% unless linklists[section.settings.main_linklist] == blank %}
+                                <button type="button" class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
+                                  {% include 'icon-hamburger' %}
+                                  {% include 'icon-close' %}
+                                  <span class="icon__fallback-text">{{ 'layout.navigation.toggle' | t }}</span>
+                                </button>
+                        {% endunless %}
+            		</div>
+          
+          </div>
+          
+          
+    </div>
+    </div>
+  </header>
+  
+  
+  {% if section.settings.holiday_banner %}
+  		
+        <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">		
+          <symbol id='calendar' viewBox='0 0 28 30'><g><path d='M0,30c9.3,0,18.7,0,28,0c0-7.3,0-14.7,0-22C18.7,8,9.3,8,0,8C0,15.4,0,22.7,0,30z M21,11c1.3,0,2.7,0,4,0 c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C21,13.7,21,12.4,21,11z M21,17c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0 C21,19.7,21,18.4,21,17z M21,23c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C21,25.7,21,24.4,21,23z M15,11 c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C15,13.7,15,12.4,15,11z M15,17c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4 c-1.3,0-2.7,0-4,0C15,19.7,15,18.4,15,17z M15,23c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C15,25.7,15,24.4,15,23z M9,11c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C9,13.7,9,12.4,9,11z M9,17c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4 c-1.3,0-2.7,0-4,0C9,19.7,9,18.4,9,17z M9,23c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C9,25.7,9,24.4,9,23z M3,11 c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C3,13.7,3,12.4,3,11z M3,17c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0 C3,19.7,3,18.4,3,17z M3,23c1.3,0,2.7,0,4,0c0,1.3,0,2.7,0,4c-1.3,0-2.7,0-4,0C3,25.7,3,24.4,3,23z'/></g><g><path d='M22,3c0-4-3-4-3,0H9c0-4-3-4-3,0H0v4h28V3H22z'/></g></symbol>
+        </svg>
+  		<div class="holiday-banner lightbox-image" data-year="{{date}}" src="{{section.settings.holiday_popup | img_url: '1000x'}}">
+          	<svg class="svg-icon"><use xlink:href="#calendar"></use></svg>
+  			See Our Upcoming Holiday Schedule 
+  		</div>
+  		{{ 'lightbox.scss.css' | asset_url | stylesheet_tag }}
+  		<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'lightbox.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+		<!--[if lte IE 9]><script src="{{ 'lightbox.js' | asset_url }}"></script><![endif]-->
+  		
+  {% endif %}
+
+</div>
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "radio",
+        "id": "align_logo",
+        "label": "Logo alignment",
+        "default": "left",
+        "options": [
+          {"value": "left", "label": "Left"},
+          {"value": "center", "label": "Centered"}
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image"
+      },
+      {
+        "type": "text",
+        "id": "logo_max_width",
+        "label": "Custom logo width (in pixels)",
+        "default": "100"
+      },
+      {
+        "type": "link_list",
+        "id": "main_linklist",
+        "label": "Menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "checkbox",
+        "id": "message",
+        "label": "Show announcement",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "message_text",
+        "label": "Announcement text",
+        "default": "Announce something here"
+      },
+      {
+        "type": "url",
+        "id": "message_link",
+        "label": "Announcement link",
+        "info": "Optional"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Announcement color",
+        "default": "#7796A8"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Announcement text color",
+        "default": "#fff"
+      },
+	  {
+        "type": "checkbox",
+        "id": "holiday_banner",
+        "label": "Show Holiday Banner",
+        "default": false
+      },
+	  {
+        "type": "image_picker",
+        "id": "holiday_popup",
+        "label": "Holiday Popup Image"
+      }
+    ]
+  }
+{% endschema %}

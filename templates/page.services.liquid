@@ -1,0 +1,14 @@
+{{ 'services.scss.css' | asset_url | stylesheet_tag }}
+<div class="services-page">
+
+      <div class="section-header text-center">
+        <h1 class="gold font-default">Services</h1>
+        <h3>All it takes to give the total package ... from quick to custom, Allure delivers solutions to present your jewelry</h3>
+      </div>
+<div class="page-width">
+        {{ page.content }}
+        {% section 'services' %}
+</div>
+
+
+</div>

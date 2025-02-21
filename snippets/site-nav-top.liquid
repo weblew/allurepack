@@ -1,0 +1,76 @@
+<ul class="list--inline {{ nav_alignment }}" id="SiteNav">
+  {% for link in linklists['site-nav-top'].links %}
+    {%- assign child_list_handle = link.title | handleize -%}
+  
+  	{% if child_list_handle == 'my-account' and customer == blank %}
+  	
+  
+  		<li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}">
+          <a href="{{ link.url }}" class="site-nav__link site-nav__link--main" aria-has-popup="true" aria-expanded="false" aria-controls="SiteNavLabel-{{ child_list_handle }}">
+            {{ link.title }}
+            {% include 'icon-chevron-down' %}
+            <span class="visually-hidden">{{ 'layout.navigation.expand' | t }}</span>
+          </a>
+
+          <div class="site-nav__dropdown login-dropdown" id="SiteNavLabel-{{ child_list_handle }}">
+            <div class="login-dropdown-title">Log In to Your Account</div>
+            <ul>
+                <li>
+                  <a href="/account/login" class="btn btn-black-dark">
+                    {{ 'layout.customer.log_in' | t }}
+                  </a>
+                </li>
+              
+              	<li>
+                  <a href="/account/register" class="btn btn-black-light">
+                    {{ 'layout.customer.create_account' | t }}
+                  </a>
+                </li>
+            </ul>
+          </div>
+        </li>
+  
+  	{% else %}
+
+      {% if linklists[child_list_handle].links != blank %}
+        <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}">
+          <a href="{{ link.url }}" class="site-nav__link site-nav__link--main" aria-has-popup="true" aria-expanded="false" aria-controls="SiteNavLabel-{{ child_list_handle }}">
+            {{ link.title }}
+            {% include 'icon-chevron-down' %}
+            <span class="visually-hidden">{{ 'layout.navigation.expand' | t }}</span>
+          </a>
+
+          <div class="site-nav__dropdown" id="SiteNavLabel-{{ child_list_handle }}">
+            <ul>
+              {% for childlink in linklists[child_list_handle].links %}
+                <li {% if childlink.active %}class="site-nav--active"{% endif %}>
+                  <a href="{{ childlink.url }}" class="site-nav__link site-nav__child-link{% if forloop.last %} site-nav__link--last{% endif %}">
+                    {% if collections[childlink.handle].image != blank %}
+                      <img class="" src="{{collections[childlink.handle].image | img_url: 'medium'}}">
+                    {% endif %}
+                    {{ childlink.title | escape }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+      {% else %}
+        <li {% if link.active %}class="site-nav--active"{% endif %}>
+          <a href="{{ link.url }}" class="site-nav__link site-nav__link--main">{{ link.title }}</a>
+        </li>
+      {% endif %}
+  
+    {% endif %}
+  {% endfor %}
+
+  <li class="">
+  	<a href="/cart" class="site-header__cart">
+      <span class="small--hide">My Cart</span>
+      {% include 'icon-cart' %}
+      <div id="CartCount" class="site-header__cart-count">
+        {{ cart.items.size }}
+      </div>
+  	</a>
+  </li>
+</ul>

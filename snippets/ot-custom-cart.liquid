@@ -1,0 +1,174 @@
+<script>
+  {% if cart %}
+  var jsonCart = {{cart | json}};
+  {% endif %}
+  {% if customer %}
+  var customerTags = [{% for tag in customer.tags %}'{{tag}}',{% endfor %}];
+  {% endif %}
+  var styles = "<style>\
+.error{\
+text-align:center;\
+background:red;\
+font-size:24px;\
+color: white;\
+}\
+.inputError{\
+border: 2px solid red;\
+}\
+.errorTooltip{\
+position: absolute;\
+color: white;\
+border: 1px red solid;\
+bottom: 105%;\
+background: red;\
+padding: 5px;\
+}\
+.loadingWrap {\
+position: fixed;\
+top: 0;\
+bottom: 0;\
+left: 0;\
+right: 0;\
+background: rgba(255,255,255,0.5);\
+}\
+.loadingText {\
+position: fixed;\
+top: 50%;\
+left: 50%;\
+font-size: 34px;\
+transform: translateX(-50%) translateY(50%);\
+color: gray;\
+}\
+  </style>";
+
+  var shopCurrency = "{{shop.currency}}";
+  var unavailable = "{{ 'products.product.unavailable' | t }}";
+  if(unavailable.indexOf('translation') > -1){
+    unavailable = "Unavailable";
+  }
+  if (typeof jQuery == 'undefined') {
+    var e = document.createElement('SCRIPT');
+    e.src = '//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js';
+    e.type = 'text/javascript';
+    e.onload = function () {
+      runAfterJquery();
+    };
+    document.head.appendChild(e);
+  } else {
+    runAfterJquery()
+  }
+  function runAfterJquery(){
+    $("body").append(styles);
+    {% if template == 'cart' %}
+    {% if cart.item_count > 0 %}
+    //$("body").append("<span class='loadingText'>Getting prices ...</span>");
+    {% endif %}
+    {% endif %}
+
+    $("[name='checkout']").attr("disabled",true);
+    $('[name="checkout"]').attr("disabled",true);
+	$('#additional-checkout-buttons, .additional-checkout-button').hide();
+    $("[name='updates[]']").change(function () {
+      $("[name='checkout']").attr('disabled', true);
+      $('[name="checkout"]').attr("disabled",true);
+	  $('#additional-checkout-buttons, .additional-checkout-button').hide();
+    });
+
+    //remove custom variant
+    $("option").each(function (){
+      var that = this;
+      if($(that).html().indexOf("and above)") > -1){
+        $(that).remove();
+      }
+    });
+    $('body').on('DOMNodeInserted', '.selector-wrapper', function () {
+      //hide duplicate option
+      var selectList1 = $("select[data-option='option0']");
+      var selectList2 = $("select[data-option='option1']");
+      var selectList3 = $("select[data-option='option2']");
+      if(selectList1.length > 1){
+        for(var i=0; i<selectList1.length;i++){
+          if(i != 1){
+            selectList1[i].closest(".selector-wrapper").remove();
+          }
+        }
+      }
+      if(selectList2.length > 1){
+        for(var i=0; i<selectList2.length;i++){
+          if(i != 1){
+            selectList2[i].closest(".selector-wrapper").remove();
+          }
+        }
+      }
+      if(selectList3.length > 1){
+        for(var i=0; i<selectList3.length;i++){
+          if(i != 1){
+            selectList3[i].closest(".selector-wrapper").remove();
+          }
+        }
+      }
+
+      //remove custom variant
+      $("option").each(function (){
+        var that = this;
+        if($(that).html().indexOf("and above)") > -1){
+          $(that).remove();
+        }
+      });
+      $(".selector-wrapper").each(function(){
+        var that = this;
+        if($(that).find("select option").length <=1){
+          $(that).hide();
+        }
+      });
+    });
+
+    $('body').on('DOMNodeInserted', '.radio-wrapper', function () {
+      //hide duplicate option
+      var selectList1 = $("fieldset[data-option='option0']");
+      var selectList2 = $("fieldset[data-option='option1']");
+      var selectList3 = $("fieldset[data-option='option2']");
+      if(selectList1.length > 1){
+        for(var i=0; i<selectList1.length;i++){
+          if(i != 1){
+            selectList1[i].closest(".radio-wrapper").remove();
+          }
+        }
+      }
+      if(selectList2.length > 1){
+        for(var i=0; i<selectList2.length;i++){
+          if(i != 1){
+            selectList2[i].closest(".radio-wrapper").remove();
+          }
+        }
+      }
+      if(selectList3.length > 1){
+        for(var i=0; i<selectList3.length;i++){
+          if(i != 1){
+            selectList3[i].closest(".radio-wrapper").remove();
+          }
+        }
+      }
+
+      //remove custom variant
+      $("label").each(function (){
+        var that = this;
+        if($(that).html().indexOf("and above)") > -1){
+          $(that).prev().remove();
+          $(that).remove();
+        }
+      });
+      $(".radio-wrapper").each(function(){
+        var that = this;
+        if($(that).find("fieldset input[type='radio']").length <=1){
+          $(that).hide();
+        }
+      });
+    });
+    $(".swatch-element input").each(function(){
+      if($(this).val().indexOf("and above") > -1){
+        $(this).parent().remove();
+      }
+    });
+  }
+</script>

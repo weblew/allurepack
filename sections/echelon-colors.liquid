@@ -1,0 +1,49 @@
+
+<script>
+  	
+  var SECTION_COLORS = {};
+  {% for block in section.blocks %}
+      
+  	  SECTION_COLORS['{{block.settings.item_name}}'] = {{block.settings | json}}
+
+  {% endfor %}
+  
+</script>
+
+
+
+{% schema %}
+  {
+    "name": "Item Colors",
+    "blocks": [
+		{
+          "type": "text_block",
+		  "name": "Color",
+          "settings": [
+            {
+              "type": "text",
+              "id": "item_name",
+              "label": "Name"
+            },
+			{
+              "type": "image_picker",
+              "id": "item_image",
+              "label": "Image"
+            },
+			{
+              "type": "color",
+              "id": "item_color",
+              "label": "Color",
+              "default": "#fff"
+            }
+          ]
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,41 @@
+	<div class="flex-4">
+      <strong>Exterior finish</strong>
+      <div class="">
+        {% if product.metafields.specs.finish %}
+        	{{product.metafields.specs.finish}}
+        {% else %}
+        	{{collectionInfo.metafields.collection.finish | default :'N\A'}}
+        {% endif %}
+      </div>
+    </div>
+    <div class="flex-4">
+      <strong>Outer packaging</strong>
+      <div class="">
+        {% if product.metafields.specs.packaging %}
+        	{{product.metafields.specs.packaging}}
+        {% else %}
+        	{{collectionInfo.metafields.collection.packaging | default :'N\A'}}
+        {% endif %}
+      </div>
+    </div>  
+
+	<div class="flex-4">
+      <strong>Interior material/color</strong>
+      <div class="">
+        {% if product.metafields.specs.material %}
+        	{{product.metafields.specs.material}}
+        {% else %}
+        	{{collectionInfo.metafields.collection.material | default :'N\A'}}
+        {% endif %}
+    </div>
+  </div>
+    <div class="flex-4">
+      <strong>Box Shell</strong>
+      <div class="">
+        {% if product.metafields.specs.shell %}
+        	{{product.metafields.specs.shell}}
+        {% else %}
+        	{{collectionInfo.metafields.collection.shell | default :'N\A'}}
+        {% endif %}
+      </div>
+    </div>  

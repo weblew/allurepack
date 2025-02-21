@@ -1,0 +1,136 @@
+<div class="services-tabs">
+    {% assign first = true %}
+    {% for block in section.blocks  %}
+        {% if block.settings.tab != blank %}
+        
+        <a href="#{{block.settings.tab | handle}}" onclick="changeTab('{{block.settings.tab | handle}}')" class="service-tab {% if first %}active{% endif  %}">{{block.settings.tab}}</a>
+            {% assign first = false %}
+        {% endif %}
+    {% endfor  %}
+</div>
+
+{% assign content_blocks = section.blocks | where:'type','content' %}
+{% assign image_text_blocks = section.blocks | where:'type','image_text' %}
+{% assign faq_blocks = section.blocks | where:'type','faq' %}
+<div class="services-tabs-content">
+    {% for block in content_blocks %}
+        <div id="{{block.settings.tab | handle}}" class="services-tabs-content-inner">
+            {{block.settings.content}}
+        </div>
+    {% endfor  %}
+</div>
+
+<div class="services-tabs-image-text">
+    {% for block in image_text_blocks %}
+        <div id="{{block.settings.tab | handle}}" class="services-tabs-image-text-inner">
+            <div  class="services-tabs-image-text-img">
+                <img src="{{block.settings.image |  img_url: 'master'}}"/>
+            </div>
+            <div class="services-tabs-image-text-content">
+                <div class="services-tabs-image-text-content-inner">
+                {{block.settings.content}}
+            </div>
+            </div>
+        </div>
+    {% endfor  %}
+</div>
+
+<div class="services-tabs-faq">
+    {% for block in faq_blocks %}
+        <div id="{{block.settings.tab | handle}}" class="services-tabs-faq-inner">
+
+            <div class="services-tabs-faq-content">
+                <h3>{{block.settings.title}}</h3>
+                {{block.settings.content}}
+            </div>
+        </div>
+    {% endfor  %}
+</div>
+
+<script>
+    function changeTab(tab){
+        document.querySelectorAll('.service-tab').forEach(elm => {
+            elm.classList.remove('active')
+        })
+        document.querySelector('[href="#'+tab+'"]').classList.add('active')
+    }
+
+    function isInViewport(el) {
+        var rect = el.getBoundingClientRect();
+
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (rect.height || document.documentElement.clientHeight) && /* or $(window).height() */
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+        );
+    }
+
+    
+
+    document.addEventListener("scroll", (event) => {
+        document.querySelectorAll('.service-tab').forEach(elm => {
+            let anchor = elm.href.split('#').pop();
+            let section = document.getElementById(anchor)
+            if(isInViewport(section)){
+                changeTab(anchor)
+            }
+        })
+    });
+</script>
+
+{% schema %}
+    {
+        "name": "Services Tabs",
+        "blocks": [{
+            "type" : "content",
+            "name" : "Content",
+            "settings" :[{
+                "type" : "text",
+                "label":"Tab",
+                "id":"tab"
+            },{
+                "type" : "richtext",
+                "label":"Content",
+                "id":"content"
+            }]
+        },{
+            "type" : "image_text",
+            "name" : "Image & Text",
+            "settings" :[{
+                "type" : "text",
+                "label":"Tab",
+                "id":"tab"
+            },{
+                "type" : "image_picker",
+                "label":"Image",
+                "id":"image"
+            },{
+                "type" : "richtext",
+                "label":"Content",
+                "id":"content"
+            }]
+        },{
+            "type" : "faq",
+            "name" : "FAQ",
+            "settings" :[{
+                "type" : "text",
+                "label":"Tab",
+                "id":"tab"
+            },{
+                "type" : "text",
+                "label":"Title",
+                "id":"title"
+            },{
+                "type" : "richtext",
+                "label":"Content",
+                "id":"content"
+            }]
+        }],
+        "presets": [
+            {
+            "name": "Services Tabs"
+            }
+        ]
+    }
+  {% endschema %}

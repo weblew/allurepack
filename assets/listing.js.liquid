@@ -8,13 +8,16 @@ if(typeof AVAILABLE_COLORS !== 'undefined' && _.isObject(AVAILABLE_COLORS)){
   
   SECTION_COLORS = typeof SECTION_COLORS === 'undefined' ? {} : SECTION_COLORS;
   COLLECTION = typeof COLLECTION === 'undefined' ? {} : COLLECTION;
+  SELECTED_COLOR = '';
   
   _.each(AVAILABLE_COLORS, function(color, val, arr, index){
    
     if(true || color.color !== 'black-white' || COLLECTION.handle === 'pearl-folders'){
         var selected = location.hash ? location.hash.replace('#','') === color.color : AVAILABLE_COLORS_INDEX === 0;   
 
-
+		if(selected){
+			SELECTED_COLOR = color.color
+		}
 
         if(COLLECTION && SECTION_COLORS[COLLECTION.handle +'_'+ color.color] && SECTION_COLORS[COLLECTION.handle +'_'+ color.color].item_image){
             console.log(1111111111)
@@ -35,7 +38,11 @@ if(typeof AVAILABLE_COLORS !== 'undefined' && _.isObject(AVAILABLE_COLORS)){
     }
   });
   
-  
+  if(SELECTED_COLOR){
+	setTimeout(function(){
+		$('.collection-color label[data-color="'+SELECTED_COLOR+'"]').trigger('click')
+	}, 1)
+  }
     
 }
   
@@ -189,7 +196,8 @@ function displayPricesAndColors(e){
     }
 }
 
-function selectCollectionColor(){
+function selectCollectionColor(e){
+
 	var color = $(this).data('color');
     
   	

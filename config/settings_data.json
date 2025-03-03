@@ -4563,7 +4563,7 @@
         "type": "promotion-banner",
         "settings": {
           "enabled": true,
-          "message": "<p>All product prices include import tariffs & taxes. No extra charges will be added at checkout.</p>",
+          "message": "<p>All prices include import tariffs & taxes. No extra charges will be added at checkout.</p>",
           "second_message": "",
           "code_message": "",
           "code": "",

@@ -4513,9 +4513,9 @@
           "fd5a278f-45c0-4c04-8a1e-04a541bc04e8": {
             "type": "color",
             "settings": {
-              "title": "Beige",
+              "title": "Beige / Camel",
               "image": "shopify://shop_images/Woven-Beige.png",
-              "colors": "",
+              "colors": "Beige\nCamel",
               "border": "rgba(0,0,0,0)"
             }
           },

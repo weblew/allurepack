@@ -4,7 +4,7 @@
       COLLECTION = {{collection | json}};
   
   
-  {% if collection.template_suffix == 'displays' %}
+  {% if collection.template_suffix == 'displays' or collection.metafields.custom.use_display_template %}
       COLLECTION = {{collections.displays | json}};
    {%endif%}
   

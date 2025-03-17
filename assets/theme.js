@@ -2416,6 +2416,7 @@ theme.Product = (function() {
 
       $(this.selectors.productThumbImages).on('click', function(evt) {
         evt.preventDefault();
+        
         var $el = $(this);
         var imageSrc = $el.attr('href');
         var zoomSrc = $el.data('zoom');

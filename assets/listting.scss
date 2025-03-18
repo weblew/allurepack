@@ -206,6 +206,19 @@
 	margin-top:10px;
   	display:block;
 }
+.list-view-item-info .list-view-item-reviews{
+  display: flex;
+    align-items: center;
+    gap: 5px;
+    .stars{
+      display: flex;
+      gap: 3px;
+      margin-top: -1px;
+      svg{
+        display: block;
+      }
+    }
+}
 .list-view-item-form strong{
 	margin-bottom: 8px;
     font-size: 16px;

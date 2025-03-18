@@ -239,6 +239,26 @@
   display: block;
 }
 
+.list-view-item-info .list-view-item-reviews {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 5px;
+}
+.list-view-item-info .list-view-item-reviews .stars {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 3px;
+  margin-top: -1px;
+}
+.list-view-item-info .list-view-item-reviews .stars svg {
+  display: block;
+}
+
 .list-view-item-form strong {
   margin-bottom: 8px;
   font-size: 16px;

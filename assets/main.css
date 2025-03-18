@@ -2653,17 +2653,6 @@ select {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
-.shop-by-box-header.boxes-page {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  gap: 20px;
-  margin-bottom: 30px;
-}
 .shop-by-box-header .types {
   position: absolute;
   top: -1px;
@@ -2679,7 +2668,6 @@ select {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   z-index: 999;
-  left: -10px;
 }
 .shop-by-box-header .types.open {
   display: -webkit-box;

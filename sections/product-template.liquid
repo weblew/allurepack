@@ -153,6 +153,12 @@
           <img src="{{ featured_img_src | img_url: product_image_size, scale: product_image_scale }}" alt="{{ featured_img_alt }}" id="FeaturedImage-{{ section.id }}" class="product-featured-img{% if enable_zoom %} js-zoom-enabled{% endif %} lightbox-image">
         
         </div>
+
+        {% if product.metafields.custom.videos != blank %}
+            {% for video in product.metafields.custom.videos.value %}
+              {{ video |  video_tag:controls: true, image_size: "650x" }}
+            {% endfor %}
+        {% endif %}
       </div>
 
       {% if product.images.size > 1 %}

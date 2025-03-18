@@ -229,6 +229,10 @@
   overflow: hidden;
 }
 
+.product-single__photos video {
+  width: 100%;
+}
+
 .thumbnails-wrapper {
   position: relative;
   padding-top: 50px;

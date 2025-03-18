@@ -50,6 +50,10 @@
 .product-single__meta {
   padding: 0 0 0 50px;
 }
+.product-single__meta video {
+  width: 100%;
+  max-width: 550px;
+}
 
 .product-single__title {
   font-size: 34px;
@@ -227,10 +231,6 @@
   outline: none;
   border-radius: 3px;
   overflow: hidden;
-}
-
-.product-single__photos video {
-  width: 100%;
 }
 
 .thumbnails-wrapper {

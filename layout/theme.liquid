@@ -2,9 +2,7 @@
 <!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
 <head>
-{% render 'visually_io_sdk' %}
 
-  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   {% if page.metafields.seo.noindex == 'true' or collection.metafields.seo.noindex == 'true' or product.metafields.seo.noindex == 'true' or page.metafields.seo.noindex == true or collection.metafields.seo.noindex == true or product.metafields.seo.noindex == true %}

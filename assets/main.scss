@@ -2449,6 +2449,13 @@ select {
 .shop-by-box-header{
     margin-bottom:80px;
     flex-wrap: wrap;
+
+    &.boxes-page{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
     
     .types {
         position: absolute;
@@ -2463,6 +2470,7 @@ select {
         display: none;
         flex-wrap:wrap;
         z-index: 999;
+        left: -10px;
         &.open{
             display: flex;
         }
@@ -2499,9 +2507,7 @@ select {
             width: calc(100vw - 30px);
             max-width: 445px;
             row-gap: 50px;
-            left: 0;
-
-            
+            left: 0;            
         }
         .types-page {
             .types{

@@ -5041,7 +5041,7 @@
       },
       "15300375147181448869": {
         "type": "shopify://apps/dr-volume-discounts/blocks/instant-load/253aa77a-a419-4c90-a20b-e9283efcd331",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       }
     }

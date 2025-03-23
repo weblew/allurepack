@@ -47,8 +47,8 @@ function displaySku(){
         price = $('#ProductSelect-product-template option:selected').data('price'),
         originalPrice = $('#ProductSelect-product-template option:selected').data('original-price');
   
-    if($('.product-price__price').length){
-      $('.product-price__price').text(price)
+    if($('#ProductSelect-product-template .product-price__price').length){
+      $('#ProductSelect-product-template .product-price__price').text(price)
     }
   	if($('.product-single__meta .price-placeholder').length){
   		$('.product-single__meta .price-placeholder').text(price)

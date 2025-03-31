@@ -4562,7 +4562,7 @@
       "promotion-banner": {
         "type": "promotion-banner",
         "settings": {
-          "enabled": true,
+          "enabled": false,
           "image": "shopify://shop_images/25-Pop_up_Calander-01.jpg",
           "image_sm": "shopify://shop_images/25-Pop_up_Calander-01.jpg",
           "message": "<p>All prices include import tariffs & taxes. No extra charges will be added at checkout.</p>",

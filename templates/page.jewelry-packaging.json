@@ -138,13 +138,6 @@
       ],
       "settings": {}
     },
-    "b041bc6f-421d-4fbf-800d-324402ef99c1": {
-      "type": "promotion-strip",
-      "settings": {
-        "catalog_title": "Get our 2024 Catalog",
-        "image": "shopify://shop_images/Mask_Group_2.png"
-      }
-    },
     "home_collection_PFkTmW": {
       "type": "home-collection",
       "settings": {
@@ -152,13 +145,20 @@
         "title": "Our Jewelry Packaging Picks",
         "collection": "jewelry-packaging"
       }
+    },
+    "b041bc6f-421d-4fbf-800d-324402ef99c1": {
+      "type": "promotion-strip",
+      "settings": {
+        "catalog_title": "Get our 2024 Catalog",
+        "image": "shopify://shop_images/Mask_Group_2.png"
+      }
     }
   },
   "order": [
     "48734f4d-3cd4-4e12-8ffe-2ba827f9b603",
     "974bcd61-ee1f-4a53-b9fe-942bafc128fb",
     "305f2c42-0eb0-4e74-8329-5f2197f33698",
-    "b041bc6f-421d-4fbf-800d-324402ef99c1",
-    "home_collection_PFkTmW"
+    "home_collection_PFkTmW",
+    "b041bc6f-421d-4fbf-800d-324402ef99c1"
   ]
 }

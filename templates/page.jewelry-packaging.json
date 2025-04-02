@@ -152,12 +152,21 @@
         "catalog_title": "Get our 2024 Catalog",
         "image": "shopify://shop_images/Mask_Group_2.png"
       }
+    },
+    "cta_fNqnQA": {
+      "type": "CTA",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
+      }
     }
   },
   "order": [
     "48734f4d-3cd4-4e12-8ffe-2ba827f9b603",
     "974bcd61-ee1f-4a53-b9fe-942bafc128fb",
     "305f2c42-0eb0-4e74-8329-5f2197f33698",
+    "cta_fNqnQA",
     "home_collection_PFkTmW",
     "b041bc6f-421d-4fbf-800d-324402ef99c1"
   ]

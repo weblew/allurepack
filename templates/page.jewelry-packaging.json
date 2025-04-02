@@ -138,10 +138,18 @@
       ],
       "settings": {}
     },
+    "cta_fNqnQA": {
+      "type": "CTA",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
+      }
+    },
     "home_collection_PFkTmW": {
       "type": "home-collection",
       "settings": {
-        "icon": false,
+        "icon": true,
         "title": "Our Jewelry Packaging Picks",
         "collection": "jewelry-packaging"
       }
@@ -151,14 +159,6 @@
       "settings": {
         "catalog_title": "Get our 2024 Catalog",
         "image": "shopify://shop_images/Mask_Group_2.png"
-      }
-    },
-    "cta_fNqnQA": {
-      "type": "CTA",
-      "settings": {
-        "background_color": "",
-        "top_spacing": 70,
-        "bottom_spacing": 70
       }
     }
   },

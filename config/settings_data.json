@@ -4063,8 +4063,8 @@
           "logo": "shopify://shop_images/AllureJCKweb-01_1.png",
           "show_announcement": false,
           "announcement": "<p><strong>New!</strong> Create your own logo</p><p><a href=\"/pages/custom\" title=\"Custom\">Get Started</a></p>",
-          "holiday_banner": false,
-          "holiday_popup": "shopify://shop_images/24_Fall_Btm_of_email-01.jpg"
+          "holiday_banner": true,
+          "holiday_popup": "shopify://shop_images/25-Pop_up_CalanderFIN-01.jpg"
         }
       },
       "logo-icons": {
@@ -4562,7 +4562,7 @@
       "promotion-banner": {
         "type": "promotion-banner",
         "settings": {
-          "enabled": false,
+          "enabled": true,
           "message": "<p>All prices include import tariffs & taxes. No extra charges will be added at checkout.</p>",
           "second_message": "",
           "code_message": "",

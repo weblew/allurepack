@@ -22,15 +22,15 @@ $(document)
   		initCountDown()
 
 	}).on('click', '.home-grid-item-colors div', function(e){
-    var image = $(this).data('image');
-    console.log(image)
-    if(image){
-        $(this).closest('.home-grid-item').find('.home-grid-item-image').css({
-            'backgroundImage': 'url('+image+')',
-            "backgroundSize" : 'contain'
-        })
+    // var image = $(this).data('image');
+    // console.log(image)
+    // if(image){
+    //     $(this).closest('.home-grid-item').find('.home-grid-item-image').css({
+    //         'backgroundImage': 'url('+image+')',
+    //         "backgroundSize" : 'contain'
+    //     })
       
-    }
+    // }
       
 }).on('click', '.grid-item-colors div', function(e){
     var image = $(this).data('image');
@@ -38,6 +38,38 @@ $(document)
         $(this).closest('.collection-box').find('.img').css({
             'backgroundImage': 'url('+image+')'
         }).addClass('contain');
+    }
+      
+}).on('click', '.home-grid-item-colors div', function(e){
+    var $this = $(this);  
+    var image =  $this.data('image');
+    
+ 
+    if(image){
+      var $img = $this.closest('.home-grid-item').find('.home-grid-item-image img')
+      if($img.length){
+
+        if($this.hasClass('already-clicked')){
+    
+          $img.attr('src', image);
+          
+        }else{
+                    
+          $img.loading().attr('src', image).load(function(){
+                $this.addClass('already-clicked');
+              $img.stopLoading();
+          }).on('error', function(){
+              $img.stopLoading();
+          });
+          
+        }
+      }else{
+        $(this).closest('.home-grid-item').find('.home-grid-item-image').css({
+            'backgroundImage': 'url('+image+')',
+            "backgroundSize" : 'contain'
+        })
+      }
+        
     }
       
 }).on('click', '.btt', function(){

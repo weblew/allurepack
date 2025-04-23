@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "services_hero_3WmNaP": {
@@ -5,7 +14,7 @@
       "settings": {
         "title": "Exclusively yours",
         "sub_title": "Custom Printed Jewelry Boxes & Packaging",
-        "image": "shopify:\/\/shop_images\/Banner_copy1sm.jpg"
+        "image": "shopify://shop_images/Banner_copy1sm.jpg"
       }
     },
     "imprinting_gallery_waAPMX": {
@@ -14,37 +23,37 @@
         "image_kwkB74": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Imprinted_jewelry_boxes_cream_and_teal.jpg"
+            "image": "shopify://shop_images/Imprinted_jewelry_boxes_cream_and_teal.jpg"
           }
         },
         "image_Wxc6dB": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/imprinting-on-red-box.jpg"
+            "image": "shopify://shop_images/imprinting-on-red-box.jpg"
           }
         },
         "image_PgL7LW": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/imprinting-on-brown-box.jpg"
+            "image": "shopify://shop_images/imprinting-on-brown-box.jpg"
           }
         },
         "image_znBwJC": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Glamour.jpg"
+            "image": "shopify://shop_images/Glamour.jpg"
           }
         },
         "image_GcPny6": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/imprinting-on-pouch.jpg"
+            "image": "shopify://shop_images/imprinting-on-pouch.jpg"
           }
         },
         "image_LXUBim": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/imprinting-on-boxes-and-bag-set.jpg"
+            "image": "shopify://shop_images/imprinting-on-boxes-and-bag-set.jpg"
           }
         }
       },
@@ -59,7 +68,7 @@
       "settings": {
         "sub_title": "Accelerating the printing process to",
         "title": "true brand luxury",
-        "content": "<p>Printed jewelry boxes present your brand in a striking manner.  Add a personalized touch that defines you!  <\/p><p>With our in-house custom printing, you can customize your jewelry packaging by imprinting your logo.   We’ll get it to you while the ink is still hot.  Well, almost.<\/p>"
+        "content": "<p>Printed jewelry boxes present your brand in a striking manner.  Add a personalized touch that defines you!  </p><p>With our in-house custom printing, you can customize your jewelry packaging by imprinting your logo.   We’ll get it to you while the ink is still hot.  Well, almost.</p>"
       }
     },
     "imprinting_video_YFm43e": {
@@ -77,8 +86,8 @@
           "disabled": true,
           "settings": {
             "title": "Add Stamp",
-            "content": "<p>Click <strong>Add Stamp<\/strong> to your selected packaging and choose where you want the logo placed.<\/p>",
-            "icon": "shopify:\/\/shop_images\/add_1_1.svg"
+            "content": "<p>Click <strong>Add Stamp</strong> to your selected packaging and choose where you want the logo placed.</p>",
+            "icon": "shopify://shop_images/add_1_1.svg"
           }
         },
         "icon_text_GjdYte": {
@@ -86,8 +95,8 @@
           "disabled": true,
           "settings": {
             "title": "Your logo",
-            "content": "<p>Upload your logo or select from a previously used logo.<br\/>You can also design a custom logo with our <a href=\"\/pages\/jewelry-logo-maker\" title=\"Design your Jewelry Logo with the Jewelry Packaging Experts\">Logo Design tool.<\/a><\/p>",
-            "icon": "shopify:\/\/shop_images\/diamond_4_1.svg"
+            "content": "<p>Upload your logo or select from a previously used logo.<br/>You can also design a custom logo with our <a href=\"/pages/jewelry-logo-maker\" title=\"Design your Jewelry Logo with the Jewelry Packaging Experts\">Logo Design tool.</a></p>",
+            "icon": "shopify://shop_images/diamond_4_1.svg"
           }
         },
         "icon_text_iM8HWY": {
@@ -95,8 +104,8 @@
           "disabled": true,
           "settings": {
             "title": "Color & Finish",
-            "content": "<p>Choose the color that fits your brand. Choose from 20 color options. <br\/>We offer foil printing in Metallic and Gloss colors. <br\/><a href=\"#\" title=\"#\">Available Colors<\/a><\/p>",
-            "icon": "shopify:\/\/shop_images\/swatches_1.svg"
+            "content": "<p>Choose the color that fits your brand. Choose from 20 color options. <br/>We offer foil printing in Metallic and Gloss colors. <br/><a href=\"#\" title=\"#\">Available Colors</a></p>",
+            "icon": "shopify://shop_images/swatches_1.svg"
           }
         }
       },
@@ -108,8 +117,8 @@
       ],
       "settings": {
         "title": "the printing process",
-        "content": "<p>We believe that the shopping experience should be as elegant and refined as the jewelry that goes inside them. Our commitment to excellence and efficiency extends beyond manufacturing and production.<\/p>",
-        "image": "shopify:\/\/shop_images\/Mask_Group_1_9482be49-f14b-4724-936e-62ba7d488834.png",
+        "content": "<p>We believe that the shopping experience should be as elegant and refined as the jewelry that goes inside them. Our commitment to excellence and efficiency extends beyond manufacturing and production.</p>",
+        "image": "shopify://shop_images/Mask_Group_1_9482be49-f14b-4724-936e-62ba7d488834.png",
         "slider": false,
         "reverse": false
       }
@@ -127,16 +136,16 @@
           "type": "icon-text",
           "settings": {
             "title": "Visual Diagrams ",
-            "content": "<p>Our design team will create a diagram showing the layout of your packaging with the size and placement of your logo. <\/p>",
-            "icon": "shopify:\/\/shop_images\/pencil_1.svg"
+            "content": "<p>Our design team will create a diagram showing the layout of your packaging with the size and placement of your logo. </p>",
+            "icon": "shopify://shop_images/pencil_1.svg"
           }
         },
         "icon_text_DabNUP": {
           "type": "icon-text",
           "settings": {
             "title": "Review & Approve",
-            "content": "<p>We collaborate to ensure satisfaction.<br\/>We will accommodate any changes until you see your dream outlined on paper.<\/p>",
-            "icon": "shopify:\/\/shop_images\/clipboard-check_1.svg"
+            "content": "<p>We collaborate to ensure satisfaction.<br/>We will accommodate any changes until you see your dream outlined on paper.</p>",
+            "icon": "shopify://shop_images/clipboard-check_1.svg"
           }
         },
         "devider_eDKHwh": {
@@ -153,20 +162,20 @@
           "type": "icon-text",
           "settings": {
             "title": "Creating your plates",
-            "content": "<p>Once you sign off on the design, we get to work manufacturing your plate.  That’s an actual metal block with your logo etched on! <\/p><p><a href=\"#\" title=\"#\">New plate pricing<\/a><\/p>",
-            "icon": "shopify:\/\/shop_images\/24_Stamp_Office_Office_Stamp.svg"
+            "content": "<p>Once you sign off on the design, we get to work manufacturing your plate.  That’s an actual metal block with your logo etched on! </p><p><a href=\"#\" title=\"#\">New plate pricing</a></p>",
+            "icon": "shopify://shop_images/24_Stamp_Office_Office_Stamp.svg"
           }
         },
         "slide_iyeeNp": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/person-receiving-logo-draft.jpg"
+            "image": "shopify://shop_images/person-receiving-logo-draft.jpg"
           }
         },
         "slide_gWyPGb": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/metal-plate-with-logo-for-printing.jpg"
+            "image": "shopify://shop_images/metal-plate-with-logo-for-printing.jpg"
           }
         }
       },
@@ -200,46 +209,46 @@
           "type": "icon-text",
           "settings": {
             "title": "Expediting every project",
-            "content": "<p>Highly efficient, our hot stamp printing service means less wait time for your branded jewelry boxes and packaging. <br\/>Printing orders typically ship within a week (excluding holiday seasons).<\/p>",
-            "icon": "shopify:\/\/shop_images\/setting_1.svg"
+            "content": "<p>Highly efficient, our hot stamp printing service means less wait time for your branded jewelry boxes and packaging. <br/>Printing orders typically ship within a week (excluding holiday seasons).</p>",
+            "icon": "shopify://shop_images/setting_1.svg"
           }
         },
         "icon_text_JbRzpY": {
           "type": "icon-text",
           "settings": {
             "title": "100% Transparency",
-            "content": "<p>With updates every step of the way, you’ll be able to trace your order as it moves along.<\/p><p>You’ll know when it enters the printing queue, when it prints, and ultimately, when it ships.<\/p>",
-            "icon": "shopify:\/\/shop_images\/notification-bell_1.svg"
+            "content": "<p>With updates every step of the way, you’ll be able to trace your order as it moves along.</p><p>You’ll know when it enters the printing queue, when it prints, and ultimately, when it ships.</p>",
+            "icon": "shopify://shop_images/notification-bell_1.svg"
           }
         },
         "slide_7EWNrM": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/image_132.png"
+            "image": "shopify://shop_images/image_132.png"
           }
         },
         "slide_FtgwFR": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/pouch-being-imprinted-in-pink.jpg"
+            "image": "shopify://shop_images/pouch-being-imprinted-in-pink.jpg"
           }
         },
         "slide_VWUN3i": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/inserting-imprinted-box-tab.jpg"
+            "image": "shopify://shop_images/inserting-imprinted-box-tab.jpg"
           }
         },
         "slide_wkgftH": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/receiving-printing-update-on-phone.jpg"
+            "image": "shopify://shop_images/receiving-printing-update-on-phone.jpg"
           }
         },
         "slide_MCr8qx": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/printed-bags-ready-to-be-shipped.jpg"
+            "image": "shopify://shop_images/printed-bags-ready-to-be-shipped.jpg"
           }
         }
       },
@@ -267,32 +276,32 @@
           "type": "icon-text",
           "settings": {
             "title": "Be Dominant",
-            "content": "<p>Claiming your space is certain to give you an edge.<\/p><p>Did you know that your jewelry gift boxes are prime real estate? Imprinting your logo there can be a dominating factor.<\/p>",
-            "icon": "shopify:\/\/shop_images\/Group_109.svg"
+            "content": "<p>Claiming your space is certain to give you an edge.</p><p>Did you know that your jewelry gift boxes are prime real estate? Imprinting your logo there can be a dominating factor.</p>",
+            "icon": "shopify://shop_images/Group_109.svg"
           }
         },
         "icon_text_b9FEVz": {
           "type": "icon-text",
           "settings": {
             "title": "Gain Brand Confidence",
-            "content": "<p>Building brand credibility in an industry associated with trust is a top priority.<\/p><p>With your name actively visible, you’re certifying your brand!<\/p>",
-            "icon": "shopify:\/\/shop_images\/shield-check_1.svg"
+            "content": "<p>Building brand credibility in an industry associated with trust is a top priority.</p><p>With your name actively visible, you’re certifying your brand!</p>",
+            "icon": "shopify://shop_images/shield-check_1.svg"
           }
         },
         "icon_text_yy6ycP": {
           "type": "icon-text",
           "settings": {
             "title": "Boost Customer Appreciation",
-            "content": "<p>When thought and consideration go into the box you are handing the customer, the customer feels you genuinely value them.<\/p><p>Custom logo jewelry boxes express your dedication in a big way.<\/p>",
-            "icon": "shopify:\/\/shop_images\/rating_1.svg"
+            "content": "<p>When thought and consideration go into the box you are handing the customer, the customer feels you genuinely value them.</p><p>Custom logo jewelry boxes express your dedication in a big way.</p>",
+            "icon": "shopify://shop_images/rating_1.svg"
           }
         },
         "icon_text_ify4ze": {
           "type": "icon-text",
           "settings": {
             "title": "Add Elements of Luxury",
-            "content": "<p>With our hot stamping technology, we engrave luxury you can feel to the touch.<\/p><p>This printing method allows for printing metallic colors that actually look metallic, not ink based. Your packaging will be graced with a smooth sheen that elevates the jewelry within.<\/p>",
-            "icon": "shopify:\/\/shop_images\/diamond_4_1_fc05472c-eb18-42f3-ab08-6875427666db.svg"
+            "content": "<p>With our hot stamping technology, we engrave luxury you can feel to the touch.</p><p>This printing method allows for printing metallic colors that actually look metallic, not ink based. Your packaging will be graced with a smooth sheen that elevates the jewelry within.</p>",
+            "icon": "shopify://shop_images/diamond_4_1_fc05472c-eb18-42f3-ab08-6875427666db.svg"
           }
         }
       },
@@ -304,16 +313,16 @@
       ],
       "settings": {
         "title": "Imprint your mark",
-        "content": "<p><a href=\"\/pages\/jewelry-boxes\" title=\"Jewelry Gift Boxes\">Jewelry Boxes<\/a>, <a href=\"https:\/\/allurepack.com\/pages\/gift-bags\" title=\"gift bags\">Gift Bags<\/a>, or <a href=\"\/pages\/jewelry-pouches\" title=\"Jewelry Pouches\">Pouches<\/a><\/p>",
+        "content": "<p>Shop <a href=\"/pages/jewelry-boxes\" title=\"Jewelry Gift Boxes\">Customized Jewelry Boxes</a> </p><p> <a href=\"/pages/custom-gift-bags\" title=\"Custom Gift Bags\">Customized Gift Bags </a>or <a href=\"/pages/jewelry-pouches\" title=\"Jewelry Pouches\">Customized Pouches</a></p>",
         "cta_title": "Shop jewelry packaging",
-        "link": "shopify:\/\/pages\/jewelry-packaging"
+        "link": "shopify://pages/jewelry-packaging"
       }
     },
     "b041bc6f-421d-4fbf-800d-324402ef99c1": {
       "type": "promotion-strip",
       "settings": {
         "catalog_title": "Get our 2024 Catalog",
-        "image": "shopify:\/\/shop_images\/Mask_Group_2.png"
+        "image": "shopify://shop_images/Mask_Group_2.png"
       }
     }
   },

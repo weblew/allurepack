@@ -16,9 +16,29 @@
         "title": "Jewelry Pouches & Fabric Bags",
         "menu": "jewelry-pouches"
       }
+    },
+    "cta_xciAMY": {
+      "type": "CTA",
+      "name": "Call to action",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
+      }
+    },
+    "home_collection_aWj8k4": {
+      "type": "home-collection",
+      "name": "Featured collection",
+      "settings": {
+        "icon": true,
+        "title": "Our Jewelry Pouch Picks",
+        "collection": "jewelry-pouches-picks"
+      }
     }
   },
   "order": [
-    "pouches_bags_TaGnz8"
+    "pouches_bags_TaGnz8",
+    "cta_xciAMY",
+    "home_collection_aWj8k4"
   ]
 }

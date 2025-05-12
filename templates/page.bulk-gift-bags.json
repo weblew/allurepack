@@ -9,9 +9,9 @@
  */
 {
   "sections": {
-    "pouches_bags_TaGnz8": {
+    "pouches_bags_tNcgGm": {
       "type": "pouches-bags",
-      "name": "Pouches & Bags",
+      "name": "Collection Landing Grid",
       "settings": {
         "title": "Bulk Gift Bags",
         "menu": "gift-bags"
@@ -33,7 +33,7 @@
     }
   },
   "order": [
-    "pouches_bags_TaGnz8",
+    "pouches_bags_tNcgGm",
     "bottom_content_rzKg9m",
     "home_collection_aWj8k4"
   ]

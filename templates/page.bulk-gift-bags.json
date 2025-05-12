@@ -17,6 +17,11 @@
         "menu": "gift-bags"
       }
     },
+    "bottom_content_rzKg9m": {
+      "type": "bottom-content",
+      "name": "Bottom Content",
+      "settings": {}
+    },
     "home_collection_aWj8k4": {
       "type": "home-collection",
       "name": "Featured collection",
@@ -25,16 +30,11 @@
         "title": "Our Jewelry Pouch Picks",
         "collection": "jewelry-pouches-picks"
       }
-    },
-    "bottom_content_rzKg9m": {
-      "type": "bottom-content",
-      "name": "Bottom Content",
-      "settings": {}
     }
   },
   "order": [
     "pouches_bags_TaGnz8",
-    "home_collection_aWj8k4",
-    "bottom_content_rzKg9m"
+    "bottom_content_rzKg9m",
+    "home_collection_aWj8k4"
   ]
 }

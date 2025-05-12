@@ -9,13 +9,18 @@
  */
 {
   "sections": {
-    "pouches_bags_TaGnz8": {
+    "pouches_bags_iNU9DX": {
       "type": "pouches-bags",
-      "name": "Pouches & Bags",
+      "name": "Collection Landing Grid",
       "settings": {
         "title": "Jewelry Pouches & Fabric Bags",
         "menu": "jewelry-pouches"
       }
+    },
+    "bottom_content_Ny34Ti": {
+      "type": "bottom-content",
+      "name": "Bottom Content",
+      "settings": {}
     },
     "home_collection_aWj8k4": {
       "type": "home-collection",
@@ -25,15 +30,10 @@
         "title": "Our Jewelry Pouch Picks",
         "collection": "jewelry-pouches-picks"
       }
-    },
-    "bottom_content_Ny34Ti": {
-      "type": "bottom-content",
-      "name": "Bottom Content",
-      "settings": {}
     }
   },
   "order": [
-    "pouches_bags_TaGnz8",
+    "pouches_bags_iNU9DX",
     "bottom_content_Ny34Ti",
     "home_collection_aWj8k4"
   ]

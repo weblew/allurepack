@@ -13,9 +13,14 @@
       "type": "pouches-bags",
       "name": "Collection Landing Grid",
       "settings": {
-        "title": "Bulk Gift Bags",
-        "menu": "gift-bags"
+        "title": "Jewelry Store Supplies",
+        "menu": ""
       }
+    },
+    "supplies_types_XkxgKe": {
+      "type": "supplies_types",
+      "name": "Supplies Types",
+      "settings": {}
     },
     "bottom_content_rzKg9m": {
       "type": "bottom-content",
@@ -34,6 +39,7 @@
   },
   "order": [
     "pouches_bags_tNcgGm",
+    "supplies_types_XkxgKe",
     "bottom_content_rzKg9m",
     "home_collection_aWj8k4"
   ]

@@ -25,10 +25,16 @@
         "title": "Our Jewelry Pouch Picks",
         "collection": "jewelry-pouches-picks"
       }
+    },
+    "bottom_content_rzKg9m": {
+      "type": "bottom-content",
+      "name": "Bottom Content",
+      "settings": {}
     }
   },
   "order": [
     "pouches_bags_TaGnz8",
-    "home_collection_aWj8k4"
+    "home_collection_aWj8k4",
+    "bottom_content_rzKg9m"
   ]
 }

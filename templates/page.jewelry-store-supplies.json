@@ -11,16 +11,175 @@
   "sections": {
     "pouches_bags_tNcgGm": {
       "type": "pouches-bags",
+      "blocks": {
+        "text_block_4MEqPL": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/3RepairE.jpg",
+            "title": "Jewelry Repair Envelopes",
+            "tags": "",
+            "link": "shopify://collections/repair-envelopes"
+          }
+        },
+        "text_block_f4bqUn": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Cleaning_Supplies2.jpg",
+            "title": "Jewelry Cleaning Supplies",
+            "tags": "",
+            "link": "shopify://collections/jewelry-cleaning-supplies"
+          }
+        },
+        "text_block_FaqnHG": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/set-of-6-acid-testing-solutions-with-stone-testing-acids-allurepack-960765.jpg",
+            "title": "Testing Acids",
+            "tags": "",
+            "link": "shopify://collections/gold-testing-acid"
+          }
+        },
+        "text_block_mX6diJ": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Loups_multi.jpg",
+            "title": "Jeweler's loupes and magnifiers",
+            "tags": "",
+            "link": "shopify://collections/jewelers-loupe"
+          }
+        },
+        "text_block_eAtUcd": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Ring_sizer_multi.jpg",
+            "title": "Ring sizers",
+            "tags": "",
+            "link": "shopify://collections/ring-sizing-tools"
+          }
+        },
+        "text_block_YQ9xzX": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Plastic_Tray_Collection_copy-black.jpg",
+            "title": "Storage Trays",
+            "tags": "",
+            "link": "shopify://collections/storage-trays-1"
+          }
+        },
+        "text_block_UjEiHb": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Mirror_Group_Pic.png",
+            "title": "Mirrors",
+            "tags": "",
+            "link": "shopify://collections/counter-mirrors"
+          }
+        },
+        "text_block_mmpe67": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Tags_multi.jpg",
+            "title": "Jewelry Price Tags",
+            "tags": "",
+            "link": "shopify://collections/jewelry-price-tags"
+          }
+        },
+        "text_block_w3tPPJ": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Zip_lock_bags_finalA.jpg",
+            "title": "Zip lock bags",
+            "tags": "",
+            "link": "shopify://collections/zip-lock-bags"
+          }
+        },
+        "text_block_FzXwMp": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Scalesandmore.jpg",
+            "title": "Scales & Testers",
+            "tags": "",
+            "link": "shopify://collections/scales-testers"
+          }
+        },
+        "text_block_3i8adP": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/group_lights.jpg",
+            "title": "Lighting",
+            "tags": "",
+            "link": "shopify://collections/lighting"
+          }
+        },
+        "text_block_37zB8x": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Anti_Tarnish_multi.jpg",
+            "title": "Anti Tarnish",
+            "tags": "",
+            "link": "shopify://collections/anti-tarnish"
+          }
+        },
+        "text_block_dg46VW": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Mailer_Assorted_copy.jpg",
+            "title": "Shipping Mailers & Boxes",
+            "tags": "",
+            "link": "https://allurepack.com/collections/jewelry-shipping-packaging"
+          }
+        },
+        "text_block_x6Hme4": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/showcasetray.jpg",
+            "title": "Showcase Trays",
+            "tags": "showcase trays various colors",
+            "link": "https://allurepack.com/collections/jewelry-trays"
+          }
+        },
+        "text_block_RCiQb8": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/lightweighttray.jpg",
+            "title": "Light Weight Trays",
+            "tags": "",
+            "link": "shopify://collections/light-weight-trays"
+          }
+        },
+        "text_block_aiWRgV": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Jewelry-display-pads_jpg.jpg",
+            "title": "Jewelry Display Pads",
+            "tags": "",
+            "link": "shopify://collections/jewelry-display-pads"
+          }
+        }
+      },
+      "block_order": [
+        "text_block_4MEqPL",
+        "text_block_f4bqUn",
+        "text_block_FaqnHG",
+        "text_block_mX6diJ",
+        "text_block_eAtUcd",
+        "text_block_YQ9xzX",
+        "text_block_UjEiHb",
+        "text_block_mmpe67",
+        "text_block_w3tPPJ",
+        "text_block_FzXwMp",
+        "text_block_3i8adP",
+        "text_block_37zB8x",
+        "text_block_dg46VW",
+        "text_block_x6Hme4",
+        "text_block_RCiQb8",
+        "text_block_aiWRgV"
+      ],
       "name": "Collection Landing Grid",
       "settings": {
         "title": "Jewelry Store Supplies",
         "menu": ""
       }
-    },
-    "supplies_types_XkxgKe": {
-      "type": "supplies_types",
-      "name": "Supplies Types",
-      "settings": {}
     },
     "bottom_content_rzKg9m": {
       "type": "bottom-content",
@@ -39,7 +198,6 @@
   },
   "order": [
     "pouches_bags_tNcgGm",
-    "supplies_types_XkxgKe",
     "bottom_content_rzKg9m",
     "home_collection_aWj8k4"
   ]

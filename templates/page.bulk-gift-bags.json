@@ -30,11 +30,21 @@
         "title": "Leading Luxury Bags",
         "collection": "bag-picks"
       }
+    },
+    "cta_8Vdhyd": {
+      "type": "CTA",
+      "name": "Call to action",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
+      }
     }
   },
   "order": [
     "pouches_bags_tNcgGm",
     "bottom_content_rzKg9m",
-    "home_collection_aWj8k4"
+    "home_collection_aWj8k4",
+    "cta_8Vdhyd"
   ]
 }

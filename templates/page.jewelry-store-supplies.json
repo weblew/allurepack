@@ -194,11 +194,21 @@
         "title": "Popular Retail Jewelry Supplies",
         "collection": "popular-supplies"
       }
+    },
+    "cta_YHexpG": {
+      "type": "CTA",
+      "name": "Call to action",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
+      }
     }
   },
   "order": [
     "pouches_bags_tNcgGm",
     "bottom_content_rzKg9m",
-    "home_collection_r8dxwB"
+    "home_collection_r8dxwB",
+    "cta_YHexpG"
   ]
 }

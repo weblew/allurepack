@@ -185,20 +185,10 @@
       "type": "bottom-content",
       "name": "Bottom Content",
       "settings": {}
-    },
-    "home_collection_aWj8k4": {
-      "type": "home-collection",
-      "name": "Featured collection",
-      "settings": {
-        "icon": true,
-        "title": "Our Jewelry Pouch Picks",
-        "collection": "jewelry-pouches-picks"
-      }
     }
   },
   "order": [
     "pouches_bags_tNcgGm",
-    "bottom_content_rzKg9m",
-    "home_collection_aWj8k4"
+    "bottom_content_rzKg9m"
   ]
 }

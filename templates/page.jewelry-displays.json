@@ -147,7 +147,7 @@
       ],
       "name": "Collection Landing Grid",
       "settings": {
-        "title": "Bulk Gift Bags",
+        "title": "{{ page.title }}",
         "menu": ""
       }
     },

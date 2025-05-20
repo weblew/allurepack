@@ -11,16 +11,186 @@
   "sections": {
     "pouches_bags_tNcgGm": {
       "type": "pouches-bags",
+      "blocks": {
+        "text_block_rXRzkh": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/rings.jpg",
+            "title": "Ring Displays",
+            "tags": "",
+            "link": "shopify://collections/rings-display"
+          }
+        },
+        "text_block_zFEwKk": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/earrings.jpg",
+            "title": "Earring Displays",
+            "tags": "",
+            "link": "shopify://collections/earrings-display"
+          }
+        },
+        "text_block_atj8UK": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/necklaces.jpg",
+            "title": "Neck Displays",
+            "tags": "",
+            "link": "shopify://collections/necks-display"
+          }
+        },
+        "text_block_fwnKMw": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/pendants.jpg",
+            "title": "Pendant Displays",
+            "tags": "",
+            "link": "shopify://collections/pendants-display"
+          }
+        },
+        "text_block_rwdGFJ": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/chains.jpg",
+            "title": "Chain Displays",
+            "tags": "",
+            "link": "shopify://collections/chains-display"
+          }
+        },
+        "text_block_4CVYrV": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/bracelet.jpg",
+            "title": "Bracelet Displays",
+            "tags": "",
+            "link": "shopify://collections/bracelets-display"
+          }
+        },
+        "text_block_zf6yMA": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/watches.jpg",
+            "title": "Bangle & Watch Stands",
+            "tags": "",
+            "link": "shopify://collections/bangles-watches-display"
+          }
+        },
+        "text_block_Um3H7R": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Jewelry-display-pads_jpg.jpg",
+            "title": "Display Pads",
+            "tags": "",
+            "link": "shopify://collections/jewelry-display-pads"
+          }
+        },
+        "text_block_8xBXg8": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/showcasetray.jpg",
+            "title": "Showcase Trays",
+            "tags": "",
+            "link": "shopify://collections/jewelry-trays"
+          }
+        },
+        "text_block_PCqYnT": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/plastic-tray-collection-copy-black.jpg",
+            "title": "Storage Trays",
+            "tags": "",
+            "link": "shopify://collections/storage-trays-1"
+          }
+        },
+        "text_block_PF9jzf": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/lightweighttray.jpg",
+            "title": "Lightweight Trays",
+            "tags": "",
+            "link": "shopify://collections/light-weight-trays"
+          }
+        },
+        "text_block_izz9Gt": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/bases-risers.jpg",
+            "title": "Jewelry Display Risers",
+            "tags": "",
+            "link": "shopify://collections/jewelry-display-risers"
+          }
+        },
+        "text_block_jjrdAR": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/1549653482293__DSET12-GR-base4.png",
+            "title": "Showcase Sets",
+            "tags": "",
+            "link": "shopify://pages/showcase-display-sets"
+          }
+        }
+      },
+      "block_order": [
+        "text_block_rXRzkh",
+        "text_block_zFEwKk",
+        "text_block_atj8UK",
+        "text_block_fwnKMw",
+        "text_block_rwdGFJ",
+        "text_block_4CVYrV",
+        "text_block_zf6yMA",
+        "text_block_Um3H7R",
+        "text_block_8xBXg8",
+        "text_block_PCqYnT",
+        "text_block_PF9jzf",
+        "text_block_izz9Gt",
+        "text_block_jjrdAR"
+      ],
       "name": "Collection Landing Grid",
       "settings": {
         "title": "Bulk Gift Bags",
-        "menu": "gift-bags"
+        "menu": ""
+      }
+    },
+    "allue_image_text_dkdCGn": {
+      "type": "allue-image-text",
+      "blocks": {
+        "item_ygGzb8": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/image_81_1_feda787a-d8cd-431d-b9ef-f9c6f0e5f092.png",
+            "content": "<h3><strong>Custom Jewelry Boxes & Displays</strong></h3><p>Put a personalized touch on every box, bag, tray and display with complete customization services by Allure</p>",
+            "button1text": "Get inspired",
+            "button1Url": "",
+            "button1Class": "btn-gold-light",
+            "button2text": "Create yours",
+            "button2Url": "",
+            "button2Class": "btn-gold"
+          }
+        }
+      },
+      "block_order": [
+        "item_ygGzb8"
+      ],
+      "name": "Image Text",
+      "settings": {
+        "sub_title": "",
+        "title": "",
+        "css_class": "custom-displays-banner"
       }
     },
     "bottom_content_rzKg9m": {
       "type": "bottom-content",
       "name": "Bottom Content",
       "settings": {}
+    },
+    "cta_Hy8MLq": {
+      "type": "CTA",
+      "name": "Call to action",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
+      }
     },
     "home_collection_aWj8k4": {
       "type": "home-collection",
@@ -43,7 +213,9 @@
   },
   "order": [
     "pouches_bags_tNcgGm",
+    "allue_image_text_dkdCGn",
     "bottom_content_rzKg9m",
+    "cta_Hy8MLq",
     "home_collection_aWj8k4",
     "cta_8Vdhyd"
   ]

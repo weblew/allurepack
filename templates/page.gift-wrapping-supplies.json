@@ -124,11 +124,21 @@
         "title": "Gift Packaging Supplies to sweeten the deal",
         "collection": "gift-packaging-picks"
       }
+    },
+    "cta_aeAxFx": {
+      "type": "CTA",
+      "name": "Call to action",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
+      }
     }
   },
   "order": [
     "pouches_bags_tNcgGm",
     "bottom_content_rzKg9m",
-    "home_collection_8dX9di"
+    "home_collection_8dX9di",
+    "cta_aeAxFx"
   ]
 }

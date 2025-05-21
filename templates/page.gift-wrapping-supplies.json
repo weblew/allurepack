@@ -115,10 +115,20 @@
       "type": "bottom-content",
       "name": "Bottom Content",
       "settings": {}
+    },
+    "home_collection_8dX9di": {
+      "type": "home-collection",
+      "name": "Featured collection",
+      "settings": {
+        "icon": true,
+        "title": "Gift Packaging Supplies to sweeten the deal",
+        "collection": "gift-packaging-picks"
+      }
     }
   },
   "order": [
     "pouches_bags_tNcgGm",
-    "bottom_content_rzKg9m"
+    "bottom_content_rzKg9m",
+    "home_collection_8dX9di"
   ]
 }

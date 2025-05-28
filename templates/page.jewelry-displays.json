@@ -145,7 +145,6 @@
         "text_block_izz9Gt",
         "text_block_jjrdAR"
       ],
-      "name": "Collection Landing Grid",
       "settings": {
         "title": "{{ page.title }}",
         "menu": ""
@@ -171,7 +170,6 @@
       "block_order": [
         "item_ygGzb8"
       ],
-      "name": "Image Text",
       "settings": {
         "sub_title": "",
         "title": "",
@@ -180,13 +178,22 @@
     },
     "bottom_content_rzKg9m": {
       "type": "bottom-content",
-      "name": "Bottom Content",
       "settings": {}
+    },
+    "home_collection_PRAKM3": {
+      "type": "home-collection",
+      "name": "Featured collection",
+      "settings": {
+        "icon": true,
+        "title": "Top Selling Jewelry Displays",
+        "collection": "jewelry-display-picks"
+      }
     }
   },
   "order": [
     "pouches_bags_tNcgGm",
     "allue_image_text_dkdCGn",
-    "bottom_content_rzKg9m"
+    "bottom_content_rzKg9m",
+    "home_collection_PRAKM3"
   ]
 }

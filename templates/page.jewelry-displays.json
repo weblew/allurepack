@@ -182,11 +182,19 @@
     },
     "home_collection_PRAKM3": {
       "type": "home-collection",
-      "name": "Featured collection",
       "settings": {
         "icon": true,
         "title": "Top Selling Jewelry Displays",
         "collection": "jewelry-display-picks"
+      }
+    },
+    "cta_DPBLFR": {
+      "type": "CTA",
+      "name": "Call to action",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
       }
     }
   },
@@ -194,6 +202,7 @@
     "pouches_bags_tNcgGm",
     "allue_image_text_dkdCGn",
     "bottom_content_rzKg9m",
-    "home_collection_PRAKM3"
+    "home_collection_PRAKM3",
+    "cta_DPBLFR"
   ]
 }

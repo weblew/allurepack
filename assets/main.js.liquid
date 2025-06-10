@@ -21,18 +21,7 @@ $(document)
   
   		initCountDown()
 
-	}).on('click', '.home-grid-item-colors div', function(e){
-    // var image = $(this).data('image');
-    // console.log(image)
-    // if(image){
-    //     $(this).closest('.home-grid-item').find('.home-grid-item-image').css({
-    //         'backgroundImage': 'url('+image+')',
-    //         "backgroundSize" : 'contain'
-    //     })
-      
-    // }
-      
-}).on('click', '.grid-item-colors div', function(e){
+	}).on('click', '.grid-item-colors div', function(e){
     var image = $(this).data('image');
     if(image){
         $(this).closest('.collection-box').find('.img').css({
@@ -43,7 +32,9 @@ $(document)
 }).on('click', '.home-grid-item-colors div', function(e){
     var $this = $(this);  
     var image =  $this.data('image');
-    
+    var variant =  $this.data('variant');
+
+    $this.addClass('selected').siblings().removeClass('selected')
  
     if(image){
       var $img = $this.closest('.home-grid-item').find('.home-grid-item-image img')
@@ -70,6 +61,10 @@ $(document)
         })
       }
         
+    }
+
+    if(variant){
+      $this.closest('form').find('[name="id"]').val(variant)
     }
       
 }).on('click', '.btt', function(){
@@ -158,7 +153,6 @@ function addItemToCart(e){
   	if($(this).hasClass('adding')){
     	return;
     }
-
   
     var $this = $(this),
         product = $(this).closest('[data-id]'),
@@ -181,7 +175,7 @@ function addItemToCart(e){
         noneLocalMessage = '{{ 'products.product.out_of_stock_none_local_message_html' | t }}',
         noneLocalMessagePartialQty = '{{ 'products.product.out_of_stock_none_local_message_partial_qty_html' | t }}';
   
-    
+   
     var itemData = new FormData($this[0]);
     id = Number(id);
     quantity = Number(quantity);
@@ -443,8 +437,12 @@ function getMinInventoryQuantity(variant, groupItems){
                 return mainVariant.option1 === variant.option1 && mainVariant.option2 === variant.option2 && mainVariant.option3 === variant.option3
             }),
             selectedInsertVariant = groupItems.insert[0];
-      	qtys.push(selectedMainVariant.inventory_quantity)
-        qtys.push(selectedInsertVariant.inventory_quantity)
+        if(selectedMainVariant){
+          qtys.push(selectedMainVariant.inventory_quantity)
+        }
+        if(selectedInsertVariant){
+          qtys.push(selectedInsertVariant.inventory_quantity)
+        }
     }else{
     	qtys.push(variant.inventory_quantity)
     }   	

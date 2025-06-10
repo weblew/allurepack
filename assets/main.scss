@@ -2790,9 +2790,16 @@ select {
       height: 0;
       padding-top: 80%;
       background-size: contain;
+      position: relative;
+      img{
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
     }
     .home-collection .home-grid-item-image{
         background-size: cover;
+        height: 0;
     }
     .home-grid-item-colors{
       margin-top: 20px;

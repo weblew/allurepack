@@ -262,10 +262,12 @@ function changeImage(){
 }
 
 function quantityChange(){
+	
 	var $this = $(this),        
-        item = $this.closest('.list-view-item').length ? $this.closest('.list-view-item') :  $this.closest('.product-detail'),
-        color = item.find('input[type=radio]:checked').data('color'),
+        item = $this.closest('.list-view-item').length ? $this.closest('.list-view-item') : $this.closest('.home-grid-item-inner') ? $this.closest('.home-grid-item-inner') : $this.closest('.product-detail'),
+		color = item.find('input[type=radio]:checked').data('color') || item.find('[data-color].selected').data('color'),
     	options = item.length ? PRODUCTS[item.data('id')].options : [], //item.data('options'),
+		variants = item.length ? PRODUCTS[item.data('id')].variants : [],
         bulk = _.find(options, function(option){
         	return option.name.toLowerCase() === 'bulk';
         }),
@@ -275,12 +277,22 @@ function quantityChange(){
         }) : '',
         qtyBreak = _.max(_.map(qtyBreaks, Number));
 
-    console.log(qtyBreaks, qtyBreak)
-    console.log(bulk)
-  	  	    
+
   	if(bulk){
-		item.find('.list-view-item-color').hide().siblings('.list-view-item-bulk-' + qtyBreak).show();
-      	item.find('.list-view-item-color-' + color + ':visible').find('input').click();
+		if(item.find('.list-view-item-color').length){
+			item.find('.list-view-item-color').hide().siblings('.list-view-item-bulk-' + qtyBreak).show();
+			item.find('.list-view-item-color-' + color + ':visible').find('input').click();
+		}else if(item.find('.grid-view-item-color').length){
+			item.find('.grid-view-item-color').hide().siblings('.grid-view-item-bulk-' + qtyBreak).show();
+			item.find('.grid-view-item-color-' + color + ':visible').click();
+		}else{
+			let variant = variants.find(v => {
+				return Number(v['option' + bulk.position]) === qtyBreak
+			});
+			if(variant){
+				$this.closest('form').find('[name="id"]').val(variant.id)
+			}
+		}
 
 		if($('[data-index=option2]').length){
 			$('[data-index=option2]').val(qtyBreak).change();

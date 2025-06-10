@@ -325,6 +325,10 @@
 }
 .grid-view-item-actions{
   margin-top: 15px;
+  input{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 .grid-view-item-actions .btn-add-to-cart{
 	width:100%;

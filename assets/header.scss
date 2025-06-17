@@ -430,9 +430,13 @@
                     .columns{
                       columns: 2;
                       column-gap: 60px;
-                      & > div{
-                        break-before: column;
+                      
+                      @media (min-width: 1024px){
+                        & > div{
+                          break-before: column;
+                        }
                       }
+                      
                       @media (max-width: 1024px){
                           columns: 1;
                       }

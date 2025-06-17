@@ -39,6 +39,7 @@
 </script>
 
 
+
 {% if product.metafields.custom.main_collection %}
 	{% assign collectionInfo = product.metafields.custom.main_collection.value %}
 {% else %}
@@ -86,14 +87,23 @@
 
 {% endif  %}
 
+{% assign showPringing = false %}
+{% unless product.metafields.custom.disable_printing %}
+  {% for printingOption in collectionInfo.metafields.collectionPrinting %}
+      {% if printingOption[1] == 'on' %}
+  		{% assign showPringing = true %}
+  	{% endif %}
+  {% endfor %}
+
+{% endunless %}
      
 <form action="/cart/add" method="post" class="home-grid-item-inner"  data-id="{{product.id}}">
   	<script type="application/json" class="item-variants">
       {{product.variants | json}}
     </script>
-	{% if product.metafields.custom.label != blank %}
-	<span class="collection-badge">{{ product.metafields.custom.label }}</span>
-	{% endif %}
+    {% if product.metafields.custom.label != blank %}
+    <span class="collection-badge">{{ product.metafields.custom.label }}</span>
+    {% endif %}
       <div>
         <a href="{{featured_variant.url | default:product.url | within: collectionInfo}}" class="home-grid-item-image" title="{{ product.featured_image.alt }}">
           <img src="{{ featured_image.src | img_url: '450x450' }}" alt="">
@@ -161,7 +171,7 @@
       </div>
 	  <input type="hidden" name="id" value="{{ featured_variant.id }}" checked data-sku="{{ featured_variant.sku }}"/>
 
-	  {% if hideForm != true %}      
+	  {% if hideForm != true and showPringing == false %}      
         <div class="flex grid-view-item-actions">
               <div class="flex-3">
                 {% assign soldIn = featured_variant.option2 %}

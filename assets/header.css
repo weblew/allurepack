@@ -463,6 +463,11 @@
      -moz-column-gap: 60px;
           column-gap: 60px;
 }
+.header .header-bottom .header-nav .header-bottom-nav-link .header-bottom-nav-link-menu .columns > div {
+  -webkit-column-break-before: column;
+     -moz-column-break-before: column;
+          break-before: column;
+}
 @media (max-width: 1024px) {
   .header .header-bottom .header-nav .header-bottom-nav-link .header-bottom-nav-link-menu .columns {
     -webkit-columns: 1;
@@ -516,6 +521,7 @@
 }
 .header .header-bottom .header-nav .header-bottom-nav-link .header-bottom-nav-link-menu .header-bottom-nav-img img {
   display: block;
+  width: 100%;
 }
 .header .header-bottom .header-nav .header-bottom-nav-link .header-bottom-nav-link-menu .header-bottom-nav-img .mega-menu-content {
   position: absolute;

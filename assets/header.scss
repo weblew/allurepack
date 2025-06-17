@@ -430,9 +430,12 @@
                     .columns{
                       columns: 2;
                       column-gap: 60px;
+                      & > div{
+                        break-before: column;
+                      }
                       @media (max-width: 1024px){
-                        columns: 1;
-                    }
+                          columns: 1;
+                      }
                     }
                     &.megamenu{
                       
@@ -477,6 +480,7 @@
                       }
                       img{
                         display: block;
+                        width: 100%;
                       }
                       .mega-menu-content{
                         position: absolute;

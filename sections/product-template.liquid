@@ -26,7 +26,7 @@
 
 {% unless product.metafields.custom.disable_printing %}
   {% for printingOption in collectionInfo.metafields.collectionPrinting %}
-      {% if printingOption[1] == 'on' %}
+      {% if printingOption[1] == 'on' %}        
   		{% assign showPringing = true %}
   	{% endif %}
   {% endfor %}

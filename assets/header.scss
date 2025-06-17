@@ -433,7 +433,12 @@
                       
                       @media (min-width: 1024px){
                         & > div{
-                          break-before: column;
+                          // break-before: column;
+                          & + div{
+                            .link-title{
+                              margin-top: 150px;
+                            }
+                          }
                         }
                       }
                       

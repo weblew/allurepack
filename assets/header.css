@@ -464,10 +464,8 @@
           column-gap: 60px;
 }
 @media (min-width: 1024px) {
-  .header .header-bottom .header-nav .header-bottom-nav-link .header-bottom-nav-link-menu .columns > div {
-    -webkit-column-break-before: column;
-       -moz-column-break-before: column;
-            break-before: column;
+  .header .header-bottom .header-nav .header-bottom-nav-link .header-bottom-nav-link-menu .columns > div + div .link-title {
+    margin-top: 150px;
   }
 }
 @media (max-width: 1024px) {

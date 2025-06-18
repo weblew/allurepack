@@ -17,9 +17,9 @@
           "settings": {
             "icon": "shopify://shop_images/Leather_Display_Collection.jpg",
             "title": "",
-            "content": "<h4>Leather Displays</h4>",
+            "content": "<h4>Leatherette Jewelry Display</h4>",
             "tags": "",
-            "link": "",
+            "link": "shopify://collections/leatherette-jewlery-display",
             "size": "flex-third"
           }
         },
@@ -28,7 +28,7 @@
           "settings": {
             "icon": "shopify://shop_images/Suede_Display_Collection.jpg",
             "title": "",
-            "content": "<h4>Suede Displays</h4>",
+            "content": "<h4>Suede jewelry Displays</h4>",
             "tags": "",
             "link": "shopify://collections/suede-displays",
             "size": "flex-third"
@@ -39,7 +39,7 @@
           "settings": {
             "icon": "shopify://shop_images/Linea_Display_Collection.jpg",
             "title": "",
-            "content": "<h4>Linea Displays<br/></h4>",
+            "content": "<h4>Linea Jewelry Displays</h4>",
             "tags": "",
             "link": "shopify://collections/linea-displays",
             "size": "flex-third"

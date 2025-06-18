@@ -48,14 +48,15 @@
 		{% if collection.metafields.custom.colors != blank  %}
 
 			{% assign collectionInfo = collection %}
+      {%  break  %}
 		{% elsif collection.description != blank %}
 
 			{% assign collectionInfo = collection %}
-
+      {%  break  %}
     {% elsif collection.template_suffix == 'displays' %}
 
         {% assign collectionInfo = collections.displays %}
-
+        {%  break  %}
 		{% endif %}
 
 	{% endfor %}
@@ -112,10 +113,7 @@
             {% endif %}
         </a>
         <div class="home-grid-item-colors">
-
-  
 			{% assign colors = collectionInfo.metafields.custom.colors.value %}                         
-      
 			{% for color in colors %}
 				{% assign variants = product.variants | where:'option1',color.name %}
         {% for variant in  variants  %}

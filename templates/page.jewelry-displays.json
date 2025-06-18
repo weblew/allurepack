@@ -17,7 +17,7 @@
           "settings": {
             "icon": "shopify://shop_images/Leather_Display_Collection.jpg",
             "title": "",
-            "content": "<h3>Leather Displays</h3>",
+            "content": "<h4>Leather Displays</h4>",
             "tags": "",
             "link": "",
             "size": "flex-third"
@@ -28,7 +28,7 @@
           "settings": {
             "icon": "shopify://shop_images/Suede_Display_Collection.jpg",
             "title": "",
-            "content": "<h3>Suede Displays</h3>",
+            "content": "<h4>Suede Displays</h4>",
             "tags": "",
             "link": "shopify://collections/suede-displays",
             "size": "flex-third"
@@ -39,7 +39,7 @@
           "settings": {
             "icon": "shopify://shop_images/Linea_Display_Collection.jpg",
             "title": "",
-            "content": "<p>Linea Displays<br/></p>",
+            "content": "<h4>Linea Displays<br/></h4>",
             "tags": "",
             "link": "shopify://collections/linea-displays",
             "size": "flex-third"

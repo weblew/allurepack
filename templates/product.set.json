@@ -9,22 +9,13 @@
  */
 {
   "sections": {
-    "48734f4d-3cd4-4e12-8ffe-2ba827f9b603": {
-      "type": "page-title",
-      "blocks": {
-        "96c87455-7a9e-42a1-a8a8-dd1b5b21fb48": {
-          "type": "text",
-          "settings": {
-            "text": "Custom Retail Bags",
-            "content": "<p>Your shop's gift bags are prime space to proclaim your brand.</p><p>Customize your bags by adding your logo and gain exclusivity.</p><p>You never know the places your bags will go!</p>"
-          }
-        }
-      },
-      "block_order": [
-        "96c87455-7a9e-42a1-a8a8-dd1b5b21fb48"
-      ],
+    "sets_aabTjx": {
+      "type": "sets",
+      "name": "Sets",
       "settings": {}
-    },
+    }
   },
-  "order": ["48734f4d-3cd4-4e12-8ffe-2ba827f9b603"]
+  "order": [
+    "sets_aabTjx"
+  ]
 }

@@ -1,6 +1,89 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script>
+    var BUNDLE_ITEMS = {{collections.bundles.products | json}};
+</script>
+{{ 'bundles.scss.css' | asset_url | stylesheet_tag }}
+{{ 'lightbox.scss.css' | asset_url | stylesheet_tag }}
+
+<br><br>
+<h1 class="font-default text-center">Showcase Display Sets</h1>
+
+<div class="page-width" ng-app="bundles" ng-controller="BundlesController as vm" ng-cloak>
+	
+  <div class="bundles flex flex-justify-between">
+    <div class="bundle flex-4-5" ng-repeat="bundle in vm.bundles">
+      	<div class="">
+            <div class=""> 
+                <div class="bundle-image lightbox-image" data-image="<% bundle.selectedImage.src %>" style="background-image:url('<% bundle.selectedImage.src %>')">
+
+                </div>
+            </div>
+            <div class=""> 
+                <h2 class="gold font-default bundle-name"><% bundle.name %> / <% bundle.selectedImage.name %></h2>
+                  <p><% bundle.description %></p>
+                  
+                  <div class="flex flex-justify-between"> 
+                    <div class="flex-2">
+                      <h6 class="gold">PRICE</h6>
+                      <% vm.getBundlePrice(bundle) | currency %>
+                    </div>
+                      <div class="flex-2">
+                      <h6 class="gold">SKU</h6>
+                      <% bundle.sku %>
+                    </div>
+                    <div class="">
+                      <h6 class="gold">COLORS</h6>
+                      <div class="bundle-colors flex">
+                        <div class="bundle-color" ng-repeat="image in bundle.images" ng-class="{selected:image.selected}" style="background-image:url('<% image.color %>')" ng-click="vm.selectBundleColor(bundle, image)">
+                        	<div class="color-name" ng-bind="image.name" ng-if="image.name"></div>
+                        </div>
+                      </div>
+                    </div>
+                      </div>
+                    <div class="text-right">
+                      <br>
+                      <div class="flex flex-right">
+                      	<input type="number" placeholder="Qty" name="quantity" ng-model="bundle.qty" class="btn-black-light qty-input">
+                        &nbsp;&nbsp;
+                      	<button type="submit" class="btn btn-black-dark" ng-click="vm.addBundleToCart(bundle)"><% bundle.atcText || vm.atcText %></button> 
+                      </div>
+                    </div>
+                      
+                  
+            </div>
+        </div>
+        
+    </div>
+                  
+   	<div class="bundle-component-spinner" ng-show="!vm.bundles"></div>
+  </div>
+  
+</div>
+
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'loader.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'loader.js' | asset_url }}"></script><![endif]-->
+    
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'bundles.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'bundles.js' | asset_url }}"></script><![endif]-->
+          
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'lightbox.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'lightbox.js' | asset_url }}"></script><![endif]-->
+              
+{% if page.metafields.content.bottom_description %}
+	<div class="page-bottom">
+		<div class="page-width">
+          {{page.metafields.content.bottom_description}}
+          {% render 'btt' %}
+      </div>
+    </div>
+{% endif %}
 {% schema %}
   {
-    "name": "Section name",
-    "settings": []
+    "name": "Sets",
+    "settings": [],
+    "presets": [{
+      "name": "Sets"
+    }]
   }
 {% endschema %}

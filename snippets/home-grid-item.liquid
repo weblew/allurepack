@@ -44,17 +44,13 @@
 	{% assign collectionInfo = product.metafields.custom.main_collection.value %}
 {% else %}
 	{% for collection in product.collections %}
-			
 		{% if collection.metafields.custom.colors != blank  %}
-
 			{% assign collectionInfo = collection %}
       {%  break  %}
 		{% elsif collection.description != blank %}
-
 			{% assign collectionInfo = collection %}
       {%  break  %}
     {% elsif collection.template_suffix == 'displays' %}
-
         {% assign collectionInfo = collections.displays %}
         {%  break  %}
 		{% endif %}

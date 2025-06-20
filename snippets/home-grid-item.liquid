@@ -117,7 +117,7 @@
 			{% for color in colors %}
 				{% assign variants = product.variants | where:'option1',color.name %}
         {% for variant in  variants  %}
-				<div class="grid-view-item-color grid-view-item-color-{{ variant.option1 | handleize }} grid-view-item-bulk-{{ variant.option2 | escape }} {% if featured_variant.option1 == variant.option1 %}selected{% endif %} {% unless forloop.first %} displayNone {% endunless %}" title="{{color.name}}" data-color="{{ variant.option1 | handleize }}" data-variant="{{variant.id}}" style="background-image: url({{color.swatch | img_url: 'medium'}});" data-image="{{ variant.image  | img_url: '450x450' }}"></div>            
+				<div class="grid-view-item-color grid-view-item-color-{{ variant.option1 | handleize }} grid-view-item-bulk-{{ variant.option2 | escape }} {% if featured_variant.option1 == variant.option1 %}selected{% endif %} {% unless forloop.first %} displayNone {% endunless %}" title="{{color.name}}" data-color="{{ variant.option1 | handleize }}" data-variant="{{variant.id}}" data-sku="{{variant.sku}}" data-price="{{variant.price |  money}}" style="background-image: url({{color.swatch | img_url: 'medium'}});" data-image="{{ variant.image  | img_url: '450x450' }}"></div>            
         {% endfor  %}
 		
 			{% endfor %}

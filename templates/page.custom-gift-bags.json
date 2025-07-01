@@ -117,7 +117,7 @@
           "type": "text",
           "settings": {
             "title": "The Fine Print of Custom Printed Bags",
-            "text": "<p><strong>Plate Fee</strong> for imprinting on bags is  $89.</p><p><strong>Printing Fee </strong>for imprinting on bags is $60 for the first 200 prints.  Each additional print is $0.27.</p><p>The printing plate fee a is one time fee for the first time you print. Once we create a plate for you, you will only be charged for printing.</p><p><a href=\"/pages/custom-printing\" title=\"Custom Printing\"><span style=\"text-decoration:underline\">Read more about custom printed packaging here.</span></a></p>",
+            "text": "<p><strong>Plate Fee</strong> for imprinting on bags is  $89.</p><p><strong>Printing Fee </strong>for imprinting on bags is $60 for the first 200 prints.  Each additional print is $0.27.</p><p>The printing plate fee a is one time fee for the first time you print. Once we create a plate for you, you will only be charged for printing.</p>",
             "width": "50%",
             "alignment": "center",
             "align_text": "left"
@@ -130,11 +130,22 @@
             "width": "50%",
             "alignment": "center"
           }
+        },
+        "text_dfa9E7": {
+          "type": "text",
+          "settings": {
+            "title": "How We Can Customize Your Gift Bags",
+            "text": "<p>Our in-house printing capabilities will etch true luxury onto each bag by hot-stamping your logo or branding with metallic, glossy, or matte print.</p>",
+            "width": "50%",
+            "alignment": "center",
+            "align_text": "left"
+          }
         }
       },
       "block_order": [
         "text_xPYUzC",
-        "image_rgXTGn"
+        "image_rgXTGn",
+        "text_dfa9E7"
       ],
       "settings": {
         "title": "Leave your imprint",

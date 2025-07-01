@@ -135,7 +135,7 @@
           "type": "text",
           "settings": {
             "title": "How We Can Customize Your Gift Bags",
-            "text": "<p>Our in-house printing capabilities will etch true luxury onto each bag by hot-stamping your logo or branding with metallic, glossy, or matte print.</p>",
+            "text": "<p>Our in-house printing capabilities will etch true luxury onto each bag by hot-stamping your logo or branding with metallic, glossy, or matte print.</p><p><a href=\"/pages/custom-printing\" title=\"Custom Printing\"><span style=\"text-decoration:underline\">Read more about custom printed packaging here.</span></a></p>",
             "width": "50%",
             "alignment": "center",
             "align_text": "left"

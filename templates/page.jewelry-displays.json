@@ -122,17 +122,6 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_Um3H7R": {
-          "type": "text_block",
-          "settings": {
-            "icon": "shopify://shop_images/Jewelry-display-pads_jpg.jpg",
-            "title": "Display Pads",
-            "content": "",
-            "tags": "",
-            "link": "shopify://collections/jewelry-display-pads",
-            "size": "flex-2-5"
-          }
-        },
         "text_block_izz9Gt": {
           "type": "text_block",
           "settings": {
@@ -141,6 +130,17 @@
             "content": "",
             "tags": "",
             "link": "shopify://collections/jewelry-display-risers",
+            "size": "flex-2-5"
+          }
+        },
+        "text_block_Um3H7R": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Jewelry-display-pads_jpg.jpg",
+            "title": "Display Pads",
+            "content": "",
+            "tags": "",
+            "link": "shopify://collections/jewelry-display-pads",
             "size": "flex-2-5"
           }
         },
@@ -200,8 +200,8 @@
         "text_block_rwdGFJ",
         "text_block_4CVYrV",
         "text_block_zf6yMA",
-        "text_block_Um3H7R",
         "text_block_izz9Gt",
+        "text_block_Um3H7R",
         "text_block_8xBXg8",
         "text_block_PCqYnT",
         "text_block_PF9jzf",

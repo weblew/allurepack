@@ -133,6 +133,17 @@
             "size": "flex-2-5"
           }
         },
+        "text_block_izz9Gt": {
+          "type": "text_block",
+          "settings": {
+            "icon": "shopify://shop_images/bases-risers.jpg",
+            "title": "Jewelry Display Risers",
+            "content": "",
+            "tags": "",
+            "link": "shopify://collections/jewelry-display-risers",
+            "size": "flex-2-5"
+          }
+        },
         "text_block_8xBXg8": {
           "type": "text_block",
           "settings": {
@@ -166,17 +177,6 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_izz9Gt": {
-          "type": "text_block",
-          "settings": {
-            "icon": "shopify://shop_images/bases-risers.jpg",
-            "title": "Jewelry Display Risers",
-            "content": "",
-            "tags": "",
-            "link": "shopify://collections/jewelry-display-risers",
-            "size": "flex-2-5"
-          }
-        },
         "text_block_jjrdAR": {
           "type": "text_block",
           "settings": {
@@ -201,10 +201,10 @@
         "text_block_4CVYrV",
         "text_block_zf6yMA",
         "text_block_Um3H7R",
+        "text_block_izz9Gt",
         "text_block_8xBXg8",
         "text_block_PCqYnT",
         "text_block_PF9jzf",
-        "text_block_izz9Gt",
         "text_block_jjrdAR"
       ],
       "settings": {

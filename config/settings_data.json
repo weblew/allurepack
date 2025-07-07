@@ -4339,35 +4339,37 @@
           "1593796056264": {
             "type": "collection",
             "settings": {
-              "image": "shopify://shop_images/020Prntcopyweb1.png",
-              "title": "<p><strong>Glamour </strong>Collection</p>",
+              "image": "shopify://shop_images/Boxes_vogue_copy.jpg",
+              "title": "<p><strong>Vogue </strong>Collection</p>",
               "link": "",
-              "collection": "glamour"
+              "collection": "vogue"
             }
           },
           "791683d9-bfa3-49db-ba15-0a51e03f98c0": {
             "type": "collection",
             "settings": {
-              "image": "shopify://shop_images/024Prnt__3_copyweb1.png",
-              "title": "<p><strong>Led </strong>Collection</p>",
+              "image": "shopify://shop_images/Boxes_woven_copy2.jpg",
+              "title": "<p><strong>Woven </strong>Collection</p>",
               "link": "",
-              "collection": "led"
+              "collection": "woven"
             }
           },
           "60bb9a71-c4f3-4c33-b3cb-524cbd814125": {
             "type": "collection",
             "settings": {
-              "title": "<p><strong>Manhattan </strong>Bags</p>",
+              "image": "shopify://shop_images/Bags_lux_copy.jpg",
+              "title": "<p><strong>Luxe </strong>Bags</p>",
               "link": "",
-              "collection": "ribbon-handle-gift-bags"
+              "collection": "luxe-bags"
             }
           },
           "ccde5349-0262-4ee5-b076-8a85044742c0": {
             "type": "collection",
             "settings": {
-              "title": "<p><strong>Microfiber</strong> Pouches</p>",
+              "image": "shopify://shop_images/Micro_Envelope_pouch_copy1.jpg",
+              "title": "<p><strong>Microfiber Envelope</strong> Pouches</p>",
               "link": "",
-              "collection": "microfiber-pouches"
+              "collection": "pocket-pouch"
             }
           }
         },

@@ -59,7 +59,8 @@
     "shop_boxes_Lwf3PP": {
       "type": "shop-boxes",
       "custom_css": [
-        ".section-title{margin: 0; padding: 0;}"
+        ".section-title {margin: 0; padding: 0;}",
+        "div{padding-bottom: 0;}"
       ],
       "name": "Shop boxes",
       "settings": {

@@ -17,10 +17,20 @@
           "settings": {
             "icon": "shopify://shop_images/Leather_Display_Collection.jpg",
             "title": "",
-            "content": "<h4>Leatherette Jewelry Display</h4>",
+            "content": "<h4>Leatherette Jewelry Displays</h4>",
             "tags": "",
             "link": "shopify://collections/leatherette-jewelry-displays",
             "size": "flex-third"
+          }
+        },
+        "text_block_Az4GVj": {
+          "type": "text_block",
+          "settings": {
+            "title": "",
+            "content": "",
+            "tags": "",
+            "link": "",
+            "size": "flex-2-5"
           }
         },
         "text_block_F9bPwi": {
@@ -191,6 +201,7 @@
       },
       "block_order": [
         "text_block_MtEPBy",
+        "text_block_Az4GVj",
         "text_block_F9bPwi",
         "text_block_H7388M",
         "text_block_rXRzkh",

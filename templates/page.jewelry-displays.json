@@ -51,6 +51,9 @@
         "text_block_F9bPwi",
         "text_block_H7388M"
       ],
+      "custom_css": [
+        "h1.font-default{margin-bottom: 30px;}"
+      ],
       "settings": {
         "title": "{{ page.title }}",
         "menu": ""
@@ -60,7 +63,7 @@
       "type": "shop-boxes",
       "custom_css": [
         ".section-title {margin: 0; padding: 0;}",
-        "div{padding-bottom: 0;}"
+        "div {padding-bottom: 0;}"
       ],
       "name": "Shop boxes",
       "settings": {

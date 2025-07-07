@@ -23,16 +23,6 @@
             "size": "flex-third"
           }
         },
-        "text_block_Az4GVj": {
-          "type": "text_block",
-          "settings": {
-            "title": "",
-            "content": "",
-            "tags": "",
-            "link": "",
-            "size": "flex-2-5"
-          }
-        },
         "text_block_F9bPwi": {
           "type": "text_block",
           "settings": {
@@ -54,8 +44,32 @@
             "link": "shopify://collections/linea-displays",
             "size": "flex-third"
           }
-        },
-        "text_block_rXRzkh": {
+        }
+      },
+      "block_order": [
+        "text_block_MtEPBy",
+        "text_block_F9bPwi",
+        "text_block_H7388M"
+      ],
+      "settings": {
+        "title": "{{ page.title }}",
+        "menu": ""
+      }
+    },
+    "shop_boxes_Lwf3PP": {
+      "type": "shop-boxes",
+      "custom_css": [
+        ".section-title{margin: 0; padding: 0;}"
+      ],
+      "name": "Shop boxes",
+      "settings": {
+        "title": "Shop by type"
+      }
+    },
+    "pouches_bags_dKCT6A": {
+      "type": "pouches-bags",
+      "blocks": {
+        "text_block_T9pVFq": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/rings.jpg",
@@ -66,7 +80,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_zFEwKk": {
+        "text_block_XyNBjq": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/earrings.jpg",
@@ -77,7 +91,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_atj8UK": {
+        "text_block_gjNd8H": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/necklaces.jpg",
@@ -88,7 +102,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_fwnKMw": {
+        "text_block_J6pxcM": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/pendants.jpg",
@@ -99,7 +113,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_rwdGFJ": {
+        "text_block_hkFbik": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/chains.jpg",
@@ -110,7 +124,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_4CVYrV": {
+        "text_block_iF4Ttt": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/bracelet.jpg",
@@ -121,7 +135,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_zf6yMA": {
+        "text_block_pGkUt4": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/watches.jpg",
@@ -132,7 +146,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_izz9Gt": {
+        "text_block_gC9YUW": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/bases-risers.jpg",
@@ -143,7 +157,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_Um3H7R": {
+        "text_block_T88aEc": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/Jewelry-display-pads_jpg.jpg",
@@ -154,7 +168,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_8xBXg8": {
+        "text_block_WGB4XF": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/showcasetray.jpg",
@@ -165,7 +179,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_PCqYnT": {
+        "text_block_3iPLhk": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/plastic-tray-collection-copy-black.jpg",
@@ -176,7 +190,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_PF9jzf": {
+        "text_block_R6KcjH": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/lightweighttray.jpg",
@@ -187,7 +201,7 @@
             "size": "flex-2-5"
           }
         },
-        "text_block_jjrdAR": {
+        "text_block_xhAmjn": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/1549653482293__DSET12-GR-base4.png",
@@ -200,26 +214,22 @@
         }
       },
       "block_order": [
-        "text_block_MtEPBy",
-        "text_block_Az4GVj",
-        "text_block_F9bPwi",
-        "text_block_H7388M",
-        "text_block_rXRzkh",
-        "text_block_zFEwKk",
-        "text_block_atj8UK",
-        "text_block_fwnKMw",
-        "text_block_rwdGFJ",
-        "text_block_4CVYrV",
-        "text_block_zf6yMA",
-        "text_block_izz9Gt",
-        "text_block_Um3H7R",
-        "text_block_8xBXg8",
-        "text_block_PCqYnT",
-        "text_block_PF9jzf",
-        "text_block_jjrdAR"
+        "text_block_T9pVFq",
+        "text_block_XyNBjq",
+        "text_block_gjNd8H",
+        "text_block_J6pxcM",
+        "text_block_hkFbik",
+        "text_block_iF4Ttt",
+        "text_block_pGkUt4",
+        "text_block_gC9YUW",
+        "text_block_T88aEc",
+        "text_block_WGB4XF",
+        "text_block_3iPLhk",
+        "text_block_R6KcjH",
+        "text_block_xhAmjn"
       ],
       "settings": {
-        "title": "{{ page.title }}",
+        "title": "",
         "menu": ""
       }
     },
@@ -273,6 +283,8 @@
   },
   "order": [
     "pouches_bags_tNcgGm",
+    "shop_boxes_Lwf3PP",
+    "pouches_bags_dKCT6A",
     "allue_image_text_dkdCGn",
     "bottom_content_rzKg9m",
     "home_collection_PRAKM3",

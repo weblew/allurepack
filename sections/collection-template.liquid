@@ -268,7 +268,7 @@
   "@type": "CollectionPage",
   "url": "{{ collection.url }}",
   "name": "{{ collection.title | escape }}",
-  "description": "{{ collection.description | strip_html | escape }}",
+  "description": "{{ collection.description | strip_html | escape  | strip_newlines }}",
   "image": "{{ collection.image | image_url }}",
   "mainEntity": {
     "@type": "ItemList",
@@ -279,7 +279,7 @@
         "name": "{{ item.title | escape }}",
         "url": "{{ item.url }}",
         "image": "{{ item.featured_image | image_url }}",
-        "description": "{{ item.description | strip_html | escape }}"
+        "description": "{{ item.description | strip_html | escape | strip_newlines }}"
       },
       {% endfor %}
     ]

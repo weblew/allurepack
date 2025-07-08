@@ -68,16 +68,15 @@
     "brand": {
         "@type": "Brand",
         "name": "Allurepack"
-    },
+    }
     {% if product.options_by_name['Color'] %}
-    "variesBy": [
+    ,"variesBy": [
         "color"
     ]
     {% endif %}
     {% if product.options_by_name['Color'] %}
     {% assign optionField = 'option' | append:product.options_by_name['Color'].position %}
-      ,
-    "hasVariant": [
+    ,"hasVariant": [
         {% for value in product.options_by_name['Color'].values %}
         {% assign variant = product.variants | where:optionField,value | first %}
         {% if variant %}

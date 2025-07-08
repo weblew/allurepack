@@ -56,7 +56,9 @@
 	<div id='virthium_widget_{{srb.id}}?rebate_only=true' class='virthium_widget' data-id='{{srb.id}}?rebate_only=true'></div>
 {% endif %}
 <!-- end virthium widget -->
-
+<script type="application/ld+json">
+      {{ product | structured_data }}
+    </script>
 <script type="application/ld+json">
 {
     "@context": "https://schema.org/",

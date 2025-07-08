@@ -83,7 +83,7 @@
       <div class="{% if totalFilters > 1 and collection.metafields.custom.hide_filters != true  %}flex-8{% else %}flex-10{% endif %}">
 
             <div class="group-title flex flex-align-center flex-justify-between">
-              <span><span id="ProductCount">{{collection.products.count}}</span> Products</span>
+              <span><span id="ProductCount">{{collection.results_count}}</span> Products</span>
             <button class="btn filter-btn" onclick="document.querySelector('.filters-panel').classList.add('open')">
                       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clip-path="url(#clip0_2258_11595)">

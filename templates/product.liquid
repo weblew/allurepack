@@ -56,9 +56,7 @@
 	<div id='virthium_widget_{{srb.id}}?rebate_only=true' class='virthium_widget' data-id='{{srb.id}}?rebate_only=true'></div>
 {% endif %}
 <!-- end virthium widget -->
-<script type="application/ld+json">
-      {{ product | structured_data }}
-    </script>
+
 <script type="application/ld+json">
 {
     "@context": "https://schema.org/",
@@ -66,7 +64,7 @@
     "name": "{{ product.title | escape }}",
     "url": "{{ product.url }}",
     "image": "{{ product.featured_image | image_url }}",
-    "description": "{{ product.description | strip_html | escape }}",
+    "description": "{{ product.description | strip_html | escape | strip_newlines }}",
     "brand": {
         "@type": "Brand",
         "name": "Allurepack"

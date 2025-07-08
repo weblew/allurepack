@@ -85,11 +85,11 @@
             <div class="group-title flex flex-align-center flex-justify-between">
               <span><span id="ProductCount">
                  {%- if collection.results_count -%}
-                {{  collection.results_count }},
+                {{  collection.results_count }}
               {%- elsif collection.products_count == collection.all_products_count -%}
-                {{ collection.products_count }}.
+                {{ collection.products_count }}
               {%- else -%}
-                {{ collection.products_count}}, {{ collection.all_products_count }}-
+                {{ collection.products_count}}
               {%- endif -%}
   </span> Products</span>
             <button class="btn filter-btn" onclick="document.querySelector('.filters-panel').classList.add('open')">

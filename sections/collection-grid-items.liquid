@@ -99,8 +99,8 @@
                       Sort & Filters
                     </button>
             </div>
-        
-            <div class="grid-view-items flex " id="product-grid" data-id="{{ section.id }}">
+        <div id="product-grid" data-id="{{ section.id }}">
+            <div class="grid-view-items flex ">
                     
                 {% for product in collection.products %}
                   <div class="home-grid-item">
@@ -120,6 +120,7 @@
             {% if paginate.pages > 1 %}
               {% include 'pagination' %}
             {% endif %}
+        </div>
         </div>
     </div>
   </div>

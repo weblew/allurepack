@@ -1,6 +1,6 @@
 {{ 'listting.css' | asset_url | stylesheet_tag }}
 
-{% paginate collection.products by 100 %}
+{% paginate collection.products by 50 %}
 
 <div data-section-id="{{ section.id }}" data-section-type="collection-template">
   

@@ -12,8 +12,13 @@
           {% if block.settings.size == 'flex-third' %}
             <div class="flex-third" style="padding-left: 10px;padding-right: 10px;">
               <div class="">
-                  <a href="{{block.settings.link}}" class=""  style="text-align: center;display: block;">
+                  <a href="{{block.settings.link}}" class=""  style="text-align: center;display: block;position:relative;">
                     <img src="{{ block.settings.icon | img_url: 'large' }}"/>
+                    {% if block.settings.link.object.metafields.custom.label != blank %}
+                      <div class="collection-badge">
+                        {{ block.settings.link.object.metafields.custom.label }}
+                      </div>
+                    {% endif %}
                   </a>
               </div>
               {% if block.settings.content != blank %}

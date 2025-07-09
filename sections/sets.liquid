@@ -11,6 +11,55 @@
 <div class="page-width" ng-app="bundles" ng-controller="BundlesController as vm" ng-cloak>
 	
   <div class="bundles flex flex-justify-between">
+    {% for bundle in shop.metaobjects.bundle_kits.values %}
+      {% assign selectedOption = bundle.options.value | first %}
+      <div class="bundle flex-4-5">
+        <div class="">
+          <div class="bundle-image lightbox-image" data-image="{{selectedOption.image | image_url}}" style="background-image:url('{{selectedOption.image | image_url}}')">
+
+          </div>
+          <div class=""> 
+            <h2 class="gold font-default bundle-name">{{bundle.name}} / {{selectedOption.color}}</h2>
+            {{bundle.description |  metafield_tag}}
+            <p></p>
+            <div class="flex flex-justify-between"> 
+              <div class="flex-2">
+                <h6 class="gold">PRICE</h6>
+                {% assign price = 0 %}
+                {% for v in selectedOption.variants.value %}
+                  {% assign price = price |  plus: v.price %}
+                {% endfor %}                
+                {{price |  money}}
+              </div>
+              <div class="flex-2">
+                <h6 class="gold">SKU</h6>
+                {{bundle.bundle_sku}}
+              </div>
+              <div class="">
+                <h6 class="gold">COLORS</h6>
+                <div class="bundle-colors flex">
+                  {% for option in bundle.options.value %}
+                  <div class="bundle-color {% if forloop.first %}selected{% endif %}"  style="background-image:url('{{option.swatch |  image_url }})">
+                    <div class="color-name">
+                      {{option.color}}
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <br>
+              <div class="flex flex-right">
+                <input type="number" placeholder="Qty" name="quantity"  class="btn-black-light qty-input">
+                &nbsp;&nbsp;
+                <button type="submit" class="btn btn-black-dark">Add To Order</button> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
     <div class="bundle flex-4-5" ng-repeat="bundle in vm.bundles">
       	<div class="">
             <div class=""> 
@@ -27,7 +76,7 @@
                       <h6 class="gold">PRICE</h6>
                       <% vm.getBundlePrice(bundle) | currency %>
                     </div>
-                      <div class="flex-2">
+                    <div class="flex-2">
                       <h6 class="gold">SKU</h6>
                       <% bundle.sku %>
                     </div>

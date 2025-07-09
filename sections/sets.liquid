@@ -11,7 +11,7 @@
 <div class="page-width" ng-app="bundles" ng-controller="BundlesController as vm" ng-cloak>
 	
   <div class="bundles flex flex-justify-between">
-    {% for bundle in shop.metaobjects.bundle_kits.values %}
+    {% comment %} {% for bundle in shop.metaobjects.bundle_kits.values %}
       {% assign selectedOption = bundle.options.value | first %}
       <div class="bundle flex-4-5">
         <div class="">
@@ -59,7 +59,7 @@
           </div>
         </div>
       </div>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
     <div class="bundle flex-4-5" ng-repeat="bundle in vm.bundles">
       	<div class="">
             <div class=""> 

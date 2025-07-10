@@ -52,7 +52,7 @@
         "text_block_H7388M"
       ],
       "custom_css": [
-        "h1.font-default{margin-bottom: 30px;}"
+        "h1.font-default {margin-bottom: 30px;}"
       ],
       "settings": {
         "title": "{{ page.title }}",
@@ -67,7 +67,7 @@
       ],
       "name": "Shop boxes",
       "settings": {
-        "title": "Shop by type"
+        "title": "Shop by Display type"
       }
     },
     "pouches_bags_dKCT6A": {

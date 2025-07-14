@@ -17,8 +17,10 @@
           "settings": {
             "icon": "shopify://shop_images/3RepairE.jpg",
             "title": "Jewelry Repair Envelopes",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/repair-envelopes"
+            "link": "shopify://collections/repair-envelopes",
+            "size": "flex-2-5"
           }
         },
         "text_block_f4bqUn": {
@@ -26,8 +28,10 @@
           "settings": {
             "icon": "shopify://shop_images/Cleaning_Supplies2.jpg",
             "title": "Jewelry Cleaning Supplies",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/jewelry-cleaning-supplies"
+            "link": "shopify://collections/jewelry-cleaning-supplies",
+            "size": "flex-2-5"
           }
         },
         "text_block_FaqnHG": {
@@ -35,8 +39,10 @@
           "settings": {
             "icon": "shopify://shop_images/set-of-6-acid-testing-solutions-with-stone-testing-acids-allurepack-960765.jpg",
             "title": "Testing Acids",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/gold-testing-acid"
+            "link": "shopify://collections/gold-testing-acid",
+            "size": "flex-2-5"
           }
         },
         "text_block_mX6diJ": {
@@ -44,8 +50,10 @@
           "settings": {
             "icon": "shopify://shop_images/Loups_multi.jpg",
             "title": "Jeweler's loupes and magnifiers",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/jewelers-loupe"
+            "link": "shopify://collections/jewelers-loupe",
+            "size": "flex-2-5"
           }
         },
         "text_block_eAtUcd": {
@@ -53,8 +61,10 @@
           "settings": {
             "icon": "shopify://shop_images/Ring_sizer_multi.jpg",
             "title": "Ring sizers",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/ring-sizing-tools"
+            "link": "shopify://collections/ring-sizing-tools",
+            "size": "flex-2-5"
           }
         },
         "text_block_YQ9xzX": {
@@ -62,8 +72,10 @@
           "settings": {
             "icon": "shopify://shop_images/Plastic_Tray_Collection_copy-black.jpg",
             "title": "Storage Trays",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/storage-trays-1"
+            "link": "shopify://collections/storage-trays-1",
+            "size": "flex-2-5"
           }
         },
         "text_block_UjEiHb": {
@@ -71,8 +83,10 @@
           "settings": {
             "icon": "shopify://shop_images/Mirror_Group_Pic.png",
             "title": "Mirrors",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/counter-mirrors"
+            "link": "shopify://collections/counter-mirrors",
+            "size": "flex-2-5"
           }
         },
         "text_block_mmpe67": {
@@ -80,8 +94,10 @@
           "settings": {
             "icon": "shopify://shop_images/Tags_multi.jpg",
             "title": "Jewelry Price Tags",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/jewelry-tags"
+            "link": "shopify://collections/jewelry-tags",
+            "size": "flex-2-5"
           }
         },
         "text_block_w3tPPJ": {
@@ -89,8 +105,10 @@
           "settings": {
             "icon": "shopify://shop_images/Zip_lock_bags_finalA.jpg",
             "title": "Zip lock bags",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/zip-lock-bags"
+            "link": "shopify://collections/zip-lock-bags",
+            "size": "flex-2-5"
           }
         },
         "text_block_FzXwMp": {
@@ -98,8 +116,10 @@
           "settings": {
             "icon": "shopify://shop_images/Scalesandmore.jpg",
             "title": "Scales & Testers",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/jewelry-scales-gem-testers"
+            "link": "shopify://collections/jewelry-scales-gem-testers",
+            "size": "flex-2-5"
           }
         },
         "text_block_3i8adP": {
@@ -107,8 +127,10 @@
           "settings": {
             "icon": "shopify://shop_images/group_lights.jpg",
             "title": "Lighting",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/lighting"
+            "link": "shopify://collections/lighting",
+            "size": "flex-2-5"
           }
         },
         "text_block_37zB8x": {
@@ -116,8 +138,10 @@
           "settings": {
             "icon": "shopify://shop_images/Anti_Tarnish_multi.jpg",
             "title": "Anti Tarnish",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/anti-tarnish"
+            "link": "shopify://collections/anti-tarnish",
+            "size": "flex-2-5"
           }
         },
         "text_block_dg46VW": {
@@ -125,8 +149,10 @@
           "settings": {
             "icon": "shopify://shop_images/Mailer_Assorted_copy.jpg",
             "title": "Shipping Mailers & Boxes",
+            "content": "",
             "tags": "",
-            "link": "https://allurepack.com/collections/jewelry-shipping-packaging"
+            "link": "https://allurepack.com/collections/jewelry-shipping-packaging",
+            "size": "flex-2-5"
           }
         },
         "text_block_x6Hme4": {
@@ -134,8 +160,10 @@
           "settings": {
             "icon": "shopify://shop_images/showcasetray.jpg",
             "title": "Showcase Trays",
+            "content": "",
             "tags": "showcase trays various colors",
-            "link": "https://allurepack.com/collections/jewelry-trays"
+            "link": "https://allurepack.com/collections/jewelry-trays",
+            "size": "flex-2-5"
           }
         },
         "text_block_RCiQb8": {
@@ -143,17 +171,21 @@
           "settings": {
             "icon": "shopify://shop_images/lightweighttray.jpg",
             "title": "Light Weight Trays",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/light-weight-trays"
+            "link": "shopify://collections/light-weight-trays",
+            "size": "flex-2-5"
           }
         },
         "text_block_aiWRgV": {
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/Jewelry-display-pads_jpg.jpg",
-            "title": "Jewelry Display Pads",
+            "title": "Pads & Accessories",
+            "content": "",
             "tags": "",
-            "link": "shopify://collections/jewelry-display-pads"
+            "link": "shopify://collections/jewelry-display-pads",
+            "size": "flex-2-5"
           }
         }
       },

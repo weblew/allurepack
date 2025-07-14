@@ -38,9 +38,9 @@
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/Linea_Display_Collection.jpg",
-            "title": "",
+            "title": "Linea Jewelry Displays",
             "content": "<h4>Linea Jewelry Displays</h4>",
-            "tags": "",
+            "tags": "Linea Jewelry Displays",
             "link": "shopify://collections/linea-displays",
             "size": "flex-third"
           }

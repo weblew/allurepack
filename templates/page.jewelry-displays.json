@@ -63,7 +63,8 @@
       "type": "shop-boxes",
       "custom_css": [
         ".section-title {margin: 0; padding: 0;}",
-        "div {padding-bottom: 0;}"
+        "div {padding-bottom: 0; padding-top: 40px;}",
+        ".flex{display: none;}"
       ],
       "name": "Shop boxes",
       "settings": {

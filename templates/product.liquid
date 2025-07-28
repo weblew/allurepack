@@ -84,7 +84,11 @@
             "@type": "Product",
             "name": "{{ product.title | escape }} - {{ value | escape }}",
             "color": "{{ value }}",
-            "isVariantOf": "{{ product.title | escape }}",
+            "isVariantOf": {
+              "@type": "ProductGroup",
+              "name": ""{{ product.title | escape }}",
+              "url": ""{{ product.url }}"
+            },
             "offers": {
                 "@type": "Offer",
                 "price": "{{ variant.price | money_without_currency }}",

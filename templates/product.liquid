@@ -95,7 +95,7 @@
                 "priceCurrency": "USD",
                 "availability": "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
             }
-        },
+        }{% unless forloop.last %},{% endunless %}
         {% endif %}
         {% endfor %}
     ]

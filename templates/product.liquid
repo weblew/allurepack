@@ -60,7 +60,7 @@
 <script type="application/ld+json">
 {
     "@context": "https://schema.org/",
-    "@type": "ProductGroup",
+    "@type": "{% if product.options_by_name['Color'] %}ProductGroup{% else %}Product{% endif %}",
     "name": "{{ product.title | escape }}",
     "url": "{{ product.url }}",
     "image": "{{ product.featured_image | image_url }}",

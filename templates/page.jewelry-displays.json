@@ -52,7 +52,8 @@
         "text_block_H7388M"
       ],
       "custom_css": [
-        "h1.font-default {margin-bottom: 50px; margin-top: 10px;}"
+        "h1.font-default {margin-bottom: 30px; margin-top: 10px;}",
+        "@media (min-width:1200px){h1.font-default {margin-bottom: 50px; margin-top: 10px;}}"
       ],
       "settings": {
         "title": "{{ page.title }}",

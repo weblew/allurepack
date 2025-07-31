@@ -84,6 +84,7 @@
             "@type": "Product",
             "name": "{{ product.title | escape }} - {{ value | escape }}",
             "color": "{{ value }}",
+            "image": "{% if variant.featured_image != blank %}{{ variant.featured_image | image_url }}{% else %}{{ product.featured_image | image_url }}{% endif %}",
             "isVariantOf": {
               "@type": "ProductGroup",
               "name": "{{ product.title | escape }}",

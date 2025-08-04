@@ -282,9 +282,9 @@
         "description": "{{ item.description | strip_html | escape | strip_newlines }}",
         "offers": {
                 "@type": "Offer",
-                "price": "{{ item.selected_or_first_available_variant.price | money_without_currency }}",
+                "price": "{{ item.price | money_without_currency }}",
                 "priceCurrency": "USD",
-                "availability": "http://schema.org/{% if product.selected_or_first_available_variant.available %}InStock{% else %}OutOfStock{% endif %}"
+                "availability": "http://schema.org/{% if item.available %}InStock{% else %}OutOfStock{% endif %}"
         }
       }{% unless forloop.last %},{% endunless %}
       {% endfor %}

@@ -30,11 +30,21 @@
         "title": "Our Jewelry Pouch Picks",
         "collection": "jewelry-pouches-picks"
       }
+    },
+    "cta_hm3jEN": {
+      "type": "CTA",
+      "name": "Call to action",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
+      }
     }
   },
   "order": [
     "pouches_bags_iNU9DX",
     "bottom_content_Ny34Ti",
-    "home_collection_aWj8k4"
+    "home_collection_aWj8k4",
+    "cta_hm3jEN"
   ]
 }

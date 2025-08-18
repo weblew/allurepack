@@ -28,11 +28,11 @@
           {% endif %}
         </div>
         <div class="footer-menu flex-2">
-          {%- assign footer_linklist_tree = section.settings.footer_linklist_tree -%}
-          {% if linklists[footer_linklist_tree].links.size > 0 %}
+          {%- assign footer_linklist_five = section.settings.footer_linklist_five -%}
+          {% if linklists[footer_linklist_five].links.size > 0 %}
 
-            <h4>{{ linklists[footer_linklist_tree].title }}</h4>
-            {% for link in linklists[footer_linklist_tree].links %}
+            <h4>{{ linklists[footer_linklist_five].title }}</h4>
+            {% for link in linklists[footer_linklist_five].links %}
               <a href="{{ link.url }}">{{ link.title }}</a>
             {% endfor %}
 
@@ -54,6 +54,16 @@
           <div>
             {% include 'social_icons' %}
           </div>
+          <br><br>
+          {%- assign footer_linklist_tree = section.settings.footer_linklist_tree -%}
+          {% if linklists[footer_linklist_tree].links.size > 0 %}
+
+            <h4>{{ linklists[footer_linklist_tree].title }}</h4>
+            {% for link in linklists[footer_linklist_tree].links %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+
+          {% endif %}
           <div>
         </div>
 
@@ -101,6 +111,11 @@
       }, {
         "type": "link_list",
         "id": "footer_linklist_four",
+        "label": "Additional menu",
+        "default": "main-menu"
+      }, {
+        "type": "link_list",
+        "id": "footer_linklist_five",
         "label": "Additional menu",
         "default": "main-menu"
       }

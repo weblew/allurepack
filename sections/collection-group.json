@@ -1,0 +1,14 @@
+{
+  "name": "Collection group",
+  "type": "aside",
+  "sections": {
+    "collection_template_xUrnQF": {
+      "type": "collection-template",
+      "name": "Collection Template",
+      "settings": {}
+    }
+  },
+  "order": [
+    "collection_template_xUrnQF"
+  ]
+}

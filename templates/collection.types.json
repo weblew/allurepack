@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "collection-grid-items": {
+      "type": "collection-grid-items",
+      "name": "Collection Grid Items",
+      "settings": {}
+    },
+    "box_icons_ca8RMJ": {
+      "type": "box-icons",
+      "name": "Box Icons",
+      "settings": {}
+    }
+  },
+  "order": [
+    "box_icons_ca8RMJ",
+    "collection-grid-items"
+  ]
+}

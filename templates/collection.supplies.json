@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "collection-grid-items": {
+      "type": "collection-grid-items",
+      "name": "Collection Grid Items",
+      "settings": {}
+    }
+  },
+  "order": [
+    "collection-grid-items"
+  ]
+}

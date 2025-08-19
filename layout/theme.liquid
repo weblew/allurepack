@@ -181,9 +181,15 @@
     
     {% include 'breadcrumb' %} 
     
-    <main class="main-content" id="MainContent" role="main">      
+    <main class="main-content" id="MainContent" role="main">   
       {{ content_for_layout }}
+
+      {% if template.name == 'collection' and template.suffix == blank or template.suffix == 'displays' %}
+        {% sections 'collection-group' %}
+      {% endif %}
     </main>
+
+    
 
     {% section 'footer' %}
 

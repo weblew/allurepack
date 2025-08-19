@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "48734f4d-3cd4-4e12-8ffe-2ba827f9b603": {
@@ -16,7 +7,7 @@
           "type": "text",
           "settings": {
             "text": "Jewelry Packaging",
-            "content": "<p>The value placed on jewelry packaging to complete the buyer experience is far from overrated. Every piece of jewelry requires attention to package them home in a safe, and elegant manner!</p>"
+            "content": "<p>The value placed on jewelry packaging to complete the buyer experience is far from overrated. Every piece of jewelry requires attention to package them home in a safe, and elegant manner!<\/p>"
           }
         }
       },
@@ -33,8 +24,8 @@
           "settings": {
             "title": "Jewelry<br>Gift Boxes",
             "content": "",
-            "url": "shopify://pages/jewelry-boxes",
-            "image": "shopify://shop_images/Rectangle_8_6.png",
+            "url": "shopify:\/\/pages\/jewelry-boxes",
+            "image": "shopify:\/\/shop_images\/Rectangle_8_6.png",
             "width": 33
           }
         },
@@ -43,8 +34,8 @@
           "settings": {
             "title": "JewelryPouches",
             "content": "",
-            "url": "shopify://pages/jewelry-pouches",
-            "image": "shopify://shop_images/Rectangle_8_7.png",
+            "url": "shopify:\/\/pages\/jewelry-pouches",
+            "image": "shopify:\/\/shop_images\/Rectangle_8_7.png",
             "width": 33
           }
         },
@@ -53,8 +44,8 @@
           "settings": {
             "title": "Pearl<br>Folders",
             "content": "",
-            "url": "shopify://collections/pearl-folders",
-            "image": "shopify://shop_images/Rectangle_8_8.png",
+            "url": "shopify:\/\/collections\/pearl-folders",
+            "image": "shopify:\/\/shop_images\/Rectangle_8_8.png",
             "width": 33
           }
         },
@@ -63,8 +54,8 @@
           "settings": {
             "title": "Jewelry<br>Trays",
             "content": "",
-            "url": "shopify://collections/jewelry-trays",
-            "image": "shopify://shop_images/Rectangle_8_9.png",
+            "url": "shopify:\/\/collections\/jewelry-trays",
+            "image": "shopify:\/\/shop_images\/Rectangle_8_9.png",
             "width": 33
           }
         },
@@ -73,8 +64,8 @@
           "settings": {
             "title": "Jewelry<br>Rolls",
             "content": "",
-            "url": "shopify://collections/jewelry-rolls",
-            "image": "shopify://shop_images/Rectangle_8_10.png",
+            "url": "shopify:\/\/collections\/jewelry-rolls",
+            "image": "shopify:\/\/shop_images\/Rectangle_8_10.png",
             "width": 33
           }
         },
@@ -83,8 +74,8 @@
           "settings": {
             "title": "Euro<br>Tote Bags",
             "content": "",
-            "url": "shopify://collections/euro-tote-bags",
-            "image": "shopify://shop_images/Rectangle_8_11.png",
+            "url": "shopify:\/\/collections\/euro-tote-bags",
+            "image": "shopify:\/\/shop_images\/Rectangle_8_11.png",
             "width": 33
           }
         }
@@ -110,7 +101,7 @@
         "f9428b7c-2179-4cc6-a28f-1017212bfd49": {
           "type": "text",
           "settings": {
-            "content": "<h3>The Hidden Gold Mine in Jewelry Packaging Supplies</h3><p>Packaging for jewelry isn’t only about the buying moment. For many, the jewelry box, or jewelry pouch will remain the treasured place to store their new purchase. For this reason, jewelry packaging boxes take on a central role in the jewelry buying experience, with attention given to quality fabrics and optimal protection. </p><p>But the jewelry packaging box isn’t limited to the buyer or recipient of the jewelry! For millennials and younger, jewelry purchasing also means taking a shot and posting.  That image containing jewelry along with its jewelry packaging will enjoy enhanced visibility once it's shared with others.</p><p>That’s why jewelry packaging goes beyond the box. Jewelry sellers are constantly on the lookout to find quality jewelry packaging supplies that will be treasured by the buyer – and, of course, also receive its fair share of likes when the snapshot is posted!</p><p></p><h4>New Jewelry Packaging Ideas</h4><p>With competition to jewelry chains and proprietors only growing, the need for new jewelry packaging ideas has really come to the fore. New trends in jewelry, plus younger demographics in shoppers eager to post their purchases, led to a new age in jewelry packaging design. And big-name brands, family-owned stores, and custom jewelers are all applauding.</p><p>Allure Box and Display, a wholesale jewelry packaging supplier,  have been innovative in design from the start to meet the needs of today's consumers. With creative jewelry packaging ideas that are fashion-forward, we believe that unique jewelry packaging shouldn’t be hard to come by. And we take steps to ensure our products are never boring by constantly expanding and adding new style and color additions. Many of our collections feature jewelry packaging design that are inspired by current fashion trends, such as visible stitching, metallic colors, and clean-cut shapes.  We’ve also incorporated minimalist jewelry packaging styles.</p><p>Jewelry comes in every price budget. Our jewelry packaging supply is designed to meet all ends of the industry, with luxury jewelry packaging and trendy, yet cheap jewelry packaging that will set you apart.</p>"
+            "content": "<h3>The Hidden Gold Mine in Jewelry Packaging Supplies<\/h3><p>Packaging for jewelry isn’t only about the buying moment. For many, the jewelry box, or jewelry pouch will remain the treasured place to store their new purchase. For this reason, jewelry packaging boxes take on a central role in the jewelry buying experience, with attention given to quality fabrics and optimal protection. <\/p><p>But the jewelry packaging box isn’t limited to the buyer or recipient of the jewelry! For millennials and younger, jewelry purchasing also means taking a shot and posting.  That image containing jewelry along with its jewelry packaging will enjoy enhanced visibility once it's shared with others.<\/p><p>That’s why jewelry packaging goes beyond the box. Jewelry sellers are constantly on the lookout to find quality jewelry packaging supplies that will be treasured by the buyer – and, of course, also receive its fair share of likes when the snapshot is posted!<\/p><p><\/p><h4>New Jewelry Packaging Ideas<\/h4><p>With competition to jewelry chains and proprietors only growing, the need for new jewelry packaging ideas has really come to the fore. New trends in jewelry, plus younger demographics in shoppers eager to post their purchases, led to a new age in jewelry packaging design. And big-name brands, family-owned stores, and custom jewelers are all applauding.<\/p><p>Allure Box and Display, a wholesale jewelry packaging supplier,  have been innovative in design from the start to meet the needs of today's consumers. With creative jewelry packaging ideas that are fashion-forward, we believe that unique jewelry packaging shouldn’t be hard to come by. And we take steps to ensure our products are never boring by constantly expanding and adding new style and color additions. Many of our collections feature jewelry packaging design that are inspired by current fashion trends, such as visible stitching, metallic colors, and clean-cut shapes.  We’ve also incorporated minimalist jewelry packaging styles.<\/p><p>Jewelry comes in every price budget. Our jewelry packaging supply is designed to meet all ends of the industry, with luxury jewelry packaging and trendy, yet cheap jewelry packaging that will set you apart.<\/p>"
           }
         },
         "4a194d5b-af15-4c05-b0b6-addda6ff0911": {
@@ -127,7 +118,7 @@
         "0bb3ff65-5195-43ed-9cfe-325b0e008e79": {
           "type": "text",
           "settings": {
-            "content": "<p>Your jewelry collection might also feature some pretty unique pieces that require non-standard box configurations to fit them neatly. Our Glamour box collection is the real deal in unique jewelry packaging with extra large slits to fit them all!</p><p></p><h4>Custom Jewelry Packaging </h4><p>Customized jewelry packaging that is designed exclusively for your brand really takes it to the next level. Working along with our expert designers, you can see that dream take shape soon.</p><p>Ready to go custom? <a href=\"/pages/contact\" title=\"Contact us\">Let’s talk custom jewelry packaging.</a></p><p></p><h4>Jewelry Packaging with Logo Imprinting</h4><p>Jewelry retail packaging from our featured wholesale collections that is also customized for your brand, is a true win-win. Enter our professional imprinting service that will transform standard jewelry retail packaging to signature packaging, exclusive to your business. What’s more, you can order only the minimum and still revel in customized jewelry packaging with your logo; all without the extra stock and cost!</p><p>Check it out when you add-to-cart the jewelry retail packaging that you love!</p><h4>Jewelry Packaging for Small Businesses</h4><p>We’re on a mission to help all jewelry designers sell their jewelry to the world, especially small jewelry businesses.  All jewelry businesses deserve wholesale prices on their jewelry packaging to help them succeed.  At Allure, you can get wholesale jewelry packaging supplies with super low minimums. Plus, you can order only the minimum and still get it imprinted! We want every small jewelry business to revel in customized jewelry packaging with their logo; all without the extra stock and cost.</p><p>Allure’s wholesale jewelry packaging is brimming with vitality. Find the packaging for your jewelry business that speaks to your consumers. Don’t forget to brand your jewelry packaging with your logo to ensure brand visibility.</p>"
+            "content": "<p>Your jewelry collection might also feature some pretty unique pieces that require non-standard box configurations to fit them neatly. Our Glamour box collection is the real deal in unique jewelry packaging with extra large slits to fit them all!<\/p><p><\/p><h4>Custom Jewelry Packaging <\/h4><p>Customized jewelry packaging that is designed exclusively for your brand really takes it to the next level. Working along with our expert designers, you can see that dream take shape soon.<\/p><p>Ready to go custom? <a href=\"\/pages\/contact\" title=\"Contact us\">Let’s talk custom jewelry packaging.<\/a><\/p><p><\/p><h4>Jewelry Packaging with Logo Imprinting<\/h4><p>Jewelry retail packaging from our featured wholesale collections that is also customized for your brand, is a true win-win. Enter our professional imprinting service that will transform standard jewelry retail packaging to signature packaging, exclusive to your business. What’s more, you can order only the minimum and still revel in customized jewelry packaging with your logo; all without the extra stock and cost!<\/p><p>Check it out when you add-to-cart the jewelry retail packaging that you love!<\/p><h4>Jewelry Packaging for Small Businesses<\/h4><p>We’re on a mission to help all jewelry designers sell their jewelry to the world, especially small jewelry businesses.  All jewelry businesses deserve wholesale prices on their jewelry packaging to help them succeed.  At Allure, you can get wholesale jewelry packaging supplies with super low minimums. Plus, you can order only the minimum and still get it imprinted! We want every small jewelry business to revel in customized jewelry packaging with their logo; all without the extra stock and cost.<\/p><p>Allure’s wholesale jewelry packaging is brimming with vitality. Find the packaging for your jewelry business that speaks to your consumers. Don’t forget to brand your jewelry packaging with your logo to ensure brand visibility.<\/p>"
           }
         }
       },
@@ -158,7 +149,7 @@
       "type": "promotion-strip",
       "settings": {
         "catalog_title": "Get our 2024 Catalog",
-        "image": "shopify://shop_images/Mask_Group_2.png"
+        "image": "shopify:\/\/shop_images\/Mask_Group_2.png"
       }
     }
   },

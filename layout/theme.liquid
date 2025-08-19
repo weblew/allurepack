@@ -182,11 +182,14 @@
     {% include 'breadcrumb' %} 
     
     <main class="main-content" id="MainContent" role="main">   
+      {% if template.name == 'collection' and template.suffix == blank or template.suffix == 'displays' %}
+        
+        {% section "item-colors" %}
+        {% section "logo-icons" %}
+      {% endif %}
       {{ content_for_layout }}
 
-      {% if template.name == 'collection' and template.suffix == blank or template.suffix == 'displays' %}
-        {% sections 'collection-group' %}
-      {% endif %}
+      
     </main>
 
     

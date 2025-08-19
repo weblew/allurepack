@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "pouches_bags_tNcgGm": {
@@ -15,33 +6,33 @@
         "text_block_MtEPBy": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/Leather_Display_Collection.jpg",
+            "icon": "shopify:\/\/shop_images\/Leather_Display_Collection.jpg",
             "title": "Leatherette Jewelry Displays",
-            "content": "<h4>Leatherette Jewelry Displays</h4>",
+            "content": "<h4>Leatherette Jewelry Displays<\/h4>",
             "tags": "",
-            "link": "shopify://collections/leatherette-jewelry-displays",
+            "link": "shopify:\/\/collections\/leatherette-jewelry-displays",
             "size": "flex-third"
           }
         },
         "text_block_F9bPwi": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/Suede_Display_Collection.jpg",
+            "icon": "shopify:\/\/shop_images\/Suede_Display_Collection.jpg",
             "title": "Suede Jewelry Displays",
-            "content": "<h4>Suede Jewelry Displays</h4>",
+            "content": "<h4>Suede Jewelry Displays<\/h4>",
             "tags": "Suede Jewelry Display Stands",
-            "link": "shopify://collections/suede-jewelry-displays",
+            "link": "shopify:\/\/collections\/suede-jewelry-displays",
             "size": "flex-third"
           }
         },
         "text_block_H7388M": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/Linea_Display_Collection.jpg",
+            "icon": "shopify:\/\/shop_images\/Linea_Display_Collection.jpg",
             "title": "Linea Jewelry Displays",
-            "content": "<h4>Linea Jewelry Displays</h4>",
+            "content": "<h4>Linea Jewelry Displays<\/h4>",
             "tags": "Linea Jewelry Displays",
-            "link": "shopify://collections/linea-jewelry-displays",
+            "link": "shopify:\/\/collections\/linea-jewelry-displays",
             "size": "flex-third"
           }
         }
@@ -87,143 +78,143 @@
         "text_block_T9pVFq": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/rings.jpg",
+            "icon": "shopify:\/\/shop_images\/rings.jpg",
             "title": "Ring Displays",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/rings-display",
+            "link": "shopify:\/\/collections\/rings-display",
             "size": "flex-2-5"
           }
         },
         "text_block_XyNBjq": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/earrings.jpg",
+            "icon": "shopify:\/\/shop_images\/earrings.jpg",
             "title": "Earring Displays",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/earrings-display",
+            "link": "shopify:\/\/collections\/earrings-display",
             "size": "flex-2-5"
           }
         },
         "text_block_gjNd8H": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/necklaces.jpg",
+            "icon": "shopify:\/\/shop_images\/necklaces.jpg",
             "title": "Neck Displays",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/jewelry-neck-displays",
+            "link": "shopify:\/\/collections\/jewelry-neck-displays",
             "size": "flex-2-5"
           }
         },
         "text_block_J6pxcM": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/pendants.jpg",
+            "icon": "shopify:\/\/shop_images\/pendants.jpg",
             "title": "Pendant Displays",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/pendants-display",
+            "link": "shopify:\/\/collections\/pendants-display",
             "size": "flex-2-5"
           }
         },
         "text_block_hkFbik": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/chains.jpg",
+            "icon": "shopify:\/\/shop_images\/chains.jpg",
             "title": "Chain Displays",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/chains-display",
+            "link": "shopify:\/\/collections\/chains-display",
             "size": "flex-2-5"
           }
         },
         "text_block_iF4Ttt": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/bracelet.jpg",
+            "icon": "shopify:\/\/shop_images\/bracelet.jpg",
             "title": "Bracelet Displays",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/bracelets-display",
+            "link": "shopify:\/\/collections\/bracelets-display",
             "size": "flex-2-5"
           }
         },
         "text_block_pGkUt4": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/watches.jpg",
+            "icon": "shopify:\/\/shop_images\/watches.jpg",
             "title": "Bangle & Watch Stands",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/bangles-watches-display",
+            "link": "shopify:\/\/collections\/bangles-watches-display",
             "size": "flex-2-5"
           }
         },
         "text_block_gC9YUW": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/bases-risers.jpg",
+            "icon": "shopify:\/\/shop_images\/bases-risers.jpg",
             "title": "Jewelry Display Risers",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/jewelry-display-risers",
+            "link": "shopify:\/\/collections\/jewelry-display-risers",
             "size": "flex-2-5"
           }
         },
         "text_block_T88aEc": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/Jewelry-display-pads_jpg.jpg",
+            "icon": "shopify:\/\/shop_images\/Jewelry-display-pads_jpg.jpg",
             "title": "Pads & Accessories",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/jewelry-display-pads",
+            "link": "shopify:\/\/collections\/jewelry-display-pads",
             "size": "flex-2-5"
           }
         },
         "text_block_WGB4XF": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/showcasetray.jpg",
+            "icon": "shopify:\/\/shop_images\/showcasetray.jpg",
             "title": "Showcase Trays",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/jewelry-trays",
+            "link": "shopify:\/\/collections\/jewelry-trays",
             "size": "flex-2-5"
           }
         },
         "text_block_3iPLhk": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/plastic-tray-collection-copy-black.jpg",
+            "icon": "shopify:\/\/shop_images\/plastic-tray-collection-copy-black.jpg",
             "title": "Storage Trays",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/storage-trays-1",
+            "link": "shopify:\/\/collections\/storage-trays-1",
             "size": "flex-2-5"
           }
         },
         "text_block_R6KcjH": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/lightweighttray.jpg",
+            "icon": "shopify:\/\/shop_images\/lightweighttray.jpg",
             "title": "Lightweight Trays",
             "content": "",
             "tags": "",
-            "link": "shopify://collections/light-weight-trays",
+            "link": "shopify:\/\/collections\/light-weight-trays",
             "size": "flex-2-5"
           }
         },
         "text_block_xhAmjn": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify://shop_images/1549653482293__DSET12-GR-base4.png",
+            "icon": "shopify:\/\/shop_images\/1549653482293__DSET12-GR-base4.png",
             "title": "Showcase Sets",
             "content": "",
             "tags": "",
-            "link": "shopify://pages/showcase-display-sets",
+            "link": "shopify:\/\/pages\/showcase-display-sets",
             "size": "flex-2-5"
           }
         }
@@ -254,8 +245,8 @@
         "item_ygGzb8": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/image_81_1_feda787a-d8cd-431d-b9ef-f9c6f0e5f092.png",
-            "content": "<h3><strong>Custom Jewelry Boxes & Displays</strong></h3><p>Put a personalized touch on every box, bag, tray and display with complete customization services by Allure</p>",
+            "image": "shopify:\/\/shop_images\/image_81_1_feda787a-d8cd-431d-b9ef-f9c6f0e5f092.png",
+            "content": "<h3><strong>Custom Jewelry Boxes & Displays<\/strong><\/h3><p>Put a personalized touch on every box, bag, tray and display with complete customization services by Allure<\/p>",
             "button1text": "Get inspired",
             "button1Url": "",
             "button1Class": "btn-gold-light",

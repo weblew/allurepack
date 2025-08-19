@@ -1,12 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "collection-grid-items": {
       "type": "collection-grid-items",
       "name": "Collection Grid Items",
       "settings": {}
+    },
+    "home_collection_TpEGhf": {
+      "type": "home-collection",
+      "name": "Featured collection",
+      "settings": {
+        "icon": true,
+        "title": "More Leatherette To Love",
+        "collection": "leatherette-jewelry-pouches"
+      }
+    },
+    "cta_RAQA6P": {
+      "type": "CTA",
+      "name": "Call to action",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 70,
+        "bottom_spacing": 70
+      }
     }
   },
   "order": [
-    "collection-grid-items"
+    "collection-grid-items",
+    "home_collection_TpEGhf",
+    "cta_RAQA6P"
   ]
 }

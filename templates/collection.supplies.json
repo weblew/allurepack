@@ -25,6 +25,7 @@
     },
     "cta_RAQA6P": {
       "type": "CTA",
+      "disabled": true,
       "name": "Call to action",
       "settings": {
         "background_color": "",

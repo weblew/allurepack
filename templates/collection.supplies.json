@@ -16,6 +16,7 @@
     },
     "home_collection_TpEGhf": {
       "type": "home-collection",
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "icon": true,

@@ -153,8 +153,16 @@
           "type": "icon-text",
           "settings": {
             "title": "Creating your plates",
-            "content": "<p>Once you sign off on the design, we get to work manufacturing your plate.  That’s an actual metal block with your logo etched on! <\/p><p><a href=\"#\" title=\"#\">New plate pricing<\/a><\/p>",
+            "content": "<p>Once you sign off on the design, we get to work manufacturing your plate.  That’s an actual metal block with your logo etched on! <\/p>",
             "icon": "shopify:\/\/shop_images\/24_Stamp_Office_Office_Stamp.svg"
+          }
+        },
+        "icon_text_BHteRG": {
+          "type": "icon-text",
+          "settings": {
+            "title": "Price for New Plate",
+            "content": "<p><strong>$75 <\/strong>For Box & Pouch<br\/><strong>$89 <\/strong>For Bags<br\/><strong>$99 <\/strong>For Large bags<\/p>",
+            "icon": "shopify:\/\/shop_images\/WhiteStone_d94815b0-f679-4003-979a-b16dc1f5c48a.jpg"
           }
         },
         "slide_iyeeNp": {
@@ -177,6 +185,7 @@
         "devider_eDKHwh",
         "title_X636yf",
         "icon_text_BtNy7m",
+        "icon_text_BHteRG",
         "slide_iyeeNp",
         "slide_gWyPGb"
       ],
@@ -210,6 +219,14 @@
             "title": "100% Transparency",
             "content": "<p>With updates every step of the way, you’ll be able to trace your order as it moves along.<\/p><p>You’ll know when it enters the printing queue, when it prints, and ultimately, when it ships.<\/p>",
             "icon": "shopify:\/\/shop_images\/notification-bell_1.svg"
+          }
+        },
+        "icon_text_kDDTHB": {
+          "type": "icon-text",
+          "settings": {
+            "title": "Imprinting fee",
+            "content": "<p><strong>$65 <\/strong>First 200 prints<br\/><strong>$0.30 <\/strong>for each additional print.<\/p>",
+            "icon": "shopify:\/\/shop_images\/WhiteStone_d94815b0-f679-4003-979a-b16dc1f5c48a.jpg"
           }
         },
         "slide_7EWNrM": {
@@ -247,6 +264,7 @@
         "title_FpYxY3",
         "icon_text_cxwEeV",
         "icon_text_JbRzpY",
+        "icon_text_kDDTHB",
         "slide_7EWNrM",
         "slide_FtgwFR",
         "slide_VWUN3i",

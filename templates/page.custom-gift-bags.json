@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "48734f4d-3cd4-4e12-8ffe-2ba827f9b603": {
@@ -7,7 +16,7 @@
           "type": "text",
           "settings": {
             "text": "Custom Retail Bags",
-            "content": "<p>Your shop's gift bags are prime space to proclaim your brand.<\/p><p>Customize your bags by adding your logo and gain exclusivity.<\/p><p>You never know the places your bags will go!<\/p>"
+            "content": "<p>Your shop's gift bags are prime space to proclaim your brand.</p><p>Customize your bags by adding your logo and gain exclusivity.</p><p>You never know the places your bags will go!</p>"
           }
         }
       },
@@ -24,8 +33,8 @@
           "settings": {
             "title": "Ribbon Handle Bags",
             "content": "",
-            "url": "shopify:\/\/collections\/ribbon-handle-gift-bags",
-            "image": "shopify:\/\/shop_images\/manhattan-bags-567424_large_64688a00-2a76-4a96-8313-b31eca850164.webp",
+            "url": "shopify://collections/ribbon-handle-gift-bags",
+            "image": "shopify://shop_images/manhattan-bags-567424_large_64688a00-2a76-4a96-8313-b31eca850164.webp",
             "width": 33
           }
         },
@@ -34,8 +43,8 @@
           "settings": {
             "title": "Euro Tote Bags",
             "content": "",
-            "url": "shopify:\/\/collections\/euro-tote-bags",
-            "image": "shopify:\/\/shop_images\/euro-tote-bags-613397_large_6c4ae561-7f22-459a-a042-e01bfa55e5a0.webp",
+            "url": "shopify://collections/euro-tote-bags",
+            "image": "shopify://shop_images/euro-tote-bags-613397_large_6c4ae561-7f22-459a-a042-e01bfa55e5a0.webp",
             "width": 33
           }
         },
@@ -44,8 +53,8 @@
           "settings": {
             "title": "Luxe Bags",
             "content": "",
-            "url": "shopify:\/\/collections\/luxe-bags",
-            "image": "shopify:\/\/shop_images\/euro-luxe-copy.jpg",
+            "url": "shopify://collections/luxe-bags",
+            "image": "shopify://shop_images/euro-luxe-copy.jpg",
             "width": 33
           }
         }
@@ -68,7 +77,7 @@
         "f9428b7c-2179-4cc6-a28f-1017212bfd49": {
           "type": "text",
           "settings": {
-            "content": "<h3>Custom Retail Bags Define your Brand<\/h3><p>Consumers can get a feel of your brand by a simple encounter with your custom retail gift bag. By seeing retail bags with your logo imprinted, your brand will be recognized as exclusive and unique.<\/p><p>Uploading your logo and adding custom imprinting hardly gets easier.  Select the wholesale gift bags of your choice, and click “add imprinting”.  With our streamlined process, your custom retail bags will soon be ready for carrying in style.<\/p>"
+            "content": "<h3>Custom Retail Bags Define your Brand</h3><p>Consumers can get a feel of your brand by a simple encounter with your custom retail gift bag. By seeing retail bags with your logo imprinted, your brand will be recognized as exclusive and unique.</p><p>Uploading your logo and adding custom imprinting hardly gets easier.  Select the wholesale gift bags of your choice, and click “add imprinting”.  With our streamlined process, your custom retail bags will soon be ready for carrying in style.</p><h3>Custom Bags for Small Businesses </h3><p>Premium branding that takes small businesses places shouldn't be hard to come by.  Through intentionally keeping printing minimums low, Allurepack provides access to small businesses to get custom gift bags with their brand prominently visible.</p><p></p><p></p>"
           }
         }
       },
@@ -108,7 +117,7 @@
           "type": "text",
           "settings": {
             "title": "How We Can Customize Your Gift Bags",
-            "text": "<p>Our in-house printing capabilities will etch true luxury onto each bag by hot-stamping your logo or branding with metallic, glossy, or matte print.<\/p><p><a href=\"\/pages\/custom-printing\" title=\"Custom Printing\"><span style=\"text-decoration:underline\">Read more about custom printed packaging here.<\/span><\/a><\/p>",
+            "text": "<p>Our in-house printing capabilities will etch true luxury onto each bag by hot-stamping your logo or branding with metallic, glossy, or matte print.</p><p><a href=\"/pages/custom-printing\" title=\"Custom Printing\"><span style=\"text-decoration:underline\">Read more about custom printed packaging here.</span></a></p>",
             "width": "50%",
             "alignment": "center",
             "align_text": "left"
@@ -117,7 +126,7 @@
         "image_rgXTGn": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/printed-bags-ready-to-be-shipped.webp",
+            "image": "shopify://shop_images/printed-bags-ready-to-be-shipped.webp",
             "width": "50%",
             "alignment": "center"
           }
@@ -126,7 +135,7 @@
           "type": "text",
           "settings": {
             "title": "The Fine Print of Custom Printed Bags",
-            "text": "<p><strong>Plate Fee<\/strong> for imprinting on bags is  $89.<\/p><p><strong>Printing Fee <\/strong>for imprinting on bags is $60 for the first 200 prints.  Each additional print is $0.27.<\/p><p>The printing plate fee a is one time fee for the first time you print. Once we create a plate for you, you will only be charged for printing.<\/p>",
+            "text": "<p><strong>Plate Fee</strong> for imprinting on bags is  $89.</p><p><strong>Printing Fee </strong>for imprinting on bags is $60 for the first 200 prints.  Each additional print is $0.27.</p><p>The printing plate fee a is one time fee for the first time you print. Once we create a plate for you, you will only be charged for printing.</p>",
             "width": "50%",
             "alignment": "center",
             "align_text": "left"
@@ -148,7 +157,7 @@
       "type": "promotion-strip",
       "settings": {
         "catalog_title": "Get our 2024 Catalog",
-        "image": "shopify:\/\/shop_images\/Mask_Group_2.png"
+        "image": "shopify://shop_images/Mask_Group_2.png"
       }
     }
   },

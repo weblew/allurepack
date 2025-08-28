@@ -16,23 +16,24 @@
 
 
         </div>
-        <div class="footer-menu flex-2">
-          {%- assign footer_linklist_two = section.settings.footer_linklist_two -%}
-          {% if linklists[footer_linklist_two].links.size > 0 %}
-
-            <h4>{{ linklists[footer_linklist_two].title }}</h4>
-            {% for link in linklists[footer_linklist_two].links %}
-              <a href="{{ link.url }}">{{ link.title }}</a>
-            {% endfor %}
-
-          {% endif %}
-        </div>
+        
         <div class="footer-menu flex-2">
           {%- assign footer_linklist_five = section.settings.footer_linklist_five -%}
           {% if linklists[footer_linklist_five].links.size > 0 %}
 
             <h4>{{ linklists[footer_linklist_five].title }}</h4>
             {% for link in linklists[footer_linklist_five].links %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+
+          {% endif %}
+        </div>
+        <div class="footer-menu flex-2">
+          {%- assign footer_linklist_two = section.settings.footer_linklist_two -%}
+          {% if linklists[footer_linklist_two].links.size > 0 %}
+
+            <h4>{{ linklists[footer_linklist_two].title }}</h4>
+            {% for link in linklists[footer_linklist_two].links %}
               <a href="{{ link.url }}">{{ link.title }}</a>
             {% endfor %}
 

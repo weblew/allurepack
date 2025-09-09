@@ -4534,9 +4534,9 @@
           "47b45cc6-0a11-4144-94d8-57e86c59c2de": {
             "type": "color",
             "settings": {
-              "title": "Kraft",
+              "title": "Kraft / Natural",
               "image": "shopify://shop_images/Kraft.jpg",
-              "colors": "Kraft",
+              "colors": "Kraft\nNatural",
               "border": "rgba(0,0,0,0)"
             }
           }

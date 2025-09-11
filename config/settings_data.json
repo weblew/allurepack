@@ -4061,7 +4061,7 @@
           "megamenu_wC9xDz"
         ],
         "custom_css": [
-          ".header .header-bottom .header-main .logo {width: 180px;}"
+          ".header .header-bottom .header-main .logo {width: 200px;}"
         ],
         "settings": {
           "logo": "shopify://shop_images/10ban.png",

@@ -4067,7 +4067,7 @@
           "logo": "shopify://shop_images/AllureJCKweb-01_1.png",
           "show_announcement": false,
           "announcement": "<p><strong>New!</strong> Create your own logo</p><p><a href=\"/pages/custom\" title=\"Custom\">Get Started</a></p>",
-          "holiday_banner": true,
+          "holiday_banner": false,
           "holiday_popup": "shopify://shop_images/Fall_Calendar_2025b.jpg"
         }
       },

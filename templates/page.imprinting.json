@@ -234,7 +234,7 @@
           "type": "icon-text",
           "settings": {
             "title": "Imprinting fee",
-            "content": "<p><strong>$65 </strong>First 200 prints<br/><strong>$0.30 </strong>for each additional print.</p>",
+            "content": "<p><strong>$69 </strong>First 200 prints<br/><strong>$0.32 </strong>for each additional print.</p>",
             "icon": "shopify://shop_images/Icon-print-03.png"
           }
         },

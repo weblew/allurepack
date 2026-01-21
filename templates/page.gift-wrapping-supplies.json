@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "pouches_bags_tNcgGm": {
@@ -6,82 +15,82 @@
         "text_block_TqiTp9": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify:\/\/shop_images\/magnetic-box-432823.jpg",
+            "icon": "shopify://shop_images/magnetic-box-432823.jpg",
             "title": "Magnetic Gift Boxes",
             "tags": "",
-            "link": "shopify:\/\/collections\/magnetic-gift-boxes"
+            "link": "shopify://collections/foldable-magnetic-gift-boxes"
           }
         },
         "text_block_rqFq9h": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify:\/\/shop_images\/Wrapping-Paper.jpg",
+            "icon": "shopify://shop_images/Wrapping-Paper.jpg",
             "title": "Wrapping paper",
             "tags": "",
-            "link": "shopify:\/\/collections\/wrapping-paper"
+            "link": "shopify://collections/wrapping-paper"
           }
         },
         "text_block_HPDrNF": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify:\/\/shop_images\/TPaperImage2.jpg",
+            "icon": "shopify://shop_images/TPaperImage2.jpg",
             "title": "Tissue Paper",
             "tags": "",
-            "link": "shopify:\/\/collections\/wholesale-tissue-paper"
+            "link": "shopify://collections/wholesale-tissue-paper"
           }
         },
         "text_block_cWktfp": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify:\/\/shop_images\/Ribbon_Photo_6190edge.jpg",
+            "icon": "shopify://shop_images/Ribbon_Photo_6190edge.jpg",
             "title": "Ribbon",
             "tags": "",
-            "link": "shopify:\/\/pages\/gift-ribbon"
+            "link": "shopify://pages/gift-ribbon"
           }
         },
         "text_block_9TEHUb": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify:\/\/shop_images\/Bows_6157SM_copy.jpg",
+            "icon": "shopify://shop_images/Bows_6157SM_copy.jpg",
             "title": "Gift Bows",
             "tags": "",
-            "link": "shopify:\/\/collections\/gift-bows"
+            "link": "shopify://collections/gift-bows"
           }
         },
         "text_block_qCxLzQ": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify:\/\/shop_images\/holiday-wrapping-supplies_jpg.jpg",
+            "icon": "shopify://shop_images/holiday-wrapping-supplies_jpg.jpg",
             "title": "Holiday Wrapping Supplies",
             "tags": "",
-            "link": "shopify:\/\/collections\/holiday-gift-wrapping-supplies"
+            "link": "shopify://collections/holiday-gift-wrapping-supplies"
           }
         },
         "text_block_7mzfYQ": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify:\/\/shop_images\/Wine_Bags3_copy.jpg",
+            "icon": "shopify://shop_images/Wine_Bags3_copy.jpg",
             "title": "Wine Packaging",
             "tags": "",
-            "link": "shopify:\/\/collections\/wine-packaging"
+            "link": "shopify://collections/wine-packaging"
           }
         },
         "text_block_wVQx8z": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify:\/\/shop_images\/StretchLoops_copy2.jpg",
+            "icon": "shopify://shop_images/StretchLoops_copy2.jpg",
             "title": "Stretch Loops",
             "tags": "",
-            "link": "shopify:\/\/collections\/metallic-stretch-loops"
+            "link": "shopify://collections/metallic-stretch-loops"
           }
         },
         "text_block_jQmLXE": {
           "type": "text_block",
           "settings": {
-            "icon": "shopify:\/\/shop_images\/GiftCard_copy1.jpg",
+            "icon": "shopify://shop_images/GiftCard_copy1.jpg",
             "title": "Gift Card Boxes",
             "tags": "",
-            "link": "shopify:\/\/collections\/gift-card-boxes"
+            "link": "shopify://collections/gift-card-boxes"
           }
         }
       },

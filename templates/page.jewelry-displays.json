@@ -88,7 +88,7 @@
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/rings.jpg",
-            "title": "Ring Displays",
+            "title": "Ring Display Stands",
             "content": "",
             "tags": "",
             "link": "shopify://collections/rings-display",
@@ -99,7 +99,7 @@
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/earrings.jpg",
-            "title": "Earring Displays",
+            "title": "Earring Display Stands",
             "content": "",
             "tags": "",
             "link": "shopify://collections/earrings-display",
@@ -110,9 +110,9 @@
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/necklaces.jpg",
-            "title": "Neck Displays",
+            "title": "Neck Display Stands",
             "content": "",
-            "tags": "",
+            "tags": "Neck display stands",
             "link": "shopify://collections/jewelry-neck-displays",
             "size": "flex-2-5"
           }
@@ -121,7 +121,7 @@
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/pendants.jpg",
-            "title": "Pendant Displays",
+            "title": "Pendant Display Stands",
             "content": "",
             "tags": "",
             "link": "shopify://collections/pendants-display",
@@ -132,9 +132,9 @@
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/chains.jpg",
-            "title": "Chain Displays",
+            "title": "Chain Display Stands",
             "content": "",
-            "tags": "",
+            "tags": "Chain display stands",
             "link": "shopify://collections/chains-display",
             "size": "flex-2-5"
           }
@@ -143,9 +143,9 @@
           "type": "text_block",
           "settings": {
             "icon": "shopify://shop_images/bracelet.jpg",
-            "title": "Bracelet Displays",
+            "title": "Bracelet Display Stands",
             "content": "",
-            "tags": "",
+            "tags": "bracelet display stands",
             "link": "shopify://collections/bracelets-display",
             "size": "flex-2-5"
           }

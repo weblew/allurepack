@@ -82,8 +82,8 @@
     {% assign featured_image = featured_variant.image %}
 
   {% else %}
-    2
     {% if collection.metafields.settings.secondaryDefaultcolor != blank %}
+      3
         {% assign find_featured_variant = product.variants | where:'option1', collection.metafields.settings.secondaryDefaultcolor %}  
         {% if find_featured_variant.size > 0 %}
           {% assign featured_variant = find_featured_variant | first %}

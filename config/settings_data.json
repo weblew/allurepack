@@ -354,7 +354,7 @@
           "email": "info@allurepack.com",
           "contactImage": "shopify://shop_images/contact_2.png",
           "customImage": "shopify://shop_images/contact-custom.png",
-          "catalogImage": "shopify://shop_images/Catalog24-25_transparency2b.png"
+          "catalogImage": "shopify://shop_images/Catalog26_transparency_copy.png"
         }
       },
       "home-slider": {
@@ -3781,7 +3781,7 @@
         "type": "promotion-strip",
         "settings": {
           "catalog_title": "Get our [year] Catalog",
-          "image": "shopify://shop_images/Catalog_image_24-25b-01.png"
+          "image": "shopify://shop_images/Catalog_image_26_copy.png"
         }
       },
       "1534961111937": {
@@ -5044,11 +5044,6 @@
       "855628211100114053": {
         "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
         "disabled": false,
-        "settings": {}
-      },
-      "15300375147181448869": {
-        "type": "shopify://apps/dr-volume-discounts/blocks/instant-load/253aa77a-a419-4c90-a20b-e9283efcd331",
-        "disabled": true,
         "settings": {}
       },
       "2200952712151285029": {

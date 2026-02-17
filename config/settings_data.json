@@ -584,8 +584,8 @@
       "promotion-strip": {
         "type": "promotion-strip",
         "settings": {
-          "catalog_title": "Get our Holiday [year] Catalog",
-          "image": "shopify://shop_images/catalog-2018_15c8a38b-cbd8-49c1-9513-e4ab88497357.png"
+          "catalog_title": "Get our [year] Catalog",
+          "image": "shopify://shop_images/Catalog_image_26_copy.png"
         }
       },
       "feature-columns": {

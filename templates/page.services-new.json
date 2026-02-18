@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "services_hero_3WmNaP": {
@@ -5,7 +14,7 @@
       "settings": {
         "title": "for seamless supply",
         "sub_title": "Allure’s shipping solutions",
-        "image": "shopify:\/\/shop_images\/c1e8226c30d88be803bbe78699a02252_1.png"
+        "image": "shopify://shop_images/c1e8226c30d88be803bbe78699a02252_1.png"
       }
     },
     "services_tabs_WALNpU": {
@@ -15,23 +24,23 @@
           "type": "content",
           "settings": {
             "tab": "",
-            "content": "<p>Allure offers shipping and storage services tailored to meet our customers' various business models. <\/p><p>We'll save you time on logistics and problem-solving. You concentrate on providing stellar service, acquiring new clients, or launching new products.<\/p>"
+            "content": "<p>Allure offers shipping and storage services tailored to meet our customers' various business models. </p><p>We'll save you time on logistics and problem-solving. You concentrate on providing stellar service, acquiring new clients, or launching new products.</p>"
           }
         },
         "image_text_VLFJyX": {
           "type": "image_text",
           "settings": {
             "tab": "Drop Shipping",
-            "image": "shopify:\/\/shop_images\/Box_Logos.jpg",
-            "content": "<h4>From our door to all of yours<\/h4><h2>Drop Shipping<\/h2><p><strong>In addition to our standard shipping options, we also offer drop shipping for customers who have multiple locations, such as chain retailers.<\/strong><\/p><p>This allows you to have orders shipped directly to your customers, skipping your stockroom, greatly reducing shipping time and storage costs. <\/p><p>It’s smooth and hitch-proof. Contact us to learn more about this option.<\/p>"
+            "image": "shopify://shop_images/Box_Logos.jpg",
+            "content": "<h4>From our door to all of yours</h4><h2>Drop Shipping</h2><p><strong>In addition to our standard shipping options, we also offer drop shipping for large brands or bigger businesses who have multiple locations, such as chain retailers.</strong></p><p>This allows you to have orders shipped directly to your customers, skipping your stockroom, and greatly reducing shipping time and storage costs. </p><p>It’s smooth and hitch-proof, part of the white glove service large corporate  accounts can expect with Allure.  Contact us to learn more about this option.</p>"
           }
         },
         "image_text_nFEbdL": {
           "type": "image_text",
           "settings": {
             "tab": "Stock & Ship",
-            "image": "shopify:\/\/shop_images\/Warehouse_Image_-_cropped.jpg",
-            "content": "<h4>Delivered – on your demand.<\/h4><h3>Stock & Ship<\/h3><p>Ensure peace of mind for when you need your branded boxes ASAP to fill large orders or, simply when you run low. <\/p><p><strong>Our Stock & Ship program allows you to place custom printed orders for the next 12 months, without worrying about storage space. We will keep them in our storage and ship them as needed.  <\/strong><\/p><p><strong>The best part?  We only charge you once the stock ships. We’ll also help you with a steady stream of supply by keeping track of your usage. <\/strong><\/p><p>We charge an upfront deposit of 25% of the total order, and then charge for the items only once they ship.<\/p><p>For Stock & Ship, there is a minimum order quantity of 3000 items.  All stock must be shipped within 12 months of ordering.<\/p>"
+            "image": "shopify://shop_images/Warehouse_Image_-_cropped.jpg",
+            "content": "<h4>Delivered – on your demand.</h4><h3>Stock & Ship</h3><p>Ensure peace of mind for when you need your branded boxes ASAP to fill large orders or, simply when you run low. </p><p><strong>Our Stock & Ship program allows you to place custom printed orders for the next 12 months, without worrying about storage space. We will keep them in our storage and ship them as needed.  </strong></p><p><strong>The best part?  We only charge you once the stock ships. We’ll also help you with a steady stream of supply by keeping track of your usage. </strong></p><p>We charge an upfront deposit of 25% of the total order, and then charge for the items only once they ship.</p><p>For Stock & Ship, there is a minimum order quantity of 3000 items.  All stock must be shipped within 12 months of ordering.</p>"
           }
         },
         "faq_LPUQnE": {
@@ -39,7 +48,7 @@
           "settings": {
             "tab": "Shipping policies",
             "title": "Shipping policies",
-            "content": "<p><strong>We offer fast shipping to addresses within the 48 contiguous states.<br\/><\/strong>In-stock items generally ship on the same or next business day after the order was placed.<br\/>Note: Custom items and custom printed items will ship within 24 hours of when the customizations are completed.<\/p>"
+            "content": "<p><strong>We offer fast shipping to addresses within the 48 contiguous states.<br/></strong>In-stock items generally ship on the same or next business day after the order was placed.<br/>Note: Custom items and custom printed items will ship within 24 hours of when the customizations are completed.</p>"
           }
         },
         "faq_i9yVqQ": {
@@ -47,7 +56,7 @@
           "settings": {
             "tab": "Pickup",
             "title": "Pickup",
-            "content": "<p>We also offer the option to pick up your order from our warehouse, located at <strong>141 Lanza Ave. Bldg. 29N Garfield NJ, 07026.<br\/><\/strong>Choose \"Pickup\" during checkout and you will be notified once your order is ready for pickup.<\/p>"
+            "content": "<p>We also offer the option to pick up your order from our warehouse, located at <strong>141 Lanza Ave. Bldg. 29N Garfield NJ, 07026.<br/></strong>Choose \"Pickup\" during checkout and you will be notified once your order is ready for pickup.</p>"
           }
         },
         "faq_XQY7yd": {
@@ -55,7 +64,7 @@
           "settings": {
             "tab": "Returns & Refunds",
             "title": "Returns & Refunds",
-            "content": "<p>Returns are accepted within 60 days of shipment. All returns must be authorized by an Allure representative in advance. To initiate a return, please email info@allurepack.com.<\/p><p><\/p><h4><strong>Custom and Printed Products<\/strong><\/h4><p>Custom or printed products cannot be canceled or refunded once production has begun. Printed orders cannot be returned unless damaged. <\/p><p><\/p><h4><strong>Damaged Products<\/strong><\/h4><p>Damaged products must be reported within 10 days of delivery.<\/p><p><\/p><h4><strong>Condition of Returned Items<\/strong><\/h4><p>All returned items must be in unused condition and in their original packaging to be eligible for a return.<\/p><h4><\/h4><h4><strong>Shipping Costs<\/strong><\/h4><p>Shipping costs are non-refundable. The customer is responsible for return shipping unless the items are defective or damaged.<\/p>"
+            "content": "<p>Returns are accepted within 60 days of shipment. All returns must be authorized by an Allure representative in advance. To initiate a return, please email info@allurepack.com.</p><p></p><h4><strong>Custom and Printed Products</strong></h4><p>Custom or printed products cannot be canceled or refunded once production has begun. Printed orders cannot be returned unless damaged. </p><p></p><h4><strong>Damaged Products</strong></h4><p>Damaged products must be reported within 10 days of delivery.</p><p></p><h4><strong>Condition of Returned Items</strong></h4><p>All returned items must be in unused condition and in their original packaging to be eligible for a return.</p><h4></h4><h4><strong>Shipping Costs</strong></h4><p>Shipping costs are non-refundable. The customer is responsible for return shipping unless the items are defective or damaged.</p>"
           }
         }
       },
@@ -73,7 +82,7 @@
       "type": "promotion-strip",
       "settings": {
         "catalog_title": "Get our 2025 Catalog",
-        "image": "shopify:\/\/shop_images\/Catalog_image_24-25b-01_a409042b-880b-4fad-a8f7-16fc27a49c7b.png"
+        "image": "shopify://shop_images/Catalog_image_24-25b-01_a409042b-880b-4fad-a8f7-16fc27a49c7b.png"
       }
     }
   },

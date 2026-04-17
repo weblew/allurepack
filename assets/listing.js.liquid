@@ -264,7 +264,7 @@ function changeImage(){
 function quantityChange(){
 	
 	var $this = $(this),        
-        item = $this.closest('.list-view-item').length ? $this.closest('.list-view-item') : $this.closest('.home-grid-item-inner') ? $this.closest('.home-grid-item-inner') : $this.closest('.product-detail'),
+        item = $this.closest('.list-view-item').length ? $this.closest('.list-view-item') : $this.closest('.home-grid-item-inner').length ? $this.closest('.home-grid-item-inner') : $this.closest('.product-detail'),
 		color = item.find('input[type=radio]:checked').data('color') || item.find('[data-color].selected').data('color'),
     	options = item.length ? PRODUCTS[item.data('id')].options : [], //item.data('options'),
 		variants = item.length ? PRODUCTS[item.data('id')].variants : [],

@@ -289,6 +289,7 @@ function quantityChange(){
 			let variant = variants.find(v => {
 				return Number(v['option' + bulk.position]) === qtyBreak
 			});
+			console.log(variant)
 			if(variant){
 				$this.closest('form').find('[name="id"]').val(variant.id)
 			}

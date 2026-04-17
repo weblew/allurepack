@@ -188,6 +188,7 @@ function addItemToCart(e){
     var itemData = new FormData($this[0]);
     id = Number(id);
     quantity = Number(quantity);
+    console.log('quantity', quantity)
       
     if(variant && variant.featured_image){
     	$('.addToCart-item-image').css('background-image', 'url("' + variant.featured_image.src + '")');

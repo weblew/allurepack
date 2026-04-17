@@ -277,7 +277,7 @@ function quantityChange(){
         }) : '',
         qtyBreak = _.max(_.map(qtyBreaks, Number));
 
-console.log($this.closest('.product-detail'))
+console.log($this.closest('.product-detail').data('id'))
   	if(bulk){
 		console.log(bulk)
 		if(item.find('.list-view-item-color').length){

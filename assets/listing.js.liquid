@@ -279,6 +279,7 @@ function quantityChange(){
 
 
   	if(bulk){
+		console.log(bulk)
 		if(item.find('.list-view-item-color').length){
 			item.find('.list-view-item-color').hide().siblings('.list-view-item-bulk-' + qtyBreak).show();
 			item.find('.list-view-item-color-' + color + ':visible').find('input').click();

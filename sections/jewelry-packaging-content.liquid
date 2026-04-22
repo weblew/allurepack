@@ -1,4 +1,4 @@
-<div class="jewelry-packaging-content">
+<div {%if section.settings.css_id != blank %}id="{{ section.settings.css_id }}"{% endif %} class="jewelry-packaging-content">
     <div class="page-width">
         {% for block in section.blocks  %}
             {% if block.type == 'text'  %}
@@ -60,6 +60,11 @@
 {% schema %}
     {
       "name": "Jewelry Packaging Content",
+      "settings": [{
+        "type": "text",
+        "id": "css_id",
+        "label": "HTML ID"
+      }],
       "blocks": [
           {
             "type": "text",

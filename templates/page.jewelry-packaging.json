@@ -136,7 +136,9 @@
         "4a194d5b-af15-4c05-b0b6-addda6ff0911",
         "0bb3ff65-5195-43ed-9cfe-325b0e008e79"
       ],
-      "settings": {}
+      "settings": {
+        "css_id": ""
+      }
     },
     "cta_fNqnQA": {
       "type": "CTA",
@@ -168,7 +170,9 @@
         "text_8f9nPQ"
       ],
       "name": "Jewelry Packaging Content",
-      "settings": {}
+      "settings": {
+        "css_id": "free-samples"
+      }
     },
     "b041bc6f-421d-4fbf-800d-324402ef99c1": {
       "type": "promotion-strip",

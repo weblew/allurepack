@@ -188,7 +188,6 @@ function addItemToCart(e){
     var itemData = new FormData($this[0]);
     id = Number(id);
     quantity = Number(quantity);
-    console.log('quantity', quantity)
       
     if(variant && variant.featured_image){
     	$('.addToCart-item-image').css('background-image', 'url("' + variant.featured_image.src + '")');
@@ -422,7 +421,6 @@ function addItemToCart(e){
 }
 
 function variantQtyLessFromQty(qty, variant, groupItems){
-console.log(qty, variant, groupItems)
     if(variant.group_items && variant.group_items.length){
       var oos_group_item = variant.group_items.find(gi => {
         return gi.inventory_quantity < qty
@@ -1096,16 +1094,55 @@ function submitBackInstock(){
   		wbAlert("Thank you, We'll let you know when it's back.");
       	$('.subscribe-back-in-stock-from').hide();
       
-        $.ajax({
-        	method: "POST",
-        	url: "https://a.klaviyo.com/api/v1/catalog/subscribe",
-        	data: { 
-          		a: "JbPn8e", 
-          		email: email,
-          		variant : variantId,
-          		platform : "shopify"
-        	}
-        });
+        // $.ajax({
+        // 	method: "POST",
+        // 	url: "https://a.klaviyo.com/api/v1/catalog/subscribe",
+        // 	data: { 
+        //   		a: "JbPn8e", 
+        //   		email: email,
+        //   		variant : variantId,
+        //   		platform : "shopify"
+        // 	}
+        // });
+        fetch("https://a.klaviyo.com/client/back-in-stock-subscriptions/?company_id=JbPn8e", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "revision": "2024-06-15"
+            },
+            body: JSON.stringify({
+              data: {
+                type: "back-in-stock-subscription",
+                attributes: {
+                  profile: {
+                    data: {
+                      type: "profile",
+                      attributes: {
+                        email: email
+                      }
+                    }
+                  },
+                  channels: ["EMAIL"]
+                },
+                relationships: {
+                  variant: {
+                    data: {
+                      type: "catalog-variant",
+                      id: `$shopify:::$default:::${variantId}`
+                    }
+                  }
+                }
+              }
+            })
+          })
+          .then(async res => {
+            if (!res.ok) {
+              console.error("Klaviyo error:", await res.text());
+              return;
+            }
+            console.log("Subscribed to back in stock");
+          })
+          .catch(err => console.error(err));
   	}
   
   	return false;

@@ -62,6 +62,8 @@ class FacetFiltersForm extends HTMLElement {
       if (countContainerDesktop) {
         countContainerDesktop.classList.add('loading');
       }
+
+      console.log(55555)
   
       sections.forEach((section) => {
         const url = `${window.location.pathname}?section_id=${section.section}&${searchParams}`;
@@ -99,6 +101,7 @@ class FacetFiltersForm extends HTMLElement {
     }
   
     static renderProductGridContainer(html) {
+      console.log(1111)
       document.getElementById('product-grid').innerHTML = new DOMParser()
         .parseFromString(html, 'text/html')
         .getElementById('product-grid').innerHTML;

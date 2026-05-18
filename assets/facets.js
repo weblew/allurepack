@@ -99,18 +99,22 @@ class FacetFiltersForm extends HTMLElement {
     }
   
     static renderProductGridContainer(html) {
-      document.getElementById('product-grid').innerHTML = new DOMParser()
-        .parseFromString(html, 'text/html')
-        .getElementById('product-grid').innerHTML;
+      const productGrid = document.getElementById('product-grid');
+      productGrid.innerHTML = new DOMParser().parseFromString(html, 'text/html').getElementById('product-grid').innerHTML;
   
-      document
-        .getElementById('product-grid')
-        .querySelectorAll('.scroll-trigger')
-        .forEach((element) => {
+      productGrid.querySelectorAll('.scroll-trigger').forEach((element) => {
           element.classList.add('scroll-trigger--cancel');
-        });
+      });
+        
 
-        $('.list-view-item, .product-detail ,.grid-view-item, .home-grid-item-inner').each(displayPricesAndColors);
+      $('.list-view-item, .product-detail ,.grid-view-item, .home-grid-item-inner').each(displayPricesAndColors);
+
+      productGrid.querySelectorAll('script[data-product-data]').forEach((oldScript) => {
+          const newScript = document.createElement('script');
+          newScript.textContent = oldScript.textContent;
+          document.head.appendChild(newScript);
+          newScript.remove();
+      });
     }
   
     static renderProductCount(html) {

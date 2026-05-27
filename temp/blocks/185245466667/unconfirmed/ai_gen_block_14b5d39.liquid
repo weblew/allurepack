@@ -1,6 +1,121 @@
+{% doc %}
+  @prompt
+    generate a section where i can paste raw html, i need to be able to add liquid, wrapp with the class "page-width" also add a background setting for the sections and padding for desktop and mobile
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-custom-liquid-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_desktop }}px 0;
+  }
+
+  .ai-custom-liquid-content-{{ ai_gen_id }} {
+    width: 100%;
+  }
+
+  .ai-custom-liquid-empty-{{ ai_gen_id }} {
+    background-color: #f4f4f4;
+    border: 2px dashed #cccccc;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #666666;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-custom-liquid-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_mobile }}px 0;
+    }
+  }
+{% endstyle %}
+
+<custom-liquid-{{ ai_gen_id }} class="ai-custom-liquid-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="page-width">
+    {% if block.settings.custom_liquid != blank %}
+      <div class="ai-custom-liquid-content-{{ ai_gen_id }}">
+        {{ block.settings.custom_liquid }}
+      </div>
+    {% else %}
+      <div class="ai-custom-liquid-empty-{{ ai_gen_id }}">
+        Paste your Liquid code in the block settings to display it here
+      </div>
+    {% endif %}
+  </div>
+</custom-liquid-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CustomLiquid{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        const scripts = this.querySelectorAll('script');
+        scripts.forEach((script) => {
+          const newScript = document.createElement('script');
+          if (script.src) {
+            newScript.src = script.src;
+          } else {
+            newScript.textContent = script.textContent;
+          }
+          script.parentNode.replaceChild(newScript, script);
+        });
+      }
+    }
+
+    customElements.define('custom-liquid-{{ ai_gen_id }}', CustomLiquid{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Custom Liquid",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Liquid code"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "label": "Desktop padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "label": "Mobile padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Liquid"
+    }
+  ]
+}
 {% endschema %}

@@ -161,26 +161,6 @@
         "catalog_title": "Get our 2024 Catalog",
         "image": "shopify://shop_images/Mask_Group_2.png"
       }
-    },
-    "1779906733282b5f63": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_d81b566_PzC8Km": {
-          "type": "ai_gen_block_d81b566",
-          "settings": {
-            "custom_liquid": "",
-            "use_page_width": true,
-            "background_color": "#ffffff",
-            "padding_desktop": 50,
-            "padding_mobile": 30
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_d81b566_PzC8Km"
-      ],
-      "settings": {}
     }
   },
   "order": [
@@ -191,7 +171,6 @@
     "home_collection_Jq3PJQ",
     "cta_7ritn3",
     "custom_content_XdeiYm",
-    "b041bc6f-421d-4fbf-800d-324402ef99c1",
-    "1779906733282b5f63"
+    "b041bc6f-421d-4fbf-800d-324402ef99c1"
   ]
 }

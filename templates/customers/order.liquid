@@ -62,7 +62,10 @@
             <td data-label="{{ 'customer.order.sku' | t }}">{{ line_item.sku }}</td>
             <td data-label="{{ 'customer.order.price' | t }}">{{ line_item.price | money }}</td>
             <td data-label="{{ 'customer.order.quantity' | t }}">
-              <div class="qty">{{ line_item.quantity }}</div>
+              <div class="qty">
+                {{ line_item.quantity }}
+                <input type="hidden" name="qty" value="{{ line_item.quantity }}">
+              </div>
             </td>
             <td data-label="{{ 'customer.order.total' | t }}">{{ line_item.quantity | times: line_item.price | money }}</td>
           </tr>

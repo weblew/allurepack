@@ -157,10 +157,11 @@
         {% for item in order.line_items %}
               
   			var itemInList = ORDERED_ITEMS.findIndex(function(item){
-            	
+            
               return item.variant_id == '{{item.variant_id}}';
             
             });
+            
   			if(itemInList === -1 && '{{item.product.type}}' !== 'logo'){
                 var product = {
                   id : {{item.id}},

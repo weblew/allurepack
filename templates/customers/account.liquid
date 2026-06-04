@@ -73,6 +73,7 @@
               	{% if reorder %}
                   <div class="account-tab-content">
                       <div class="account-product-history-list">
+                        {{ customer.orders.size }}
                           {% if customer.orders.size != 0 %}
 								<div class="account-product-history-item account-product-history-header">
                                    <div class="image">

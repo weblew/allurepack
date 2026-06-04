@@ -6,7 +6,7 @@ $(document).on('click', '#customer_logout_link', function(){
 
 }).on('click', '.js-reorder', function(e){
 
-  return;
+  
 		
   var selectedItems = $('.js-select-reorder:checked'),
       counter = 0;
@@ -17,8 +17,10 @@ $(document).on('click', '#customer_logout_link', function(){
     
     $(this).loading();
     window.addingToCart = true;
-  	
+  	console.log('get cart')
     Shopify.getCart(function(cart){
+
+      console.log(cart)
 
       
       CART.items = cart.items;
@@ -49,7 +51,7 @@ $(document).on('click', '#customer_logout_link', function(){
         })
       }); 
       
-      
+      return;
       
       jQuery.ajax({
           url: '/cart/add.js',

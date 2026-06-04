@@ -38,7 +38,6 @@ $(document).on('click', '#customer_logout_link', function(){
               return v.option1 === product.option1 && Number(v.option2) === Number(qtyBreak);
             });
         
-        alert(qty)
         items.push({
 
           id : newVeriant ? newVeriant.id : data.itemId,
@@ -48,7 +47,6 @@ $(document).on('click', '#customer_logout_link', function(){
         })
       }); 
       
-      return;
       
       jQuery.ajax({
           url: '/cart/add.js',

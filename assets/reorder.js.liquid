@@ -5,6 +5,8 @@ $(document).on('click', '#customer_logout_link', function(){
   localStorage.removeItem('NET30')
 
 }).on('click', '.js-reorder', function(e){
+
+  return;
 		
   var selectedItems = $('.js-select-reorder:checked'),
       counter = 0;
@@ -46,9 +48,7 @@ $(document).on('click', '#customer_logout_link', function(){
 
         })
       }); 
-      console.log(selectedItems)
-
-      return;
+      
       
       
       jQuery.ajax({

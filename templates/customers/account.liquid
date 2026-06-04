@@ -73,7 +73,7 @@
               	{% if reorder %}
                   <div class="account-tab-content">
                       <div class="account-product-history-list">
-                        {{ customer.orders.size }}
+                        
                           {% if customer.orders.size != 0 %}
 								<div class="account-product-history-item account-product-history-header">
                                    <div class="image">
@@ -153,7 +153,7 @@
 <script>  	  
   
   {% for order in customer.orders %}
-  		
+  		console.log(333333)
         {% for item in order.line_items %}
               
   			var itemInList = ORDERED_ITEMS.findIndex(function(item){

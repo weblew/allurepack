@@ -22,6 +22,7 @@ $(document).on('click', '#customer_logout_link', function(){
       
       CART.items = cart.items;
       var items = [];
+      console.log(selectedItems)
           
       selectedItems.each(function(item){
         var data = $(this).data(),

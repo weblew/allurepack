@@ -17,11 +17,11 @@
 
 
 
-{% unless collection.handle contains 'box' or collection.handle contains 'walnut-jewelry-boxes' or collection.template_suffix == 'displays' %}
+{% unless collection.handle contains 'box' or  collection.template_suffix == 'displays' %}
 
 	{% include 'collection-info' %}
 
-{% elsif collection.title contains 'Sleek' or collection.title contains 'Uniform' or collection.title contains 'Magnetic' %}
+{% elsif collection.title contains 'Sleek' or collection.title contains 'Uniform' or collection.title contains 'Magnetic' or collection.handle contains 'walnut-jewelry-boxes'  %}
   
   {% include 'collection-info' %}
   

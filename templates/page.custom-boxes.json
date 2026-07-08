@@ -38,47 +38,34 @@
       "settings": {
         "icon": true,
         "title": "Our Gift-Ready Boxes",
-        "collection": "custom-printed-bags"
+        "collection": "custom-printed-gift-boxes"
       }
     },
     "974bcd61-ee1f-4a53-b9fe-942bafc128fb": {
       "type": "shop-boxes",
       "blocks": {
-        "4188c351-b113-4784-ae03-f7ed83963a93": {
+        "page_xBGjkq": {
           "type": "page",
           "settings": {
-            "title": "Ribbon Handle Bags",
+            "title": "Collapsible Gift Boxes",
             "content": "",
-            "url": "shopify://collections/ribbon-handle-gift-bags",
-            "image": "shopify://shop_images/manhattan-bags-567424_large_64688a00-2a76-4a96-8313-b31eca850164.webp",
-            "width": 33
+            "url": "shopify://collections/foldable-magnetic-gift-boxes",
+            "image": "shopify://shop_images/custom_printed_gift_boxes_square.png"
           }
         },
-        "a62418ba-05b0-4c29-a16e-fe2a9cc4eef8": {
+        "page_NxTqnC": {
           "type": "page",
           "settings": {
-            "title": "Euro Tote Bags",
+            "title": "Gift Card Boxes",
             "content": "",
-            "url": "shopify://collections/euro-tote-bags",
-            "image": "shopify://shop_images/euro-tote-bags-613397_large_6c4ae561-7f22-459a-a042-e01bfa55e5a0.webp",
-            "width": 33
-          }
-        },
-        "8df0cf51-28af-4bfc-8ad3-3607f8699b13": {
-          "type": "page",
-          "settings": {
-            "title": "Luxe Bags",
-            "content": "",
-            "url": "shopify://collections/luxe-bags",
-            "image": "shopify://shop_images/euro-luxe-copy.jpg",
-            "width": 33
+            "url": "shopify://collections/gift-card-boxes",
+            "image": "shopify://shop_images/Custom_printed_gift_card_boxes.png"
           }
         }
       },
       "block_order": [
-        "4188c351-b113-4784-ae03-f7ed83963a93",
-        "a62418ba-05b0-4c29-a16e-fe2a9cc4eef8",
-        "8df0cf51-28af-4bfc-8ad3-3607f8699b13"
+        "page_xBGjkq",
+        "page_NxTqnC"
       ],
       "custom_css": [
         ".shop-box-inner .box-text {background: rgba(0, 0, 0, 0.1);}"

@@ -50,7 +50,8 @@
             "title": "Collapsible Gift Boxes",
             "content": "",
             "url": "shopify://collections/foldable-magnetic-gift-boxes",
-            "image": "shopify://shop_images/custom_printed_gift_boxes_square.png"
+            "image": "shopify://shop_images/custom_printed_gift_boxes_square.png",
+            "width": 40
           }
         },
         "page_NxTqnC": {

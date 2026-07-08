@@ -45,7 +45,7 @@
             "content": "",
             "url": "shopify://collections/gift-card-boxes",
             "image": "shopify://shop_images/Custom_printed_gift_card_boxes.png",
-            "width": 55
+            "width": 50
           }
         }
       },
@@ -117,7 +117,7 @@
         "image_rgXTGn": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/printed-bags-ready-to-be-shipped.webp",
+            "image": "shopify://shop_images/logo-printing-on-gift-box.png",
             "width": "50%",
             "alignment": "center"
           }

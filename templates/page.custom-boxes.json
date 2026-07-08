@@ -59,7 +59,8 @@
             "title": "Gift Card Boxes",
             "content": "",
             "url": "shopify://collections/gift-card-boxes",
-            "image": "shopify://shop_images/Custom_printed_gift_card_boxes.png"
+            "image": "shopify://shop_images/Custom_printed_gift_card_boxes.png",
+            "width": 40
           }
         }
       },

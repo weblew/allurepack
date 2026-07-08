@@ -162,7 +162,7 @@
           "type": "icon-text",
           "settings": {
             "title": "Creating your plates",
-            "content": "<p>Once you sign off on the design, we get to work manufacturing your plate.  That’s an actual metal block with your logo etched on! </p>",
+            "content": "<p>Once you sign off on the digital design, we get to work manufacturing your plate.  That’s an actual metal block with your logo etched on! </p>",
             "icon": "shopify://shop_images/24_Stamp_Office_Office_Stamp.svg"
           }
         },

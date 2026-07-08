@@ -25,22 +25,6 @@
       ],
       "settings": {}
     },
-    "cta_7ritn3": {
-      "type": "CTA",
-      "settings": {
-        "background_color": "",
-        "top_spacing": 50,
-        "bottom_spacing": 70
-      }
-    },
-    "home_collection_Jq3PJQ": {
-      "type": "home-collection",
-      "settings": {
-        "icon": true,
-        "title": "Our Gift-Ready Boxes",
-        "collection": "custom-printed-gift-boxes"
-      }
-    },
     "974bcd61-ee1f-4a53-b9fe-942bafc128fb": {
       "type": "shop-boxes",
       "blocks": {
@@ -93,6 +77,22 @@
         "css_id": ""
       }
     },
+    "cta_7ritn3": {
+      "type": "CTA",
+      "settings": {
+        "background_color": "",
+        "top_spacing": 50,
+        "bottom_spacing": 70
+      }
+    },
+    "home_collection_Jq3PJQ": {
+      "type": "home-collection",
+      "settings": {
+        "icon": true,
+        "title": "Our Gift-Ready Boxes",
+        "collection": "custom-printed-gift-boxes"
+      }
+    },
     "cta_6nyHYE": {
       "type": "CTA",
       "settings": {
@@ -125,8 +125,8 @@
         "text_xPYUzC": {
           "type": "text",
           "settings": {
-            "title": "The Fine Print of Custom Printed Bags",
-            "text": "<p><strong>Plate Fee</strong> for imprinting on bags is  $89.</p><p><strong>Printing Fee </strong>for imprinting on bags is $60 for the first 200 prints.  Each additional print is $0.27.</p><p>The printing plate fee a is one time fee for the first time you print. Once we create a plate for you, you will only be charged for printing.</p>",
+            "title": "The Fine Print of Custom Printed Gift Boxes",
+            "text": "<p><strong>Plate Fee</strong> for imprinting on gift boxes is  $75.</p><p><strong>Printing Fee </strong>for imprinting on gift boxes is $69 for the first 200 prints.  Each additional print is $0.32.</p><p>The printing plate fee is one time fee for the first time you print. Once we create a plate for you, you will only be charged for printing.</p>",
             "width": "50%",
             "alignment": "center",
             "align_text": "left"
@@ -154,10 +154,10 @@
   },
   "order": [
     "48734f4d-3cd4-4e12-8ffe-2ba827f9b603",
-    "cta_7ritn3",
-    "home_collection_Jq3PJQ",
     "974bcd61-ee1f-4a53-b9fe-942bafc128fb",
     "305f2c42-0eb0-4e74-8329-5f2197f33698",
+    "cta_7ritn3",
+    "home_collection_Jq3PJQ",
     "cta_6nyHYE",
     "custom_content_XdeiYm",
     "b041bc6f-421d-4fbf-800d-324402ef99c1"

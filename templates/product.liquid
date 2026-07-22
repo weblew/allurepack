@@ -83,6 +83,7 @@
         {
             "@type": "Product",
             "name": "{{ product.title | escape }} - {{ value | escape }}",
+            "description": "{{ product.description | strip_html | escape | strip_newlines }}",
             "color": "{{ value }}",
             "image": "{% if variant.featured_image != blank %}{{ variant.featured_image | image_url }}{% else %}{{ product.featured_image | image_url }}{% endif %}",
             "isVariantOf": {

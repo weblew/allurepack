@@ -4343,10 +4343,10 @@
           "1593796056264": {
             "type": "collection",
             "settings": {
-              "image": "shopify://shop_images/Boxes_vogue-new.jpg",
-              "title": "<p><strong>Vogue </strong>Collection</p>",
-              "link": "",
-              "collection": "vogue"
+              "image": "shopify://shop_images/GlamourGroupSilver.jpg",
+              "title": "<p><strong>Glamour </strong>Collection</p>",
+              "link": "shopify://collections/glamour",
+              "collection": "glamour"
             }
           },
           "791683d9-bfa3-49db-ba15-0a51e03f98c0": {

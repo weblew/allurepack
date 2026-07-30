@@ -4343,7 +4343,7 @@
           "1593796056264": {
             "type": "collection",
             "settings": {
-              "image": "shopify://shop_images/GlamourGroupSilver.jpg",
+              "image": "shopify://shop_images/Glamour_Collection_Extended_Background_Photo.png",
               "title": "<p><strong>Glamour </strong>Collection</p>",
               "link": "shopify://collections/glamour",
               "collection": "glamour"
@@ -4352,7 +4352,7 @@
           "791683d9-bfa3-49db-ba15-0a51e03f98c0": {
             "type": "collection",
             "settings": {
-              "image": "shopify://shop_images/LEDGroupBlack.jpg",
+              "image": "shopify://shop_images/LED_Collection_Extended_Background_Photo.png",
               "title": "<p><strong>LED </strong>Collection</p>",
               "link": "shopify://collections/led",
               "collection": "led"

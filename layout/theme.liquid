@@ -359,6 +359,28 @@ var google_remarketing_only = true;
     window.RUSH_PRINTING = {{all_products[shop.metafields.settings.printing_delay_rush_item] | json}}  ;
 </script>
 {% endif %}
+
+{% if product != blank %}
+  <script>
+    (function() {
+      var storageKey = 'allure_recently_viewed_products';
+      var currentHandle = {{ product.handle | json }};
+
+      try {
+        var storedHandles = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        if (!Array.isArray(storedHandles)) storedHandles = [];
+
+        var updatedHandles = [currentHandle].concat(storedHandles.filter(function(handle) {
+          return typeof handle === 'string' && handle && handle !== currentHandle;
+        })).slice(0, 20);
+
+        localStorage.setItem(storageKey, JSON.stringify(updatedHandles));
+      } catch (error) {
+        return;
+      }
+    })();
+  </script>
+{% endif %}
   
 </body>
 </html>

@@ -1,0 +1,238 @@
+<recently-viewed-products
+  id="RecentlyViewedProducts-{{ section.id }}"
+  data-storage-key="allure_recently_viewed_products"
+  data-product-handle="{{ product.handle | escape }}"
+  data-products-root="{{ routes.root_url }}products/"
+  data-render-section-id="recently-viewed-products"
+  data-limit="{{ section.settings.products_to_show }}"
+  hidden
+>
+  <div
+    class="home-items recently-viewed-products__content"
+    style="--padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px; --padding-top-desktop: {{ section.settings.padding_top_desktop }}px; --padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;"
+  >
+    <div class="page-width">
+      {% if section.settings.title != blank %}
+        <h2 class="section-title">
+          {% if section.settings.icon %}
+            <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path d="M3.42254 4.53809H0C0.614301 4.88912 1.8429 5.80179 1.8429 6.64426V19.5446H10.7344V17.9649H3.42254V4.53809Z" fill="#C7A049"/>
+              <path d="M12.5775 4.53809H16C15.3857 4.88912 14.1571 5.80179 14.1571 6.64426V19.5446H9.15493V17.965H12.5775V4.53809Z" fill="#C7A049"/>
+              <path d="M5.44889 1.11568C4.92235 0.852412 3.68978 1.00726 3.86926 1.90554C4.13257 2.9586 4.92239 3.22189 7.23914 3.22189C6.76525 2.16858 5.97543 1.37896 5.44889 1.11568Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.5"/>
+              <path d="M10.8126 1.11568C11.3391 0.852412 12.5717 1.00726 12.3922 1.90554C12.1289 2.9586 11.3391 3.22189 9.02234 3.22189C9.49622 2.16858 10.286 1.37896 10.8126 1.11568Z" fill="#C7A049" stroke="#C7A049" stroke-width="0.5"/>
+            </svg>
+          {% endif %}
+          {{ section.settings.title | escape }}
+        </h2>
+      {% endif %}
+
+      <div class="featured-items" data-recently-viewed-items></div>
+    </div>
+  </div>
+
+  <template data-recently-viewed-card>
+    {% if product != blank and product.featured_image != blank %}
+      <div class="home-grid-item" data-recently-viewed-handle="{{ product.handle | escape }}">
+        {% render 'home-grid-item', product: product, collection: collection, section: section, hideForm: true %}
+      </div>
+    {% endif %}
+  </template>
+</recently-viewed-products>
+
+{% stylesheet %}
+  .home-items.recently-viewed-products__content {
+    padding-top: var(--padding-top-mobile);
+    padding-bottom: var(--padding-bottom-mobile);
+  }
+
+  @media screen and (min-width: 750px) {
+    .home-items.recently-viewed-products__content {
+      padding-top: var(--padding-top-desktop);
+      padding-bottom: var(--padding-bottom-desktop);
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  if (!customElements.get('recently-viewed-products')) {
+    class RecentlyViewedProducts extends HTMLElement {
+      connectedCallback() {
+        if (this.dataset.initialized === 'true') return;
+
+        this.dataset.initialized = 'true';
+        this.items = this.querySelector('[data-recently-viewed-items]');
+
+        const handles = this.readHandles();
+        const currentHandle = this.dataset.productHandle;
+        const limit = Number.parseInt(this.dataset.limit, 10) || 4;
+        const handlesToRender = handles
+          .filter((handle) => handle !== currentHandle);
+
+        if (currentHandle) this.storeHandle(currentHandle, handles);
+        if (handlesToRender.length) this.renderProducts(handlesToRender, limit);
+      }
+
+      readHandles() {
+        try {
+          const handles = JSON.parse(localStorage.getItem(this.dataset.storageKey) || '[]');
+          return Array.isArray(handles)
+            ? handles.filter((handle) => typeof handle === 'string' && handle.length)
+            : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      storeHandle(currentHandle, handles) {
+        try {
+          const updatedHandles = [currentHandle]
+            .concat(handles.filter((handle) => handle !== currentHandle))
+            .slice(0, 20);
+          localStorage.setItem(this.dataset.storageKey, JSON.stringify(updatedHandles));
+        } catch (error) {
+          return;
+        }
+      }
+
+      async renderProducts(handles, limit) {
+        const cards = [];
+
+        for (let index = 0; index < handles.length && cards.length < limit; index += limit) {
+          const batch = handles.slice(index, index + limit);
+          const batchCards = await Promise.all(batch.map((handle) => this.fetchCard(handle)));
+          cards.push(...batchCards.filter(Boolean));
+        }
+
+        cards.slice(0, limit).forEach((card) => this.items.appendChild(card));
+        if (!this.items.children.length) return;
+
+        this.activateProductData();
+        this.initializeProductCards();
+        this.hidden = false;
+        this.dispatchEvent(new CustomEvent('recently-viewed:loaded', { bubbles: true }));
+      }
+
+      async fetchCard(handle) {
+        const url = `${this.dataset.productsRoot}${encodeURIComponent(handle)}?section_id=${encodeURIComponent(this.dataset.renderSectionId)}`;
+
+        try {
+          const response = await fetch(url, { credentials: 'same-origin' });
+          if (!response.ok) return null;
+
+          const html = await response.text();
+          const documentFragment = new DOMParser().parseFromString(html, 'text/html');
+          const template = documentFragment.querySelector('template[data-recently-viewed-card]');
+          if (!template || !template.content.querySelector('[data-recently-viewed-handle]')) return null;
+
+          return document.importNode(template.content, true);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      activateProductData() {
+        this.items.querySelectorAll('script[data-product-data]').forEach((oldScript) => {
+          const newScript = document.createElement('script');
+          Array.from(oldScript.attributes).forEach((attribute) => {
+            newScript.setAttribute(attribute.name, attribute.value);
+          });
+          newScript.textContent = oldScript.textContent;
+          oldScript.replaceWith(newScript);
+        });
+      }
+
+      initializeProductCards() {
+        if (typeof window.displayPricesAndColors !== 'function') return;
+
+        this.items.querySelectorAll('.home-grid-item-inner').forEach((card) => {
+          window.displayPricesAndColors.call(card, {});
+        });
+      }
+    }
+
+    customElements.define('recently-viewed-products', RecentlyViewedProducts);
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Recently viewed",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "icon",
+      "label": "Show icon",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Recently viewed"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Desktop spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently viewed",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

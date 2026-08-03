@@ -331,7 +331,7 @@
       ],
       "settings": {
         "title": "Imprint your mark",
-        "content": "<p>Shop <a href=\"/pages/jewelry-boxes\" title=\"Jewelry Gift Boxes\">Customized Jewelry Boxes</a> </p><p> <a href=\"/pages/custom-gift-bags\" title=\"Custom Gift Bags\">Customized Gift Bags </a>or <a href=\"/pages/jewelry-pouches\" title=\"Jewelry Pouches\">Customized Pouches</a></p>",
+        "content": "<p><strong>Shop</strong> <a href=\"/pages/jewelry-boxes\" title=\"Jewelry Gift Boxes\">Customized Jewelry Boxes</a> and <a href=\"/pages/jewelry-pouches\" title=\"Jewelry Pouches\">Customized Pouches</a></p><p> <strong>Brand your gift bag or box</strong> with our <a href=\"/pages/custom-gift-bags\" title=\"Custom Gift Bags\">Customized Gift Bags </a>and <a href=\"/pages/custom-gift-boxes\" title=\"Custom Gift Boxes\">Customized Gift Boxes</a> </p>",
         "cta_title": "Shop jewelry packaging",
         "link": "shopify://pages/jewelry-packaging"
       }

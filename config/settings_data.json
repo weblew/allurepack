@@ -4828,6 +4828,10 @@
           "a1ec8ffe-17f5-46fa-8481-7d5afb360c67",
           "fbeae9df-f9c3-4d4c-9a14-09c18ebe13f8"
         ],
+        "custom_css": [
+          ".testimonials-content {margin: 0 auto 40px; text-align: center;}",
+          ".testimonials-badge {margin-top:0; margin-left: auto; margin-right: auto;}"
+        ],
         "name": "Reviews",
         "settings": {
           "title": "<h3><strong>Alluring</strong><br/>Testimonials</h3>",

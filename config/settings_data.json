@@ -4831,7 +4831,8 @@
         "name": "Reviews",
         "settings": {
           "title": "<h3><strong>Alluring</strong><br/>Testimonials</h3>",
-          "liquid": "<a href=\"https://www.ekomi-us.com/review-allurepackcom.html\" target=\"_blank\">\n              \t<img src=\"{{ 'zerti_gold_new.png' | file_img_url: '100x'}}\" width=\"60px\" height=\"60px\"/>\nSee our reviews\non eKomi\n              </a>"
+          "liquid": "<a href=\"https://www.ekomi-us.com/review-allurepackcom.html\" target=\"_blank\">\n              \t<img src=\"{{ 'zerti_gold_new.png' | file_img_url: '100x'}}\" width=\"60px\" height=\"60px\"/>\nSee our reviews\non eKomi\n              </a>",
+          "ekomi": true
         }
       },
       "allue-image-text": {

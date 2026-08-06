@@ -4830,7 +4830,8 @@
         ],
         "custom_css": [
           ".testimonials-content {margin: 0 auto 40px; text-align: center;}",
-          ".testimonials-badge {margin-top:0; margin-left: auto; margin-right: auto;}"
+          ".testimonials-badge {margin-top: 0; margin-left: auto; margin-right: auto;}",
+          ".slick-prev:before, .slick-next:before{}"
         ],
         "name": "Reviews",
         "settings": {

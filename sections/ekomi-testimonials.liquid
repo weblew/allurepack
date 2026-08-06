@@ -1,0 +1,49 @@
+<div class="page-width">
+
+  <div id="widget-container" class="ekomi-widget-container ekomi-widget-sf1131466a06e43e9020c"  ></div>
+
+<a href="https://www.ekomi-us.com/review-allurepackcom.html" target="_blank"><img alt="allurepack.com Reviews with ekomi-us.com" src="https://smart-widget-assets.ekomiapps.de/resources/ekomi_logo.png" style="display: none;"/></a>
+
+<script type="text/javascript">
+    function registerWidget (w, token) {
+        w['_ekomiWidgetsServerUrl'] = 'https://widgets.ekomi.com';
+        w['_customerId'] = 113146;
+       
+        if (w['_language'] == undefined) {
+            w['_language'] = new Array();
+        }
+        w['_language'][token] = 'auto';        
+       
+        if(typeof(w['_ekomiWidgetTokens']) !== 'undefined'){
+            w['_ekomiWidgetTokens'][w['_ekomiWidgetTokens'].length] = token;
+        } else {
+            w['_ekomiWidgetTokens'] = new Array(token);
+        }
+        if(typeof(ekomiWidgetJs) == 'undefined') {
+            ekomiWidgetJs = true;
+            var scr = document.createElement('script');scr.src = 'https://sw-assets.ekomiapps.de/static_resources/widget.js';
+            var head = document.getElementsByTagName('head')[0];head.appendChild(scr);
+           
+        } else {if (typeof ekomiWidgetMain != 'undefined') {ekomiWidgetMain('ajax', token);}}
+        return true;
+    }
+    (function (w) {
+        var token = 'sf1131466a06e43e9020c';
+        var k = document.getElementsByClassName("ekomi-widget-" + token);
+        for(var x=0;x<k.length;x++){ registerWidget(w,token); }
+    })(window);
+</script>
+</div>
+
+{% schema %}
+  {
+    "name": "Ekomi Testimonials",
+    "class": "index-section",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Ekomi Testimonials"
+      }
+    ]
+  }
+{% endschema %}

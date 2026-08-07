@@ -4053,12 +4053,25 @@
               "width": 280,
               "menu": ""
             }
+          },
+          "megamenu_QXVwfe": {
+            "type": "megamenu",
+            "settings": {
+              "title": "Gift Packaging",
+              "content": "",
+              "image": "shopify://shop_images/Mask_Group_1_0fced928-4d87-4b36-a5e5-d436729fe04b.png",
+              "link": "shopify://pages/custom-gift-bags",
+              "menu_item": "Gift Packaging",
+              "width": 280,
+              "menu": ""
+            }
           }
         },
         "block_order": [
           "1d280b5f-b959-4f85-a7c8-d266ab3a031f",
           "eb6de3c1-a48b-4b38-a4d3-5191fe750dad",
-          "megamenu_wC9xDz"
+          "megamenu_wC9xDz",
+          "megamenu_QXVwfe"
         ],
         "custom_css": [
           "._header .header-bottom .header-main .logo {width: 180px;}"
@@ -4831,7 +4844,7 @@
         "custom_css": [
           ".testimonials-content {margin: 0 auto 40px; text-align: center;}",
           ".testimonials-badge {margin-top: 0; margin-left: auto; margin-right: auto;}",
-          ".slick-prev:before, .slick-next:before{}"
+          ".slick-prev:before,.slick-next:before {}"
         ],
         "name": "Reviews",
         "settings": {

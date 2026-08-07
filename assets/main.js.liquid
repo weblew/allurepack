@@ -108,6 +108,17 @@ $(document)
   		$(this).closest('.header-bottom-nav-link').find('.header-bottom-nav-link-menu').slideToggle();
 		return false;
 	})
+	.on('mouseenter focusin', '.header-bottom-nav-link', function(){
+		var $menu = $(this).children('.header-bottom-nav-link-menu');
+		if(!$menu.length){
+			return;
+		}
+		// Force a layout pass regardless of hover timing so we can measure
+		// the menu before deciding which side to anchor it to.
+		$menu.removeClass('flip-right').css('display', 'block');
+		var overflowsRight = $menu[0].getBoundingClientRect().right > window.innerWidth;
+		$menu.css('display', '').toggleClass('flip-right', overflowsRight);
+	})
     .on('click', '.vt-promotion-banner-close', function(){
 
         $('.vt-promotion-banner').hide();

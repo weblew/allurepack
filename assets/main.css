@@ -3056,6 +3056,9 @@ select {
     top: 0;
     left: 0;
   }
+  .grid-view-items .home-grid-item-image {
+    padding-top: 100%;
+  }
   .home-collection .home-grid-item-image {
     background-size: cover;
     height: 0;
@@ -4732,6 +4735,12 @@ select {
   background-repeat: no-repeat;
   background-size: contain;
   background-image: url("data:image/svg+xml,%3Csvg width='14' height='15' viewBox='0 0 14 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.05607 3.65544C3.55777 3.65544 3.15381 4.05941 3.15381 4.5577C3.15381 5.056 3.55777 5.45996 4.05607 5.45996C4.55471 5.45996 4.95867 5.056 4.95867 4.5577C4.95867 4.05941 4.55471 3.65544 4.05607 3.65544Z' fill='%23C7A049'/%3E%3Cpath d='M10.2007 10.7002L7.67067 13.2302L1.15532 6.71489L1.05818 3.26258L1.91065 2.41012L2.76346 1.55765L6.21507 1.65479L12.7304 8.17015L10.2007 10.7002ZM6.81084 0.763049C6.71581 0.667668 6.58817 0.61296 6.45351 0.609103L2.56639 0.4997C2.42508 0.491283 2.282 0.550893 2.17996 0.653287L1.16689 1.66635L0.154169 2.67908C0.0517746 2.78112 -0.00398595 2.92104 0.000222034 3.06551L0.109985 6.95333C0.113491 7.08799 0.168542 7.21564 0.263572 7.31067L7.29896 14.3457C7.4017 14.4484 7.53601 14.5 7.67067 14.5C7.80532 14.5 7.93999 14.4484 8.04274 14.3457L10.9445 11.4439L13.8459 8.5422C14.0514 8.33671 14.0514 8.00358 13.8459 7.79809L6.81084 0.763049Z' fill='%23C7A049'/%3E%3C/svg%3E%0A");
+}
+@media only screen and (max-width: 760px) {
+  .volume-discount.has-discount,
+  .docapp-volume-discounts-promo .docapp-volume-discounts-promo-container .docapp-volume-discounts-promo-line {
+    font-size: 14px;
+  }
 }
 
 .docapp-volume-discounts-promo .docapp-volume-discounts-promo-line .docapp-volume-discounts-promo-required,

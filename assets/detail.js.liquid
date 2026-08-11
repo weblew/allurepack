@@ -19,15 +19,29 @@ $(document).on('change', '.selector-wrapper, .selector-wrapper input', function(
   });
 
   if($('.grid-view-items form').length > 5){
-    changeSimilarItemsImages();	
-    
-    // $('.grid-view-items').slick({
-    //   slidesToShow: $(window).width() < 1024 ? 1.4 : 5,
-    //   slidesToScroll: $(window).width() < 1024 ? 1 : 3,
-    //   infinite: true,
-    //   dots:true
-    // }).addClass('in');
-    
+    changeSimilarItemsImages();
+
+    if($(window).width() >= 1024){
+      // slick's `responsive` option (breakpoint-switching at runtime) is
+      // unreliable combined with `infinite:true` (needed below to avoid a
+      // blank trailing page) — compute the tier once from the actual width
+      // instead of trusting slick to swap it live.
+      var similarItemsSlidesPerView = getSlidesPerView();
+
+      $('#similar-items .grid-view-items').slick({
+        slidesToShow: similarItemsSlidesPerView,
+        slidesToScroll: similarItemsSlidesPerView,
+        infinite: true,
+        dots: false,
+        arrows: true
+      }).addClass('in');
+    } else {
+      // Below 1024px, skip slick entirely — .grid-view-items-container's
+      // CSS falls back to a native horizontally-scrolling row (overflow-x:
+      // auto) instead, sidestepping slick's mobile quirks altogether.
+      $('#similar-items .grid-view-items').addClass('in');
+    }
+
   }else if($('.grid-view-items form').length){
     changeSimilarItemsImages();	
   $('.grid-view-items').addClass('in');
@@ -40,6 +54,18 @@ $(document).on('change', '.selector-wrapper, .selector-wrapper input', function(
 setTimeout(function(){
   $('[data-index=option1]').change();
 },300);
+
+// Shared slidesToShow tiering for the similar-items / recently-viewed
+// sliders — kept as a plain width check (evaluated once at slick init)
+// rather than slick's own `responsive` breakpoints, which don't reliably
+// re-apply when combined with `infinite:true`.
+function getSlidesPerView(){
+  var width = $(window).width();
+  if(width < 600) return 2;
+  if(width < 1024) return 3;
+  if(width < 1400) return 4;
+  return 5;
+}
 
 function displaySku(){
   	

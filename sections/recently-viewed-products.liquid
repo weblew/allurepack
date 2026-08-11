@@ -109,6 +109,7 @@
         this.activateProductData();
         this.initializeProductCards();
         this.hidden = false;
+        this.initializeSlider();
         this.dispatchEvent(new CustomEvent('recently-viewed:loaded', { bubbles: true }));
       }
 
@@ -146,6 +147,38 @@
 
         this.items.querySelectorAll('.home-grid-item-inner').forEach((card) => {
           window.displayPricesAndColors.call(card, {});
+        });
+      }
+
+      initializeSlider() {
+        const $ = window.jQuery;
+        if (typeof $ !== 'function' || typeof $.fn.slick !== 'function') return;
+
+        const $items = $(this.items);
+        if ($items.hasClass('slick-initialized')) return;
+
+        const width = $(window).width();
+        if (width < 1024) {
+          // Below 1024px, skip slick entirely — the CSS falls back to a
+          // native horizontally-scrolling row (overflow-x: auto) instead,
+          // sidestepping slick's mobile quirks altogether.
+          return;
+        }
+
+        // slick's `responsive` option (breakpoint-switching at runtime) is
+        // unreliable combined with `infinite:true` (needed below to avoid a
+        // blank trailing page) — compute the tier once from the actual
+        // width instead of trusting slick to swap it live. Matches the
+        // tiering used for the similar-items slider (detail.js.liquid).
+        const slidesPerView = width < 1400 ? 4 : 5;
+
+        $items.slick({
+          dots: false,
+          arrows: true,
+          infinite: true,
+          speed: 300,
+          slidesToShow: slidesPerView,
+          slidesToScroll: slidesPerView
         });
       }
     }

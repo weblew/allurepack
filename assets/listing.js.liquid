@@ -1,4 +1,6 @@
 /* Start Wrap For Jquery 01/08/18 */
+var PRINTING_CART_CONFIRMATION_SCOPE = {{ settings.printing_cart_confirmation_scope | default: 'collections' | json }};
+
 jQuery(document).ready(function($) {
 
   $('.collection-mobile-title').html($('.collection-desktop-title').html())
@@ -561,9 +563,9 @@ function selectColors(){
     	}])
         .controller('PrintingController', PrintingController);
 
-    PrintingController.$inject = ['$scope', '$http'];
+    PrintingController.$inject = ['$scope', '$http', '$timeout'];
 
-    function PrintingController($scope, $http) {
+    function PrintingController($scope, $http, $timeout) {
         var vm = this;
       	
 		vm.printing_options = printing_options;
@@ -863,7 +865,24 @@ function selectColors(){
               	
               	window.applyToItems = vm.applyToItems;
               
-        		closePanel()
+				closePanel()
+
+				if(vm.applyTo !== 'all' && PRINTING_CART_CONFIRMATION_SCOPE !== 'disabled'){
+					$timeout(function(){
+						var productSelector = '.list-view-item[data-id="' + vm.applyTo + '"]';
+
+						if(PRINTING_CART_CONFIRMATION_SCOPE === 'all'){
+							productSelector += ', .product-detail[data-id="' + vm.applyTo + '"]';
+						}
+
+						var productForm = $(productSelector).first();
+						productForm = productForm.is('form[action="/cart/add"]') ? productForm : productForm.find('form[action="/cart/add"]').first();
+
+						if(productForm.length){
+							productForm.data('printing-cart-confirmation', true).trigger('submit');
+						}
+					}, 0, false);
+				}
             }else{
 				if(vm.applyTo === 'all'){
 					delete vm.applyToItems.all;

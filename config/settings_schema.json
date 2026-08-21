@@ -868,6 +868,31 @@
     ]
   },
   {
+    "name": "Printing",
+    "settings": [
+      {
+        "type": "select",
+        "id": "printing_cart_confirmation_scope",
+        "label": "Cart confirmation after save",
+        "default": "collections",
+        "options": [
+          {
+            "value": "collections",
+            "label": "Collections only"
+          },
+          {
+            "value": "all",
+            "label": "Products and collections"
+          },
+          {
+            "value": "disabled",
+            "label": "Disabled"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "Out of stock",
     "settings": [
       {

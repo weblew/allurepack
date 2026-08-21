@@ -1883,6 +1883,19 @@ select {
     top: 50%
 }
 
+.addToCart-layer.printing-cart-confirmation.adding {
+  .js-add-addToCart,
+  .js-cancel-addToCart,
+  .addToCart-layer-close {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .js-add-addToCart {
+    cursor: wait;
+  }
+}
+
 .addToCart-layer-overlay {
     content: '';
     position: fixed;
@@ -1914,6 +1927,17 @@ select {
     padding: 8px 10px;
     margin: 4px 0;
 }
+
+.addToCart-layer .addToCart-printing-confirmation-message{
+  display: none;
+  color: #000;
+  background-color: antiquewhite;
+  padding: 10px 12px;
+  margin-top: 20px;
+  min-height: 58px;
+  align-items: center;
+}
+
 .addToCart-layer .addToCart-item-image{
 	width: 150px;
     height: 150px;

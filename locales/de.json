@@ -304,7 +304,8 @@
       "on_sale": "Angebot",
       "quantity": "Menge",
       "add_to_cart": "In den Einkaufswagen legen",
-      "back_to_collection": "Zurück zu {{ title }}"
+      "back_to_collection": "Zurück zu {{ title }}",
+      "printing_proof_message": "Vor dem Druck wird ein Korrekturabzug per E-Mail gesendet."
     }
   },
   "gift_cards": {

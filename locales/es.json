@@ -304,7 +304,8 @@
       "on_sale": "Oferta",
       "quantity": "Cantidad",
       "add_to_cart": "Agregar al carrito",
-      "back_to_collection": "Volver a {{ title }}"
+      "back_to_collection": "Volver a {{ title }}",
+      "printing_proof_message": "Enviaremos una prueba por correo electrónico antes de imprimir."
     }
   },
   "gift_cards": {

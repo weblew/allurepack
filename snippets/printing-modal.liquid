@@ -408,8 +408,13 @@
 
     </div>
     <div class="printing-panel-footer">
-      <button class="btn btn-black-light" ng-click="vm.closePanel()">Cancel</button>
-      <button class="btn btn-black-dark" ng-click="vm.savePrintingPanel()">Save</button>
+      <div class="printing-panel-proof-message">
+        <p>{{ 'products.product.printing_proof_message' | t }}</p>
+      </div>
+      <div class="printing-panel-footer-actions">
+        <button class="btn btn-black-light" ng-click="vm.closePanel()">Cancel</button>
+        <button class="btn btn-black-dark" ng-click="vm.savePrintingPanel()">Save</button>
+      </div>
     </div>
   </div>
 </div>

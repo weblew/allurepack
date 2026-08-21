@@ -309,6 +309,7 @@
       "quantity": "Quantity",
       "add_to_cart": "Add to cart",
       "back_to_collection": "Back to {{ title }}",
+      "printing_proof_message": "A proof will be emailed for your approval before production.",
       "out_of_stock_local_message_html": "<strong>Note: <\/strong>This item may ship in 2-3 days in a separate shipment.",
       "out_of_stock_local_message_partial_qty_html": "<strong>Note:<\/strong> Part of this item may ship in 2-3 days in a separate shipment.",
       "out_of_stock_none_local_message_html": "<strong>Note: <\/strong>This item is not available for immediate shipment, We will ship this item as soon as we have it back in stock. ",

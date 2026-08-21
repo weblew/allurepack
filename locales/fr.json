@@ -304,7 +304,8 @@
       "on_sale": "Solde",
       "quantity": "Quantité",
       "add_to_cart": "Ajouter au panier",
-      "back_to_collection": "Retour à {{ title }}"
+      "back_to_collection": "Retour à {{ title }}",
+      "printing_proof_message": "Un bon à tirer sera envoyé par e-mail avant l'impression."
     }
   },
   "gift_cards": {

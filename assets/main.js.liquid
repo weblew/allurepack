@@ -1253,6 +1253,22 @@ function openConfirmAddToCartLayer(cb){
   
 }
 
+var atcUpsellScriptRequest;
+
+function loadATCUpsell(){
+    if(window.ATCUpsell){
+        return $.Deferred().resolve(window.ATCUpsell).promise();
+    }
+
+    if(!atcUpsellScriptRequest){
+        atcUpsellScriptRequest = $.getScript({{ 'atc-upsell.js' | asset_url | json }}).fail(function(){
+            atcUpsellScriptRequest = null;
+        });
+    }
+
+    return atcUpsellScriptRequest;
+}
+
 function openAddToCartLayer(reason, item){	
   	
   	if(reason === 'confirm'){
@@ -1284,12 +1300,19 @@ function openAddToCartLayer(reason, item){
       	$('.atc-upsell').empty();
       
       	
-      	if(item){
+		if(item){
         
-            var searchQuery = item.handle + ':' + encodeURI(item.variant.option1);
+            var searchQuery = encodeURIComponent(item.handle + ':' + item.variant.option1);
+            var dynamicUpsellRequest = loadATCUpsell();
 
-            $('.atc-upsell').load('/search?q='+searchQuery+'&view=upsell', function(res){
+            $('.atc-upsell').load('/search?q='+searchQuery+'&view=upsell', function(){
+                var upsellContainer = $(this);
 
+                dynamicUpsellRequest.done(function(){
+                    if(window.ATCUpsell){
+                        window.ATCUpsell.enhance(upsellContainer, item);
+                    }
+                });
             });
           
         }

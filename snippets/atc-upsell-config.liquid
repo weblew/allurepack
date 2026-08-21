@@ -1,0 +1,58 @@
+{% assign atc_display_menu = settings.atc_display_menu %}
+
+{% if atc_display_menu != blank and atc_display_menu.links == blank %}
+  {% assign atc_display_menu = linklists[settings.atc_display_menu] %}
+{% endif %}
+
+{% assign atc_ribbon_menu = settings.atc_ribbon_menu %}
+
+{% if atc_ribbon_menu != blank and atc_ribbon_menu.links == blank %}
+  {% assign atc_ribbon_menu = linklists[settings.atc_ribbon_menu] %}
+{% endif %}
+
+{% assign atc_bag_menu = settings.atc_bag_menu %}
+
+{% if atc_bag_menu != blank and atc_bag_menu.links == blank %}
+  {% assign atc_bag_menu = linklists[settings.atc_bag_menu] %}
+{% endif %}
+
+<script>
+  window.ATC_UPSELL_DISPLAY_COLLECTIONS = {
+    {% assign atc_mapping_started = false %}
+    {% if atc_display_menu != blank %}
+      {% for link in atc_display_menu.links %}
+        {% if link.type == 'collection_link' and link.object != blank %}
+          {% if atc_mapping_started %},{% endif %}
+          {{ link.title | handleize | json }}: {{ link.object.handle | json }}
+          {% assign atc_mapping_started = true %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  };
+
+  window.ATC_UPSELL_RIBBON_COLLECTIONS = [
+    {% assign atc_ribbon_started = false %}
+    {% if atc_ribbon_menu != blank %}
+      {% for link in atc_ribbon_menu.links %}
+        {% if link.type == 'collection_link' and link.object != blank %}
+          {% if atc_ribbon_started %},{% endif %}
+          {{ link.object.handle | json }}
+          {% assign atc_ribbon_started = true %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  ];
+
+  window.ATC_UPSELL_BAG_COLLECTIONS = [
+    {% assign atc_bag_started = false %}
+    {% if atc_bag_menu != blank %}
+      {% for link in atc_bag_menu.links %}
+        {% if link.type == 'collection_link' and link.object != blank %}
+          {% if atc_bag_started %},{% endif %}
+          {{ link.object.handle | json }}
+          {% assign atc_bag_started = true %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  ];
+</script>

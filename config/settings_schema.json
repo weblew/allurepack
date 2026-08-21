@@ -845,6 +845,29 @@
     ]
   },
   {
+    "name": "ATC upsell",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "atc_display_menu",
+        "label": "Display collections menu",
+        "info": "Each item must link to its display collection. Titles such as Ring Displays, Neck Displays, and Bangle & Watch Displays are supported."
+      },
+      {
+        "type": "link_list",
+        "id": "atc_ribbon_menu",
+        "label": "Ribbon collections menu",
+        "info": "Each menu item must link to a ribbon or coordinating trim collection."
+      },
+      {
+        "type": "link_list",
+        "id": "atc_bag_menu",
+        "label": "Bag collections menu",
+        "info": "Only linked collections containing Bag or Large Bag products with matching sizes are used."
+      }
+    ]
+  },
+  {
     "name": "Out of stock",
     "settings": [
       {

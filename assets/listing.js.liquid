@@ -121,6 +121,12 @@ $('.custom-logo-section').appendTo('body');
   
 });
 
+function getActiveColorInputs(colorOptions){
+	return colorOptions.filter(function(){
+		return $(this).css('display') !== 'none';
+	}).find('input');
+}
+
 function displayPricesAndColors(e){
 
       
@@ -134,7 +140,8 @@ function displayPricesAndColors(e){
         }),
         selectedVariants = selectedVariant ? _.filter(variants, function(v){
         	return v.sku === selectedVariant.sku;
-        }) : [];
+        }) : [],
+		hashColorInputs;
     	 
   	if(selectedVariant){
       item.find('.list-view-item-sku, .home-grid-item-sku').text(selectedVariant.sku);
@@ -177,8 +184,9 @@ function displayPricesAndColors(e){
       
       	item.find('.list-view-item-bulk-' + qtyBreak).show();
       
-      	if(location.hash && item.find('.list-view-item-color-' + location.hash.replace('#','')).length){
-          	item.find('.list-view-item-color-' + location.hash.replace('#','') + ':visible').find('input').click();
+		hashColorInputs = location.hash ? getActiveColorInputs(item.find('.list-view-item-color-' + location.hash.replace('#',''))) : $();
+		if(hashColorInputs.length){
+			hashColorInputs.click();
         }else{
         	item.find('.list-view-item-bulk-' + qtyBreak + ':first').find('input').click();
         }
@@ -187,8 +195,9 @@ function displayPricesAndColors(e){
        
       item.find('.list-view-item-color').show();
       
-      if(location.hash && item.find('.list-view-item-color-' + location.hash.replace('#','')).length){
-        item.find('.list-view-item-color-' + location.hash.replace('#','') + ':visible').find('input').click();
+      hashColorInputs = location.hash ? getActiveColorInputs(item.find('.list-view-item-color-' + location.hash.replace('#',''))) : $();
+      if(hashColorInputs.length){
+        hashColorInputs.click();
       }else{
         item.find('.list-view-item-color:first input').click();
       }
@@ -202,14 +211,14 @@ function selectCollectionColor(e){
     
   	
   	$('.list-view-item').show().each(function(){
-      	var itemHasColor = $(this).find('.list-view-item-color-' + color + ':visible input').length;
+		var itemHasColor = getActiveColorInputs($(this).find('.list-view-item-color-' + color)).length;
       
       	if(!itemHasColor){
         	$(this).hide()
         }
       
     })
-  	$('.list-view-item-color-' + color + ':visible input').click();
+	getActiveColorInputs($('.list-view-item-color-' + color)).click();
   	location.hash = color;
 }
 
@@ -282,7 +291,7 @@ console.log($this.closest('.list-view-item').length ? $this.closest('.list-view-
 		console.log(bulk)
 		if(item.find('.list-view-item-color').length){
 			item.find('.list-view-item-color').hide().siblings('.list-view-item-bulk-' + qtyBreak).show();
-			item.find('.list-view-item-color-' + color + ':visible').find('input').click();
+			getActiveColorInputs(item.find('.list-view-item-color-' + color)).click();
 		}else if(item.find('.grid-view-item-color').length){
 			item.find('.grid-view-item-color').hide().siblings('.grid-view-item-bulk-' + qtyBreak).show();
 			item.find('.grid-view-item-color-' + color + ':visible').click();

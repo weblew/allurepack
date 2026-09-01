@@ -47,9 +47,11 @@
     "preset_product_description": "",
     "preset_product_image": "",
     "preset_product_price": "",
+    "atc_box_menu": "jewelry-box-by-type",
     "atc_display_menu": "jewelry-displays-types",
     "atc_ribbon_menu": "gift-ribbon",
     "atc_bag_menu": "pouches-bags",
+    "printing_cart_confirmation_scope": "all",
     "show_out_of_stock": true,
     "item_color_white": "#ffffff",
     "item_color_silver": "#c0c0c0",
@@ -5033,6 +5035,19 @@
           "autoplay": true,
           "autoplay_speed": "5"
         }
+      },
+      "recently_viewed_products_eAMbBg": {
+        "type": "recently-viewed-products",
+        "name": "Recently viewed",
+        "settings": {
+          "icon": true,
+          "title": "Recently viewed",
+          "products_to_show": 4,
+          "padding_top_desktop": 20,
+          "padding_bottom_desktop": 80,
+          "padding_top_mobile": 0,
+          "padding_bottom_mobile": 80
+        }
       }
     },
     "content_for_index": [
@@ -5042,6 +5057,7 @@
       "d9d29d6f-61a2-4e64-bad8-4765700f7c54",
       "1593794994202",
       "1534961358699",
+      "recently_viewed_products_eAMbBg",
       "da5a9173-e922-4b65-bf97-270b4da4d646",
       "e4b97abd-e710-4007-98d0-47bddd84c9d2",
       "1c0c8079-95c7-41e1-8ab9-dffdf52bcbda",

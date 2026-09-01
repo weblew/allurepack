@@ -1,5 +1,171 @@
 /* Start Wrap For Jquery 01/08/18 */
-var PRINTING_CART_CONFIRMATION_SCOPE = {{ settings.printing_cart_confirmation_scope | default: 'collections' | json }};
+var PRINTING_CART_CONFIRMATION_SCOPE = {{ settings.printing_cart_confirmation_scope | default: 'all' | json }};
+var PENDING_PRINTING_CART_REMINDER = null;
+var PENDING_PRINTING_CART_ACTION = null;
+var ALLOW_PRINTING_PAGE_EXIT = false;
+
+function getPrintingCartReminderForm(productId){
+	var productSelector = '.list-view-item[data-id="' + productId + '"]';
+
+	if(PRINTING_CART_CONFIRMATION_SCOPE === 'all'){
+		productSelector += ', .product-detail[data-id="' + productId + '"]';
+	}
+
+	var productForm = jQuery(productSelector).first();
+	productForm = productForm.is('form[action="/cart/add"]') ? productForm : productForm.find('form[action="/cart/add"]').first();
+
+	return productForm;
+}
+
+function setPendingPrintingCartReminder(productId){
+	var productForm = getPrintingCartReminderForm(productId),
+		productRoot;
+
+	if(!productForm.length){
+		PENDING_PRINTING_CART_REMINDER = null;
+		return;
+	}
+
+	productRoot = productForm.closest('.list-view-item[data-id], .product-detail[data-id]');
+	PENDING_PRINTING_CART_REMINDER = {
+		productId: String(productId),
+		form: productForm[0],
+		root: productRoot.length ? productRoot[0] : productForm[0]
+	};
+
+	console.log('[Printing Cart Reminder]', 'Printing settings saved; waiting for Add to Cart', {
+		productId: String(productId)
+	});
+}
+
+function clearPendingPrintingCartReminder(reason){
+	if(PENDING_PRINTING_CART_REMINDER){
+		console.log('[Printing Cart Reminder]', 'Pending reminder cleared', {
+			productId: PENDING_PRINTING_CART_REMINDER.productId,
+			reason: reason
+		});
+	}
+
+	PENDING_PRINTING_CART_REMINDER = null;
+	PENDING_PRINTING_CART_ACTION = null;
+}
+
+function closePendingPrintingCartReminder(){
+	jQuery('.addToCart-layer').removeClass('in adding printing-cart-confirmation printing-cart-reminder');
+	jQuery('.addToCart-layer-overlay').removeClass('in');
+	jQuery('.addToCart-printing-confirmation-message').hide();
+	jQuery('.printing-reminder-actions').hide();
+	jQuery('.addToCart-standard-confirmation-actions').show();
+}
+
+function openPendingPrintingCartReminder(actionTarget){
+	var pending = PENDING_PRINTING_CART_REMINDER,
+		$layer = jQuery('.addToCart-layer');
+
+	if(!pending || !document.documentElement.contains(pending.form)){
+		clearPendingPrintingCartReminder('product_form_missing');
+		return;
+	}
+
+	PENDING_PRINTING_CART_ACTION = actionTarget || null;
+	$layer.removeClass('adding printing-cart-confirmation').addClass('printing-cart-reminder');
+	jQuery('.addToCart-layer-header span').text('Did you forget something?');
+	jQuery('.addToCart-printing-confirmation-message')
+		.text('We saved your printing settings.')
+		.css('display', 'flex');
+	jQuery('.addToCart-conform').show();
+	jQuery('.addToCart-added, .addToCart-standard-confirmation-actions, .js-subscribe-back-in-stock, .subscribe-back-in-stock-from').hide();
+	jQuery('.printing-reminder-actions').css('display', 'flex');
+	$layer.addClass('in');
+	jQuery('.addToCart-layer-overlay').addClass('in');
+}
+
+document.addEventListener('click', function(event){
+	var pending = PENDING_PRINTING_CART_REMINDER,
+		target = event.target,
+		$target;
+
+	if(!pending || !target || target.nodeType !== 1){
+		return;
+	}
+
+	$target = jQuery(target);
+
+	if(pending.root && pending.root.contains(target) && !$target.closest('a[href]').length){
+		return;
+	}
+
+	if($target.closest('.printing-panel, .printing-pricing-popup, .addToCart-modal-section, .modal-layer').length){
+		return;
+	}
+
+	if(!$target.closest('a, button, input, select, textarea, label, [role="button"], [ng-click], .btn, [tabindex]').length){
+		return;
+	}
+
+	event.preventDefault();
+	event.stopPropagation();
+	if(typeof event.stopImmediatePropagation === 'function'){
+		event.stopImmediatePropagation();
+	}
+
+	console.log('[Printing Cart Reminder]', 'Customer interacted outside the configured product; opening reminder', {
+		productId: pending.productId,
+		target: target.tagName
+	});
+
+	openPendingPrintingCartReminder($target.closest('a, button, input, select, textarea, label, [role="button"], .btn, [tabindex]')[0]);
+}, true);
+
+jQuery(document).on('submit.printingCartReminder', 'form[action="/cart/add"]', function(){
+	if(PENDING_PRINTING_CART_REMINDER && PENDING_PRINTING_CART_REMINDER.form === this){
+		clearPendingPrintingCartReminder('customer_submitted_product');
+	}
+});
+
+jQuery(document)
+	.on('click', '.js-return-printing-item', function(){
+		var pending = PENDING_PRINTING_CART_REMINDER;
+
+		clearPendingPrintingCartReminder('customer_returned_to_item');
+		closePendingPrintingCartReminder();
+		if(pending && pending.root){
+			pending.root.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			setTimeout(function(){
+				var field = jQuery(pending.form).find('[name="quantity"], [name="id"]:visible').first();
+				if(field.length){
+					field.trigger('focus');
+				}
+			}, 400);
+		}
+	})
+	.on('click', '.js-continue-printing-shopping', function(){
+		var actionTarget = PENDING_PRINTING_CART_ACTION;
+
+		PENDING_PRINTING_CART_ACTION = null;
+		ALLOW_PRINTING_PAGE_EXIT = true;
+		clearPendingPrintingCartReminder('customer_continued_shopping');
+		closePendingPrintingCartReminder();
+
+		if(actionTarget && document.documentElement.contains(actionTarget)){
+			setTimeout(function(){
+				actionTarget.click();
+				ALLOW_PRINTING_PAGE_EXIT = false;
+			}, 0);
+		}else{
+			ALLOW_PRINTING_PAGE_EXIT = false;
+		}
+	});
+
+window.addEventListener('beforeunload', function(event){
+	if(!PENDING_PRINTING_CART_REMINDER || ALLOW_PRINTING_PAGE_EXIT){
+		return;
+	}
+
+	event.preventDefault();
+	event.returnValue = '';
+	return '';
+});
 
 jQuery(document).ready(function($) {
 
@@ -589,6 +755,7 @@ function selectColors(){
       	vm.openPrintingPanel = openPrintingPanel;
       	vm.savePrintingPanel = savePrintingPanel;
       	vm.savedLocations = savedLocations;
+		vm.hasNewPlateUpload = hasNewPlateUpload;
 		vm.togglePrintingPricing = togglePrintingPricing;
 		vm.locationIsValid = locationIsValid;
 		vm.closePopover = closePopover;
@@ -869,18 +1036,7 @@ function selectColors(){
 
 				if(vm.applyTo !== 'all' && PRINTING_CART_CONFIRMATION_SCOPE !== 'disabled'){
 					$timeout(function(){
-						var productSelector = '.list-view-item[data-id="' + vm.applyTo + '"]';
-
-						if(PRINTING_CART_CONFIRMATION_SCOPE === 'all'){
-							productSelector += ', .product-detail[data-id="' + vm.applyTo + '"]';
-						}
-
-						var productForm = $(productSelector).first();
-						productForm = productForm.is('form[action="/cart/add"]') ? productForm : productForm.find('form[action="/cart/add"]').first();
-
-						if(productForm.length){
-							productForm.data('printing-cart-confirmation', true).trigger('submit');
-						}
+						setPendingPrintingCartReminder(vm.applyTo);
 					}, 0, false);
 				}
             }else{
@@ -904,6 +1060,12 @@ function selectColors(){
               return location.saved;
             })
         }
+
+		function hasNewPlateUpload(){
+			return vm.logos_locations.some(function(location){
+				return location.type === 'upload' && !!location.file;
+			});
+		}
       
       	function itemHasPrinting(id){
           	return vm.applyToItems.find(function(item){

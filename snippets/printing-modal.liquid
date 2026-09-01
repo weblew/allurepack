@@ -408,7 +408,7 @@
 
     </div>
     <div class="printing-panel-footer">
-      <div class="printing-panel-proof-message">
+      <div class="printing-panel-proof-message" ng-show="vm.hasNewPlateUpload()">
         <p>{{ 'products.product.printing_proof_message' | t }}</p>
       </div>
       <div class="printing-panel-footer-actions">
@@ -796,13 +796,18 @@
             <div class="addToCart-actions addToCart-conform">
                <div class="addToCart-printing-confirmation-message"></div>
                <br/>
-                <div class="flex flex-justify-end">
+                <div class="flex flex-justify-end addToCart-standard-confirmation-actions">
                     {% if settings.show_out_of_stock %}
                         <div class="btn btn-black-light js-subscribe-back-in-stock">Notify me when available</div>
                     {% endif %}
                     <div class="btn btn-black-light js-cancel-addToCart">Continue Shopping</div>
                     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
                     <div class="btn btn-black-dark js-add-addToCart">Add to cart</div>
+                </div>
+                <div class="flex flex-justify-end printing-reminder-actions" style="display: none;">
+                    <div class="btn btn-black-dark js-return-printing-item">Return to item and add to cart</div>
+                    <span class="printing-reminder-or">or</span>
+                    <div class="btn btn-black-light js-continue-printing-shopping">Continue shopping</div>
                 </div>
             </div>
             <form class="subscribe-back-in-stock-from">

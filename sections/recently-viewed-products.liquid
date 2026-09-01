@@ -45,6 +45,10 @@
     padding-bottom: var(--padding-bottom-mobile);
   }
 
+  .recently-viewed-products__content .featured-items.slick-initialized .slick-track {
+    column-gap: 0;
+  }
+
   @media screen and (min-width: 750px) {
     .home-items.recently-viewed-products__content {
       padding-top: var(--padding-top-desktop);
@@ -171,6 +175,12 @@
         // width instead of trusting slick to swap it live. Matches the
         // tiering used for the similar-items slider (detail.js.liquid).
         const slidesPerView = width < 1400 ? 4 : 5;
+        const itemCount = this.items.children.length;
+
+        // Keep a normal four-column flex row when every requested product
+        // already fits. Slick is only needed when there are additional cards
+        // to navigate to.
+        if (itemCount <= slidesPerView) return;
 
         $items.slick({
           dots: false,
@@ -178,7 +188,7 @@
           infinite: true,
           speed: 300,
           slidesToShow: slidesPerView,
-          slidesToScroll: slidesPerView
+          slidesToScroll: Math.min(slidesPerView, itemCount)
         });
       }
     }

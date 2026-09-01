@@ -2071,6 +2071,78 @@ select {
   cursor: wait;
 }
 
+.addToCart-layer.printing-cart-reminder {
+  width: 660px;
+}
+.addToCart-layer.printing-cart-reminder .addToCart-layer-header {
+  padding: 28px 32px 0;
+  font-size: 22px;
+  line-height: 1.3;
+}
+.addToCart-layer.printing-cart-reminder .addToCart-layer-body {
+  padding: 14px 32px 30px;
+}
+.addToCart-layer.printing-cart-reminder .addToCart-layer-body > .flex.flex-no-wrap {
+  display: none;
+}
+.addToCart-layer.printing-cart-reminder .addToCart-conform > br {
+  display: none;
+}
+.addToCart-layer.printing-cart-reminder .addToCart-printing-confirmation-message {
+  min-height: 0;
+  margin: 0 0 24px;
+  padding: 0;
+  background: transparent;
+  color: #3d4246;
+  line-height: 1.6;
+}
+.addToCart-layer.printing-cart-reminder .printing-reminder-actions {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 12px;
+}
+.addToCart-layer.printing-cart-reminder .printing-reminder-or {
+  color: #6c6c6c;
+  font-size: 14px;
+}
+.addToCart-layer.printing-cart-reminder .js-return-printing-item {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+.addToCart-layer.printing-cart-reminder .js-continue-printing-shopping {
+  padding: 0;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media only screen and (max-width: 600px) {
+  .addToCart-layer.printing-cart-reminder .addToCart-layer-header {
+    padding: 24px 22px 0;
+    text-align: left;
+  }
+  .addToCart-layer.printing-cart-reminder .addToCart-layer-body {
+    padding: 12px 22px 24px;
+  }
+  .addToCart-layer.printing-cart-reminder .printing-reminder-actions {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .addToCart-layer.printing-cart-reminder .printing-reminder-or {
+    display: none;
+  }
+}
+
 .addToCart-layer-overlay {
   content: "";
   position: fixed;
@@ -3006,6 +3078,7 @@ select {
 
 .home-grid-item-colors div {
   width: 18px;
+  min-width: 18px;
   height: 18px;
   background-size: cover;
   border-radius: 50%;

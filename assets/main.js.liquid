@@ -4,7 +4,143 @@ var LOGO_ID = 43768727622,
     PLATE_STD = 5178177159207,
     PLATE_BAG_LRG = 40765962256427,
     CART = typeof CART_PAGE == 'undefined' ? '' : CART_PAGE,
-    modalDeferred = new $.Deferred();
+    modalDeferred = new $.Deferred(),
+    PRINTING_CART_OPERATION_ID = 0;
+
+function printingCartLog(operation, message, details, level){
+    var logger = level === 'error' ? console.error : level === 'warn' ? console.warn : console.log,
+        prefix = '[Printing Cart #' + operation.id + ']';
+
+    if(typeof details === 'undefined'){
+        logger.call(console, prefix, message);
+    }else{
+        logger.call(console, prefix, message, details);
+    }
+}
+
+function printingCartRequestResult(operation, action, response, textStatus){
+    var status = response && typeof response.status === 'number' ? response.status : 200,
+        failed = status >= 400 || textStatus === 'error' || textStatus === 'timeout';
+
+    printingCartLog(operation, action + (failed ? ' failed' : ' completed'), {
+        status: status,
+        result: textStatus || (failed ? 'error' : 'success')
+    }, failed ? 'error' : 'log');
+
+    if(failed){
+        printingCartClarityEvent(operation, 'printing_fee_request_failed', {
+            printing_cart_result: 'request_failed',
+            printing_failed_action: action,
+            printing_http_status: String(status)
+        });
+    }
+}
+
+function getOrCreatePrintingTraceId(){
+    var storageKey = 'allure_printing_trace_id',
+        traceId;
+
+    try{
+        traceId = window.sessionStorage.getItem(storageKey);
+    }catch(e){}
+
+    if(!traceId){
+        traceId = 'PT-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+
+        try{
+            window.sessionStorage.setItem(storageKey, traceId);
+        }catch(e){}
+    }
+
+    return traceId;
+}
+
+function ensurePrintingTraceInput($form){
+    var traceInput = $form.find('[name="properties[_Printing Trace ID]"]'),
+        hasPrinting = $form.find('[name^="properties[Printing "][name$=" color]"]').length > 0,
+        traceId;
+
+    if(!hasPrinting){
+        traceInput.remove();
+        return '';
+    }
+
+    traceId = getOrCreatePrintingTraceId();
+
+    if(traceInput.length){
+        traceInput.val(traceId);
+    }else{
+        $('<input>', {
+            type: 'hidden',
+            name: 'properties[_Printing Trace ID]',
+            value: traceId,
+            class: 'js-printing-trace-id'
+        }).appendTo($form);
+    }
+
+    registerPrintingTraceWithClarity(traceId);
+
+    return traceId;
+}
+
+function registerPrintingTraceWithClarity(traceId){
+    var clarity;
+
+    if(!traceId){
+        return;
+    }
+
+    clarity = getClarityClient();
+    clarity('identify', traceId, traceId);
+    clarity('set', 'printing_trace_id', traceId);
+
+    console.log('[Printing Trace]', 'Clarity lookup identifiers assigned', {
+        traceId: traceId,
+        customUserId: traceId,
+        customSessionId: traceId
+    });
+}
+
+function getPrintingTraceIds(){
+    var traceIds = [];
+
+    _.each(CART.items || [], function(item){
+        var traceId = item.properties && item.properties['_Printing Trace ID'];
+
+        if(traceId && traceIds.indexOf(traceId) === -1){
+            traceIds.push(String(traceId));
+        }
+    });
+
+    return traceIds;
+}
+
+function getClarityClient(){
+    if(typeof window.clarity !== 'function'){
+        window.clarity = function(){
+            (window.clarity.q = window.clarity.q || []).push(arguments);
+        };
+    }
+
+    return window.clarity;
+}
+
+function printingCartClarityEvent(operation, eventName, tags){
+    var clarity = getClarityClient(),
+        traceIds = operation.traceIds || [];
+
+    if(traceIds.length){
+        clarity('set', 'printing_trace_id', traceIds.length === 1 ? traceIds[0] : traceIds);
+    }
+
+    _.each(tags || {}, function(value, key){
+        if(value !== null && typeof value !== 'undefined'){
+            clarity('set', key, Array.isArray(value) ? value : String(value).slice(0, 255));
+        }
+    });
+
+    clarity('event', eventName);
+}
 
 updateCartObj();
 //setUpBreadcrumbs();
@@ -186,6 +322,7 @@ function addItemToCart(e){
         }),
         settings = PRODUCTS[productId].settings,
         group_items = PRODUCTS[productId].group_items,
+        printingTraceId = ensurePrintingTraceInput($this),
         item = $this.serialize(),
         min_inventory_quantity = getMinInventoryQuantity(variant, group_items),
         variantQtyLess = variantQtyLessFromQty(quantity, variant, group_items),
@@ -316,7 +453,7 @@ function addItemToCart(e){
                             if(cb){
                                 cb();
                             }
-                        });
+                        }, printingVerificationFailed);
                     });
             });
 
@@ -341,7 +478,7 @@ function addItemToCart(e){
                             if(cb){
                                 cb();
                             }
-                        });
+                        }, printingVerificationFailed);
                     });
                 },
                 error: function (res) {           
@@ -398,7 +535,7 @@ function addItemToCart(e){
                             if(cb){
                             	cb();
                             }
-                        });
+                        }, printingVerificationFailed);
                       });
             });
 
@@ -424,7 +561,7 @@ function addItemToCart(e){
                             if(cb){
                             	cb();
                             }
-                        });
+                        }, printingVerificationFailed);
                       });
                   },
                   error: function (res) {           
@@ -462,6 +599,24 @@ function addItemToCart(e){
             });
 
 
+        }
+    }
+
+    function printingVerificationFailed(verification){
+        var message = 'The item was added, but we could not confirm all printing fees. Please click Add To Cart again.';
+
+        console.error('Printing cart verification failed', verification);
+        $this.find('[type=submit]').text('ADD TO CART');
+        $this.find('.qty-error').text(message);
+        $this.removeClass('adding');
+        window.addingToCart = false;
+
+        if($('.addToCart-layer').hasClass('printing-cart-confirmation')){
+            $('.addToCart-printing-confirmation-message').text(message);
+            $('.addToCart-layer').removeClass('adding');
+            $('.js-add-addToCart').text('ADD TO CART').removeClass('disabled').attr('aria-disabled', 'false');
+        }else{
+            wbAlert(message, 'error');
         }
     }
 }
@@ -594,14 +749,230 @@ function getTotalItemsWithIngravig(){
 
 }
 
-async function adjustLogoItems(cb){
+function verifyAdjustedPrintingItems(done, fail, attempt, operation){
+    var verificationStartedAt = Date.now();
+
+    printingCartLog(operation, 'Reloading cart for verification', {
+        attempt: attempt
+    });
+
+    $.ajax({
+        url: '/cart.js',
+        method: 'GET',
+        dataType: 'json',
+        cache: false
+    }).done(function(cart){
+        CART = cart;
+        $('#CartCount').text(CART.items.length);
+        $(document).trigger('CART');
+
+        var verification = verifyPrintingCartItems();
+
+        if(verification.valid){
+            printingCartLog(operation, 'Verification passed', {
+                attempt: attempt,
+                printingCount: verification.printingCount,
+                expectedFees: verification.expected,
+                actualFees: verification.actual,
+                verificationMs: Date.now() - verificationStartedAt,
+                totalMs: Date.now() - operation.startedAt
+            });
+            printingCartClarityEvent(operation, 'printing_cart_verification_passed', {
+                printing_cart_result: 'passed',
+                printing_cart_attempt: attempt,
+                printing_count: verification.printingCount,
+                printing_total_ms: Date.now() - operation.startedAt
+            });
+            if(done){
+                done();
+            }
+        }else if(attempt < 2){
+            printingCartLog(operation, 'Verification found incorrect fees; retrying reconciliation', {
+                attempt: attempt,
+                mismatches: verification.mismatches,
+                expectedFees: verification.expected,
+                actualFees: verification.actual,
+                verificationMs: Date.now() - verificationStartedAt
+            }, 'warn');
+            printingCartClarityEvent(operation, 'printing_cart_verification_retry', {
+                printing_cart_result: 'retrying',
+                printing_cart_attempt: attempt,
+                printing_mismatch: verification.mismatches.map(function(item){ return item.fee; })
+            });
+            adjustLogoItems(done, fail, attempt + 1, operation);
+        }else if(fail){
+            printingCartLog(operation, 'Verification failed after retry', {
+                attempt: attempt,
+                mismatches: verification.mismatches,
+                expectedFees: verification.expected,
+                actualFees: verification.actual,
+                totalMs: Date.now() - operation.startedAt
+            }, 'error');
+            printingCartClarityEvent(operation, 'printing_cart_verification_failed', {
+                printing_cart_result: 'failed',
+                printing_cart_attempt: attempt,
+                printing_mismatch: verification.mismatches.map(function(item){ return item.fee; }),
+                printing_total_ms: Date.now() - operation.startedAt
+            });
+            getClarityClient()('upgrade', 'printing-cart-verification-failed');
+            fail(verification);
+        }else{
+            printingCartLog(operation, 'Verification failed after retry; continuing legacy callback', {
+                attempt: attempt,
+                mismatches: verification.mismatches,
+                expectedFees: verification.expected,
+                actualFees: verification.actual,
+                totalMs: Date.now() - operation.startedAt
+            }, 'error');
+            printingCartClarityEvent(operation, 'printing_cart_verification_failed', {
+                printing_cart_result: 'failed',
+                printing_cart_attempt: attempt,
+                printing_mismatch: verification.mismatches.map(function(item){ return item.fee; }),
+                printing_total_ms: Date.now() - operation.startedAt
+            });
+            getClarityClient()('upgrade', 'printing-cart-verification-failed');
+            if(done){
+                done();
+            }
+        }
+    }).fail(function(xhr){
+        if(attempt < 2){
+            printingCartLog(operation, 'Cart reload failed; retrying reconciliation', {
+                attempt: attempt,
+                status: xhr.status,
+                verificationMs: Date.now() - verificationStartedAt
+            }, 'warn');
+            printingCartClarityEvent(operation, 'printing_cart_reload_retry', {
+                printing_cart_result: 'reload_retrying',
+                printing_cart_attempt: attempt,
+                printing_http_status: String(xhr.status || 0)
+            });
+            adjustLogoItems(done, fail, attempt + 1, operation);
+        }else if(fail){
+            printingCartLog(operation, 'Cart reload failed after retry', {
+                attempt: attempt,
+                status: xhr.status,
+                totalMs: Date.now() - operation.startedAt
+            }, 'error');
+            printingCartClarityEvent(operation, 'printing_cart_reload_failed', {
+                printing_cart_result: 'reload_failed',
+                printing_cart_attempt: attempt,
+                printing_http_status: String(xhr.status || 0),
+                printing_total_ms: Date.now() - operation.startedAt
+            });
+            getClarityClient()('upgrade', 'printing-cart-reload-failed');
+            fail({
+                valid: false,
+                reason: 'Unable to reload the cart after adding printing fees.',
+                status: xhr.status
+            });
+        }else{
+            printingCartLog(operation, 'Cart reload failed after retry; continuing legacy callback', {
+                attempt: attempt,
+                status: xhr.status,
+                totalMs: Date.now() - operation.startedAt
+            }, 'error');
+            printingCartClarityEvent(operation, 'printing_cart_reload_failed', {
+                printing_cart_result: 'reload_failed',
+                printing_cart_attempt: attempt,
+                printing_http_status: String(xhr.status || 0),
+                printing_total_ms: Date.now() - operation.startedAt
+            });
+            getClarityClient()('upgrade', 'printing-cart-reload-failed');
+            if(done){
+                done();
+            }
+        }
+    });
+}
+
+function verifyPrintingCartItems(){
+    var logoInfo = getTotalItemsWithIngravig(),
+        quantities = {},
+        expected = {},
+        expectedByName = {},
+        actualByName = {},
+        feeNames = {},
+        mismatches = [];
+
+    feeNames[LOGO_ID] = 'Printing fee - first 200';
+    feeNames[LOGO_ID_200] = 'Printing fee - additional prints';
+    feeNames[PLATE_STD] = 'Plate fee - boxes and pouches';
+    feeNames[PLATE_BAG] = 'Plate fee - bags';
+    feeNames[PLATE_BAG_LRG] = 'Plate fee - large bags';
+
+    _.each(CART.items, function(item){
+        quantities[item.id] = (quantities[item.id] || 0) + item.quantity;
+    });
+
+    expected[LOGO_ID] = logoInfo.count > 0 ? 1 : 0;
+    expected[LOGO_ID_200] = logoInfo.count > 200 ? logoInfo.count - 200 : 0;
+    expected[PLATE_STD] = logoInfo.logoNeedsPlate && logoInfo.cartHasItemsWithPrinting ? 1 : 0;
+    expected[PLATE_BAG] = logoInfo.logoNeedsPlate && logoInfo.cartHasBagsWithPrinting ? 1 : 0;
+    expected[PLATE_BAG_LRG] = logoInfo.logoNeedsPlate && logoInfo.cartHasLargeBagsWithPrinting ? 1 : 0;
+
+    _.each(expected, function(expectedQuantity, id){
+        var actualQuantity = quantities[id] || 0,
+            feeName = feeNames[id];
+
+        expectedByName[feeName] = expectedQuantity;
+        actualByName[feeName] = actualQuantity;
+
+        if(actualQuantity !== expectedQuantity){
+            mismatches.push({
+                fee: feeName,
+                id: Number(id),
+                expected: expectedQuantity,
+                actual: actualQuantity
+            });
+        }
+    });
+
+    return {
+        valid: mismatches.length === 0,
+        printingCount: logoInfo.count,
+        expected: expectedByName,
+        actual: actualByName,
+        mismatches: mismatches
+    };
+}
+
+async function adjustLogoItems(cb, fail, attempt, operation){
+
+    attempt = attempt || 1;
+    operation = operation || {
+        id: ++PRINTING_CART_OPERATION_ID,
+        startedAt: Date.now(),
+        traceIds: getPrintingTraceIds()
+    };
 
     var LOGO_INFO = getTotalItemsWithIngravig(),
         CHANGED = false,
         logoForm = $('[name="printing-modal-form"].has-logo'),
         formData;
 
-    console.log(LOGO_INFO)
+    printingCartLog(operation, 'Reconciliation started', {
+        attempt: attempt,
+        traceIds: operation.traceIds,
+        printingCount: LOGO_INFO.count,
+        uploadedOrCustomLogo: !!LOGO_INFO.logoNeedsPlate,
+        requiresBoxOrPouchPlate: !!LOGO_INFO.cartHasItemsWithPrinting,
+        requiresBagPlate: !!LOGO_INFO.cartHasBagsWithPrinting,
+        requiresLargeBagPlate: !!LOGO_INFO.cartHasLargeBagsWithPrinting
+    });
+
+    if(LOGO_INFO.count > 0){
+        printingCartClarityEvent(operation, attempt === 1 ? 'printing_cart_started' : 'printing_cart_retry_started', {
+            printing_cart_result: attempt === 1 ? 'started' : 'retrying',
+            printing_cart_attempt: attempt,
+            printing_count: LOGO_INFO.count,
+            printing_requires_new_plate: !!LOGO_INFO.logoNeedsPlate
+        });
+
+        if(attempt === 1){
+            getClarityClient()('upgrade', 'printing-cart-investigation');
+        }
+    }
   
   	//there is items that need logos
   	if(LOGO_INFO.count > 0){
@@ -646,9 +1017,10 @@ async function adjustLogoItems(cb){
 
           
   
-          if(cb){
-              cb();
-          }
+          printingCartLog(operation, 'Fee adjustments completed; starting verification', {
+              attempt: attempt
+          });
+          verifyAdjustedPrintingItems(cb, fail, attempt, operation);
           
         })
       	
@@ -658,9 +1030,10 @@ async function adjustLogoItems(cb){
     	// remove all logos and plates
       	await removeLogosAndPlates();
 
-        if(cb){
-              cb();
-          }
+        printingCartLog(operation, 'No printed merchandise remains; fee removals completed', {
+            attempt: attempt
+        });
+        verifyAdjustedPrintingItems(cb, fail, attempt, operation);
     
     }
 
@@ -697,13 +1070,18 @@ async function adjustLogoItems(cb){
       	var obj = {};
       	obj[LOGO_ID] = 1;
 
-        console.log('add logo without file')
+        printingCartLog(operation, 'Setting base printing fee for plate-on-file selection', {
+            attempt: attempt,
+            variantId: LOGO_ID,
+            quantity: 1
+        });
 
        return new Promise((resolve, reject) => {
 
          $.post('/cart/update.js', {
         	updates:obj
-          }).always(function(res){
+          }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'Base printing fee update', res, textStatus);
     			if(done){
                     done();
                 }
@@ -774,7 +1152,12 @@ async function adjustLogoItems(cb){
         
       	await removeLogo();    	      	
         return new Promise((resolve, reject) => {
-            console.log('add logo')
+            printingCartLog(operation, 'Uploading logo information to base printing fee', {
+                attempt: attempt,
+                variantId: LOGO_ID,
+                uploadLocations: logoForm.length,
+                customLogoLocations: hasCustomLogo.length
+            });
             $.ajax({
                 url : '/cart/add',
                 type: 'POST',
@@ -782,7 +1165,8 @@ async function adjustLogoItems(cb){
                 data: formData,
                 cache : false,
                 processData: false
-            }).done(function(response) {
+            }).always(function(response, textStatus) {
+                printingCartRequestResult(operation, 'Logo information upload', response, textStatus);
                 if(done){
                     done();
                 }
@@ -799,12 +1183,17 @@ async function adjustLogoItems(cb){
       	var obj = {};
       	obj[LOGO_ID_200] = LOGO_INFO.count - 200;
 
-       console.log('add logo 200')
+       printingCartLog(operation, 'Setting additional-print fee quantity', {
+           attempt: attempt,
+           variantId: LOGO_ID_200,
+           quantity: LOGO_INFO.count - 200
+       });
 
         return new Promise((resolve, reject) => {
         	$.post('/cart/update.js', {
           	updates:obj
-          }).always(function(res){
+          }).always(function(res, textStatus){
+              printingCartRequestResult(operation, 'Additional-print fee update', res, textStatus);
   			if(done){
                   done();
               }
@@ -821,11 +1210,16 @@ async function adjustLogoItems(cb){
       	var obj = {};
       	obj[PLATE_STD] = 1;
 
-       console.log('add stn plate')
+       printingCartLog(operation, 'Setting box/pouch plate fee', {
+           attempt: attempt,
+           variantId: PLATE_STD,
+           quantity: 1
+       });
         return new Promise((resolve, reject) => {
         	$.post('/cart/update.js', {
           	updates:obj
-          }).always(function(res){
+          }).always(function(res, textStatus){
+              printingCartRequestResult(operation, 'Box/pouch plate fee update', res, textStatus);
   			if(done){
                   done();
               }
@@ -841,12 +1235,17 @@ async function adjustLogoItems(cb){
       	var obj = {};
       	obj[PLATE_BAG] = 1;
 
-        console.log('add plate bag')
+        printingCartLog(operation, 'Setting bag plate fee', {
+            attempt: attempt,
+            variantId: PLATE_BAG,
+            quantity: 1
+        });
 
         return new Promise((resolve, reject) => {
             $.post('/cart/update.js', {
             	updates:obj
-            }).always(function(res){
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'Bag plate fee update', res, textStatus);
                 if(done){
                     done();
                 }
@@ -862,12 +1261,17 @@ async function adjustLogoItems(cb){
       	var obj = {};
       	obj[PLATE_BAG_LRG] = 1;
 
-        console.log('add large bag')
+        printingCartLog(operation, 'Setting large-bag plate fee', {
+            attempt: attempt,
+            variantId: PLATE_BAG_LRG,
+            quantity: 1
+        });
       	
         return new Promise((resolve, reject) => {
             $.post('/cart/update.js', {
             	updates:obj
-            }).always(function(res){
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'Large-bag plate fee update', res, textStatus);
     			resolve();
             });
         });
@@ -876,17 +1280,34 @@ async function adjustLogoItems(cb){
 
     //done
   	function removeLogo(done){
-    	
-      	var obj = {};
-      	obj[LOGO_ID] = 0;
 
-        console.log('remove logo')
+        var logoItem = (CART.items || []).find(function(cartItem){
+            return cartItem.id === LOGO_ID;
+        });
+
+        if(!logoItem){
+            printingCartLog(operation, 'No existing base printing fee to remove; skipping removal', {
+                attempt: attempt,
+                variantId: LOGO_ID
+            });
+            if(done){
+                done();
+            }
+            return Promise.resolve();
+        }
+
+        printingCartLog(operation, 'Removing existing base printing fee before rebuilding logo information', {
+            attempt: attempt,
+            variantId: LOGO_ID,
+            lineKey: logoItem.key
+        });
 
       	return new Promise((resolve, reject) => {
             $.post('/cart/change.js', {
-              'id': LOGO_ID,
+              'id': logoItem.key,
               'quantity': 0
-            }).always(function(res){
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'Existing base printing fee removal', res, textStatus);
                 if(done){
                     done();
                 }
@@ -907,12 +1328,16 @@ async function adjustLogoItems(cb){
 
         if(!LOGO_ID_200_KEY) return;
 
-        console.log('remove logo 200')
+        printingCartLog(operation, 'Removing additional-print fee', {
+            attempt: attempt,
+            variantId: LOGO_ID_200
+        });
 
       	return new Promise((resolve, reject) => {
             $.post('/cart/update.js', {
             	updates:obj
-            }).always(function(res){
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'Additional-print fee removal', res, textStatus);
                 if(done){
                     done();
                 }
@@ -951,12 +1376,16 @@ async function adjustLogoItems(cb){
 
         if(!Object.keys(obj).length) return;
 
-        console.log('remove all plates')
+        printingCartLog(operation, 'Removing plate fees that are no longer required', {
+            attempt: attempt,
+            variantIds: Object.keys(obj)
+        });
 
       	return new Promise((resolve, reject) => {
             $.post('/cart/update.js', {
             	updates:obj
-            }).always(function(res){
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'Plate fee removal', res, textStatus);
                 if(done){
                     done();
                 }
@@ -977,12 +1406,16 @@ async function adjustLogoItems(cb){
 
         if(!PLATE_STD_KEY) return;
 
-        console.log('remove std plates')
+        printingCartLog(operation, 'Removing box/pouch plate fee', {
+            attempt: attempt,
+            variantId: PLATE_STD
+        });
 
       	return new Promise((resolve, reject) => {
             $.post('/cart/update.js', {
             	updates:obj
-            }).always(function(res){
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'Box/pouch plate fee removal', res, textStatus);
                 if(done){
                     done();
                 }
@@ -1003,12 +1436,16 @@ async function adjustLogoItems(cb){
 
       if(!PLATE_BAG_KEY) return;
 
-      console.log('remove bag plate')
+      printingCartLog(operation, 'Removing bag plate fee', {
+          attempt: attempt,
+          variantId: PLATE_BAG
+      });
 
       	return new Promise((resolve, reject) => {
             $.post('/cart/update.js', {
             	updates:obj
-            }).always(function(res){
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'Bag plate fee removal', res, textStatus);
                 if(done){
                     done();
                 }
@@ -1029,12 +1466,16 @@ async function adjustLogoItems(cb){
 
         if(!PLATE_BAG_LRG_KEY) return;
 
-       console.log('remove large plate bag')
+       printingCartLog(operation, 'Removing large-bag plate fee', {
+           attempt: attempt,
+           variantId: PLATE_BAG_LRG
+       });
 
          return new Promise((resolve, reject) => {
             $.post('/cart/update.js', {
             	updates:obj
-            }).always(function(res){
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'Large-bag plate fee removal', res, textStatus);
     			resolve();
             });
         });
@@ -1055,12 +1496,16 @@ async function adjustLogoItems(cb){
         	obj[RUSH_PRINTING_ID] = 0;
         }
 
-        console.log('remove logos and plates')
+        printingCartLog(operation, 'Removing all printing-related fees because no printed merchandise remains', {
+            attempt: attempt,
+            variantIds: Object.keys(obj)
+        });
 
       	return new Promise((resolve, reject) => {
             $.post('/cart/update.js', {
             	updates:obj
-            }).always(function(res){
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, 'All printing-related fee removal', res, textStatus);
                 if(done){
                     done();
                 }
@@ -1077,11 +1522,20 @@ async function adjustLogoItems(cb){
             var obj = {};
             obj[RUSH_PRINTING_ID] = 0;
 
+            printingCartLog(operation, 'Rush-printing tier changed; replacing fee', {
+                attempt: attempt,
+                previousVariantId: window.RUSH_PRINTING_ID,
+                nextVariantId: getRushVariant().id
+            });
+
             $.post('/cart/update.js', {
                 updates:obj
-            }).always(function(res){
+            }).always(function(res, textStatus){
 
-                $.get('/cart/add.js?quantity=1&id=' + getRushVariant().id).always(function(res){
+                printingCartRequestResult(operation, 'Previous rush-printing fee removal', res, textStatus);
+
+                $.get('/cart/add.js?quantity=1&id=' + getRushVariant().id).always(function(res, addTextStatus){
+                    printingCartRequestResult(operation, 'Replacement rush-printing fee add', res, addTextStatus);
                     if(done){
                         done();
                     }
@@ -1090,6 +1544,12 @@ async function adjustLogoItems(cb){
             });
         }else{
         
+			printingCartLog(operation, 'Rush-printing fee does not need adjustment', {
+				attempt: attempt,
+				currentVariantId: window.RUSH_PRINTING_ID || null,
+				expectedVariantId: getRushVariant() ? getRushVariant().id : null
+			});
+
         	if(done){
               	done();
             }
@@ -1275,7 +1735,9 @@ function setUpBreadcrumbs(){
 
 function openConfirmAddToCartLayer(cb){	
   	
-  	$('.addToCart-conform').show();
+	$('.printing-reminder-actions').hide();
+	$('.addToCart-standard-confirmation-actions').show();
+	$('.addToCart-conform').show();
     $('.addToCart-added').hide();
 	  $('.addToCart-layer').removeClass('adding');
 	  $('.js-add-addToCart').text('ADD TO CART').removeClass('disabled').attr('aria-disabled', 'false');
@@ -1320,8 +1782,10 @@ function openAddToCartLayer(reason, item){
       	
 		$('.addToCart-layer-header span').html('1 Item Added To Cart');
 		$('.js-add-addToCart').off('click.addToCartConfirmation');
-		$('.addToCart-layer').removeClass('adding printing-cart-confirmation');
+		$('.addToCart-layer').removeClass('adding printing-cart-confirmation printing-cart-reminder');
 		$('.addToCart-printing-confirmation-message').hide();
+		$('.printing-reminder-actions').hide();
+		$('.addToCart-standard-confirmation-actions').show();
 		$('.js-add-addToCart').text('ADD TO CART').removeClass('disabled').attr('aria-disabled', 'false');
 
 		if(window.free_gift_item && window.free_gift_item.available && window.free_gift_code && window.free_gift_min_order_amount && window.free_gift_min_order_amount <= (CART.total_price/100)){
@@ -1424,8 +1888,10 @@ function closePrintingModal(e){
 	if(!e || $(e.target).is('.addToCart-layer-close') || $(e.target).hasClass('addToCart-layer') || $(e.target).hasClass('js-cancel-addToCart') || $(e.target).hasClass('addToCart-layer-overlay')){
   		$('.addToCart-layer').removeClass('in');
       	$('.addToCart-layer-overlay').removeClass('in')        
-		    $('.addToCart-printing-confirmation-message').hide();
-		    $('.addToCart-layer').removeClass('adding printing-cart-confirmation');
+		$('.addToCart-printing-confirmation-message').hide();
+		$('.printing-reminder-actions').hide();
+		$('.addToCart-standard-confirmation-actions').show();
+		$('.addToCart-layer').removeClass('adding printing-cart-confirmation printing-cart-reminder');
 	}
   
 }

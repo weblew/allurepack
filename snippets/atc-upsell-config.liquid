@@ -1,3 +1,9 @@
+{% assign atc_box_menu = settings.atc_box_menu %}
+
+{% if atc_box_menu != blank and atc_box_menu.links == blank %}
+  {% assign atc_box_menu = linklists[settings.atc_box_menu] %}
+{% endif %}
+
 {% assign atc_display_menu = settings.atc_display_menu %}
 
 {% if atc_display_menu != blank and atc_display_menu.links == blank %}
@@ -17,6 +23,19 @@
 {% endif %}
 
 <script>
+  window.ATC_UPSELL_BOX_COLLECTIONS = {
+    {% assign atc_box_mapping_started = false %}
+    {% if atc_box_menu != blank %}
+      {% for link in atc_box_menu.links %}
+        {% if link.type == 'collection_link' and link.object != blank %}
+          {% if atc_box_mapping_started %},{% endif %}
+          {{ link.title | handleize | json }}: {{ link.object.handle | json }}
+          {% assign atc_box_mapping_started = true %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  };
+
   window.ATC_UPSELL_DISPLAY_COLLECTIONS = {
     {% assign atc_mapping_started = false %}
     {% if atc_display_menu != blank %}

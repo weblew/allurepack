@@ -4,6 +4,7 @@
   // Manual product.metafields.upsell.items cards are rendered first by
   // search.upsell.liquid. This module only fills additional rule-based slots.
   var jsonCache = {};
+  var BOX_COLLECTIONS = window.ATC_UPSELL_BOX_COLLECTIONS || {};
   var DISPLAY_COLLECTIONS = window.ATC_UPSELL_DISPLAY_COLLECTIONS || {};
   var BAG_COLLECTIONS = window.ATC_UPSELL_BAG_COLLECTIONS || [];
   var RIBBON_COLLECTIONS = window.ATC_UPSELL_RIBBON_COLLECTIONS || [];
@@ -134,23 +135,28 @@
   }
 
   function isBox(product) {
-    return productTags(product).indexOf('box') !== -1;
+    return productTags(product).indexOf('box') !== -1 ||
+      /\bbox(?:es)?\b/.test(normalized(product.title));
   }
 
   function isDisplay(product) {
-    return productTags(product).indexOf('display') !== -1;
+    return productTags(product).indexOf('display') !== -1 ||
+      /\bdisplays?\b/.test(normalized(product.title));
   }
 
   function isBag(product) {
     var type = normalized(product.type);
     var tags = productTags(product);
+    var title = normalized(product.title);
 
     return type === 'bag' || type === 'large bag' ||
-      tags.indexOf('type bag') !== -1 || tags.indexOf('type large bag') !== -1;
+      tags.indexOf('type bag') !== -1 || tags.indexOf('type large bag') !== -1 ||
+      /\bbags?\b/.test(title);
   }
 
   function productType(product) {
     var tags = productTags(product);
+    var title = normalized(product.title);
     var typeTags = tags.filter(function (tag) {
       return tag.indexOf('type ') === 0;
     }).map(function (tag) {
@@ -163,6 +169,28 @@
     var match = priorities.find(function (type) {
       return typeTags.indexOf(type) !== -1;
     });
+    var titleMatch;
+
+    titleMatch = [
+        { type: 'double ring', pattern: /\bdouble ring\b/ },
+        { type: 'clip', pattern: /\bclip\b/ },
+        { type: 'cufflink', pattern: /\bcufflinks?\b/ },
+        { type: 'bracelet', pattern: /\bbracelets?\b/ },
+        { type: 'earring', pattern: /\bearrings?\b|\bstuds?\b/ },
+        { type: 'pendant', pattern: /\bpendants?\b/ },
+        { type: 'necklace', pattern: /\bnecklaces?\b|\bneck\b/ },
+        { type: 'watch', pattern: /\bwatches?\b/ },
+        { type: 'bangle', pattern: /\bbangles?\b/ },
+        { type: 'pillow', pattern: /\bpillows?\b/ },
+        { type: 'universal', pattern: /\buniversal\b|\butility\b/ },
+        { type: 'ring', pattern: /\brings?\b/ }
+      ].map(function (candidate) {
+        return candidate.pattern.test(title) ? candidate.type : null;
+      }).find(Boolean);
+
+    if (!match) {
+      match = titleMatch;
+    }
 
     return (match || normalized(product.type)).replace(/\s+/g, '-');
   }
@@ -184,6 +212,18 @@
 
     return aliases.map(function (alias) {
       return DISPLAY_COLLECTIONS[alias];
+    }).find(Boolean);
+  }
+
+  function boxCollectionForType(type) {
+    var aliases = [type, type + '-box', type + '-boxes'];
+
+    if (type === 'neck') {
+      aliases = aliases.concat(['necklace', 'necklace-box', 'necklace-boxes']);
+    }
+
+    return aliases.map(function (alias) {
+      return BOX_COLLECTIONS[alias];
     }).find(Boolean);
   }
 
@@ -244,9 +284,97 @@
       });
   }
 
+  function boxCollectionHandlesForBag(sourceProduct) {
+    var title = normalized(sourceProduct.title);
+    var smallTypes = ['ring', 'double-ring', 'earring', 'pendant'];
+    var largeTypes = ['bracelet', 'necklace', 'watch', 'bangle'];
+    var types = smallTypes.concat(largeTypes);
+    var seen = {};
+
+    if (/\b(?:mini|gem)\b/.test(title)) {
+      types = smallTypes;
+    } else if (/\b(?:jewel|cub)\b/.test(title)) {
+      types = largeTypes;
+    }
+
+    return shuffled(types.map(boxCollectionForType).filter(function (handle) {
+      if (!handle || seen[handle]) {
+        return false;
+      }
+      seen[handle] = true;
+      return true;
+    }));
+  }
+
+  function recommendBoxForBag(sourceProduct, sourceVariant, excluded) {
+    var collectionHandles = boxCollectionHandlesForBag(sourceProduct);
+
+    return Promise.all(collectionHandles.map(getCollection)).then(function (collections) {
+      var sourceFamily = colorFamily(sourceVariant.option1, true);
+      var products = [].concat.apply([], collections);
+      var seen = {};
+      var exact = [];
+      var family = [];
+
+      products.forEach(function (product) {
+        var exactVariant;
+        var familyVariant;
+
+        if (!product.handle || seen[product.handle] || excluded[product.handle] || !isBox(product)) {
+          return;
+        }
+        seen[product.handle] = true;
+        exactVariant = variantByExactColor(product, sourceVariant.option1);
+        familyVariant = sourceFamily ? variantByFamily(product, sourceFamily, true) : null;
+
+        if (exactVariant) {
+          exact.push({ product: product, variant: exactVariant });
+        } else if (familyVariant) {
+          family.push({ product: product, variant: familyVariant });
+        }
+      });
+
+      return shuffled(exact)[0] || shuffled(family)[0] || null;
+    }).then(function (recommendation) {
+      if (recommendation) {
+        recommendation.kind = 'box';
+        recommendation.reason = 'Coordinating box size and color';
+      }
+      return recommendation;
+    });
+  }
+
   function recommendBox(sourceProduct, sourceVariant, excluded) {
     var term = collectionSearchTerm(sourceProduct);
     var sourceType = productType(sourceProduct);
+
+    if (isBag(sourceProduct)) {
+      return recommendBoxForBag(sourceProduct, sourceVariant, excluded);
+    }
+
+    if (!isBox(sourceProduct)) {
+      var boxCollectionHandle = boxCollectionForType(sourceType);
+
+      if (!boxCollectionHandle) {
+        return Promise.resolve(null);
+      }
+
+      return getCollection(boxCollectionHandle).then(function (products) {
+        var candidates = shuffled(products.filter(function (product) {
+          return product.handle && !excluded[product.handle] && isBox(product);
+        }));
+
+        return firstMatchingProduct(candidates, function (product) {
+          return variantByExactColor(product, sourceVariant.option1);
+        }, 0);
+      }).then(function (recommendation) {
+        if (recommendation) {
+          recommendation.kind = 'box';
+          recommendation.reason = 'Matching ' + sourceType.replace(/-/g, ' ') + ' box';
+        }
+        return recommendation;
+      });
+    }
 
     if (!term) {
       return Promise.resolve(null);
@@ -324,9 +452,17 @@
     return match ? Number(match[1]) : null;
   }
 
-  function bagHasRightSize(product, sourceSku) {
+  function bagHasRightSize(product, sourceSku, sourceProduct) {
     var number = skuNumber(sourceSku);
     var title = normalized(product.title);
+    var sourceTitle = normalized(sourceProduct && sourceProduct.title);
+
+    if (/\b(?:mini|gem)\b/.test(sourceTitle)) {
+      return /\b(?:mini|gem)\b/.test(title);
+    }
+    if (/\b(?:jewel|cub)\b/.test(sourceTitle)) {
+      return /\b(?:jewel|cub)\b/.test(title);
+    }
 
     if (number === null) {
       return true;
@@ -338,11 +474,11 @@
     return /\b(jewel|cub)\b/.test(title);
   }
 
-  function recommendBag(sourceVariant, excluded) {
+  function recommendBag(sourceProduct, sourceVariant, excluded) {
     return Promise.all(BAG_COLLECTIONS.map(getCollection)).then(function (collections) {
       var products = [].concat.apply([], collections).filter(function (product) {
         return product.handle && !excluded[product.handle] && isBag(product) &&
-          bagHasRightSize(product, sourceVariant.sku);
+          bagHasRightSize(product, sourceVariant.sku, sourceProduct);
       });
       var sourceFamily = colorFamily(sourceVariant.option1, true) || 'black';
       var exact = [];
@@ -503,13 +639,18 @@
   function enhance($container, addedItem) {
     var requestToken = String(Date.now()) + String(Math.random());
 
+    $container.find('.atc-upsell-dynamic-status').remove();
     $container.data('dynamic-upsell-request', requestToken);
 
     return getProduct(addedItem.handle).then(function (sourceProduct) {
       var sourceVariant;
       var excluded;
 
-      if (!isBox(sourceProduct)) {
+      if ($container.data('dynamic-upsell-request') !== requestToken) {
+        return [];
+      }
+
+      if (!isBox(sourceProduct) && !isDisplay(sourceProduct) && !isBag(sourceProduct)) {
         return [];
       }
 
@@ -526,10 +667,32 @@
       excluded = excludedHandles($container, sourceProduct.handle);
       $container.append('<div class="atc-upsell-dynamic-status">Finding coordinating items...</div>');
 
+      if (isBag(sourceProduct)) {
+        return recommendBox(sourceProduct, sourceVariant, excluded).then(function (boxRecommendation) {
+          var displayExcluded = {};
+
+          Object.keys(excluded).forEach(function (handle) {
+            displayExcluded[handle] = true;
+          });
+          if (boxRecommendation) {
+            displayExcluded[boxRecommendation.product.handle] = true;
+          }
+
+          return Promise.all([
+            Promise.resolve(boxRecommendation),
+            boxRecommendation ?
+              recommendDisplay(boxRecommendation.product, boxRecommendation.variant, displayExcluded) :
+              Promise.resolve(null),
+            recommendBag(sourceProduct, sourceVariant, excluded),
+            recommendGift(sourceVariant, excluded)
+          ]);
+        });
+      }
+
       return Promise.all([
         recommendBox(sourceProduct, sourceVariant, excluded),
         recommendDisplay(sourceProduct, sourceVariant, excluded),
-        recommendBag(sourceVariant, excluded),
+        recommendBag(sourceProduct, sourceVariant, excluded),
         recommendGift(sourceVariant, excluded)
       ]);
     }).then(function (recommendations) {

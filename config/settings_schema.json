@@ -849,6 +849,12 @@
     "settings": [
       {
         "type": "link_list",
+        "id": "atc_box_menu",
+        "label": "Box collections menu",
+        "info": "Each item must link to its jewelry box type collection. This is used when a display is added."
+      },
+      {
+        "type": "link_list",
         "id": "atc_display_menu",
         "label": "Display collections menu",
         "info": "Each item must link to its display collection. Titles such as Ring Displays, Neck Displays, and Bangle & Watch Displays are supported."
@@ -874,7 +880,7 @@
         "type": "select",
         "id": "printing_cart_confirmation_scope",
         "label": "Cart confirmation after save",
-        "default": "collections",
+        "default": "all",
         "options": [
           {
             "value": "collections",

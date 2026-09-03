@@ -7,7 +7,8 @@
 
 
 {% if product %}
-    {% if product.metafields.upsell and product.metafields.upsell.items %}
+    {% comment %} Manual metafield upsell disabled — leave to atc-upsell.js dynamic recommendations. {% endcomment %}
+    {% if false and product.metafields.upsell and product.metafields.upsell.items %}
 	
       <div class="">
         	

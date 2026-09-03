@@ -703,7 +703,9 @@
       }
 
       $container.find('.atc-upsell-dynamic-status').remove();
-      recommendations = (recommendations || []).filter(Boolean);
+      recommendations = (recommendations || []).filter(Boolean).filter(function (recommendation) {
+        return !!imageURL(recommendation.product, recommendation.variant);
+      });
       if (!recommendations.length) {
         return;
       }

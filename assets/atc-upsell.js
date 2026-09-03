@@ -327,9 +327,9 @@
         exactVariant = variantByExactColor(product, sourceVariant.option1);
         familyVariant = sourceFamily ? variantByFamily(product, sourceFamily, true) : null;
 
-        if (exactVariant) {
+        if (exactVariant && imageURL(product, exactVariant)) {
           exact.push({ product: product, variant: exactVariant });
-        } else if (familyVariant) {
+        } else if (familyVariant && imageURL(product, familyVariant)) {
           family.push({ product: product, variant: familyVariant });
         }
       });
@@ -365,7 +365,8 @@
         }));
 
         return firstMatchingProduct(candidates, function (product) {
-          return variantByExactColor(product, sourceVariant.option1);
+          var variant = variantByExactColor(product, sourceVariant.option1);
+          return variant && imageURL(product, variant) ? variant : null;
         }, 0);
       }).then(function (recommendation) {
         if (recommendation) {
@@ -394,7 +395,8 @@
       });
 
       return firstMatchingProduct(shuffled(candidates), function (product) {
-        return variantByExactColor(product, sourceVariant.option1);
+        var variant = variantByExactColor(product, sourceVariant.option1);
+        return variant && imageURL(product, variant) ? variant : null;
       }, 0);
     }).then(function (recommendation) {
       if (recommendation) {
@@ -424,7 +426,7 @@
         var variant = sourceFamily ?
           variantForColor(product, sourceVariant.option1, false, 'White') :
           variantByExactColor(product, 'White');
-        if (!variant) {
+        if (!variant || !imageURL(product, variant)) {
           return false;
         }
 
@@ -490,11 +492,11 @@
         var familyVariant = variantByFamily(product, sourceFamily, true);
         var blackVariant = variantByFamily(product, 'black', true);
 
-        if (exactVariant) {
+        if (exactVariant && imageURL(product, exactVariant)) {
           exact.push({ product: product, variant: exactVariant });
-        } else if (familyVariant) {
+        } else if (familyVariant && imageURL(product, familyVariant)) {
           family.push({ product: product, variant: familyVariant });
-        } else if (blackVariant) {
+        } else if (blackVariant && imageURL(product, blackVariant)) {
           fallback.push({ product: product, variant: blackVariant });
         }
       });
@@ -535,7 +537,7 @@
           variant = availableVariants(product)[0];
         }
 
-        if (variant) {
+        if (variant && imageURL(product, variant)) {
           recommendation = { product: product, variant: variant };
           return true;
         }

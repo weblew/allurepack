@@ -5048,6 +5048,18 @@
           "padding_top_mobile": 0,
           "padding_bottom_mobile": 80
         }
+      },
+      "recently-viewed-products": {
+        "type": "recently-viewed-products",
+        "settings": {
+          "icon": true,
+          "title": "Recently viewed",
+          "products_to_show": 8,
+          "padding_top_desktop": 0,
+          "padding_bottom_desktop": 80,
+          "padding_top_mobile": 0,
+          "padding_bottom_mobile": 80
+        }
       }
     },
     "content_for_index": [

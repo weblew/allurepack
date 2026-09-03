@@ -981,38 +981,36 @@ async function adjustLogoItems(cb, fail, attempt, operation){
 
         	//if need plates
         	if(LOGO_INFO.logoNeedsPlate){
-        		
-              //add plates
-              await addPlates();
-              //add logo
-              await addLogo();
-            	//if amount of items that need logo is more then 200
-              if(LOGO_INFO.count > 200){
-                  //add logo-200
-                  await addLogo200();
-              }else{
-                  //remove logo-200
-                  await removeLogo200();
-              }          	          	
-            
+
+              //plates and the additional-print fee are plain quantity updates on
+              //lines separate from the logo file itself, so send them as one
+              //combined request and run it alongside the logo upload instead of
+              //one request after another
+              var feeUpdates = {};
+              feeUpdates[PLATE_STD] = LOGO_INFO.cartHasItemsWithPrinting ? 1 : 0;
+              feeUpdates[PLATE_BAG] = LOGO_INFO.cartHasBagsWithPrinting ? 1 : 0;
+              feeUpdates[PLATE_BAG_LRG] = LOGO_INFO.cartHasLargeBagsWithPrinting ? 1 : 0;
+              feeUpdates[LOGO_ID_200] = LOGO_INFO.count > 200 ? LOGO_INFO.count - 200 : 0;
+
+              await Promise.all([
+                  applyFeeQuantities(feeUpdates, 'Plate and additional-print fee update'),
+                  addLogo()
+              ]);
+
           }else{
-            
-              //add logo without file
-              await addLogoWithoutFile();
-            
-            	//if amount of items that need logo is more then 200
-              if(LOGO_INFO.count > 200){
-                  //add logo-200
-                  await addLogo200();
-                  //remove plates
-                  await removePlates();
-              }else{
-                  //remove logo 200
-                  await removeLogo200();
-                  //remove plates
-                  await removePlates();
-              }
-          
+
+              //base printing fee, plates and additional-print fee are all plain
+              //quantity updates here (no file to upload), so set them together
+              //in a single request
+              var feeUpdates = {};
+              feeUpdates[LOGO_ID] = 1;
+              feeUpdates[PLATE_STD] = 0;
+              feeUpdates[PLATE_BAG] = 0;
+              feeUpdates[PLATE_BAG_LRG] = 0;
+              feeUpdates[LOGO_ID_200] = LOGO_INFO.count > 200 ? LOGO_INFO.count - 200 : 0;
+
+              await applyFeeQuantities(feeUpdates, 'Base printing fee, plate and additional-print fee update');
+
           }
 
           
@@ -1026,7 +1024,25 @@ async function adjustLogoItems(cb, fail, attempt, operation){
       	
     
     }else{
-    
+
+        var hasExistingPrintingFees = (CART.items || []).some(function(item){
+            return item.id === LOGO_ID || item.id === LOGO_ID_200 || item.id === PLATE_STD ||
+                item.id === PLATE_BAG || item.id === PLATE_BAG_LRG ||
+                (window.RUSH_PRINTING_ID && item.id === RUSH_PRINTING_ID);
+        });
+
+        if(!hasExistingPrintingFees){
+            //nothing printed in the cart and no leftover fee lines to clean up -
+            //there is nothing to write and nothing to verify, so skip both requests
+            printingCartLog(operation, 'No printed merchandise and no existing printing fees; nothing to reconcile', {
+                attempt: attempt
+            });
+            if(cb){
+                cb();
+            }
+            return;
+        }
+
     	// remove all logos and plates
       	await removeLogosAndPlates();
 
@@ -1034,66 +1050,31 @@ async function adjustLogoItems(cb, fail, attempt, operation){
             attempt: attempt
         });
         verifyAdjustedPrintingItems(cb, fail, attempt, operation);
-    
+
     }
 
     //done
-  	async function addPlates(done){
-        if(LOGO_INFO.cartHasLargeBagsWithPrinting){          
-          await addLargePlateBag();
-        }else{
-          await removeLargePlateBag();
+  	function applyFeeQuantities(updates, label){
+        if(!Object.keys(updates).length){
+            return Promise.resolve();
         }
 
-        if(LOGO_INFO.cartHasBagsWithPrinting){
-          await addPlateBag();
-        }else{
-          await removePlateBag();
-        }
-
-        if(LOGO_INFO.cartHasItemsWithPrinting){
-          await addPlateStd();
-        }else{
-          await removePlateStd();
-        }
-        
-        if(done){
-            return done();
-        }
-    
-    }    	
-  	
-  	
-  	//done
-  	function addLogoWithoutFile(done){
-      
-      	var obj = {};
-      	obj[LOGO_ID] = 1;
-
-        printingCartLog(operation, 'Setting base printing fee for plate-on-file selection', {
+        printingCartLog(operation, label, {
             attempt: attempt,
-            variantId: LOGO_ID,
-            quantity: 1
+            updates: updates
         });
 
-       return new Promise((resolve, reject) => {
-
-         $.post('/cart/update.js', {
-        	updates:obj
-          }).always(function(res, textStatus){
-                printingCartRequestResult(operation, 'Base printing fee update', res, textStatus);
-    			if(done){
-                    done();
-                }
+        return new Promise((resolve, reject) => {
+            $.post('/cart/update.js', {
+                updates: updates
+            }).always(function(res, textStatus){
+                printingCartRequestResult(operation, label, res, textStatus);
                 resolve();
-          });
-          
+            });
         });
 
-      	
-  
-  	}
-  
+    }
+
   	//done
   	async function addLogo(done){
       	
@@ -1178,107 +1159,6 @@ async function adjustLogoItems(cb, fail, attempt, operation){
     }
   	
   	//done
-  	function addLogo200(done){
-      
-      	var obj = {};
-      	obj[LOGO_ID_200] = LOGO_INFO.count - 200;
-
-       printingCartLog(operation, 'Setting additional-print fee quantity', {
-           attempt: attempt,
-           variantId: LOGO_ID_200,
-           quantity: LOGO_INFO.count - 200
-       });
-
-        return new Promise((resolve, reject) => {
-        	$.post('/cart/update.js', {
-          	updates:obj
-          }).always(function(res, textStatus){
-              printingCartRequestResult(operation, 'Additional-print fee update', res, textStatus);
-  			if(done){
-                  done();
-              }
-             resolve();
-          });
-        });
-      
-    }
-  
-  	
-  	//done
-  	function addPlateStd(done){
-    	
-      	var obj = {};
-      	obj[PLATE_STD] = 1;
-
-       printingCartLog(operation, 'Setting box/pouch plate fee', {
-           attempt: attempt,
-           variantId: PLATE_STD,
-           quantity: 1
-       });
-        return new Promise((resolve, reject) => {
-        	$.post('/cart/update.js', {
-          	updates:obj
-          }).always(function(res, textStatus){
-              printingCartRequestResult(operation, 'Box/pouch plate fee update', res, textStatus);
-  			if(done){
-                  done();
-              }
-             resolve();
-          });
-        });
-      
-    }
-  
-  	//done
-  	function addPlateBag(done){
-    	
-      	var obj = {};
-      	obj[PLATE_BAG] = 1;
-
-        printingCartLog(operation, 'Setting bag plate fee', {
-            attempt: attempt,
-            variantId: PLATE_BAG,
-            quantity: 1
-        });
-
-        return new Promise((resolve, reject) => {
-            $.post('/cart/update.js', {
-            	updates:obj
-            }).always(function(res, textStatus){
-                printingCartRequestResult(operation, 'Bag plate fee update', res, textStatus);
-                if(done){
-                    done();
-                }
-    			resolve();
-            });
-        });
-      
-    }
-
-    //done
-  	function addLargePlateBag(done){
-    	
-      	var obj = {};
-      	obj[PLATE_BAG_LRG] = 1;
-
-        printingCartLog(operation, 'Setting large-bag plate fee', {
-            attempt: attempt,
-            variantId: PLATE_BAG_LRG,
-            quantity: 1
-        });
-      	
-        return new Promise((resolve, reject) => {
-            $.post('/cart/update.js', {
-            	updates:obj
-            }).always(function(res, textStatus){
-                printingCartRequestResult(operation, 'Large-bag plate fee update', res, textStatus);
-    			resolve();
-            });
-        });
-      
-    }
-
-    //done
   	function removeLogo(done){
 
         var logoItem = (CART.items || []).find(function(cartItem){
@@ -1317,171 +1197,6 @@ async function adjustLogoItems(cb, fail, attempt, operation){
       
     }
   
-  	//done
-  	function removeLogo200(done){
-    	
-      	var obj = {};
-        var LOGO_ID_200_KEY = CART.items.find(ci => {
-            return ci.id === LOGO_ID_200
-        })
-      	obj[LOGO_ID_200] = 0;
-
-        if(!LOGO_ID_200_KEY) return;
-
-        printingCartLog(operation, 'Removing additional-print fee', {
-            attempt: attempt,
-            variantId: LOGO_ID_200
-        });
-
-      	return new Promise((resolve, reject) => {
-            $.post('/cart/update.js', {
-            	updates:obj
-            }).always(function(res, textStatus){
-                printingCartRequestResult(operation, 'Additional-print fee removal', res, textStatus);
-                if(done){
-                    done();
-                }
-    			resolve();
-            });
-        });
-      
-    }
-
-  
-  
-  	//done
-  	function removePlates(done){
-    	
-      	var obj = {};
-
-        var PLATE_STD_KEY = CART.items.find(ci => {
-            return ci.id === PLATE_STD
-        })
-        var PLATE_BAG_KEY = CART.items.find(ci => {
-            return ci.id === PLATE_BAG
-        })
-        var PLATE_BAG_LRG_KEY = CART.items.find(ci => {
-            return ci.id === PLATE_BAG_LRG
-        })
-
-        if(PLATE_STD_KEY){
-        	obj[PLATE_STD] = 0;
-        }
-        if(PLATE_BAG_KEY){
-        	obj[PLATE_BAG] = 0;
-        }
-        if(PLATE_BAG_LRG_KEY){
-          obj[PLATE_BAG_LRG] = 0;
-        }
-
-        if(!Object.keys(obj).length) return;
-
-        printingCartLog(operation, 'Removing plate fees that are no longer required', {
-            attempt: attempt,
-            variantIds: Object.keys(obj)
-        });
-
-      	return new Promise((resolve, reject) => {
-            $.post('/cart/update.js', {
-            	updates:obj
-            }).always(function(res, textStatus){
-                printingCartRequestResult(operation, 'Plate fee removal', res, textStatus);
-                if(done){
-                    done();
-                }
-    			resolve();
-            });
-        });
-      
-    }
-  	
-  	//done
-  	function removePlateStd(done){
-    
-      	var obj = {};
-        var PLATE_STD_KEY = CART.items.find(ci => {
-            return ci.id === PLATE_STD
-        })
-      	obj[PLATE_STD] = 0;
-
-        if(!PLATE_STD_KEY) return;
-
-        printingCartLog(operation, 'Removing box/pouch plate fee', {
-            attempt: attempt,
-            variantId: PLATE_STD
-        });
-
-      	return new Promise((resolve, reject) => {
-            $.post('/cart/update.js', {
-            	updates:obj
-            }).always(function(res, textStatus){
-                printingCartRequestResult(operation, 'Box/pouch plate fee removal', res, textStatus);
-                if(done){
-                    done();
-                }
-    			resolve();
-            });
-        });
-    
-    }
-  	
-  	//done
-  	function removePlateBag(done){
-    
-      	var obj = {};
-        var PLATE_BAG_KEY = CART.items.find(ci => {
-            return ci.id === PLATE_BAG
-        })
-      	obj[PLATE_BAG] = 0;
-
-      if(!PLATE_BAG_KEY) return;
-
-      printingCartLog(operation, 'Removing bag plate fee', {
-          attempt: attempt,
-          variantId: PLATE_BAG
-      });
-
-      	return new Promise((resolve, reject) => {
-            $.post('/cart/update.js', {
-            	updates:obj
-            }).always(function(res, textStatus){
-                printingCartRequestResult(operation, 'Bag plate fee removal', res, textStatus);
-                if(done){
-                    done();
-                }
-    			resolve();
-            });
-        });
-    
-    }
-
-    //done
-  	function removeLargePlateBag(done){
-    
-      	var obj = {};
-        var PLATE_BAG_LRG_KEY = CART.items.find(ci => {
-            return ci.id === PLATE_BAG_LRG
-        })
-      	obj[PLATE_BAG_LRG] = 0;
-
-        if(!PLATE_BAG_LRG_KEY) return;
-
-       printingCartLog(operation, 'Removing large-bag plate fee', {
-           attempt: attempt,
-           variantId: PLATE_BAG_LRG
-       });
-
-         return new Promise((resolve, reject) => {
-            $.post('/cart/update.js', {
-            	updates:obj
-            }).always(function(res, textStatus){
-                printingCartRequestResult(operation, 'Large-bag plate fee removal', res, textStatus);
-    			resolve();
-            });
-        });
-    
-    }
-  	
   	//done
   	function removeLogosAndPlates(done){
     	
@@ -1807,7 +1522,7 @@ function openAddToCartLayer(reason, item){
       	$('.atc-upsell').empty();
       
       	
-		if(item){
+		if(window.innerWidth > 749 && item){
         
             var searchQuery = encodeURIComponent(item.handle + ':' + item.variant.option1);
             var dynamicUpsellRequest = loadATCUpsell();

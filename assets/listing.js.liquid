@@ -1,10 +1,15 @@
 /* Start Wrap For Jquery 01/08/18 */
-var PRINTING_CART_CONFIRMATION_SCOPE = {{ settings.printing_cart_confirmation_scope | default: 'all' | json }};
+var PRINTING_CART_CONFIRMATION_SCOPE = document.body.getAttribute('data-printing-cart-confirmation-scope') || 'all';
 var PENDING_PRINTING_CART_REMINDER = null;
 var PENDING_PRINTING_CART_ACTION = null;
 var ALLOW_PRINTING_PAGE_EXIT = false;
 
 function getPrintingCartReminderForm(productId){
+	if(PRINTING_CART_CONFIRMATION_SCOPE === 'disabled' ||
+		(PRINTING_CART_CONFIRMATION_SCOPE === 'collections' && !document.body.classList.contains('template-collection'))){
+		return jQuery();
+	}
+
 	var productSelector = '.list-view-item[data-id="' + productId + '"]';
 
 	if(PRINTING_CART_CONFIRMATION_SCOPE === 'all'){

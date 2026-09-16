@@ -51,7 +51,7 @@
     "atc_display_menu": "jewelry-displays-types",
     "atc_ribbon_menu": "gift-ribbon",
     "atc_bag_menu": "pouches-bags",
-    "printing_cart_confirmation_scope": "all",
+    "printing_cart_confirmation_scope": "collections",
     "show_out_of_stock": true,
     "item_color_white": "#ffffff",
     "item_color_silver": "#c0c0c0",

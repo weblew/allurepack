@@ -151,7 +151,7 @@
   });
 </script>
 </head> <div class='evm-multiple evm-us-main-div' data-page='{{template}}'></div>
-<body class="template-{{ template | split: '.' | first }}">
+<body class="template-{{ template | split: '.' | first }}" data-printing-cart-confirmation-scope="{{ settings.printing_cart_confirmation_scope | default: 'all' | escape }}">
 
   <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 

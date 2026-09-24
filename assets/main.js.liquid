@@ -1215,13 +1215,18 @@ async function adjustLogoItems(cb, fail, attempt, operation){
     }
   	
   	//done
-  	function removeLogo(done){
+  	async function removeLogo(done){
 
-        var logoItem = (CART.items || []).find(function(cartItem){
+        //sweep every matching line, not just the first - a cart can already be
+        //carrying more than one base printing fee line (left over from before
+        //this reconciliation existed, or from a cross-tab race this page's
+        //own lock can't see), and leaving the extras behind means the cart
+        //never self-heals and just keeps growing new lines on top
+        var logoItems = (CART.items || []).filter(function(cartItem){
             return cartItem.id === LOGO_ID;
         });
 
-        if(!logoItem){
+        if(!logoItems.length){
             printingCartLog(operation, 'No existing base printing fee to remove; skipping removal', {
                 attempt: attempt,
                 variantId: LOGO_ID
@@ -1229,31 +1234,41 @@ async function adjustLogoItems(cb, fail, attempt, operation){
             if(done){
                 done();
             }
-            return Promise.resolve(true);
+            return true;
         }
 
-        printingCartLog(operation, 'Removing existing base printing fee before rebuilding logo information', {
+        printingCartLog(operation, 'Removing existing base printing fee line(s) before rebuilding logo information', {
             attempt: attempt,
             variantId: LOGO_ID,
-            lineKey: logoItem.key
+            lineKeys: logoItems.map(function(item){ return item.key; })
         });
 
-      	return new Promise((resolve, reject) => {
-            $.post('/cart/change.js', {
-              'id': logoItem.key,
-              'quantity': 0
-            }).always(function(res, textStatus){
-                var status = res && typeof res.status === 'number' ? res.status : 200,
-                    removed = status < 400 && textStatus !== 'error' && textStatus !== 'timeout';
+        var allRemoved = true;
 
-                printingCartRequestResult(operation, 'Existing base printing fee removal', res, textStatus);
-                if(done){
-                    done();
-                }
-    			resolve(removed);
+        for(var i = 0; i < logoItems.length; i++){
+            var removed = await new Promise((resolve, reject) => {
+                $.post('/cart/change.js', {
+                  'id': logoItems[i].key,
+                  'quantity': 0
+                }).always(function(res, textStatus){
+                    var status = res && typeof res.status === 'number' ? res.status : 200,
+                        succeeded = status < 400 && textStatus !== 'error' && textStatus !== 'timeout';
+
+                    printingCartRequestResult(operation, 'Existing base printing fee removal', res, textStatus);
+                    resolve(succeeded);
+                });
             });
-        });
-      
+
+            if(!removed){
+                allRemoved = false;
+            }
+        }
+
+        if(done){
+            done();
+        }
+
+        return allRemoved;
     }
   
   	//done

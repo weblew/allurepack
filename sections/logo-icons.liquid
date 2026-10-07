@@ -1,4 +1,4 @@
-{% capture 'fonts' %}
+{% capture fonts %}
 <select style="font-family: 'Roboto', sans-serif;">
   <option value="Roboto" style="font-family: 'Roboto';">A</option>
   <option value="Muli" style="font-family: 'Muli';">A</option>
@@ -254,3 +254,13 @@
 
 {% javascript %}
 {% endjavascript %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% capture 'fonts' %}"
+  to: "{% capture fonts %}"
+  position: 0..19
+{% endcomment %}

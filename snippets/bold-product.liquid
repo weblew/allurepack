@@ -403,7 +403,7 @@ OPTIONAL: bold-product-error.liquid - If this snippet exists, it will be used to
 "name":{{- opt | json -}},
 {%- if bold_product_endpoint == 'json' -%}"product_id":{{- bold_product.id | json -}},{%- endif -%}
 "position":{{-  forloop.index | json -}},
-"values":{{- [option_name] | json -}}
+"values":{{- self[option_name] | json -}}
 }
     {%- endfor -%}
 ]
@@ -440,4 +440,13 @@ OPTIONAL: bold-product-error.liquid - If this snippet exists, it will be used to
 {%- endunless -%}
 {%- if bold_trigger_break -%}
   {%- break -%}
-{%- endif -%}
+{%- endif -%}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{- [option_name] | json -}}"
+  to: "{{- self[option_name] | json -}}"
+  position: 24478..24510
+{%- endcomment -%}

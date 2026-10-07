@@ -119,7 +119,7 @@
                       Box Material / Features
                     </h4>
                   <div class="meterials-container">
-                      {% assign meterials = [] %}
+                      {% assign meterials = nil %}
                       {% for link in linklists[page.handle].links  %}
                         {% assign link_meterials = link.object.metafields.custom.materials.value %}
                         {% assign meterials = meterials | concat:link_meterials | uniq  %}                      
@@ -250,4 +250,13 @@
       {% render 'btt' %}
       </div>
     </div>
-{% endif %}
+{% endif %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% assign meterials = [] %}"
+  to: "{% assign meterials = nil %}"
+  position: 6252..6280
+{%- endcomment -%}

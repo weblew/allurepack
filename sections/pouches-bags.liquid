@@ -7,7 +7,7 @@
 
       
 
-      {% capture bugger_blocks =  %}
+      {% capture bugger_blocks %}
         {% for block in section.blocks %}
           {% if block.settings.size == 'flex-third' %}
             <div class="flex-third" style="padding-left: 10px;padding-right: 10px;">
@@ -164,4 +164,13 @@
       }
     ]
   }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% capture bugger_blocks =  %}"
+  to: "{% capture bugger_blocks %}"
+  position: 135..162
+{%- endcomment -%}

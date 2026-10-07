@@ -47,7 +47,7 @@
                   {% endunless %}
                  
 
-                  {{ line_item.title | replace:',':'<br/>' | link_to: line_item.product.url }}
+                  {{ line_item.title | replace: ',', '<br/>' | link_to: line_item.product.url }}
               </div>
               {% if line_item.fulfillment %}
                 <div class="note">
@@ -173,4 +173,15 @@
 
         {% endfor %}
   
-</script>
+</script>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ line_item.title | replace:',':'<br/>' | link_to: line_item.product.url
+    }}"
+  to: "{{ line_item.title | replace: ',', '<br/>' | link_to: line_item.product.url
+    }}"
+  position: 1948..2026
+{%- endcomment -%}

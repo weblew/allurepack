@@ -1,6 +1,6 @@
 
 	
-{% capture 'title' %}
+{% capture title %}
 
       {% if collection.handle == 'showcase-trays' or collection.handle  == 'light-weight-trays' %}
 
@@ -170,3 +170,13 @@
     </div>
 
                 
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% capture 'title' %}"
+  to: "{% capture title %}"
+  position: 3..22
+{% endcomment %}

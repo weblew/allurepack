@@ -60,6 +60,7 @@
     {% for order in customer.orders %}
       {% for item in order.line_items %}
         {% if item.variant_id and item.product.type != 'logo' %}
+          {% assign history_image = item.variant.image | default: item.image | default: item.product.featured_image %}
           var itemInList = ORDERED_ITEMS.findIndex(function(product) {
             return product.variant_id === {{ item.variant_id | json }};
           });
@@ -75,7 +76,7 @@
               properties: {{ item.properties | json | escape | json }},
               variant_id: {{ item.variant_id | json }},
               url: {{ item.url | escape | json }},
-              image: {{ item.variant.image | image_url: width: 100 | escape | json }},
+              image: {% if history_image %}{{ history_image | image_url: width: 100 | escape | json }}{% else %}"data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="{% endif %},
               option1: {{ item.variant.option1 | json }},
               option2: {{ item.variant.option2 | json }},
               options: {{ item.product.options_with_values | json }},

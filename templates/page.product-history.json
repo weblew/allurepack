@@ -47,11 +47,11 @@
         "ai_gen_block_d81b566_mwfzR4": {
           "type": "ai_gen_block_d81b566",
           "settings": {
-            "custom_liquid": "",
+            "custom_liquid": "<br>",
             "use_page_width": true,
             "background_color": "#ffffff",
-            "padding_desktop": 50,
-            "padding_mobile": 30
+            "padding_desktop": 30,
+            "padding_mobile": 20
           },
           "blocks": {}
         }

@@ -23,6 +23,9 @@
       "block_order": [
         "text_tVLHT4"
       ],
+      "custom_css": [
+        "h1 {text-align: left !important;}"
+      ],
       "name": "Page Title",
       "settings": {}
     },

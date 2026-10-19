@@ -175,6 +175,12 @@
     }
   },
   "customer": {
+    "product_history": {
+      "image": "Image",
+      "title": "Title",
+      "reorder": "Reorder",
+      "sign_in": "Sign in to view your product history."
+    },
     "account": {
       "title": "My Account",
       "details": "Account Details",

@@ -1,0 +1,115 @@
+{{ 'account.scss.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width">
+  {% if customer %}
+    <div class="account-product-history-list">
+      {% if customer.orders.size != 0 %}
+        <div class="account-product-history-item account-product-history-header">
+          <div class="image">{{ 'customer.product_history.image' | t }}</div>
+          <div class="sku">{{ 'customer.order.sku' | t }}</div>
+          <div class="title">{{ 'customer.product_history.title' | t }}</div>
+          <div class="price">{{ 'customer.order.price' | t }}</div>
+          <div class="qty">{{ 'customer.order.quantity' | t }}</div>
+          <div class="reorder">{{ 'customer.product_history.reorder' | t }}</div>
+        </div>
+      {% else %}
+        <p>{{ 'customer.orders.none' | t }}</p>
+      {% endif %}
+    </div>
+    {% if customer.orders.size != 0 %}
+      <div class="text-right">
+        <br>
+        <button type="button" class="btn btn-black-dark js-reorder">{{ 'customer.product_history.reorder' | t }}</button>
+      </div>
+    {% endif %}
+  {% else %}
+    {% unless request.design_mode %}
+      <script>
+        window.location.replace({{ routes.account_login_url | json }} + '?return_url=' + encodeURIComponent(window.location.pathname + window.location.search));
+      </script>
+    {% endunless %}
+    <p>{{ 'customer.product_history.sign_in' | t }}</p>
+    <a class="btn" href="{{ routes.account_login_url }}?return_url={{ request.path | url_encode }}">{{ 'customer.login.sign_in' | t }}</a>
+  {% endif %}
+</div>
+
+{% if customer %}
+  <script id="account-product-history-template" type="text/template">
+    <div class="account-product-history-item">
+      <input type="hidden" name="varian_id" value="{id}">
+      <input type="hidden" name="varian_sku" value="{sku}">
+      <div class="image">
+        <a href="{url}"><img src="{image}" alt="{title}" width="50" loading="lazy"></a>
+      </div>
+      <div class="sku"><a href="{url}">{sku}</a></div>
+      <div class="title"><a href="{url}">{title}</a></div>
+      <div class="price">{line_price}</div>
+      <div class="qty">{quantity}</div>
+      <div class="reorder">
+        <label class="checkbox">
+          <input type="checkbox" class="js-select-reorder" aria-label="{{ 'customer.product_history.reorder' | t }} {title}" data-item-id="{variant_id}" data-quantity="{quantity}" data-properties='{properties}'>
+          <span></span>
+        </label>
+      </div>
+    </div>
+  </script>
+
+  <script src="{{ 'reorder.js' | asset_url }}" defer></script>
+  <script>
+    window.ORDERED_ITEMS = [];
+    {% for order in customer.orders %}
+      {% for item in order.line_items %}
+        {% if item.variant_id and item.product.type != 'logo' %}
+          var itemInList = ORDERED_ITEMS.findIndex(function(product) {
+            return product.variant_id === {{ item.variant_id | json }};
+          });
+
+          if (itemInList === -1) {
+            ORDERED_ITEMS.push({
+              id: {{ item.id | json }},
+              title: {{ item.title | escape | json }},
+              price: {{ item.price | money | json }},
+              line_price: {{ item.line_price | money | json }},
+              quantity: {{ item.quantity | json }},
+              sku: {{ item.sku | escape | json }},
+              properties: {{ item.properties | json | escape | json }},
+              variant_id: {{ item.variant_id | json }},
+              url: {{ item.url | escape | json }},
+              image: {{ item.variant.image | image_url: width: 100 | escape | json }},
+              option1: {{ item.variant.option1 | json }},
+              option2: {{ item.variant.option2 | json }},
+              options: {{ item.product.options_with_values | json }},
+              variants: [
+                {% for variant in item.product.variants %}
+                  {
+                    id: {{ variant.id | json }},
+                    option1: {{ variant.option1 | json }},
+                    option2: {{ variant.option2 | json }}
+                  }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              ]
+            });
+          } else {
+            ORDERED_ITEMS[itemInList].quantity = Math.max(ORDERED_ITEMS[itemInList].quantity, {{ item.quantity | json }});
+          }
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product history",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["page"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product history"
+    }
+  ]
+}
+{% endschema %}

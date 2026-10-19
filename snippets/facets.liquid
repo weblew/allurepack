@@ -21,7 +21,7 @@
   if results.url
     assign results_url = results.url
   else
-    assign terms = results.terms | escape
+    assign terms = results.terms | url_encode
     assign results_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
   endif
 -%}
@@ -62,7 +62,7 @@
               {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
               {% case filter.type %}
                 {% when 'boolean', 'list' %}
-                  {% if filter.values.size > 1  %}
+                  {% if filter.values.size > 1 or results.terms %}
                   <details
                     id="Details-{{ forloop.index }}-{{ section.id }}"
                     class="{% if filter_type == 'horizontal' %}disclosure-has-popup facets__disclosure{% else %} facets__disclosure-vertical{% endif %} js-filter"

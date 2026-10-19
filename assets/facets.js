@@ -107,14 +107,14 @@ class FacetFiltersForm extends HTMLElement {
       });
         
 
-      $('.list-view-item, .product-detail ,.grid-view-item, .home-grid-item-inner').each(displayPricesAndColors);
-
       productGrid.querySelectorAll('script[data-product-data]').forEach((oldScript) => {
           const newScript = document.createElement('script');
           newScript.textContent = oldScript.textContent;
           document.head.appendChild(newScript);
           newScript.remove();
       });
+
+      $('.list-view-item, .product-detail ,.grid-view-item, .home-grid-item-inner').each(displayPricesAndColors);
     }
   
     static renderProductCount(html) {
@@ -310,4 +310,3 @@ class FacetFiltersForm extends HTMLElement {
   }
   
   customElements.define('facet-remove', FacetRemove);
-  

@@ -8,6 +8,18 @@
     "theme_support_url": "https:\/\/support.shopify.com\/"
   },
   {
+    "name": "Search",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_predictive_search",
+        "label": "Enable search suggestions",
+        "info": "Show suggested searches, products, collections, pages, and blog posts while typing.",
+        "default": false
+      }
+    ]
+  },
+  {
     "name": "Colors",
     "settings": [
       {

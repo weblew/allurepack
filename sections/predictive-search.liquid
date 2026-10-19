@@ -1,0 +1,61 @@
+{% if predictive_search.performed %}
+  {% assign text_result_count = predictive_search.resources.queries.size | plus: predictive_search.resources.collections.size | plus: predictive_search.resources.pages.size | plus: predictive_search.resources.articles.size %}
+  {% assign result_count = predictive_search.resources.products.size | plus: text_result_count %}
+  <div data-predictive-results data-status="{{ 'general.search.suggestion_count' | t: count: result_count | escape }}">
+    {% if result_count == 0 %}
+      <p class="predictive-search__message">{{ 'general.search.empty' | t }}</p>
+    {% endif %}
+    <div role="listbox" aria-label="{{ 'general.search.suggestions' | t }}">
+      <div class="predictive-search__columns">
+      {% if text_result_count > 0 %}
+        <div class="predictive-search__text">
+      {% if predictive_search.resources.queries.size > 0 %}
+        <div role="group" aria-label="{{ 'general.search.suggestions' | t }}">
+          <p class="predictive-search__heading" aria-hidden="true">{{ 'general.search.suggestions' | t }}</p>
+          {% for query in predictive_search.resources.queries %}
+            <a class="predictive-search__item" href="{{ query.url }}" role="option" aria-selected="false">{{ query.text | escape }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+          {% assign text_types = 'collections,pages,articles' | split: ',' %}
+          {% for text_type in text_types %}
+            {% assign text_results = predictive_search.resources[text_type] %}
+            {% assign heading_key = 'general.search.' | append: text_type %}
+            {% if text_results.size > 0 %}
+              <div role="group" aria-label="{{ heading_key | t }}">
+                <p class="predictive-search__heading" aria-hidden="true">{{ heading_key | t }}</p>
+                {% for result in text_results %}
+                  <a class="predictive-search__item" href="{{ result.url }}" role="option" aria-selected="false">{{ result.title | escape }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if predictive_search.resources.products.size > 0 %}
+        <div class="predictive-search__products" role="group" aria-label="{{ 'general.search.products' | t }}">
+          <p class="predictive-search__heading" aria-hidden="true">{{ 'general.search.products' | t }}</p>
+          <div class="predictive-search__grid">
+          {% for product in predictive_search.resources.products %}
+            <a class="predictive-search__item predictive-search__product" href="{{ product.url }}" role="option" aria-selected="false">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 320 | image_tag: width: 160, height: 160, loading: 'lazy', alt: '' }}
+              {% endif %}
+              <span>{{ product.title | escape }}</span>
+            </a>
+          {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      </div>
+      <a class="predictive-search__item predictive-search__all" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&amp;options%5Bprefix%5D=last" role="option" aria-selected="false">
+        {{ 'general.search.view_all' | t: terms: predictive_search.terms | escape_once }}
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{"name": "Predictive search", "settings": []}
+{% endschema %}

@@ -53,7 +53,16 @@
       "title": "Search our site",
       "placeholder": "Search",
       "submit": "Submit",
-      "close": "Close search"
+      "close": "Close search",
+      "loading": "Searching…",
+      "suggestions": "Suggestions",
+      "products": "Products",
+      "collections": "Collections",
+      "pages": "Pages",
+      "articles": "Blog posts",
+      "view_all": "View all results for “{{ terms }}”",
+      "empty": "No suggestions found. Try another search.",
+      "suggestion_count": "{{ count }} suggestions available"
     },
     "newsletter_form": {
       "newsletter_email": "Join our mailing list",

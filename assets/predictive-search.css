@@ -1,0 +1,207 @@
+allure-predictive-search {
+  display: block;
+}
+
+.predictive-search {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  width: min(800px, calc(100vw - 48px));
+  transform: translateX(-50%);
+  z-index: 1002;
+  background: #fff;
+  color: #2f2923;
+  border: 1px solid #e8e4df;
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .16);
+  text-align: left;
+}
+
+.predictive-search[hidden] {
+  display: none;
+}
+
+.predictive-search__columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+}
+
+.predictive-search__text {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.predictive-search__products {
+  flex: 2;
+  min-width: 0;
+  padding-bottom: 12px;
+}
+
+.predictive-search__text > [role="group"],
+.predictive-search__products {
+  border: 1px solid #e8e4df;
+  border-radius: 5px;
+}
+
+.predictive-search__text > [role="group"] {
+  padding-bottom: 8px;
+}
+
+.predictive-search__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+.predictive-search .predictive-search__item.predictive-search__product {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.predictive-search .predictive-search__product img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+@media (max-width: 1024px) {
+  .predictive-search {
+    left: 0;
+    width: 100%;
+    transform: none;
+  }
+}
+
+@media (min-width: 601px) {
+  .predictive-search:has(.predictive-search__products:only-child) {
+    width: min(540px, calc(100vw - 48px));
+  }
+}
+
+.predictive-search__heading {
+  margin: 0;
+  padding: 12px 12px 6px;
+  color: #71685e;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.predictive-search .predictive-search__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  color: #2f2923;
+  font-size: 14px;
+  line-height: 1.4;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.predictive-search__item img {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  object-fit: contain;
+  border-radius: 4px;
+  background: #f7f5f2;
+}
+
+.predictive-search__text .predictive-search__item {
+  margin: 3px 8px;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.predictive-search .predictive-search__item:hover {
+  background: #f0ede7;
+  opacity: 1;
+}
+
+.predictive-search .predictive-search__item[aria-selected="true"],
+.predictive-search .predictive-search__item:focus-visible {
+  background: #f7f5f1;
+  outline: 1px solid #a68b60;
+  outline-offset: -2px;
+}
+
+.predictive-search .predictive-search__all {
+  justify-content: space-between;
+  padding: 16px;
+  margin-top: 0;
+  border-top: 1px solid #e8e4df;
+  font-weight: 600;
+}
+
+.predictive-search__message {
+  margin: 0;
+  padding: 20px 16px;
+  font-size: 14px;
+  color: #71685e;
+}
+
+@media (max-width: 600px) {
+  .predictive-search__columns {
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .predictive-search__text,
+  .predictive-search__products {
+    width: 100%;
+    gap: 8px;
+    padding-bottom: 0;
+  }
+
+  .predictive-search__text > [role="group"] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0 4px 4px;
+  }
+
+  .predictive-search__heading {
+    grid-column: 1 / -1;
+    padding: 10px 8px 4px;
+  }
+
+  .predictive-search__text .predictive-search__item {
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 12px;
+    min-height: 28px;
+  }
+
+  .predictive-search__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .predictive-search .predictive-search__item.predictive-search__product {
+    gap: 6px;
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .predictive-search .predictive-search__product img {
+    height: 88px;
+    aspect-ratio: auto;
+  }
+
+  .predictive-search .predictive-search__all {
+    padding: 12px;
+    font-size: 13px;
+  }
+}

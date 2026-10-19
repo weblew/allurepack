@@ -1,0 +1,104 @@
+{{ 'shop.scss.css' | asset_url | stylesheet_tag }}
+{{ 'listting.css' | asset_url | stylesheet_tag }}
+
+<style>
+	
+  .main-content {
+      background-color: inherit;
+      padding-top: 55px;
+  }
+	
+</style>
+<script>
+
+  var AVAILABLE_COLORS = {};
+
+</script>
+
+{% paginate search.results by 50 %}
+
+<div class="page-width">
+  <div class="{% unless search.performed %}empty-page-content text-center{% else %}section-header{% endunless %}">
+  {% unless search.performed %}
+      <h1 class="h2">{{ 'general.search.title' | t }}</h1>
+  {% else %}
+      <div class="shop-by-box-header flex flex-align-center flex-justify-between">
+        <h1 id="ProductCountDesktop" class="gold font-default">{{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count | escape_once }}</h1>
+      </div>
+  {% endunless %}
+
+  </div>
+</div>
+
+
+{% if search.performed %}
+  {% assign filter_count = search.filters | size %}
+  <div class="page-width">
+    <div class="flex flex-align-top collection-container">
+      {% if filter_count > 0 %}
+        <div id="SearchFilters" class="filters flex-2 filters-panel">
+          <div class="filters-panel-inner">
+            <div class="group-title">{{ 'products.facets.filter_button' | t }}</div>
+            {% render 'facets', results: search, enable_filtering: true, enable_sorting: false, filter_type: 'vertical', paginate: paginate %}
+            <a href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&amp;options%5Bprefix%5D=last">{{ 'products.facets.clear_all' | t }}</a>
+            <div class="filters-panel-close">
+              <button type="button" class="btn btn-gold-light" onclick="document.getElementById('SearchFilters').classList.remove('open'); document.getElementById('SearchFiltersToggle').setAttribute('aria-expanded', 'false'); document.getElementById('SearchFiltersToggle').focus()">{{ 'products.facets.apply' | t }}</button>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      <div class="{% if filter_count > 0 %}flex-8{% else %}flex-10{% endif %}">
+        <div class="group-title flex flex-align-center flex-justify-between">
+          <span id="ProductCount" role="status">{{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count | escape_once }}</span>
+          {% if filter_count > 0 %}
+            <button id="SearchFiltersToggle" type="button" class="btn filter-btn" aria-controls="SearchFilters" aria-expanded="false" onclick="document.getElementById('SearchFilters').classList.add('open'); this.setAttribute('aria-expanded', 'true')">{{ 'products.facets.filter_button' | t }}</button>
+          {% endif %}
+        </div>
+        <div id="product-grid" data-id="{{ section.id }}">
+        {% if search.results_count == 0 %}
+          <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+          {% include 'shop-boxes' %}
+        {% endif %}
+        <div class="grid-view-items flex">
+          {% for item in search.results %}
+            <div class="home-grid-item">
+              {% if item.object_type == 'product' %}
+                {% render 'home-grid-item', product: item %}
+              {% else %}
+                <a href="{{ item.url }}">
+                  <h2 class="home-grid-item-title">{{ item.title | escape }}</h2>
+                  <p>{{ item.content | strip_html | truncatewords: 30 | escape }}</p>
+                </a>
+              {% endif %}
+            </div>
+          {% endfor %}
+
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+        </div>
+
+        {% if paginate.pages > 1 %}
+          {% include 'pagination' %}
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% endpaginate %}
+{% include "printing-modal" %}
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'listing.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'listing.js' | asset_url }}"></script><![endif]-->
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": []
+}
+{% endschema %}
+

@@ -9,6 +9,28 @@
  */
 {
   "sections": {
+    "page_title_UTkXqV": {
+      "type": "page-title",
+      "blocks": {
+        "text_tVLHT4": {
+          "type": "text",
+          "settings": {
+            "text": "{{ page.title }}",
+            "content": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_tVLHT4"
+      ],
+      "name": "Page Title",
+      "settings": {}
+    },
+    "product_history_UYg9aq": {
+      "type": "product-history",
+      "name": "Product history",
+      "settings": {}
+    },
     "cta_8Vdhyd": {
       "type": "CTA",
       "disabled": true,
@@ -19,14 +41,32 @@
         "bottom_spacing": 70
       }
     },
-    "product_history_UYg9aq": {
-      "type": "product-history",
-      "name": "Product history",
+    "blocks_yhC8E4": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_d81b566_mwfzR4": {
+          "type": "ai_gen_block_d81b566",
+          "settings": {
+            "custom_liquid": "",
+            "use_page_width": true,
+            "background_color": "#ffffff",
+            "padding_desktop": 50,
+            "padding_mobile": 30
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_d81b566_mwfzR4"
+      ],
+      "name": "Custom Liquid",
       "settings": {}
     }
   },
   "order": [
+    "page_title_UTkXqV",
     "product_history_UYg9aq",
-    "cta_8Vdhyd"
+    "cta_8Vdhyd",
+    "blocks_yhC8E4"
   ]
 }

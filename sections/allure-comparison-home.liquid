@@ -1,0 +1,85 @@
+{%- comment -%} Allurepack vs. Other Jewelry Packaging Suppliers — homepage section {%- endcomment -%}
+{%- assign sid = section.id -%}
+<style>
+  #ac-{{ sid }} { background: {{ section.settings.bg }}; padding: {{ section.settings.pad }}px 20px; font-family: Strawford, "Helvetica Neue", Arial, sans-serif; }
+  #ac-{{ sid }} * { box-sizing: border-box; }
+  #ac-{{ sid }} .ac-head { max-width: 672px; margin: 0 auto 40px; text-align: center; }
+  #ac-{{ sid }} .ac-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: #b7994b; margin: 0 0 8px; }
+  #ac-{{ sid }} .ac-title { font-size: 30px; font-weight: 400; line-height: 1.25; color: #1d1b19; margin: 0 0 12px; }
+  #ac-{{ sid }} .ac-intro { color: #2f2f2e; margin: 0; font-size: 16px; line-height: 1.5; }
+  #ac-{{ sid }} .ac-table { max-width: 896px; margin: 0 auto; border: 1px solid #e5e2dd; border-radius: 6px; overflow: hidden; }
+  #ac-{{ sid }} .ac-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #e5e2dd; }
+  #ac-{{ sid }} .ac-row:first-child { border-top: 0; }
+  #ac-{{ sid }} .ac-cell { display: flex; gap: 12px; align-items: flex-start; padding: 16px 24px; font-size: 14px; line-height: 1.5; }
+  #ac-{{ sid }} .ac-th { font-size: 14px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  #ac-{{ sid }} .ac-th.us { background: #1d1b19; color: #b7994b; }
+  #ac-{{ sid }} .ac-th.them, #ac-{{ sid }} .ac-ico.them { background: #faf8f6; color: #2f2f2e; }
+  #ac-{{ sid }} .ac-us { background: #fcfaf5; color: #1d1b19; font-weight: 600; }
+  #ac-{{ sid }} .ac-them { background: #fff; color: #2f2f2e; }
+  #ac-{{ sid }} .ac-ico { flex: 0 0 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+  #ac-{{ sid }} .ac-ico.us { background: #b7994b; color: #fff; }
+  #ac-{{ sid }} .ac-cta { margin-top: 40px; text-align: center; }
+  #ac-{{ sid }} .ac-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; border: 1px solid #c7a049; background: #fff; color: #c7a049; font-size: 14px; font-weight: 500; letter-spacing: 2.24px; text-transform: uppercase; text-decoration: none; border-radius: 0; transition: background .2s, color .2s; }
+  #ac-{{ sid }} .ac-btn:hover, #ac-{{ sid }} .ac-btn:focus { background: #c7a049; color: #fff; }
+  @media (max-width: 749px) {
+    #ac-{{ sid }} .ac-title { font-size: 24px; }
+    #ac-{{ sid }} .ac-cell { padding: 12px 14px; font-size: 13px; gap: 8px; }
+    #ac-{{ sid }} .ac-th { font-size: 12px; }
+  }
+</style>
+
+<section id="ac-{{ sid }}">
+  <div class="ac-head">
+    {%- if section.settings.eyebrow != blank -%}<p class="ac-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    {%- if section.settings.title != blank -%}<h2 class="ac-title">{{ section.settings.title }}</h2>{%- endif -%}
+    {%- if section.settings.intro != blank -%}<p class="ac-intro">{{ section.settings.intro }}</p>{%- endif -%}
+  </div>
+  <div class="ac-table" role="table" aria-label="{{ section.settings.title | escape }}">
+    <div class="ac-row" role="row">
+      <div class="ac-cell ac-th us" role="columnheader">{{ section.settings.us_label }}</div>
+      <div class="ac-cell ac-th them" role="columnheader">{{ section.settings.them_label }}</div>
+    </div>
+    {%- for block in section.blocks -%}
+      <div class="ac-row" role="row" {{ block.shopify_attributes }}>
+        <div class="ac-cell ac-us" role="cell"><span class="ac-ico us" aria-hidden="true">&#10003;</span>{{ block.settings.us }}</div>
+        <div class="ac-cell ac-them" role="cell"><span class="ac-ico them" aria-hidden="true">&#10005;</span>{{ block.settings.them | default: '&mdash;' }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.btn_label != blank -%}
+    <div class="ac-cta"><a class="ac-btn" href="{{ section.settings.btn_link | default: '/pages/jewelry-packaging' }}">{{ section.settings.btn_label }}</a></div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Allurepack comparison",
+  "tag": "div",
+  "class": "allure-comparison-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small heading", "default": "Why Allurepack" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Allurepack vs. other jewelry packaging providers" },
+    { "type": "textarea", "id": "intro", "label": "Intro text", "default": "No surprise fees, no big minimums, and fast shipping. See how we compare." },
+    { "type": "text", "id": "us_label", "label": "Left column heading", "default": "Allurepack" },
+    { "type": "text", "id": "them_label", "label": "Right column heading", "default": "Other Jewelry Packaging Suppliers" },
+    { "type": "text", "id": "btn_label", "label": "Button text", "default": "Explore Packaging" },
+    { "type": "url", "id": "btn_link", "label": "Button link" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#ffffff" },
+    { "type": "range", "id": "pad", "label": "Top/bottom spacing", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "blocks": [
+    { "type": "row", "name": "Comparison row", "settings": [
+      { "type": "text", "id": "us", "label": "Allurepack", "default": "Benefit" },
+      { "type": "text", "id": "them", "label": "Other suppliers" }
+    ] }
+  ],
+  "presets": [
+    { "name": "Allurepack comparison", "blocks": [
+      { "type": "row", "settings": { "us": "No extra import charges", "them": "Tariffs" } },
+      { "type": "row", "settings": { "us": "No minimum order amount", "them": "Small order surcharge" } },
+      { "type": "row", "settings": { "us": "Low or no minimums on packaging", "them": "Minimums of 50 plus" } },
+      { "type": "row", "settings": { "us": "Same day shipping on non printed orders", "them": "Shipping often 2+ days" } }
+    ] }
+  ]
+}
+{% endschema %}
